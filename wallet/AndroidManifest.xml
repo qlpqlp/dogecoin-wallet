@@ -21,6 +21,7 @@
 
     <!-- dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- group: CAMERA -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- group: NOTIFICATIONS -->
 
     <uses-feature
         android:name="android.hardware.touchscreen"

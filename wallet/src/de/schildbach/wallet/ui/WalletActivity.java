@@ -17,6 +17,7 @@
 
 package de.schildbach.wallet.ui;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -25,7 +26,9 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.nfc.NdefMessage;
@@ -38,6 +41,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -86,6 +91,13 @@ public final class WalletActivity extends AbstractWalletActivity {
         super.onCreate(savedInstanceState);
         application = getWalletApplication();
         final Configuration config = application.getConfiguration();
+
+        // Request notification permission for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
+            }
+        }
 
         walletActivityViewModel = new ViewModelProvider(this).get(AbstractWalletActivityViewModel.class);
         viewModel = new ViewModelProvider(this).get(WalletActivityViewModel.class);

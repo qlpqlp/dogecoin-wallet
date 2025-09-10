@@ -1,4 +1,5 @@
 # fee rates in satoshis per 1000 bytes of tx data
-ECONOMIC=100000000
-NORMAL=100000000
-PRIORITY=100000000
+# Following official Dogecoin fee recommendations: 0.01 DOGE per KB
+ECONOMIC=1000000
+NORMAL=1000000
+PRIORITY=1000000

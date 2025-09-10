@@ -54,7 +54,7 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 ### Asset Updates
 - **Checkpoints**: Updated with Dogecoin blockchain checkpoints
 - **Electrum Servers**: Configured Dogecoin Electrum servers
-- **Fee Structure**: Updated fee calculations for Dogecoin network
+- **Fee Structure**: Updated to follow official Dogecoin fee recommendations (0.01 DOGE per KB)
 - **Word Lists**: Updated BIP39 wordlist for Dogecoin compatibility
 
 ### Security and Privacy
@@ -73,8 +73,28 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 • **Notifications**: System notification for received coins.
 • **Paper Wallet Support**: Sweeping of paper wallets (e.g. those used for cold storage).
 • **Android Widget**: Home screen widget to easily view your Dogecoin balance and quickly access send/receive functions without opening the app.
+• **Low Fees**: Uses official Dogecoin fee recommendations (0.01 DOGE per KB) for affordable transactions.
 • **Security**: Supports SegWit and modern address formats.
 • **Privacy**: Supports Tor via the separate Orbot app.
+
+## 💰 TRANSACTION FEES
+
+This wallet follows the official Dogecoin fee recommendations for optimal network performance and user experience:
+
+### **Fee Structure**
+- **All Categories**: 0.01 DOGE per kilobyte (KB) of transaction data
+- **Fee Categories**: ECONOMIC, NORMAL, and PRIORITY all use the same rate
+- **Static Fees**: No dynamic fee fetching - uses consistent, predictable fees
+
+### **Real-World Examples**
+- **Small transaction** (~250 bytes): ~0.0025 DOGE
+- **Medium transaction** (~500 bytes): ~0.005 DOGE  
+- **Large transaction** (~1000 bytes): ~0.01 DOGE
+
+### **Benefits**
+- **Affordable**: Much lower than Bitcoin fees, making micro-transactions practical
+- **Predictable**: Same fee rate across all transaction types
+- **Official Standards**: Follows [Dogecoin Core recommendations](https://github.com/dogecoin/dogecoin/blob/master/doc/fee-recommendation.md)
 
 ## 🛠️ PREREQUISITES FOR BUILDING
 
