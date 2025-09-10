@@ -6,6 +6,7 @@
     android:viewportWidth="24.0"
     android:viewportHeight="24.0">
 
+    <!-- Material Symbols Send icon for send -->
     <path
         android:fillColor="#FFFFFFFF"
         android:pathData="M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z" />

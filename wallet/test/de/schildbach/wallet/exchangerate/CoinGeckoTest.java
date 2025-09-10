@@ -35,7 +35,7 @@ public class CoinGeckoTest {
     @Test
     public void parse() throws Exception {
         final BufferedSource json = Okio.buffer(Okio.source(getClass().getResourceAsStream("coingecko.json")));
-        final List<ExchangeRateEntry> rates = coinGecko.parse(json);
+        final List<ExchangeRateEntry> rates = coinGecko.parse(json, 1.0);
         assertEquals(45, rates.size());
     }
 }

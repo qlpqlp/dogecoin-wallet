@@ -129,7 +129,8 @@ public final class RequestCoinsFragment extends Fragment {
                     getString(R.string.request_coins_fragment_initiate_request_qr));
             if (nfcAdapter != null && nfcAdapter.isEnabled()) {
                 initiateText.append(' ').append(getString(R.string.request_coins_fragment_initiate_request_nfc));
-                nfcAdapter.setNdefPushMessage(createNdefMessage(paymentRequest), activity);
+                // NFC functionality temporarily disabled for compatibility
+                // nfcAdapter.setNdefPushMessage(createNdefMessage(paymentRequest), activity);
             }
             initiateRequestView.setText(initiateText);
         });
@@ -178,7 +179,7 @@ public final class RequestCoinsFragment extends Fragment {
         acceptBluetoothPaymentView = view.findViewById(R.id.request_coins_accept_bluetooth_payment);
         acceptBluetoothPaymentView.setVisibility(
                 bluetoothAdapter != null &&
-                        (Bluetooth.getAddress(bluetoothAdapter) != null || config.getLastBluetoothAddress() != null || config.getBluetoothAddress() != null) ?
+                        (getBluetoothAddressSafely(bluetoothAdapter) != null || config.getLastBluetoothAddress() != null || config.getBluetoothAddress() != null) ?
                         View.VISIBLE : View.GONE);
         acceptBluetoothPaymentView.setChecked(bluetoothAdapter != null && bluetoothAdapter.isEnabled());
         acceptBluetoothPaymentView.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -274,7 +275,7 @@ public final class RequestCoinsFragment extends Fragment {
     }
 
     private boolean maybeStartBluetoothListening() {
-        String bluetoothAddress = Bluetooth.getAddress(bluetoothAdapter);
+        String bluetoothAddress = getBluetoothAddressSafely(bluetoothAdapter);
         if (bluetoothAddress == null)
             bluetoothAddress = config.getLastBluetoothAddress();
         if (bluetoothAddress == null)
@@ -295,6 +296,17 @@ public final class RequestCoinsFragment extends Fragment {
             viewModel.bluetoothServiceIntent = null;
         }
         viewModel.bluetoothMac.setValue(null);
+    }
+
+    private String getBluetoothAddressSafely(BluetoothAdapter adapter) {
+        if (adapter == null)
+            return null;
+        try {
+            return Bluetooth.getAddress(adapter);
+        } catch (SecurityException e) {
+            log.info("Bluetooth permission not granted, skipping Bluetooth address retrieval", e);
+            return null;
+        }
     }
 
     @Override

@@ -6,11 +6,8 @@
     android:viewportWidth="24.0"
     android:viewportHeight="24.0">
 
-    <group
-        android:pivotX="12.0"
-        android:scaleX="-1">
-        <path
-            android:fillColor="#FFFFFFFF"
-            android:pathData="M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z" />
-    </group>
+    <!-- Material Symbols Download icon for receive -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M19,9h-4V3H9v6H5l7,7 7,-7zM5,18v2h14v-2H5z" />
 </vector>

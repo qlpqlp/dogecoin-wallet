@@ -100,7 +100,7 @@ public class WalletApplication extends Application {
         org.bitcoinj.core.Context.enableStrictMode();
         org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
 
-        log.info("=== starting app using flavor: {}, build type: {}, network: {}", BuildConfig.FLAVOR,
+        log.info("=== starting app using flavor: {}, build type: {}, network: {}", "main",
                 BuildConfig.BUILD_TYPE, Constants.NETWORK_PARAMETERS.getId());
 
         Networks.register(Constants.NETWORK_PARAMETERS);
@@ -123,8 +123,13 @@ public class WalletApplication extends Application {
         final Configuration config = getConfiguration();
         config.updateLastVersionCode(packageInfo.versionCode);
         final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter != null)
-            config.updateLastBluetoothAddress(Bluetooth.getAddress(bluetoothAdapter));
+        if (bluetoothAdapter != null) {
+            try {
+                config.updateLastBluetoothAddress(Bluetooth.getAddress(bluetoothAdapter));
+            } catch (SecurityException e) {
+                log.info("Bluetooth permission not granted, skipping Bluetooth address update", e);
+            }
+        }
 
         cleanupFiles();
 

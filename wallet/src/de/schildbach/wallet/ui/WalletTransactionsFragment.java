@@ -123,7 +123,7 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
                     String miningWarning = getString(R.string.wallet_transactions_fragment_empty_text_warning);
                     int prevLength = emptyText.length();
                     emptyText.append("\n\n").append(miningWarning);
-                    emptyText.setSpan(new ForegroundColorSpan(Color.RED), prevLength, emptyText.length(), SpannableStringBuilder.SPAN_POINT_MARK);
+                    emptyText.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fg_balance_warning)), prevLength, emptyText.length(), SpannableStringBuilder.SPAN_POINT_MARK);
                 }
                 if (warning == WarningType.BACKUP) {
                     final int start = emptyText.length();

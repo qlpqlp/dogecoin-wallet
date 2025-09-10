@@ -217,7 +217,12 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     private void updateBluetoothAddress() {
         final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter != null) {
-            String bluetoothAddress = Bluetooth.getAddress(bluetoothAdapter);
+            String bluetoothAddress = null;
+            try {
+                bluetoothAddress = Bluetooth.getAddress(bluetoothAdapter);
+            } catch (SecurityException e) {
+                log.info("Bluetooth permission not granted, skipping Bluetooth address retrieval", e);
+            }
             if (bluetoothAddress == null)
                 bluetoothAddress = config.getLastBluetoothAddress();
             if (bluetoothAddress != null) {

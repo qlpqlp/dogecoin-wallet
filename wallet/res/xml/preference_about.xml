@@ -7,8 +7,12 @@
         android:title="@string/about_version_title" />
     <Preference
         android:key="about_copyright"
-        android:summary="© 2011-2020, the Bitcoin Wallet developers\n© 2013-2020, the Dogecoin Wallet developers"
+        android:summary="© 2011-2020, the Bitcoin Wallet developers\n© 2013-2025, the Dogecoin Wallet developers\nMaintained by: Paulo Vidal (@inevitable360)"
         android:title="@string/about_copyright_title" />
+    <Preference
+        android:key="about_author"
+        android:summary="Paulo Vidal (@inevitable360)\nLanger Hans (@langer_hans)"
+        android:title="Authors" />
     <Preference
         android:key="about_license"
         android:summary="https://www.gnu.org/licenses/gpl-3.0.txt"
@@ -19,19 +23,19 @@
     </Preference>
     <Preference
         android:key="about_license"
-        android:summary="https://github.com/langerhans/dogecoin-wallet-new/wiki/PrivacyPolicy"
+        android:summary="https://github.com/qlpqlp/dogecoin-wallet/wiki/PrivacyPolicy"
         android:title="@string/about_privacy_title" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://github.com/langerhans/dogecoin-wallet-new/wiki/PrivacyPolicy" />
+            android:data="https://github.com/qlpqlp/dogecoin-wallet/wiki/PrivacyPolicy" />
     </Preference>
     <Preference
         android:key="about_source"
-        android:summary="https://github.com/langerhans/dogecoin-wallet-new"
+        android:summary="https://github.com/qlpqlp/dogecoin-wallet\nForked from: https://github.com/langerhans/dogecoin-wallet-new"
         android:title="@string/about_source_title">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://github.com/langerhans/dogecoin-wallet-new" />
+            android:data="https://github.com/qlpqlp/dogecoin-wallet" />
     </Preference>
     <Preference
         android:enabled="false"
@@ -40,11 +44,11 @@
         android:title="@string/about_market_app_title" />
     <Preference
         android:key="about_twitter"
-        android:summary="\@langer_hans"
-        android:title="Twitter">
+        android:summary="\@inevitable360\n\@langer_hans"
+        android:title="X (formerly Twitter)">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://twitter.com/langer_hans" />
+            android:data="https://x.com/inevitable360" />
     </Preference>
 
     <PreferenceCategory
@@ -52,7 +56,8 @@
 
         <Preference
             android:key="about_credits_bitcoinj"
-            android:summary="https://github.com/dogecoin/libdohj">
+            android:summary="https://github.com/dogecoin/libdohj"
+            android:title="DogecoinJ (libdohj)">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/dogecoin/libdohj" />
@@ -104,6 +109,110 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/qos-ch/slf4j" />
+        </Preference>
+        <Preference
+            android:key="about_credits_androidx"
+            android:summary="https://developer.android.com/jetpack/androidx"
+            android:title="AndroidX Libraries">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx" />
+        </Preference>
+        <Preference
+            android:key="about_credits_lifecycle"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/lifecycle"
+            android:title="Android Lifecycle">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/lifecycle" />
+        </Preference>
+        <Preference
+            android:key="about_credits_room"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/room"
+            android:title="Android Room Database">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/room" />
+        </Preference>
+        <Preference
+            android:key="about_credits_retrofit"
+            android:summary="https://github.com/square/retrofit"
+            android:title="Retrofit">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/square/retrofit" />
+        </Preference>
+        <Preference
+            android:key="about_credits_gson"
+            android:summary="https://github.com/google/gson"
+            android:title="Gson">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/google/gson" />
+        </Preference>
+        <Preference
+            android:key="about_credits_glide"
+            android:summary="https://github.com/bumptech/glide"
+            android:title="Glide">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/bumptech/glide" />
+        </Preference>
+        <Preference
+            android:key="about_credits_workmanager"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/work"
+            android:title="WorkManager">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/work" />
+        </Preference>
+        <Preference
+            android:key="about_credits_navigation"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/navigation"
+            android:title="Navigation Component">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/navigation" />
+        </Preference>
+        <Preference
+            android:key="about_credits_material"
+            android:summary="https://github.com/material-components/material-components-android"
+            android:title="Material Design Components">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/material-components/material-components-android" />
+        </Preference>
+        <Preference
+            android:key="about_credits_constraintlayout"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/constraintlayout"
+            android:title="ConstraintLayout">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/constraintlayout" />
+        </Preference>
+        <Preference
+            android:key="about_credits_espresso"
+            android:summary="https://developer.android.com/jetpack/androidx/releases/test"
+            android:title="Espresso Testing">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://developer.android.com/jetpack/androidx/releases/test" />
+        </Preference>
+        <Preference
+            android:key="about_credits_junit"
+            android:summary="https://junit.org/junit5/"
+            android:title="JUnit">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://junit.org/junit5/" />
+        </Preference>
+        <Preference
+            android:key="about_credits_mockito"
+            android:summary="https://github.com/mockito/mockito"
+            android:title="Mockito">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/mockito/mockito" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

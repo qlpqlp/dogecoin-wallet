@@ -45,7 +45,7 @@ public final class Constants {
 
     /** Network this wallet is on (e.g. testnet or mainnet). */
     public static final NetworkParameters NETWORK_PARAMETERS =
-            !BuildConfig.FLAVOR.equals("prod") ? DogecoinTestNet3Params.get() : DogecoinMainNetParams.get();
+            DogecoinMainNetParams.get(); // Using mainnet for production
 
     /** Bitcoinj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
@@ -134,7 +134,7 @@ public final class Constants {
     public static final String DONATION_ADDRESS = null;
 
     /** Recipient e-mail address for reports. */
-    public static final String REPORT_EMAIL = "dogecoinandroid@gmail.com";
+    public static final String REPORT_EMAIL = "report@inevitable360.com";
 
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";

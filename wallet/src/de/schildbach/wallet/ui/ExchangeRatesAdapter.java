@@ -238,8 +238,8 @@ public class ExchangeRatesAdapter extends ListAdapter<ExchangeRatesAdapter.ListI
             holder.defaultView.setVisibility(listItem.isDefault ? View.VISIBLE : View.INVISIBLE);
         }
         if (fullBind || changes.contains(ChangeType.RATE)) {
-            holder.rateView.setFormat(Constants.LOCAL_FORMAT.postfixCode().code(0, "/1k"));
-            holder.rateView.setAmount(listItem.baseRateAsFiat.multiply(1000));
+            holder.rateView.setFormat(Constants.LOCAL_FORMAT.postfixCode().code(0, "/1"));
+            holder.rateView.setAmount(listItem.baseRateAsFiat);
             holder.walletView.setFormat(Constants.LOCAL_FORMAT);
             if (listItem.balanceAsFiat != null) {
                 holder.walletView.setAmount(listItem.balanceAsFiat);

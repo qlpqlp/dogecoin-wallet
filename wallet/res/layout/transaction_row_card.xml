@@ -14,7 +14,8 @@
     app:cardElevation="0px"
     app:cardBackgroundColor="@color/bg_list_card_transaction"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="false">
+    app:cardUseCompatPadding="false"
+    app:cardCornerRadius="12dp">
 
     <include layout="@layout/transaction_row" />
 </androidx.cardview.widget.CardView>

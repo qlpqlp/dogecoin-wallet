@@ -219,7 +219,7 @@ public class ReportIssueDialogFragment extends DialogFragment {
                 ")\n");
         report.append("APK Hash: ").append(application.apkHash().toString()).append("\n");
         report.append("Package: ").append(pi.packageName).append("\n");
-        report.append("Flavor: " + BuildConfig.FLAVOR + "\n");
+        report.append("Flavor: main\n");
         report.append("Build Type: " + BuildConfig.BUILD_TYPE + "\n");
         final String installerPackageName = Installer.installerPackageName(application);
         final Installer installer = Installer.from(installerPackageName);

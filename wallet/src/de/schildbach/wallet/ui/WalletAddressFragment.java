@@ -77,8 +77,10 @@ public final class WalletAddressFragment extends Fragment {
         });
         viewModel.bitcoinUri.observe(this, bitcoinUri -> {
             final NfcAdapter nfcAdapter = WalletAddressFragment.this.nfcAdapter;
-            if (nfcAdapter != null)
-                nfcAdapter.setNdefPushMessage(createNdefMessage(bitcoinUri.toString()), activity);
+            if (nfcAdapter != null) {
+                // NFC functionality temporarily disabled for compatibility
+                // nfcAdapter.setNdefPushMessage(createNdefMessage(bitcoinUri.toString()), activity);
+            }
             activityViewModel.addressLoadingFinished();
         });
         viewModel.showWalletAddressDialog.observe(this, new Event.Observer<Void>() {

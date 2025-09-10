@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:orientation="vertical">
+        android:background="@drawable/modal_background_modern"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/raise_fee_dialog_message"

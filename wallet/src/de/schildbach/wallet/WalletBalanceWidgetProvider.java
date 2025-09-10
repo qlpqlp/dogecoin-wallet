@@ -167,13 +167,13 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
         }
 
         views.setOnClickPendingIntent(R.id.widget_button_balance,
-                PendingIntent.getActivity(context, 0, new Intent(context, WalletActivity.class), 0));
+                PendingIntent.getActivity(context, 0, new Intent(context, WalletActivity.class), PendingIntent.FLAG_IMMUTABLE));
         views.setOnClickPendingIntent(R.id.widget_button_request,
-                PendingIntent.getActivity(context, 0, new Intent(context, RequestCoinsActivity.class), 0));
+                PendingIntent.getActivity(context, 0, new Intent(context, RequestCoinsActivity.class), PendingIntent.FLAG_IMMUTABLE));
         views.setOnClickPendingIntent(R.id.widget_button_send,
-                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsActivity.class), 0));
+                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsActivity.class), PendingIntent.FLAG_IMMUTABLE));
         views.setOnClickPendingIntent(R.id.widget_button_send_qr,
-                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsQrActivity.class), 0));
+                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsQrActivity.class), PendingIntent.FLAG_IMMUTABLE));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

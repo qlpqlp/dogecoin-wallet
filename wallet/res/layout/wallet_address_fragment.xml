@@ -5,17 +5,20 @@
     android:id="@+id/bitcoin_address_qr_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="2dp"
+    android:elevation="4dp"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/bg_qr_thumb">
+    app:cardBackgroundColor="@color/bg_qr_thumb"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
     <ImageView
         android:id="@+id/bitcoin_address_qr"
         android:layout_width="@dimen/wallet_address_qr_size"
         android:layout_height="@dimen/wallet_address_qr_size"
         android:layout_gravity="center"
+        android:background="@drawable/qr_code_background_modern_shadow"
         android:contentDescription="@string/action_show_qr"
         android:focusable="true"
-        android:padding="4dp"
+        android:padding="6dp"
         android:scaleType="fitXY" />
 </androidx.cardview.widget.CardView>

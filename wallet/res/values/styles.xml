@@ -16,6 +16,10 @@
         <item name="android:spinnerStyle">@style/My.Widget.Spinner</item>
         <item name="android:popupMenuStyle">@style/My.Widget.PopupMenu</item>
         <item name="android:windowBackground">@color/bg_level1</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorSecondary">@color/colorSecondary</item>
     </style>
 
     <style name="My.Theme.WithSplash" parent="@style/My.Theme">
@@ -44,6 +48,7 @@
         <item name="android:titleTextStyle">@style/My.TextAppearance.Widget.ActionBar.Title</item>
         <item name="android:subtitleTextStyle">@style/My.TextAppearance.Widget.ActionBar.Subtitle</item>
         <item name="android:displayOptions">showTitle</item>
+        <item name="android:customNavigationLayout">@layout/action_bar_custom</item>
     </style>
 
     <style name="My.Widget.ActionBar.ChildActivity" parent="@style/My.Widget.ActionBar">
