@@ -2,6 +2,30 @@
 
 Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dogecoin payment wallet app for your Android device! This is a fork of the original Bitcoin Wallet, converted to support Dogecoin Blockchain.
 
+
+## Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+  <img src="img/001.jpg" width="30%" />
+  <img src="img/002.jpg" width="30%" />
+  <img src="img/003.jpg" width="30%" />
+  <img src="img/004.jpg" width="30%" />
+  <img src="img/005.jpg" width="30%" />
+  <img src="img/006.jpg" width="30%" />
+  <img src="img/007.jpg" width="30%" />
+  <img src="img/008.jpg" width="30%" />
+  <img src="img/009.jpg" width="30%" />
+  <img src="img/010.jpg" width="30%" />
+  <img src="img/011.jpg" width="30%" />
+  <img src="img/012.jpg" width="30%" />
+  <img src="img/013.jpg" width="30%" />
+  <img src="img/014.jpg" width="30%" />
+  <img src="img/015.jpg" width="30%" />
+  <img src="img/016.jpg" width="30%" />
+  <img src="img/017.jpg" width="30%" />
+</div>
+
+
 This project contains several sub-projects:
 
  * __wallet__:
