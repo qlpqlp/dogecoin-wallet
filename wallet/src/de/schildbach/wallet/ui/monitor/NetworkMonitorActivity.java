@@ -20,10 +20,13 @@ package de.schildbach.wallet.ui.monitor;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import de.schildbach.wallet.R;
+import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.ui.AbstractWalletActivity;
 import de.schildbach.wallet.util.ViewPagerTabs;
 import de.schildbach.wallet.util.ZoomOutPageTransformer;
@@ -34,8 +37,11 @@ import de.schildbach.wallet.util.ZoomOutPageTransformer;
 public final class NetworkMonitorActivity extends AbstractWalletActivity {
     private static final int POSITION_PEER_LIST = 0;
     private static final int POSITION_BLOCK_LIST = 1;
+    private static final int POSITION_TOTAL_NODES = 2;
     private static final int[] TAB_LABELS = { R.string.network_monitor_peer_list_title,
-            R.string.network_monitor_block_list_title };
+            R.string.network_monitor_block_list_title, R.string.total_nodes_title };
+    
+    private ViewPagerTabs pagerTabs;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -43,9 +49,12 @@ public final class NetworkMonitorActivity extends AbstractWalletActivity {
 
         setContentView(R.layout.network_monitor_content);
         final ViewPager2 pager = findViewById(R.id.network_monitor_pager);
-        final ViewPagerTabs pagerTabs = findViewById(R.id.network_monitor_pager_tabs);
+        pagerTabs = findViewById(R.id.network_monitor_pager_tabs);
 
         pagerTabs.addTabLabels(TAB_LABELS);
+        
+        // Set up dynamic peer count in title
+        setupDynamicPeerTitle();
 
         final boolean twoPanes = getResources().getBoolean(R.bool.network_monitor_two_panes);
 
@@ -69,6 +78,11 @@ public final class NetworkMonitorActivity extends AbstractWalletActivity {
         pager.setAdapter(new PagerAdapter());
     }
 
+    private void setupDynamicPeerTitle() {
+        // No longer showing dynamic peer count in Peers tab title
+        // The Peers tab will just show "Peers" as the title
+    }
+
     private class PagerAdapter extends FragmentStateAdapter {
         public PagerAdapter() {
             super(NetworkMonitorActivity.this);
@@ -76,7 +90,7 @@ public final class NetworkMonitorActivity extends AbstractWalletActivity {
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
 
         @NonNull
@@ -86,6 +100,8 @@ public final class NetworkMonitorActivity extends AbstractWalletActivity {
                 return new PeerListFragment();
             else if (position == POSITION_BLOCK_LIST)
                 return new BlockListFragment();
+            else if (position == POSITION_TOTAL_NODES)
+                return new TotalNodesFragment();
             else
                 throw new IllegalArgumentException();
         }

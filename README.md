@@ -43,6 +43,28 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
+## ✨ NEW FEATURES & IMPROVEMENTS
+
+### 🔍 Advanced QR Code Scanner
+- **Upgraded to Google ML Kit**: Replaced ZXing with Google ML Kit Barcode Scanning for superior QR code detection
+- **Modern QR Code Support**: Can read aesthetic QR codes with bullet points, custom shapes, and non-standard designs
+- **Better Accuracy**: Machine learning-based detection provides higher success rates
+- **Compatibility**: Maintains support for traditional square QR codes
+
+### 🔋 Battery Optimization Fix
+- **Fixed Background Sync Issues**: Resolved problems with header synchronization being interrupted by Android's battery optimization
+- **New Permission**: Added `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` permission
+- **Settings Integration**: Added battery optimization preference in app settings
+- **Reliable Sync**: Headers now sync consistently without being put to sleep
+
+### 🌐 Worldwide Node Discovery
+- **New Total Nodes Tab**: Added comprehensive network monitoring in the Network Monitor
+- **Real-time Discovery**: Continuously discovers Dogecoin nodes worldwide every 5 seconds
+- **Detailed Information**: Shows node version, sub-version, services, synced blocks, and connection status
+- **Health Monitoring**: Automatically removes inactive nodes and finds replacements every 10 minutes
+- **IPv6 & TOR Support**: Discovers nodes across different network types
+- **Live Updates**: Real-time display of discovered nodes with progress indicators
+
 ### Core Network Changes
 - **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`
 - **Library Migration**: Replaced `bitcoinj` with `libdohj` (DogecoinJ library) version 0.15
@@ -237,7 +259,8 @@ android.enableR8.fullMode=false
 Key dependencies include:
 - `libdohj:0.15` - DogecoinJ library
 - `androidx.*` - AndroidX libraries
-- `com.google.zxing:core:3.3.3` - QR code scanning
+- `com.google.mlkit:barcode-scanning:17.2.0` - Advanced QR code scanning with ML Kit
+- `com.google.zxing:core:3.5.3` - Legacy QR code support (kept for compatibility)
 - `com.squareup.okhttp3:okhttp:3.14.9` - HTTP client
 
 ## 📦 DISTRIBUTION
@@ -288,7 +311,8 @@ For issues and support:
 - **Dogecoin Wallet Conversion**: Langer Hans [@langer_hans](https://x.com/langer_hans)
 - **Additional Contributors**: inevitable360 [@inevitable360](https://x.com/inevitable360) and other contributors
 - **DogecoinJ Library**: [libdohj](https://github.com/dogecoin/libdohj)
-- **ZXing**: QR code scanning library
+- **Google ML Kit**: Advanced QR code scanning with machine learning
+- **ZXing**: Legacy QR code scanning library (kept for compatibility)
 - **AndroidX**: Modern Android libraries
 - **OkHttp**: HTTP client library
 

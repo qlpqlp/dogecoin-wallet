@@ -440,6 +440,9 @@ public class BlockchainService extends LifecycleService {
             log.info("device {} idle mode", pm.isDeviceIdleMode() ? "entering" : "exiting");
         }
     };
+    
+    // Independent worldwide peer discovery (does not affect wallet sync)
+    private WorldwidePeerDiscovery worldwidePeerDiscovery;
 
     public class LocalBinder extends Binder {
         public BlockchainService getService() {
@@ -501,6 +504,10 @@ public class BlockchainService extends LifecycleService {
         config.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
 
         registerReceiver(deviceIdleModeReceiver, new IntentFilter(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED));
+        
+        // Initialize independent worldwide peer discovery
+        worldwidePeerDiscovery = new WorldwidePeerDiscovery(application);
+        worldwidePeerDiscovery.start();
 
         peerConnectivityListener = new PeerConnectivityListener();
 
@@ -750,6 +757,11 @@ public class BlockchainService extends LifecycleService {
         unregisterReceiver(deviceIdleModeReceiver);
 
         config.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        
+        // Stop worldwide peer discovery
+        if (worldwidePeerDiscovery != null) {
+            worldwidePeerDiscovery.stop();
+        }
 
         final boolean expectLargeData =
                 blockChain != null && (config.getBestChainHeightEver() - blockChain.getBestChainHeight()) > CONNECTIVITY_NOTIFICATION_PROGRESS_MIN_BLOCKS;
@@ -807,6 +819,30 @@ public class BlockchainService extends LifecycleService {
         return peerGroup.getConnectedPeers();
     }
 
+    /**
+     * Get the total number of available peers discovered worldwide
+     * This uses the independent DNS seed discovery service
+     */
+    public int getTotalDiscoveredPeers() {
+        if (worldwidePeerDiscovery != null) {
+            return worldwidePeerDiscovery.getCurrentWorldwidePeerCount();
+        }
+        
+        // Fallback to connected peers if worldwide discovery not available
+        if (peerGroup != null) {
+            return peerGroup.getConnectedPeers().size();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Get the worldwide peer discovery service
+     */
+    public WorldwidePeerDiscovery getWorldwidePeerDiscovery() {
+        return worldwidePeerDiscovery;
+    }
+
     public void dropAllPeers() {
         if (peerGroup == null)
             return;
@@ -854,6 +890,13 @@ public class BlockchainService extends LifecycleService {
     @MainThread
     private void broadcastPeerState(final int numPeers) {
         application.peerState.setValue(numPeers);
+        // Update worldwide peer count from independent discovery service
+        if (worldwidePeerDiscovery != null) {
+            final Integer worldwideCount = worldwidePeerDiscovery.worldwidePeerCount.getValue();
+            if (worldwideCount != null) {
+                application.totalDiscoveredPeers.setValue(worldwideCount);
+            }
+        }
     }
 
     @MainThread

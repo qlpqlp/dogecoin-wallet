@@ -68,6 +68,10 @@ public final class CameraManager {
     public int getOrientation() {
         return cameraInfo.orientation;
     }
+    
+    public Camera.Size getCameraResolution() {
+        return cameraResolution;
+    }
 
     public Camera open(final TextureView textureView, final int displayOrientation) throws IOException {
         final int cameraId = determineCameraId();

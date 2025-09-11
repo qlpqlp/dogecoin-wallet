@@ -165,6 +165,20 @@ public final class Constants {
 
     public static final int PEER_DISCOVERY_TIMEOUT_MS = 5 * (int) DateUtils.SECOND_IN_MILLIS;
     public static final int PEER_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
+    
+    /** Dogecoin DNS seed servers for worldwide peer discovery */
+    public static final String[] DOGECOIN_DNS_SEEDS = {
+        "seed.dogecoin.com",
+        "seed.multidoge.org", 
+        "seed.dogecoin.net",
+        "seed.dogecoin.io",
+        "seed.dogecoin.org"
+    };
+    
+    /** Interval for periodic worldwide peer discovery (in milliseconds) */
+    public static final long WORLDWIDE_PEER_DISCOVERY_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long DISCOVERY_TIMEOUT_MS = 2 * DateUtils.MINUTE_IN_MILLIS; // 2 minute timeout for better discovery
+    public static final int MAX_DISCOVERY_ATTEMPTS = 15; // Try more times for better results
 
     public static final long LAST_USAGE_THRESHOLD_JUST_MS = DateUtils.HOUR_IN_MILLIS;
     public static final long LAST_USAGE_THRESHOLD_TODAY_MS = DateUtils.DAY_IN_MILLIS;

@@ -31,7 +31,8 @@ dependencies {
     implementation 'com.lambdaworks:scrypt:1.4.0'
     implementation 'com.google.protobuf:protobuf-java:3.7.1'
     implementation 'com.google.guava:guava:29.0-android'
-    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.mlkit:barcode-scanning:17.2.0'
+    implementation 'com.google.zxing:core:3.5.3'
     //noinspection GradleDependency
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
     //noinspection GradleDependency

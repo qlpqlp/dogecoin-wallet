@@ -34,6 +34,12 @@ import android.graphics.SurfaceTexture;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.graphics.ImageFormat;
+import android.graphics.YuvImage;
+import android.graphics.Rect;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.io.ByteArrayOutputStream;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -54,14 +60,11 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.PlanarYUVLuminanceSource;
-import com.google.zxing.ReaderException;
-import com.google.zxing.Result;
-import com.google.zxing.ResultPointCallback;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.ui.AbstractWalletActivity;
 import de.schildbach.wallet.ui.DialogBuilder;
@@ -125,6 +128,9 @@ public final class ScanActivity extends AbstractWalletActivity
     private volatile Handler cameraHandler;
 
     private ScanViewModel viewModel;
+    
+    // ML Kit Barcode Scanner
+    private BarcodeScanner barcodeScanner;
 
     private static final Logger log = LoggerFactory.getLogger(ScanActivity.class);
 
@@ -132,6 +138,12 @@ public final class ScanActivity extends AbstractWalletActivity
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        
+        // Initialize ML Kit Barcode Scanner
+        BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+            .build();
+        barcodeScanner = BarcodeScanning.getClient(options);
 
         viewModel = new ViewModelProvider(this).get(ScanViewModel.class);
         viewModel.showPermissionWarnDialog.observe(this, new Event.Observer<Void>() {
@@ -235,6 +247,11 @@ public final class ScanActivity extends AbstractWalletActivity
         cameraThread.quit();
 
         previewView.setSurfaceTextureListener(null);
+        
+        // Close ML Kit scanner
+        if (barcodeScanner != null) {
+            barcodeScanner.close();
+        }
 
         // We're removing the requested orientation because if we don't, somehow the requested orientation is
         // bleeding through to the calling activity, forcing it into a locked state until it is restarted.
@@ -303,13 +320,13 @@ public final class ScanActivity extends AbstractWalletActivity
         return super.onKeyDown(keyCode, event);
     }
 
-    public void handleResult(final Result scanResult) {
+    public void handleResult(final String qrText) {
         vibrator.vibrate(VIBRATE_DURATION);
 
         scannerView.setIsResult(true);
 
         final Intent result = new Intent();
-        result.putExtra(INTENT_EXTRA_RESULT, scanResult.getText());
+        result.putExtra(INTENT_EXTRA_RESULT, qrText);
         setResult(RESULT_OK, result);
         postFinish();
     }
@@ -396,28 +413,49 @@ public final class ScanActivity extends AbstractWalletActivity
     }
 
     private final Runnable fetchAndDecodeRunnable = new Runnable() {
-        private final QRCodeReader reader = new QRCodeReader();
-        private final Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
-
         @Override
         public void run() {
             cameraManager.requestPreviewFrame((data, camera) -> decode(data));
         }
 
         private void decode(final byte[] data) {
-            final PlanarYUVLuminanceSource source = cameraManager.buildLuminanceSource(data);
-            final BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
             try {
-                hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK, (ResultPointCallback) dot -> runOnUiThread(() -> scannerView.addDot(dot)));
-                final Result scanResult = reader.decode(bitmap, hints);
-
-                runOnUiThread(() -> handleResult(scanResult));
-            } catch (final ReaderException x) {
-                // retry
+                // Convert camera data to Bitmap for ML Kit
+                final Camera.Size previewSize = cameraManager.getCameraResolution();
+                final YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
+                final ByteArrayOutputStream out = new ByteArrayOutputStream();
+                yuvImage.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 50, out);
+                final byte[] imageBytes = out.toByteArray();
+                final Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                
+                // Create InputImage for ML Kit
+                final InputImage image = InputImage.fromBitmap(bitmap, 0);
+                
+                // Process with ML Kit
+                barcodeScanner.process(image)
+                    .addOnSuccessListener(barcodes -> {
+                        if (!barcodes.isEmpty()) {
+                            final Barcode barcode = barcodes.get(0);
+                            final String qrText = barcode.getRawValue();
+                            if (qrText != null && !qrText.isEmpty()) {
+                                log.info("QR code decoded with ML Kit: {}", qrText);
+                                runOnUiThread(() -> handleResult(qrText));
+                                return;
+                            }
+                        }
+                        // No QR code found, retry
+                        cameraHandler.post(fetchAndDecodeRunnable);
+                    })
+                    .addOnFailureListener(e -> {
+                        log.debug("ML Kit barcode scanning failed: {}", e.getMessage());
+                        // Retry on failure
+                        cameraHandler.post(fetchAndDecodeRunnable);
+                    });
+                    
+            } catch (final Exception e) {
+                log.debug("Error processing camera data: {}", e.getMessage());
+                // Retry on error
                 cameraHandler.post(fetchAndDecodeRunnable);
-            } finally {
-                reader.reset();
             }
         }
     };

@@ -11,4 +11,14 @@
         <item>SoChain</item>
         <item>BlockCypher</item>
     </string-array>
+
+    <string name="preferences_battery_optimization_title">Battery optimization</string>
+    <string name="preferences_battery_optimization_summary">Prevent Android from putting the app to sleep during synchronization.</string>
+    
+    <!-- Total Nodes -->
+    <string name="total_nodes_title">Total Nodes</string>
+    <string name="total_nodes_count">%d Nodes Worldwide</string>
+    <string name="last_updated">Last updated: %s</string>
+    <string name="refresh">Refresh</string>
+    <string name="discovered_nodes">Discovered Nodes</string>
 </resources>

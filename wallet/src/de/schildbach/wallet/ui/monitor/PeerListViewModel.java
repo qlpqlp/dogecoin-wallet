@@ -40,6 +40,7 @@ public class PeerListViewModel extends AndroidViewModel {
     private final WalletApplication application;
     private final BlockchainServiceLiveData blockchainService;
     public final MediatorLiveData<List<Peer>> peers;
+    public final MediatorLiveData<Integer> totalDiscoveredPeers;
     private HostnamesLiveData hostnames;
 
     public PeerListViewModel(final Application application) {
@@ -47,8 +48,12 @@ public class PeerListViewModel extends AndroidViewModel {
         this.application = (WalletApplication) application;
         this.blockchainService = new BlockchainServiceLiveData(application);
         this.peers = new MediatorLiveData<>();
+        this.totalDiscoveredPeers = new MediatorLiveData<>();
         this.peers.addSource(blockchainService, blockchainService -> maybeRefreshPeers());
         this.peers.addSource(this.application.peerState, numPeers -> maybeRefreshPeers());
+        this.totalDiscoveredPeers.addSource(this.application.totalDiscoveredPeers, totalPeers -> {
+            this.totalDiscoveredPeers.setValue(totalPeers);
+        });
     }
 
     private void maybeRefreshPeers() {

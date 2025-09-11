@@ -63,12 +63,12 @@
                 android:data="https://github.com/dogecoin/libdohj" />
         </Preference>
         <Preference
-            android:key="about_credits_zxing"
-            android:summary="https://github.com/zxing/zxing"
-            android:title="@string/about_credits_zxing_title">
+            android:key="about_credits_mlkit"
+            android:summary="https://developers.google.com/ml-kit/vision/barcode-scanning"
+            android:title="Google ML Kit Barcode Scanning">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/zxing/zxing" />
+                android:data="https://developers.google.com/ml-kit/vision/barcode-scanning" />
         </Preference>
         <Preference
             android:key="about_credits_bouncycastle"

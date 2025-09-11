@@ -81,6 +81,7 @@ public class WalletApplication extends Application {
 
     public final MutableLiveData<BlockchainState> blockchainState = new MutableLiveData<>();
     public final MutableLiveData<Integer> peerState = new MutableLiveData<>();
+    public final MutableLiveData<Integer> totalDiscoveredPeers = new MutableLiveData<>();
     public final MutableLiveData<Event<Void>> walletChanged = new MutableLiveData<>();
 
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();

@@ -87,6 +87,23 @@ public class ViewPagerTabs extends View {
         }
     }
 
+    public void updateTabLabel(final int index, final String newLabel) {
+        if (index >= 0 && index < labels.size()) {
+            labels.set(index, newLabel);
+            
+            // Recalculate max width
+            paint.setTypeface(Typeface.DEFAULT_BOLD);
+            maxWidth = 0;
+            for (final String label : labels) {
+                final int width = (int) paint.measureText(label);
+                if (width > maxWidth)
+                    maxWidth = width;
+            }
+            
+            invalidate();
+        }
+    }
+
     private final Path path = new Path();
 
     @Override
