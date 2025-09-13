@@ -300,15 +300,16 @@ public class WorldwidePeerDiscovery {
                     if (seedPeerAddresses != null) {
                         for (final InetSocketAddress address : seedPeerAddresses) {
                             allPeers.add(address);
-                            // Add node immediately for real-time display
+                            // Add node immediately for real-time display (will filter for port 22556)
                             addNodeImmediately(address, "Seed Peer", "Getting...", "Getting...");
                         }
                         log.info("Phase 1: Discovered {} peers from seed peers", seedPeerAddresses.length);
                         
-                        // Update progress
+                        // Update progress (filter for mainnet port)
+                        final long mainnetPeers = allPeers.stream().filter(addr -> addr.getPort() == 22556).count();
                         mainHandler.post(() -> {
                             discoveryProgress.setValue(10);
-                            worldwidePeerCount.setValue(allPeers.size());
+                            worldwidePeerCount.setValue((int)mainnetPeers);
                         });
                     } else {
                         log.warn("Phase 1: SeedPeers returned null - no peers discovered");
@@ -338,7 +339,7 @@ public class WorldwidePeerDiscovery {
                                 for (final InetSocketAddress address : dnsPeers) {
                                     if (allPeers.add(address)) { // Only add if new
                                         newPeers++;
-                                        // Add node immediately for real-time display
+                                        // Add node immediately for real-time display (will filter for port 22556)
                                         addNodeImmediately(address, "DNS Seed", "Getting...", "Getting...");
                                     }
                                 }
@@ -354,11 +355,12 @@ public class WorldwidePeerDiscovery {
                     
                     log.info("Phase 2: Attempt {} - Total DNS peers discovered: {} (total so far: {})", attempt, totalDnsPeers, allPeers.size());
                     
-                    // Update progress and count
+                    // Update progress and count (filter for mainnet port)
                     final int currentAttempt = attempt;
+                    final long mainnetPeers = allPeers.stream().filter(addr -> addr.getPort() == 22556).count();
                     mainHandler.post(() -> {
                         discoveryProgress.setValue(10 + (currentAttempt * 15));
-                        worldwidePeerCount.setValue(allPeers.size());
+                        worldwidePeerCount.setValue((int)mainnetPeers);
                     });
                     
                     // Small delay between attempts
@@ -402,8 +404,21 @@ public class WorldwidePeerDiscovery {
                     log.info("Phase 6: Extended discovery complete, total so far: {}", allPeers.size());
                 }
                 
-                // Create detailed node info for each peer (ensure no duplicates)
+                // Filter peers to only include those on Dogecoin mainnet port 22556
+                final int dogecoinMainnetPort = 22556;
+                final Set<InetSocketAddress> filteredPeers = new HashSet<>();
                 for (final InetSocketAddress address : allPeers) {
+                    if (address.getPort() == dogecoinMainnetPort) {
+                        filteredPeers.add(address);
+                    } else {
+                        log.debug("Filtered out peer on non-mainnet port {}: {}", address.getPort(), address.getAddress().getHostAddress());
+                    }
+                }
+                
+                log.info("Filtered peers: {} total discovered, {} on mainnet port 22556", allPeers.size(), filteredPeers.size());
+                
+                // Create detailed node info for each filtered peer (ensure no duplicates)
+                for (final InetSocketAddress address : filteredPeers) {
                     final String ipAddress = address.getAddress().getHostAddress();
                     final int port = address.getPort();
                     
@@ -430,7 +445,8 @@ public class WorldwidePeerDiscovery {
                 }
 
                 final long discoveryTime = System.currentTimeMillis() - startTime;
-                log.info("Discovery completed in {}ms - Total worldwide peers discovered: {}", discoveryTime, allPeers.size());
+                log.info("Discovery completed in {}ms - Total worldwide peers discovered: {} (filtered to {} on mainnet port 22556)", 
+                    discoveryTime, allPeers.size(), filteredPeers.size());
                 
                 // Update detailed information for more nodes
                 connectToPeersForDetails(detailedNodes);
@@ -438,7 +454,7 @@ public class WorldwidePeerDiscovery {
                 mainHandler.post(() -> {
                     discoveryProgress.setValue(100);
                     isDiscovering.setValue(false);
-                    worldwidePeerCount.setValue(allPeers.size());
+                    worldwidePeerCount.setValue(filteredPeers.size());
                     worldwideNodes.setValue(new ArrayList<>(discoveredNodes.values()));
                 });
             } catch (Exception e) {
@@ -489,11 +505,18 @@ public class WorldwidePeerDiscovery {
     }
     
     /**
-     * Add a node immediately for real-time display
+     * Add a node immediately for real-time display (only if on mainnet port 22556)
      */
     private void addNodeImmediately(final InetSocketAddress address, final String source, final String version, final String userAgent) {
-        final String ipAddress = address.getAddress().getHostAddress();
         final int port = address.getPort();
+        
+        // Only add nodes on Dogecoin mainnet port 22556
+        if (port != 22556) {
+            log.debug("Skipped immediate peer on non-mainnet port {}: {} from {}", port, address.getAddress().getHostAddress(), source);
+            return;
+        }
+        
+        final String ipAddress = address.getAddress().getHostAddress();
         final String nodeKey = createUniqueNodeKey(ipAddress, port);
         
         if (!discoveredNodes.containsKey(nodeKey)) {
@@ -965,7 +988,7 @@ public class WorldwidePeerDiscovery {
                             if (allPeers.add(peer)) {
                                 newPeers++;
                                 additionalPeers++;
-                                // Add node immediately for real-time display
+                                // Add node immediately for real-time display (will filter for port 22556)
                                 addNodeImmediately(peer, "Additional DNS", "Getting...", "Getting...");
                             }
                         }
@@ -985,22 +1008,20 @@ public class WorldwidePeerDiscovery {
             
             for (final String seed : comprehensiveSeeds) {
                 try {
-                    // Try with different port variations
-                    final int[] ports = {22555, 22556, 22557, 22558, 22559};
-                    for (final int port : ports) {
-                        try {
-                            final java.net.InetAddress[] addresses = java.net.InetAddress.getAllByName(seed);
-                            for (final java.net.InetAddress address : addresses) {
-                                final InetSocketAddress socketAddress = new InetSocketAddress(address, port);
+                    // Only use Dogecoin mainnet port 22556
+                    final int dogecoinPort = 22556;
+                    try {
+                        final java.net.InetAddress[] addresses = java.net.InetAddress.getAllByName(seed);
+                        for (final java.net.InetAddress address : addresses) {
+                            final InetSocketAddress socketAddress = new InetSocketAddress(address, dogecoinPort);
                                 if (allPeers.add(socketAddress)) {
                                     additionalPeers++;
-                                    // Add node immediately for real-time display
-                                    addNodeImmediately(socketAddress, "Port Variation", "Getting...", "Getting...");
+                                    // Add node immediately for real-time display (will filter for port 22556)
+                                    addNodeImmediately(socketAddress, "Dogecoin Mainnet", "Getting...", "Getting...");
                                 }
-                            }
-                        } catch (Exception e) {
-                            // Ignore port variation failures
                         }
+                    } catch (Exception e) {
+                        // Ignore DNS resolution failures
                     }
                 } catch (Exception e) {
                     log.debug("Comprehensive seed '{}' failed: {}", seed, e.getMessage());

@@ -182,6 +182,18 @@ android.applicationVariants.all{ variant ->
     variant.mergeResourcesProvider.configure {
         doFirst{
             LangUpdater.main(new File("${rootDir}/wallet/res/"))
+            // Add the missing total_nodes_title string before compilation
+            def stringsFile = new File("${rootDir}/wallet/res/values/strings.xml")
+            if (stringsFile.exists()) {
+                def content = stringsFile.text
+                if (!content.contains("total_nodes_title")) {
+                    content = content.replace(
+                        '<string name="network_monitor_block_list_title">Blocks</string>',
+                        '<string name="network_monitor_block_list_title">Blocks</string>\n    <string name="total_nodes_title">Total Nodes</string>'
+                    )
+                    stringsFile.text = content
+                }
+            }
         }
         doLast{
             new File("${rootDir}/wallet/res/").eachFileRecurse (FileType.DIRECTORIES) { file ->
@@ -229,6 +241,12 @@ class LangUpdater {
 
     static def tryAllReplacements(String s) {
         String res = s
+        
+        // Skip replacement for specific strings that should remain unchanged
+        if (s == "Total Nodes") {
+            return s
+        }
+        
         // Do some specifics first
         res = res.replaceAll("bitcoinj", "libdohj")
         res = res.replaceAll("bitboy", "dogecoin.com")
