@@ -78,7 +78,10 @@ public class ExtendedPublicKeyFragment extends DialogFragment {
         imageView.setImageDrawable(bitmap);
 
         final DialogBuilder dialog = DialogBuilder.custom(activity, 0, view);
-        dialog.setNegativeButton(R.string.button_dismiss, (d, which) -> dismissAllowingStateLoss());
+        dialog.setNegativeButton(R.string.button_dismiss, (d, which) -> {
+            dismissAllowingStateLoss();
+            activity.finish(); // Finish the activity when dialog is dismissed
+        });
         dialog.setPositiveButton(R.string.button_share, (d, which) -> {
             final ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(activity);
             builder.setType("text/plain");
@@ -87,6 +90,7 @@ public class ExtendedPublicKeyFragment extends DialogFragment {
             builder.setChooserTitle(R.string.extended_public_key_fragment_share);
             builder.startChooser();
             log.info("extended public key shared via intent: {}", base58);
+            activity.finish(); // Finish the activity after sharing
         });
 
         return dialog.show();

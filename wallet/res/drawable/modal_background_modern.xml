@@ -6,10 +6,10 @@
     <corners android:radius="16dp" />
     
     <!-- Background color -->
-    <solid android:color="@color/bg_level2" />
+    <solid android:color="@color/bg_level3" />
     
-    <!-- Subtle border -->
+    <!-- No border -->
     <stroke
-        android:width="1dp"
-        android:color="@color/fg_less_significant" />
+        android:width="0dp"
+        android:color="@android:color/transparent" />
 </shape>

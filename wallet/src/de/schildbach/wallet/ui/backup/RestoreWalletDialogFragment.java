@@ -20,6 +20,7 @@ package de.schildbach.wallet.ui.backup;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -219,6 +220,14 @@ public class RestoreWalletDialogFragment extends DialogFragment {
                 final boolean hasCoins = balance.signum() > 0;
                 replaceWarningView.setVisibility(hasCoins ? View.VISIBLE : View.GONE);
             });
+
+            // Apply amber text color to buttons
+            if (dialog.getButton(DialogInterface.BUTTON_POSITIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
+            if (dialog.getButton(DialogInterface.BUTTON_NEGATIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
         });
 
         return dialog;

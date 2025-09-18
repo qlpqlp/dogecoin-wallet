@@ -75,6 +75,30 @@
             android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
             android:layout_marginTop="8dp" />
 
+        <!-- QR Code Scanner View -->
+        <FrameLayout
+            android:id="@+id/sweep_wallet_fragment_scanner_container"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
+            android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/bg_level2">
+
+            <TextureView
+                android:id="@+id/sweep_wallet_fragment_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:keepScreenOn="true" />
+
+            <de.schildbach.wallet.ui.scan.ScannerView
+                android:id="@+id/sweep_wallet_fragment_scanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
         <Space
             android:layout_width="0px"
             android:layout_height="0px"

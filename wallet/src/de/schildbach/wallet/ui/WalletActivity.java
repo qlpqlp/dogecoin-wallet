@@ -62,6 +62,8 @@ import de.schildbach.wallet.ui.preference.PreferenceActivity;
 import de.schildbach.wallet.ui.scan.ScanActivity;
 import de.schildbach.wallet.ui.send.SendCoinsActivity;
 import de.schildbach.wallet.ui.send.SweepWalletActivity;
+import de.schildbach.wallet.ui.DigitalSignatureActivity;
+import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.OnFirstPreDraw;
@@ -74,6 +76,8 @@ import org.bitcoinj.script.Script;
  * @author Andreas Schildbach
  */
 public final class WalletActivity extends AbstractWalletActivity {
+    public static final String INTENT_EXTRA_SHOW_REPORT_ISSUE = "show_report_issue";
+    
     private WalletApplication application;
     private Handler handler = new Handler();
 
@@ -209,10 +213,13 @@ public final class WalletActivity extends AbstractWalletActivity {
     protected void onResume() {
         super.onResume();
 
-        handler.postDelayed(() -> {
-            // delayed start so that UI has enough time to initialize
-            BlockchainService.start(WalletActivity.this, true);
-        }, 1000);
+        // Check biometric authentication if required
+        if (BiometricHelper.isBiometricRequired(this)) {
+            showBiometricAuthentication();
+        } else {
+            // User is already authenticated, biometric is disabled, or internal navigation
+            startBlockchainService();
+        }
     }
 
     @Override
@@ -220,6 +227,39 @@ public final class WalletActivity extends AbstractWalletActivity {
         handler.removeCallbacksAndMessages(null);
 
         super.onPause();
+    }
+
+    private void startBlockchainService() {
+        handler.postDelayed(() -> {
+            // delayed start so that UI has enough time to initialize
+            BlockchainService.start(WalletActivity.this, true);
+        }, 1000);
+    }
+
+    private void showBiometricAuthentication() {
+        BiometricAuthDialogFragment.show(getSupportFragmentManager(), new BiometricAuthDialogFragment.BiometricAuthCallback() {
+            @Override
+            public void onBiometricAuthSuccess() {
+                // Authentication successful, mark as authenticated and start service
+                BiometricHelper.setAuthenticated(WalletActivity.this, true);
+                startBlockchainService();
+            }
+
+            @Override
+            public void onBiometricAuthError(String error) {
+                // Show error and exit app
+                android.widget.Toast.makeText(WalletActivity.this, error, android.widget.Toast.LENGTH_LONG).show();
+                // Exit the app on error
+                finishAffinity();
+            }
+
+            @Override
+            public void onBiometricAuthCancelled() {
+                // User cancelled, exit the app
+                android.widget.Toast.makeText(WalletActivity.this, "Authentication required to access wallet", android.widget.Toast.LENGTH_SHORT).show();
+                finishAffinity();
+            }
+        });
     }
 
     private AnimatorSet buildEnterAnimation(final View contentView) {
@@ -320,6 +360,12 @@ public final class WalletActivity extends AbstractWalletActivity {
     private void handleIntent(final Intent intent) {
         final String action = intent.getAction();
 
+        // Handle report issue intent
+        if (intent.getBooleanExtra(INTENT_EXTRA_SHOW_REPORT_ISSUE, false)) {
+            viewModel.showReportIssueDialog.setValue(Event.simple());
+            return;
+        }
+
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             final String inputType = intent.getType();
             final NdefMessage ndefMessage = (NdefMessage) intent
@@ -395,9 +441,6 @@ public final class WalletActivity extends AbstractWalletActivity {
 
         final Resources res = getResources();
 
-        final boolean showExchangeRatesOption = Constants.ENABLE_EXCHANGE_RATES
-                && res.getBoolean(R.bool.show_exchange_rates_option);
-        menu.findItem(R.id.wallet_options_exchange_rates).setVisible(showExchangeRatesOption);
         menu.findItem(R.id.wallet_options_sweep_wallet).setVisible(Constants.ENABLE_SWEEP_WALLET);
         final String externalStorageState = Environment.getExternalStorageState();
         final boolean enableRestoreWalletOption = Environment.MEDIA_MOUNTED.equals(externalStorageState)
@@ -437,14 +480,14 @@ public final class WalletActivity extends AbstractWalletActivity {
         } else if (itemId == R.id.wallet_options_address_book) {
             AddressBookActivity.start(this);
             return true;
-        } else if (itemId == R.id.wallet_options_exchange_rates) {
-            startActivity(new Intent(this, ExchangeRatesActivity.class));
+        } else if (itemId == R.id.wallet_options_recurring_payments) {
+            startActivity(new Intent(this, RecurringPaymentsActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_digital_signature) {
+            startActivity(new Intent(this, DigitalSignatureActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_sweep_wallet) {
             SweepWalletActivity.start(this);
-            return true;
-        } else if (itemId == R.id.wallet_options_network_monitor) {
-            startActivity(new Intent(this, NetworkMonitorActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_restore_wallet) {
             viewModel.showRestoreWalletDialog.setValue(Event.simple());
@@ -463,9 +506,6 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_technical_notes) {
             viewModel.showHelpDialog.setValue(new Event<>(R.string.help_technical_notes));
-            return true;
-        } else if (itemId == R.id.wallet_options_report_issue) {
-            viewModel.showReportIssueDialog.setValue(Event.simple());
             return true;
         } else if (itemId == R.id.wallet_options_help) {
             viewModel.showHelpDialog.setValue(new Event<>(R.string.help_wallet));

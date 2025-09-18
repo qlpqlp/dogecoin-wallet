@@ -1,275 +1,181 @@
-/*
- * Copyright the original author or authors.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package de.schildbach.wallet.ui.monitor;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.Dimension;
-import androidx.annotation.MainThread;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hashing;
-import com.google.common.net.HostAndPort;
-import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
+import de.schildbach.wallet.service.PeerManager;
+import de.schildbach.wallet.ui.AbstractWalletActivity;
+import com.google.common.net.HostAndPort;
 import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.PeerAddress;
-import org.bitcoinj.core.VersionMessage;
 
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * @author Andreas Schildbach
+ * Adapter for displaying peer information in a RecyclerView
  */
-public class PeerListAdapter extends ListAdapter<PeerListAdapter.ListItem, PeerListAdapter.ViewHolder> {
-    public static List<ListItem> buildListItems(final Context context, final List<Peer> peers,
-            final Map<InetAddress, String> hostnames) {
-        final List<ListItem> items = new ArrayList<>(peers.size());
-        for (final Peer peer : peers) {
-            final PeerAddress peerAddress = peer.getAddress();
-            final InetAddress inetAddress = peerAddress.getAddr();
-            final String ip = inetAddress.getHostAddress();
-            final int port = peerAddress.getPort();
-            final HostAndPort hostAndPort = HostAndPort.fromParts(ip, port);
-            final String hostname = hostnames.get(inetAddress);
-            final String displayHost = hostname != null ? hostname : ip;
-            final HostAndPort displayHostAndPort;
-            if (port != Constants.NETWORK_PARAMETERS.getPort())
-                displayHostAndPort = HostAndPort.fromParts(displayHost, port);
-            else
-                displayHostAndPort = HostAndPort.fromHost(displayHost);
-            final long height = peer.getBestHeight();
-            final VersionMessage versionMessage = peer.getPeerVersionMessage();
-            final String version = versionMessage.subVer;
-            final String protocol = "protocol: " + versionMessage.clientVersion;
-            final String services = peer.toStringServices(versionMessage.localServices).toLowerCase(Locale.US);
-            final long pingTime = peer.getPingTime();
-            final String ping = pingTime < Long.MAX_VALUE ?
-                    context.getString(R.string.peer_list_row_ping_time, pingTime) : null;
-            final Drawable icon;
-            if (peer.isDownloadData()) {
-                icon = context.getDrawable(R.drawable.ic_sync_white_24dp);
-                icon.setTint(context.getColor(R.color.fg_significant));
-            } else {
-                icon = null;
+public class PeerListAdapter extends RecyclerView.Adapter<PeerListAdapter.PeerViewHolder> {
+    private List<PeerManager.PeerInfo> peers;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+    
+    public PeerListAdapter(List<PeerManager.PeerInfo> peers) {
+        this.peers = peers;
+    }
+    
+    public PeerListAdapter(AbstractWalletActivity activity, PeerListFragment fragment) {
+        this.peers = new ArrayList<>();
+    }
+    
+    public void setSelectedPeer(HostAndPort peer) {
+        // Implementation for selection
+    }
+    
+    public int positionOf(HostAndPort peer) {
+        // Implementation for finding position
+        return RecyclerView.NO_POSITION;
+    }
+    
+    public void submitList(List<Object> items) {
+        // Convert Object list to PeerInfo list for display
+        this.peers.clear();
+        for (Object item : items) {
+            if (item instanceof PeerManager.PeerInfo) {
+                this.peers.add((PeerManager.PeerInfo) item);
             }
-            items.add(new ListItem(hostAndPort, displayHostAndPort, height, version, protocol, services, ping, icon));
+        }
+        notifyDataSetChanged();
+    }
+    
+    public static List<Object> buildListItems(AbstractWalletActivity activity, List<Peer> peers, Map<InetAddress, String> hostnames) {
+        List<Object> items = new ArrayList<>();
+        if (peers != null) {
+            for (Peer peer : peers) {
+                String hostname = null;
+                if (hostnames != null) {
+                    hostname = hostnames.get(peer.getAddress().getAddr());
+                }
+                PeerManager.PeerInfo peerInfo = new PeerManager.PeerInfo(peer, hostname);
+                items.add(peerInfo);
+            }
         }
         return items;
     }
-
-    public static class ListItem {
-        // internal item id
-        public final long id;
-        // external item id
-        public final HostAndPort hostAndPort;
-
-        public final HostAndPort displayHostAndPort;
-        public final long height;
-        public final String version;
-        public final String protocol;
-        public final String services;
-        public final String ping;
-        public final Drawable icon;
-
-        public ListItem(final HostAndPort hostAndPort, final HostAndPort displayHostAndPort, final long height,
-                        final String version, final String protocol, final String services, final String ping,
-                        final Drawable icon) {
-            this.id = id(hostAndPort);
-            this.hostAndPort = hostAndPort;
-            this.displayHostAndPort = displayHostAndPort;
-            this.height = height;
-            this.version = version;
-            this.protocol = protocol;
-            this.services = services;
-            this.ping = ping;
-            this.icon = icon;
-        }
-
-        private static long id(final HostAndPort hostAndPort) {
-            return ID_HASH.newHasher().putUnencodedChars(hostAndPort.getHost()).putInt(hostAndPort.getPort())
-                    .hash().asLong();
-        }
-
-        private static final HashFunction ID_HASH = Hashing.farmHashFingerprint64();
+    
+    public static List<Object> buildEmptyListItems(AbstractWalletActivity activity) {
+        // Show a message when no peers are connected
+        List<Object> emptyItems = new ArrayList<>();
+        emptyItems.add("No peers connected. This could be due to:");
+        emptyItems.add("• No internet connection");
+        emptyItems.add("• Low device storage");
+        emptyItems.add("• Blockchain sync disabled");
+        emptyItems.add("• Check Total Nodes tab for discovered peers");
+        return emptyItems;
     }
-
-    public interface OnClickListener {
-        void onPeerClick(View view, HostAndPort peerHostAndPort);
-    }
-
-    private final LayoutInflater inflater;
-    @Dimension
-    private final int cardElevationSelected;
-
-    private enum ChangeType {
-        HOST, PING, ICON, SELECTION
-    }
-
-    @Nullable
-    private final OnClickListener onClickListener;
-    @Nullable
-    private HostAndPort selectedPeerHostAndPort;
-
-    public PeerListAdapter(final Context context, @Nullable final OnClickListener onClickListener) {
-        super(new DiffUtil.ItemCallback<ListItem>() {
-            @Override
-            public boolean areItemsTheSame(final ListItem oldItem, final ListItem newItem) {
-                return oldItem.id == newItem.id;
-            }
-
-            @Override
-            public boolean areContentsTheSame(final ListItem oldItem, final ListItem newItem) {
-                if (!Objects.equals(oldItem.displayHostAndPort, newItem.displayHostAndPort))
-                    return false;
-                if (!Objects.equals(oldItem.ping, newItem.ping))
-                    return false;
-                if (!Objects.equals(oldItem.icon, newItem.icon))
-                    return false;
-                return true;
-            }
-
-            @Nullable
-            @Override
-            public Object getChangePayload(final ListItem oldItem, final ListItem newItem) {
-                final EnumSet<ChangeType> changes = EnumSet.noneOf(ChangeType.class);
-                if (!Objects.equals(oldItem.displayHostAndPort, newItem.displayHostAndPort))
-                    changes.add(ChangeType.HOST);
-                if (!Objects.equals(oldItem.ping, newItem.ping))
-                    changes.add(ChangeType.PING);
-                if (!Objects.equals(oldItem.icon, newItem.icon))
-                    changes.add(ChangeType.ICON);
-                return changes;
-            }
-        });
-
-        this.inflater = LayoutInflater.from(context);
-        this.cardElevationSelected = context.getResources().getDimensionPixelOffset(R.dimen.card_elevation_selected);
-        this.onClickListener = onClickListener;
-
-        setHasStableIds(true);
-    }
-
-    @MainThread
-    public void setSelectedPeer(final HostAndPort newSelectedPeerHostAndPort) {
-        if (Objects.equals(newSelectedPeerHostAndPort, selectedPeerHostAndPort))
-            return;
-        if (selectedPeerHostAndPort != null)
-            notifyItemChanged(positionOf(selectedPeerHostAndPort), EnumSet.of(ChangeType.SELECTION));
-        if (newSelectedPeerHostAndPort != null)
-            notifyItemChanged(positionOf(newSelectedPeerHostAndPort), EnumSet.of(ChangeType.SELECTION));
-        this.selectedPeerHostAndPort = newSelectedPeerHostAndPort;
-    }
-
-    @MainThread
-    public int positionOf(final HostAndPort peerHostAndPort) {
-        if (peerHostAndPort != null) {
-            final List<ListItem> list = getCurrentList();
-            for (int i = 0; i < list.size(); i++) {
-                final ListItem item = list.get(i);
-                if (item.hostAndPort.equals(peerHostAndPort))
-                    return i;
-            }
-        }
-        return RecyclerView.NO_POSITION;
-    }
-
+    
+    @NonNull
     @Override
-    public long getItemId(final int position) {
-        final ListItem listItem = getItem(position);
-        return listItem.id;
+    public PeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_peer_info, parent, false);
+        return new PeerViewHolder(view);
     }
-
+    
     @Override
-    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.peer_list_row, parent, false));
+    public void onBindViewHolder(@NonNull PeerViewHolder holder, int position) {
+        if (position < peers.size()) {
+            PeerManager.PeerInfo peer = peers.get(position);
+            holder.bind(peer, dateFormat);
+        }
     }
-
+    
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        throw new UnsupportedOperationException();
+    public int getItemCount() {
+        return peers.size();
     }
-
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position, final List<Object> payloads) {
-        final boolean fullBind = payloads.isEmpty();
-        final EnumSet<ChangeType> changes = EnumSet.noneOf(ChangeType.class);
-        for (final Object payload : payloads)
-            changes.addAll((EnumSet<ChangeType>) payload);
-
-        final ListItem listItem = getItem(position);
-        if (fullBind || changes.contains(ChangeType.SELECTION)) {
-            final boolean isSelected = listItem.hostAndPort.equals(selectedPeerHostAndPort);
-            holder.itemView.setSelected(isSelected);
-            ((CardView) holder.itemView).setCardElevation(isSelected ? cardElevationSelected : 0);
-        }
-        if (fullBind || changes.contains(ChangeType.HOST)) {
-            holder.hostView.setText(listItem.displayHostAndPort.toString());
-        }
-        if (fullBind || changes.contains(ChangeType.PING)) {
-            holder.pingView.setText(listItem.ping);
-        }
-        if (fullBind || changes.contains(ChangeType.ICON)) {
-            holder.iconView.setImageDrawable(listItem.icon);
-        }
-        if (fullBind) {
-            holder.heightView.setText(listItem.height > 0 ? listItem.height + " blocks" : null);
-            holder.versionView.setText(listItem.version);
-            holder.protocolView.setText(listItem.protocol);
-            holder.servicesView.setText(listItem.services);
-            if (onClickListener != null)
-                holder.itemView.setOnClickListener(v -> onClickListener.onPeerClick(v, listItem.hostAndPort));
-        }
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView hostView;
-        private final TextView heightView;
-        private final TextView versionView;
-        private final TextView protocolView;
-        private final TextView servicesView;
-        private final TextView pingView;
-        private final ImageView iconView;
-
-        private ViewHolder(final View itemView) {
+    
+    public static class PeerViewHolder extends RecyclerView.ViewHolder {
+        private TextView peerIp;
+        private TextView peerPort;
+        private TextView peerVersion;
+        private TextView peerSubVersion;
+        private TextView peerServices;
+        private TextView peerLatency;
+        private TextView peerStatus;
+        private TextView peerLastSeen;
+        
+        public PeerViewHolder(@NonNull View itemView) {
             super(itemView);
-            hostView = itemView.findViewById(R.id.peer_list_row_host);
-            heightView = itemView.findViewById(R.id.peer_list_row_height);
-            versionView = itemView.findViewById(R.id.peer_list_row_version);
-            protocolView = itemView.findViewById(R.id.peer_list_row_protocol);
-            servicesView = itemView.findViewById(R.id.peer_list_row_services);
-            pingView = itemView.findViewById(R.id.peer_list_row_ping);
-            iconView = itemView.findViewById(R.id.peer_list_row_icon);
+            peerIp = itemView.findViewById(R.id.peer_ip);
+            peerPort = itemView.findViewById(R.id.peer_port);
+            peerVersion = itemView.findViewById(R.id.peer_version);
+            peerSubVersion = itemView.findViewById(R.id.peer_subversion);
+            peerServices = itemView.findViewById(R.id.peer_services);
+            peerLatency = itemView.findViewById(R.id.peer_latency);
+            peerStatus = itemView.findViewById(R.id.peer_status);
+            peerLastSeen = itemView.findViewById(R.id.peer_last_seen);
+        }
+        
+        public void bind(PeerManager.PeerInfo peer, SimpleDateFormat dateFormat) {
+            peerIp.setText(peer.ip);
+            peerPort.setText(":" + peer.port);
+            peerVersion.setText("Version: " + (peer.version != null ? peer.version : "Unknown"));
+            peerSubVersion.setText("Sub-version: " + (peer.subVersion != null ? peer.subVersion : "Unknown"));
+            peerServices.setText("Services: " + formatServices(peer.services));
+            peerLatency.setText("Latency: " + (peer.latency > 0 ? peer.latency + "ms" : "Unknown"));
+            peerStatus.setText(peer.status);
+            peerLastSeen.setText("Last seen: " + dateFormat.format(new Date(peer.lastSeen)));
+            
+            // Set status with colored text only (no background)
+            peerStatus.setText(peer.status);
+            
+            // Set text color based on status
+            int statusColor = Color.GRAY;
+            switch (peer.status) {
+                case "Online":
+                    statusColor = Color.GREEN;
+                    break;
+                case "Discovered":
+                    statusColor = Color.YELLOW;
+                    break;
+                case "Offline":
+                    statusColor = Color.RED;
+                    break;
+            }
+            peerStatus.setTextColor(statusColor);
+        }
+        
+        private String formatServices(String services) {
+            if (services == null || services.equals("Unknown")) return "Unknown";
+            
+            try {
+                long servicesLong = Long.parseLong(services);
+                StringBuilder result = new StringBuilder();
+                if ((servicesLong & 1) != 0) result.append("NETWORK ");
+                if ((servicesLong & 2) != 0) result.append("GETUTXO ");
+                if ((servicesLong & 4) != 0) result.append("BLOOM ");
+                if ((servicesLong & 8) != 0) result.append("WITNESS ");
+                if ((servicesLong & 16) != 0) result.append("XTHIN ");
+                if ((servicesLong & 32) != 0) result.append("COMPACT_FILTERS ");
+                if ((servicesLong & 64) != 0) result.append("NETWORK_LIMITED ");
+                
+                if (result.length() == 0) {
+                    return "NONE";
+                }
+                
+                return result.toString().trim();
+            } catch (NumberFormatException e) {
+                return services; // Return the original string if it's not a number
+            }
         }
     }
 }

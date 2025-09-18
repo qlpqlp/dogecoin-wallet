@@ -76,6 +76,9 @@ public class BootstrapReceiver extends BroadcastReceiver {
             // make sure there is always a blockchain sync scheduled
             StartBlockchainService.schedule(application, true);
 
+            // make sure recurring payments service is scheduled
+            RecurringPaymentsService.schedule(application);
+
             // if the app hasn't been used for a while and contains coins, maybe show reminder
             maybeShowInactivityNotification(application);
         } else if (ACTION_DISMISS.equals(action)) {

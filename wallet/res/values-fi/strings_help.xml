@@ -1,118 +1,118 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			Näytön vasemmassa yläkulmassa on näkyvillä saldosi Bitcoineina ja yhtenä valittuna kansainvälisenä valuuttana.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			Näytön vasemmassa yläkulmassa on näkyvillä saldosi Dogecoineina ja yhtenä valittuna kansainvälisenä valuuttana.
 			Napauta mennäksesi kansainvälisten valuuttojen listaan, ja napauta yhtä valuutoista valitaksesi sen oletukseksi.
-		</p>
-		<p>
-			QR-koodi oikealla yläreunassa sisältää tämänhetkisen bitcoin-osoitteesi ja sitä voidaan käyttää maksajan skannattavaksi.
+		&lt;/p&gt;
+		&lt;p&gt;
+			QR-koodi oikealla yläreunassa sisältää tämänhetkisen dogecoin-osoitteesi ja sitä voidaan käyttää maksajan skannattavaksi.
 			Napauta QR-koodia nähdäksesi siitä suuremman version.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Näytön alaosa sisältää listan rahansiirroistasi.
 			Se on aluksi tyhjä ja alkaa täyttyä, kun lähetät ja vastaanotat maksuja.
 			Vastaanotetut rahansiirrot ovat merkitty vihreällä ja lähetetyt punaisella värillä.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Voit lähettää tai pyytää kolikoita napauttamalla painikkeita toimintapalkissa.
 			Asetusvalikossa on enemmän valintoja saatavilla.
-		</p>
-	]]></string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
+		&lt;/p&gt;
+	</string>
+<string name="help_request_coins">
+
+		&lt;p&gt;
 			Käyttämällä tätä ikkunaa voit pyytää kolikoita maksajalta.
-			Maksajalla tulisi olla jo Bitcoin-lompakko asennettuna.
-		</p>
-		<p>
-			Aluksi voit syöttää määrän Bitcoineina jonka haluat pyytää.
-		</p>
-		<p>
+			Maksajalla tulisi olla jo Dogecoin-lompakko asennettuna.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Aluksi voit syöttää määrän Dogecoineina jonka haluat pyytää.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Seuraavaksi voit joko skannauttaa QR-koodisi maksajalla,
 			tai voit lähettää pyyntösi etäällä olevalle henkilölle jakamispainikkeen avulla toimintopalkissa.
 			Mikäli molemmissa laitteissa on NFC käytössä, voit myös koskettaa puhelimellasi toista puhelinta.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Pyyntökäytännön ollessa mikä tahansa, maksajalle esitetään ikkuna kolikoiden lähettämistä varten, jossa kaikki kentät ovat esitäytetyt.
 			Mikäli maksaja suostuu tähän, hän voi suorittaa maksun helposti.
-		</p>
-	]]></string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
+		&lt;/p&gt;
+	</string>
+<string name="help_send_coins">
+
+		&lt;p&gt;
 			Olet käynnistänyt kolikoiden lähetysprosessin.
-		</p>
-		<p>
-			Syötä aluksi Bitcoin-osoite, johon maksetaan.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Syötä aluksi Dogecoin-osoite, johon maksetaan.
 			Osoite täyttyy automaattisesti jo tunnetuista osoitteista osoitekirjassasi.
 			Voit myös skannata vastaanottajan esittämän QR-koodin painamalla kameranäppäintä.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Seuraavaksi syötä määrä, jonka haluat maksaa.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Viimeiseksi syötä maksamiseen tarkoitettu PIN-koodi, mikäli se on asetettu aiemmin.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Voit luoda maksun ollessasi offline-tilassa.
-			Se lähtetään seuraavassa Bitcoin-lompakon käynnistyksen yhteydessä.
+			Se lähtetään seuraavassa Dogecoin-lompakon käynnistyksen yhteydessä.
 			Jos haluat maksun käsiteltäväksi mahdollisimman nopeasti, varmista, että olet hyvässä yhteydessä (esim. WLAN).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Huomioi:
 			Maksut ovat peruuttamattomia!
 			Tarkista aina vastaanotto-osoite!.
-		</p>
-	]]></string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Tärkeitä turvallisuusohjeita:</b>
-		</p>
-		<p>
-			Bitcoinit on tallennettu laitteeseesi.
-			<b>Jos kadotat sen, menetät Bitcoinisi.</b>
-		</p>
-		<p>
-			Tämä tarkoittaa, että sinun on <b>varmuuskopioitava lompakkosi</b>!
+		&lt;/p&gt;
+	</string>
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Tärkeitä turvallisuusohjeita:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Dogecoinit on tallennettu laitteeseesi.
+			&lt;b&gt;Jos kadotat sen, menetät Dogecoinisi.&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Tämä tarkoittaa, että sinun on &lt;b&gt;varmuuskopioitava lompakkosi&lt;/b&gt;!
 			Käytä ennemmin sovelluksen omaa varmuuskopiointia tätä varten kuin kolmannen osapuolen ohjelmistoja.
 			Pidä varmuuskopioisi turvassa ja muista salasanasi.
-		</p>
-		<p>
-			<b>Ennen sovelluksen poistoa</b> (tai sovellustietojen/laitteen nollausta), <b>siirrä Bitcoinisi muuhun lompakkoon</b>.
-			Jäljelle jääneet Bitcoinit katoavat.
-		</p>
-		<p>
-			<b>Maksut ovat peruuttamattomia</b>.
-			Jos lähetät Bitcoinisi tyhjyyteen, ei ole juuri mitään mahdollisuutta saada niitä takaisin.
-		</p>
-		<p>
-			<b>Pidä laitteesi turvassa!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Ennen sovelluksen poistoa&lt;/b&gt; (tai sovellustietojen/laitteen nollausta), &lt;b&gt;siirrä Dogecoinisi muuhun lompakkoon&lt;/b&gt;.
+			Jäljelle jääneet Dogecoinit katoavat.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Maksut ovat peruuttamattomia&lt;/b&gt;.
+			Jos lähetät Dogecoinisi tyhjyyteen, ei ole juuri mitään mahdollisuutta saada niitä takaisin.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Pidä laitteesi turvassa!&lt;/b&gt;
 			Älä anna root-oikeuksia laitetteellesi.
 			Asenna vain sovelluksia joihin luotat täysin.
 			Haitalliset ohjelmat voivat yrittää varastaa lompakkosi.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Pidä riskit pieninä!
-			<b>Säilytä vain kohtuullista määrää</b> päivän käyttöä varten.
-		</p>
-	]]></string>
-  <string name="help_technical_notes">
-<![CDATA[
-		<p>
-			<b>Teknisiä tietoja:</b>
-		</p>
-		<p>
-			Bitcoin-lompakko on SPV/kevytlompakko, joka seuraa suurinta ketjua enimmällä vahvistustyöllä (joskus myös kutsutaan nimellä \"pisin ketju\", \"voittava ketju\" tai \"Bitcoin block chain\").
+			&lt;b&gt;Säilytä vain kohtuullista määrää&lt;/b&gt; päivän käyttöä varten.
+		&lt;/p&gt;
+	</string>
+<string name="help_technical_notes">
+
+		&lt;p&gt;
+			&lt;b&gt;Teknisiä tietoja:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Dogecoin-lompakko on SPV/kevytlompakko, joka seuraa suurinta ketjua enimmällä vahvistustyöllä (joskus myös kutsutaan nimellä \"pisin ketju\", \"voittava ketju\" tai \"Dogecoin block chain\").
 			Vastaanotat ainoastaan saapuvia rahansiirtoja ja sinulla on mahdollisuus maksaa kyseisessä ketjussa.
-			Mitään takuuta ei voida antaa Bitcoineista pienemmissä ketjuissa, jotka ovat ketjuja vähemmällä vahvistustyöllä.
-		</p>
-		<p>
+			Mitään takuuta ei voida antaa Dogecoineista pienemmissä ketjuissa, jotka ovat ketjuja vähemmällä vahvistustyöllä.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Aiemmin pienimmät ketjut ovat aina muuttuneet turhiksi erittäin pian.
-			Jos haluat seurata pienempää ketjua kaikesta huolimatta, sinua neuvotaan käyttämään \"luotettu vertainen\"-ominaisuutta yhdistääksesi ainoastaan bitcoind-implementaatioon joka pakottaa halutun ketjun.
+			Jos haluat seurata pienempää ketjua kaikesta huolimatta, sinua neuvotaan käyttämään \"luotettu vertainen\"-ominaisuutta yhdistääksesi ainoastaan dogecoind-implementaatioon joka pakottaa halutun ketjun.
 			Jos verkko lompakkosi ja luotetun vertaisen välillä ei ole luotettava, käytä VPN:aa varmentaaksesi yhteyden.
-		</p>
-	]]></string>
+		&lt;/p&gt;
+	</string>
 </resources>

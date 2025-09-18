@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_level1">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@color/bg_level2"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recurring_payments_activity_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant" />
+
+        <Button
+            android:id="@+id/btn_add_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/recurring_payments_add_new"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/ic_settings_white_24dp"
+            android:drawablePadding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            style="@style/My.Dialog.Button" />
+
+    </LinearLayout>
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/layout_empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_settings_white_24dp"
+            android:alpha="0.5"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recurring_payments_no_payments"
+            android:textSize="16sp"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:alpha="0.7"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <!-- Payments List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_payments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

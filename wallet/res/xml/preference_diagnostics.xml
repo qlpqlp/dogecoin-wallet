@@ -2,12 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="extended_public_key"
-        android:summary="@string/preferences_extended_public_key_summary"
-        android:title="@string/preferences_extended_public_key_title" />
-    <Preference
-        android:key="initiate_reset"
-        android:summary="@string/preferences_initiate_reset_summary"
-        android:title="@string/preferences_initiate_reset_title" />
+    <!-- These options have been moved to the main menu -->
+    <!-- Extended Public Key and Reset Blockchain are now separate menu items -->
+    
 </PreferenceScreen>

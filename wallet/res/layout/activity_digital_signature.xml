@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_level1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/digital_signature_activity_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Tab Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btn_sign_text"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Sign Text"
+                android:textSize="12sp"
+                android:drawableTop="@drawable/ic_text_white_24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:layout_marginEnd="4dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_sign_file"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Sign File"
+                android:textSize="12sp"
+                android:drawableTop="@drawable/ic_file_white_24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_verify"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Verify"
+                android:textSize="12sp"
+                android:drawableTop="@drawable/ic_verify_white_24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:layout_marginStart="4dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <!-- Sign Text Panel -->
+        <LinearLayout
+            android:id="@+id/panel_sign_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="@drawable/modal_background_modern"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/digital_signature_enter_text"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/edit_text_to_sign"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:hint="Enter text to sign..."
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_generate_signature"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Generate Signature"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_signature_white_24dp"
+                android:drawablePadding="8dp"
+                android:layout_marginTop="16dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <!-- Sign File Panel -->
+        <LinearLayout
+            android:id="@+id/panel_sign_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/modal_background_modern"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/digital_signature_select_file"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btn_select_file"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Select File"
+                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_file_white_24dp"
+                    android:drawablePadding="8dp"
+                    android:layout_marginEnd="8dp"
+                    style="@style/My.Dialog.Button" />
+
+                <Button
+                    android:id="@+id/btn_take_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Take Photo"
+                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_camera_white_24dp"
+                    android:drawablePadding="8dp"
+                    android:layout_marginStart="8dp"
+                    style="@style/My.Dialog.Button" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/text_selected_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No file selected"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btn_sign_selected_file"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Sign Selected File"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_signature_white_24dp"
+                android:drawablePadding="8dp"
+                android:enabled="false"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <!-- Verify Signature Panel -->
+        <LinearLayout
+            android:id="@+id/panel_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/modal_background_modern"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/digital_signature_enter_original_text"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/edit_original_text"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:hint="Enter original text..."
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/digital_signature_enter_signature"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/edit_signature"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:hint="Enter signature..."
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/digital_signature_enter_address"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/edit_verification_address"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:hint="Enter Dogecoin address..."
+                android:inputType="text"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btn_verify_signature"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Verify Signature"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_verify_white_24dp"
+                android:drawablePadding="8dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <!-- Results Panel -->
+        <LinearLayout
+            android:id="@+id/panel_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/modal_background_modern"
+            android:padding="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Results:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/text_signed_text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signed text:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_signed_text_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:textIsSelectable="true"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_file_hash_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="File Hash (SHA256):"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_file_hash_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:textIsSelectable="true"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signature:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_signature_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:textIsSelectable="true"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Doge Address:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_address_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:textIsSelectable="true"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_copy_signature"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Copy"
+                    android:textSize="12sp"
+                    android:drawableStart="@drawable/ic_copy_white_24dp"
+                    android:drawablePadding="4dp"
+                    android:layout_marginEnd="8dp"
+                    style="@style/My.Dialog.Button" />
+
+                <Button
+                    android:id="@+id/btn_share_signature"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Share"
+                    android:textSize="12sp"
+                    android:drawableStart="@drawable/ic_share_white_24dp"
+                    android:drawablePadding="4dp"
+                    android:layout_marginStart="8dp"
+                    style="@style/My.Dialog.Button" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_clear_results"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/digital_signature_clear"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_clear_white_24dp"
+                android:drawablePadding="8dp"
+                android:layout_marginTop="16dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

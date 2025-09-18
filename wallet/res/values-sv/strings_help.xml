@@ -1,102 +1,102 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			Den övre halvan av skärmen visar ditt saldo i Bitcoin och en vald valuta.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			Den övre halvan av skärmen visar ditt saldo i Dogecoin och en vald valuta.
 			Klicka för att gå till listan över valutor, och klicka på en valuta för att sätta den som standard.
-		</p>
-		<p>
-			QR-koden till höger innehåller din bitcoin-adress och kan användas för att en annan part ska skanna den.
+		&lt;/p&gt;
+		&lt;p&gt;
+			QR-koden till höger innehåller din dogecoin-adress och kan användas för att en annan part ska skanna den.
 			Klicka på QR-koden för att få en större version av den.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Botten av skärmen täcks av din transaktionslista, vilken är tom från början.
 			Väntande transaktioner är utgråade tills de är bekräftade.
 			Klicka på en post för att lägga till avsändaren eller mottagaren i adressboken.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Du kan skicka en myntbegäran genom att klicka på knapparna i åtgärdsfältet.
 			Fler alternativ finns under alternativmenyn.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
-			Med denna dialog kan du ta emot bitcoin från någon annan (som redan har Bitcoin Wallet installerad på sin telefon).
-		</p>
-		<p>
-			Först anger du hur många bitcoin du vill att de skickar.
-		</p>
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
+			Med denna dialog kan du ta emot dogecoin från någon annan (som redan har Dogecoin Wallet installerad på sin telefon).
+		&lt;/p&gt;
+		&lt;p&gt;
+			Först anger du hur många dogecoin du vill att de skickar.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Sedan kan den andra personen scanna QR-koden.
-			Eller så använder du \"Dela\" knappen i aktivitetslistan för att skicka din uppmaning att skicka bitcoin.
-			Den andra personen behöver sedan bara klicka på den Bitcoin-URL du skickat.
-		</p>
-		<p>
+			Eller så använder du \"Dela\" knappen i aktivitetslistan för att skicka din uppmaning att skicka dogecoin.
+			Den andra personen behöver sedan bara klicka på den Dogecoin-URL du skickat.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Sedan kommer den andra personen att få se en dialogruta där alla fält redan är ifyllda.
-			Om han eller hon sedan accapterar transaktionen så skickas bitcoin till dig.
-		</p>
-	]]>
+			Om han eller hon sedan accapterar transaktionen så skickas dogecoin till dig.
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
-			Du har påbörjat skickandet av bitcoin.
-			Du kom hit från huvudskärmen eller genom att klicka på en Bitcoin-URL i din webbläsare.
-		</p>
-		<p>
-			Ange först vilken Bitcoin adress du vill skicka till.
+<string name="help_send_coins">
+
+		&lt;p&gt;
+			Du har påbörjat skickandet av dogecoin.
+			Du kom hit från huvudskärmen eller genom att klicka på en Dogecoin-URL i din webbläsare.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Ange först vilken Dogecoin adress du vill skicka till.
 			Adressen kan automatiskt fyllas i om den börjar med någon av adresserna i din adressbok.
-			Du kan också scanna en QR-kod innehållande en Bitcoin-adress, genom att trycka på QR knappen i aktivitetslistan.
-		</p>
-		<p>
-			Sedan kan du se hur många bitcoin du för tillfället kan skicka.
+			Du kan också scanna en QR-kod innehållande en Dogecoin-adress, genom att trycka på QR knappen i aktivitetslistan.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Sedan kan du se hur många dogecoin du för tillfället kan skicka.
 			Om det antalet skiljer sig från det som visas på huvudskärmen, så beror det på hittills obekräftade överföringar som du ännu inte får använda.
-		</p>
-		<p>
-			Slutligen anger du hur många bitcoin du skicka.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
+			Slutligen anger du hur många dogecoin du skicka.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Du kan skapa en transaktion även om du inte är online.
-			Den kommer att skickas nästa gång Bitcoin Wallet startas.
+			Den kommer att skickas nästa gång Dogecoin Wallet startas.
 			Om du vill att en transaktion ska hanteras så fort som möjligt, se till att ha bra uppkoppling till internet (exempelvis ett WLAN).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Notera:
 			Transaktioner kan inte stoppas!
 			Kontrollera alltid adressen du skickar till.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Några ord om säkerhet och bitcoin:</n>
-		</p>
-		<p>
-			Dina bitcoin i Bitcoin Wallet sparas på din Android telefon.
-			<b>Om du tappar bort din telefon, så tappar du bort dina bitcoin.</b>
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Några ord om säkerhet och dogecoin:&lt;/n&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Dina dogecoin i Dogecoin Wallet sparas på din Android telefon.
+			&lt;b&gt;Om du tappar bort din telefon, så tappar du bort dina dogecoin.&lt;/b&gt;
 			Precis som pengar i din vanliga plånbok.
-		</p>
-		<p>
-			<b>Innan du avinstallerar Bitcoin Wallet</b> (eller tar bort appens data/rensar din telefon), <b>skicka dina bitcoin till en annan wallet</b>.
-			Alla kvarvarande bitcoin kommer att försvinna.
-		</p>
-		<p>
-			<b>Transaktioner kan inte stoppas</b>.
-			Efter att du skickat bitcoin finns det inget sätt att få dem tillbaka, annat än om du vet vem mottagaren är, och han/hon skickar dem tillbaka.
-		</p>
-		<p>
-			<b>Se till att skydda din telefon!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Innan du avinstallerar Dogecoin Wallet&lt;/b&gt; (eller tar bort appens data/rensar din telefon), &lt;b&gt;skicka dina dogecoin till en annan wallet&lt;/b&gt;.
+			Alla kvarvarande dogecoin kommer att försvinna.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Transaktioner kan inte stoppas&lt;/b&gt;.
+			Efter att du skickat dogecoin finns det inget sätt att få dem tillbaka, annat än om du vet vem mottagaren är, och han/hon skickar dem tillbaka.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Se till att skydda din telefon!&lt;/b&gt;
 			Installera endast appar du helt litar på.
 			En elak app kan försöka stjäla din wallet.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Utsätt dig inte för onödig risk!
-			<b>Använd bara Bitcoin Wallet med mindre belopp</b> för daglig användning.
-		</p>
-	]]>
+			&lt;b&gt;Använd bara Dogecoin Wallet med mindre belopp&lt;/b&gt; för daglig användning.
+		&lt;/p&gt;
+	
 	</string>
 </resources>

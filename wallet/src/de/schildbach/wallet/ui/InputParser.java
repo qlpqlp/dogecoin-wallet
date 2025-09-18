@@ -100,7 +100,7 @@ public abstract class InputParser {
                 } catch (final BitcoinURIParseException x) {
                     log.info("got invalid dogecoin uri: '" + input + "'", x);
 
-                    error(R.string.input_parser_invalid_bitcoin_uri, input);
+                    error(R.string.input_parser_invalid_dogecoin_uri, input);
                 }
             } else if (PATTERN_TRANSACTION.matcher(input).matches()) {
                 try {

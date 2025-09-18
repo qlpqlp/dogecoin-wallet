@@ -1,122 +1,122 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			La partie supérieure gauche de l’écran affiche votre solde en bitcoins ainsi qu’une monnaie nationale choisie.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			La partie supérieure gauche de l’écran affiche votre solde en dogecoins ainsi qu’une monnaie nationale choisie.
 			Touchez-la pour atteindre la liste des monnaies nationales et touchez l’une d’elles pour la choisir par défaut.
-		</p>
-		<p>
-			Le code QR en haut à droite contient votre adresse Bitcoin actuelle et peut être balayé par un payeur.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Le code QR en haut à droite contient votre adresse Dogecoin actuelle et peut être balayé par un payeur.
 			Touchez le code QR pour l’agrandir.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Le bas de l’écran est couvert par votre liste de transactions.
 			Elle est vide initialement et se remplira alors que recevez et envoyez des paiements.
 			Les paiements reçus seront marqués en vert et les paiements envoyés en rouge.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Vous pouvez envoyer ou recevoir des pièces en touchant les boutons dans la barre de menus.
 			Plus d’options sont offertes dans le menu des options.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
 			Grâce à cette fenêtre de dialogue, vous pouvez demander des pièces à un payeur.
-		</p>
-		<p>
-			Vous pouvez d’abord un montant de bitcoins à demander.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
+			Vous pouvez d’abord un montant de dogecoins à demander.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Ensuite, le payeur devra balayé le code QR généré.
 			Ou vous pourrez envoyer votre demande à une personne éloignée grâce au bouton Partager de la barre de menus.
 			Si la CCP (NFC) est activée sur les deux téléphones, vous pouvez aussi les faire se toucher.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Dans les deux cas, une fenêtre d’envoi de pièces sera présentée préremplie au payeur.
 			Si le payeur accepte, il ou elle pourra facilement envoyer le paiement.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
-			Vous avez amorcé un processus d’envoi de bitcoins.
-		</p>
-		<p>
-			Saisissez d’abord l’adresse Bitcoin de destination.
+<string name="help_send_coins">
+
+		&lt;p&gt;
+			Vous avez amorcé un processus d’envoi de dogecoins.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Saisissez d’abord l’adresse Dogecoin de destination.
 			L’adresse sera saisie automatiquement pour les entrées connues de votre carnet d’adresses.
 			Vous pouvez aussi balayer un code QR présenté par le bénéficiaire du paiement en touchant le bouton de l’appareil photo.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Saisissez ensuite le montant à payer.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Enfin, le NIP de dépense doit être saisi s’il a été défini au préalable.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Vous pouvez saisir un paiement alors que vous êtes hors ligne.
-			Il sera envoyé lors du prochain démarrage de Bitcoin Wallet.
+			Il sera envoyé lors du prochain démarrage de Dogecoin Wallet.
 			Pour que le paiement soit traité aussi rapidement que possible, assurez-vous d’être bien connecté (c.-à-d. sur un WLAN).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Note :
 			Les paiements sont irréversibles !
 			Vérifiez toujours l’adresse de destination.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Notes de sécurité importantes :</b>
-		</p>
-		<p>
-			Les bitcoins sont stockés sur l’appareil.
-			<b>Si vous le perdez, vous perdrez vos bitcoins.</b>
-		</p>
-		<p>
-			Cela signifie que vous devez <b>sauvegarder votre porte-monnaie</b> !
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Notes de sécurité importantes :&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Les dogecoins sont stockés sur l’appareil.
+			&lt;b&gt;Si vous le perdez, vous perdrez vos dogecoins.&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Cela signifie que vous devez &lt;b&gt;sauvegarder votre porte-monnaie&lt;/b&gt; !
 			Utilisez la fonction de sauvegarde de l’appli plutôt qu’une appli de sauvegarde tierce.
 			Conservez votre sauvegarde en lieu sûr et souvenez-vous du mot de passe.
-		</p>
-		<p>
-			<b>Avant de désinstaller l’appli</b> (ou d’en effacer les données ou de purger les données de votre appareil), <b>transférez vos bitcoins vers un autre porte-monnaie</b>.
-			Les bitcoins restants seront perdus.
-		</p>
-		<p>
-			<b>Les paiements sont irréversibles</b>.
-			Si vous envoyez vos bitcoins dans le vide, il n’y a presque aucun moyen de les récupérer.
-		</p>
-		<p>
-			<b>Assurez la sécurité de votre appareil mobile !</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Avant de désinstaller l’appli&lt;/b&gt; (ou d’en effacer les données ou de purger les données de votre appareil), &lt;b&gt;transférez vos dogecoins vers un autre porte-monnaie&lt;/b&gt;.
+			Les dogecoins restants seront perdus.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Les paiements sont irréversibles&lt;/b&gt;.
+			Si vous envoyez vos dogecoins dans le vide, il n’y a presque aucun moyen de les récupérer.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Assurez la sécurité de votre appareil mobile !&lt;/b&gt;
 			Ne prenez pas le contrôle de la racine (root) de votre appareil.
 			N’installez que des applications de confiance.
 			Des applications malveillantes pourraient essayer de voler votre porte-monnaie.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Minimisez les risques !
-			<b>Ne gardez qu’un montant raisonnable,</b> pour la journée.
-		</p>
-	]]>
+			&lt;b&gt;Ne gardez qu’un montant raisonnable,&lt;/b&gt; pour la journée.
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_technical_notes">
-<![CDATA[
-		<p>
-			<b>Notes techniques :</b>
-		</p>
-		<p>
-			En tant que porte-monnaie VPS (vérification de paiement simplifiée), léger, le porte-monnaie Bitcoin Wallet suit la chaîne de la plus grande preuve de travail (parfois aussi appelé « la chaîne la plus longue », « la chaîne gagnante », ou la « chaîne de blocs Bitcoin »).
+<string name="help_technical_notes">
+
+		&lt;p&gt;
+			&lt;b&gt;Notes techniques :&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			En tant que porte-monnaie VPS (vérification de paiement simplifiée), léger, le porte-monnaie Dogecoin Wallet suit la chaîne de la plus grande preuve de travail (parfois aussi appelé « la chaîne la plus longue », « la chaîne gagnante », ou la « chaîne de blocs Dogecoin »).
 			Vous ne pourrez recevoir des paiements entrants et ne pourrez payer que sur cette chaîne.
-			Il ne peut y avoir aucune garantie sur les bitcoins des chaînes minoritaires, c’est-à-dire les chaînes avec moins de preuve de travail.
-		</p>
-		<p>
+			Il ne peut y avoir aucune garantie sur les dogecoins des chaînes minoritaires, c’est-à-dire les chaînes avec moins de preuve de travail.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Par le passé, les chaînes minoritaires ont toujours très rapidement perdu toute pertinence.
-			Si vous souhaitez quand même suivre une chaîne minoritaire, il vous est conseillé d’utiliser la fonction « Pair de confiance » pour vous connecter exclusivement à une instance de bitcoind qui utilise votre chaîne désirée.
+			Si vous souhaitez quand même suivre une chaîne minoritaire, il vous est conseillé d’utiliser la fonction « Pair de confiance » pour vous connecter exclusivement à une instance de dogecoind qui utilise votre chaîne désirée.
 			Si le réseau entre votre porte-monnaie et le pair de confiance n’est pas digne de confiance, utilisez un RPV pour authentifier cette connexion.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
 </resources>

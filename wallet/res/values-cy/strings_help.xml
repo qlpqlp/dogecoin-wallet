@@ -1,123 +1,123 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			Mae rhan dde uchaf y sgrin yn dangos dy falans mewn Bitcoin ac arian un wlad a ddewisir.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			Mae rhan dde uchaf y sgrin yn dangos dy falans mewn Dogecoin ac arian un wlad a ddewisir.
 			Tapia i fynd i\'r rhestr o arian gwledydd a thapia ar un ohonynt i\'w osod fel y rhagosodiad.
-		</p>
-		<p>
-			Mae\'r cod QR yn y dde uchaf yn cynnwys dy gyfeiriad Bitcoin cyfredol a gellir ei ddefnyddio i\'w sganio gan dalwr.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Mae\'r cod QR yn y dde uchaf yn cynnwys dy gyfeiriad Dogecoin cyfredol a gellir ei ddefnyddio i\'w sganio gan dalwr.
 			Tapia ar y cod QR i gael fersiwn mwy ohono.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Mae dy restr trafodion ar draws gaelod y sgrin.
 			Mae\'n wag i ddechrau a bydd yn llenwi wrth i ti dderbyn ac anfon taliadau.
 			Caiff taliadau a dderbyniwyd eu nodi mewn gwyrdd a thaliadau a anfonwyd mewn coch.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Gellir anfon neu wneud cais am Fitcoin trwy tapio\'r botymau yn y bar gweithredoedd.
 			Mae rhagor o opsiynau ar gael yn y dewislen opsiynau.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
     </string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
 			Gan ddefnyddio\'r deialog hwn, gellir wneud cais am Fitcoin gan dalwr.
-			Rhaid bod y talwr eisoes hefyd wedi gosod waled Bitcoin.
-		</p>
-		<p>
+			Rhaid bod y talwr eisoes hefyd wedi gosod waled Dogecoin.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Yn gyntaf, gellir rhoi swm o Fitcoin i wneud cais amdano.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Yna, rwyt naill ai\'n cael y talwr i sganio\'r cod QR a gynhyrchwyd.
 			Neu, gellir anfon dy gais at berson gan ddefnyddio\'r botwm rhannu yn y bar gweithredoedd.
 			Os yw\'r ddwy ddyfais gydag NFC wedi\'i alluogi, gellir hefyd eu tapio at eu gilydd.
-		</p>
-		<p>
-			Pa bynnag ffordd, caiff y talwr weld deialog i anfon Bitcoin gyda\'r holl meysydd ffurflen wedi\'u cwblhau.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Pa bynnag ffordd, caiff y talwr weld deialog i anfon Dogecoin gyda\'r holl meysydd ffurflen wedi\'u cwblhau.
 			Os yw\'r talwr yn cytuno, caiff wneud y taliad yn hawdd.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
     </string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
-			Rwyt wedi dechrau\'r broses o anfon Bitcoin.
-		</p>
-		<p>
-			Yn gyntaf, rho\'r cyfeiriad Bitcoin i\'w dalu iddo.
+<string name="help_send_coins">
+
+		&lt;p&gt;
+			Rwyt wedi dechrau\'r broses o anfon Dogecoin.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Yn gyntaf, rho\'r cyfeiriad Dogecoin i\'w dalu iddo.
 			Bydd y cyfeiriad yn awto-gwblhau o gofnodion eisoes yn dy lyfr cyfeiriadau.
 			Gellir hefyd sganio cod QR a gyflwynwyd gan y talai gan bwyso\'r botwm camera.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Nesaf, symda i\'r swm i\'w dalu.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Yn olaf, rhaid rhoi\'r PIN gwariant os oes un eisoes wedi\'i osod.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Gellir roi gorchymun taliad heb fod ar-lein.
-			Caiff ei anfon y tro nesaf bydd Waled Bitcoin yn ail-ddechrau.
+			Caiff ei anfon y tro nesaf bydd Waled Dogecoin yn ail-ddechrau.
 			Os wyt eisiau i daliad cael ei brosesu mor gyflym â phosib, gwiria fod gennyt gysylltiad da (e.e. WLAN).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Noder:
 			Ni ellir dad-wneud taliadau!
 			Gwiria\'r cyfeiriadau derbyn yn ofalus.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
     </string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Nodiadau diogelwch pwysig:</b>
-		</p>
-		<p>
-			Mae Bitcoin yn cael eu cadw ar y ddyfais.
-			<b>Os wyt ti\'n ei golli, mi fyddi\'n colli dy Fitcoin.</b>
-		</p>
-		<p>
-			Golygir hyn bod angen <b>cadw copi wrth gefn o dy waled</b>!
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Nodiadau diogelwch pwysig:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Mae Dogecoin yn cael eu cadw ar y ddyfais.
+			&lt;b&gt;Os wyt ti\'n ei golli, mi fyddi\'n colli dy Fitcoin.&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Golygir hyn bod angen &lt;b&gt;cadw copi wrth gefn o dy waled&lt;/b&gt;!
 			Defnyddia\'r cyfleuster o fewn yr ap i wneud hyn, yn hytrach nag ap trydydd parti.
 			Cadwa dy gopi wrth gefn yn ddiogel a chofia dy gyfrinair.
-		</p>
-		<p>
-			<b>Cyn dadosod</b> (neu glirio data apiau/ailosod dy ddyfais), <b>trosglwydda dy Fitcoin i waled arall</b>.
-			Caiff Bitcoin sy\'n weddill eu colli.
-		</p>
-		<p>
-			<b>Ni ellir dad-wneud taliadau</b>.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Cyn dadosod&lt;/b&gt; (neu glirio data apiau/ailosod dy ddyfais), &lt;b&gt;trosglwydda dy Fitcoin i waled arall&lt;/b&gt;.
+			Caiff Dogecoin sy\'n weddill eu colli.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Ni ellir dad-wneud taliadau&lt;/b&gt;.
 			Os wyt yn anfon dy Fitcoin i\'r gwagle, does bron dim modd o\'u cael nhw nôl.
-		</p>
-		<p>
-			<b>Cadwa dy ddyfais yn ddiogel!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Cadwa dy ddyfais yn ddiogel!&lt;/b&gt;
 			Paid â gwreiddio dy ddyfais.
 			Paid â gosod apiau nad wyt yn ymddiried ynddynt.
 			Gall apiau maleisus fod yn ceisio dwyn dy waled.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Cadwa\'r risg yn isel!
-			<b>Cadwa dim ond swm ymarferol</b> ar gyfer defnydd diwrnod.
-		</p>
-	]]>
+			&lt;b&gt;Cadwa dim ond swm ymarferol&lt;/b&gt; ar gyfer defnydd diwrnod.
+		&lt;/p&gt;
+	
     </string>
-  <string name="help_technical_notes">
-<![CDATA[
-        <p>
-            <b>Nodiadau technegol:</b>
-        </p>
-        <p>
-            Fel waled ysgafn/SPV, dilyna Bitcoin Wallet y gadwyn prawf-o-waith mwyaf (a elwir hefyd weithiau y \"gadwyn hiraf\", y \"gadwyn enillgar\", neu\'r \"gadwyn bloc Bitcoin\").
+<string name="help_technical_notes">
+
+        &lt;p&gt;
+            &lt;b&gt;Nodiadau technegol:&lt;/b&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            Fel waled ysgafn/SPV, dilyna Dogecoin Wallet y gadwyn prawf-o-waith mwyaf (a elwir hefyd weithiau y \"gadwyn hiraf\", y \"gadwyn enillgar\", neu\'r \"gadwyn bloc Dogecoin\").
             Byddi ond yn derbyn taliadau a medru gwneud taliadau ar y gadwyn honno.
-            Ni ellir gwarantu Bitcoin ar gadwyni lleiafrifol, hynny yw gyda phrawf-o-waith llai.
-        </p>
-        <p>
+            Ni ellir gwarantu Dogecoin ar gadwyni lleiafrifol, hynny yw gyda phrawf-o-waith llai.
+        &lt;/p&gt;
+        &lt;p&gt;
             Yn y gorffennol, mae cadwyni lleiafrifol wedi dod yn amherthnasol yn gyflym iawn.
-            Os wyt yn dymuno dilyn cadwyn lleiafrifol beth bynnag, fe\'th gynghorir i ddefnyddio\'r nodwedd \"cyfoed dibynadwy\" i gysylltu yn unig gyda gweithrediad bitcoin sy\'n gorfodi\'r gadwyn yn ôl dy ddymuniad.
+            Os wyt yn dymuno dilyn cadwyn lleiafrifol beth bynnag, fe\'th gynghorir i ddefnyddio\'r nodwedd \"cyfoed dibynadwy\" i gysylltu yn unig gyda gweithrediad dogecoin sy\'n gorfodi\'r gadwyn yn ôl dy ddymuniad.
             Os nad oes modd ymddiried yn y rhwydwaith yn cysylltu dy waled â\'r cyfoed dibynadwy, defnyddia VPN i ddilysu\'r cysylltiad.
-        </p>
-    ]]>
+        &lt;/p&gt;
+    
     </string>
 </resources>

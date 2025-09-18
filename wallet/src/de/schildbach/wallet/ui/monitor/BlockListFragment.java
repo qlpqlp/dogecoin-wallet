@@ -43,6 +43,7 @@ import org.bitcoinj.core.StoredBlock;
 import org.bitcoinj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import android.util.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -50,15 +51,14 @@ import java.util.Map;
 /**
  * @author Andreas Schildbach
  */
-public final class BlockListFragment extends Fragment implements BlockListAdapter.OnClickListener,
-        BlockListAdapter.ContextMenuCallback {
+public final class BlockListFragment extends Fragment {
     private AbstractWalletActivity activity;
     private WalletApplication application;
     private Configuration config;
 
     private ViewAnimator viewGroup;
     private RecyclerView recyclerView;
-    private BlockListAdapter adapter;
+    private BlockListCollapsibleAdapter adapter;
 
     private AbstractWalletActivityViewModel walletActivityViewModel;
     private NetworkMonitorViewModel activityViewModel;
@@ -80,17 +80,7 @@ public final class BlockListFragment extends Fragment implements BlockListAdapte
         walletActivityViewModel = new ViewModelProvider(activity).get(AbstractWalletActivityViewModel.class);
         walletActivityViewModel.wallet.observe(this, wallet -> maybeSubmitList());
         activityViewModel = new ViewModelProvider(activity).get(NetworkMonitorViewModel.class);
-        activityViewModel.selectedItem.observe(this, item -> {
-            if (item instanceof Sha256Hash) {
-                final Sha256Hash blockHash = (Sha256Hash) item;
-                adapter.setSelectedBlock(blockHash);
-                final int position = adapter.positionOf(blockHash);
-                if (position != RecyclerView.NO_POSITION)
-                    recyclerView.smoothScrollToPosition(position);
-            } else {
-                adapter.setSelectedBlock(null);
-            }
-        });
+        // Removed block selection functionality for modern adapter
         viewModel = new ViewModelProvider(this).get(BlockListViewModel.class);
         viewModel.blocks.observe(this, blocks -> {
             maybeSubmitList();
@@ -100,7 +90,7 @@ public final class BlockListFragment extends Fragment implements BlockListAdapte
         viewModel.getTransactions().observe(this, transactions -> maybeSubmitList());
         viewModel.getTime().observe(this, time -> maybeSubmitList());
 
-        adapter = new BlockListAdapter(activity, this, this);
+        adapter = new BlockListCollapsibleAdapter(activity, null, null);
     }
 
     @Override
@@ -117,35 +107,19 @@ public final class BlockListFragment extends Fragment implements BlockListAdapte
 
     private void maybeSubmitList() {
         final List<StoredBlock> blocks = viewModel.blocks.getValue();
-        final Wallet wallet = walletActivityViewModel.wallet.getValue();
         if (blocks != null) {
-            final Map<String, AddressBookEntry> addressBook = AddressBookEntry.asMap(viewModel.addressBook.getValue());
-            adapter.submitList(BlockListAdapter.buildListItems(activity, blocks, viewModel.getTime().getValue(),
-                    config.getFormat(), viewModel.getTransactions().getValue(), wallet, addressBook));
+            final java.util.Set<org.bitcoinj.core.Transaction> transactions = viewModel.getTransactions().getValue();
+            final org.bitcoinj.wallet.Wallet wallet = walletActivityViewModel.wallet.getValue();
+            
+            Log.d("BlockListFragment", "Building list with " + blocks.size() + " blocks, " + 
+                  (transactions != null ? transactions.size() : 0) + " transactions, wallet: " + (wallet != null ? "present" : "null"));
+            
+            final List<BlockListCollapsibleAdapter.ListItem> listItems = 
+                BlockListCollapsibleAdapter.buildListItems(activity, blocks, 
+                    viewModel.getTime().getValue(), Constants.LOCAL_FORMAT, 
+                    transactions, wallet, null);
+            adapter.submitList(listItems);
         }
     }
 
-    @Override
-    public void onBlockClick(final View view, final Sha256Hash blockHash) {
-        activityViewModel.selectedItem.setValue(blockHash);
-    }
-
-    @Override
-    public void onInflateBlockContextMenu(final MenuInflater inflater, final Menu menu) {
-        inflater.inflate(R.menu.blocks_context, menu);
-        menu.findItem(R.id.blocks_context_browse).setVisible(Constants.ENABLE_BROWSE);
-    }
-
-    @Override
-    public boolean onClickBlockContextMenuItem(final MenuItem item, final Sha256Hash blockHash) {
-        final int itemId = item.getItemId();
-        if (itemId == R.id.blocks_context_browse) {
-            final Uri blockExplorerUri = Uri.parse(String.format(config.getBlockExplorer(), "block"));
-            log.info("Viewing block {} on {}", blockHash, blockExplorerUri);
-            activity.startExternalDocument(Uri.withAppendedPath(blockExplorerUri, blockHash.toString()));
-            return true;
-        } else {
-            return false;
-        }
-    }
 }

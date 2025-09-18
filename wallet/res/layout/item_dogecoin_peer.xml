@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_list_card"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Peer Address and Status -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/peer_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="192.168.1.1:22556"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network" />
+
+        <View
+            android:id="@+id/peer_status_bullet"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_amber"
+            android:layout_margin="4dp" />
+
+    </LinearLayout>
+
+    <!-- Peer Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+        <!-- Version and Sub Version Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Protocol: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="70015"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Sub: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_sub_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="/Shibetoshi:1.14.9/"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:singleLine="true"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Services Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Services: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_services"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NETWORK &amp; BLOOM"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:singleLine="true"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Synced Blocks and Source Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Synced: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_synced_blocks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4,500,000"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Source: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_source"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DNS"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network" />
+
+        </LinearLayout>
+
+        <!-- Last Seen and Latency Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Last Seen: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_last_seen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2m ago"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Latency: "
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/peer_latency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="150ms (Good)"
+                android:textSize="12sp"
+                android:textColor="@color/fg_on_dark_bg_network" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

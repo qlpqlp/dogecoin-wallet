@@ -37,12 +37,12 @@ import java.util.List;
 /**
  * @author Andreas Schildbach
  */
-public final class PeerListFragment extends Fragment implements PeerListAdapter.OnClickListener {
+public final class PeerListFragment extends Fragment {
     private AbstractWalletActivity activity;
 
     private ViewAnimator viewGroup;
     private RecyclerView recyclerView;
-    private PeerListAdapter adapter;
+    private PeerListCollapsibleAdapter adapter;
 
     private NetworkMonitorViewModel activityViewModel;
     private PeerListViewModel viewModel;
@@ -78,7 +78,7 @@ public final class PeerListFragment extends Fragment implements PeerListAdapter.
         });
         viewModel.getHostnames().observe(this, hostnames -> maybeSubmitList());
 
-        adapter = new PeerListAdapter(activity, this);
+        adapter = new PeerListCollapsibleAdapter();
     }
 
     @Override
@@ -95,11 +95,14 @@ public final class PeerListFragment extends Fragment implements PeerListAdapter.
 
     private void maybeSubmitList() {
         final List<Peer> peers = viewModel.peers.getValue();
-        if (peers != null)
-            adapter.submitList(PeerListAdapter.buildListItems(activity, peers, viewModel.getHostnames().getValue()));
+        if (peers != null && !peers.isEmpty()) {
+            adapter.submitList(PeerListCollapsibleAdapter.buildListItems(activity, peers, viewModel.getHostnames().getValue()));
+        } else {
+            // If no blockchain peers, show a message about impediments or sync status
+            adapter.submitList(PeerListCollapsibleAdapter.buildEmptyListItems(activity));
+        }
     }
 
-    @Override
     public void onPeerClick(final View view, final HostAndPort peerpeerHostAndPort) {
         activityViewModel.selectedItem.setValue(peerpeerHostAndPort);
     }

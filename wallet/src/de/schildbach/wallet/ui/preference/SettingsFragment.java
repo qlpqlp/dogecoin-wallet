@@ -43,6 +43,7 @@ import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.Bluetooth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     private Preference trustedPeerOnlyPreference;
     private Preference ownNamePreference;
     private EditTextPreference bluetoothAddressPreference;
+    private android.preference.CheckBoxPreference biometricPreference;
 
     private static final int BLUETOOTH_ADDRESS_LENGTH = 6 * 2 + 5; // including the colons
     private static final Logger log = LoggerFactory.getLogger(SettingsFragment.class);
@@ -125,12 +127,14 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             removeOrDisablePreference(notificationsPreference);
 
         final Preference batteryOptimizationPreference = findPreference(Configuration.PREFS_KEY_BATTERY_OPTIMIZATION);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            batteryOptimizationPreference.setIntent(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                    .setData(Uri.parse("package:" + application.getPackageName())));
+        if (batteryOptimizationPreference != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                batteryOptimizationPreference.setIntent(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                        .setData(Uri.parse("package:" + application.getPackageName())));
+            }
+            if (batteryOptimizationPreference.getIntent() == null || pm.resolveActivity(batteryOptimizationPreference.getIntent(), 0) == null)
+                removeOrDisablePreference(batteryOptimizationPreference);
         }
-        if (batteryOptimizationPreference.getIntent() == null || pm.resolveActivity(batteryOptimizationPreference.getIntent(), 0) == null)
-            removeOrDisablePreference(batteryOptimizationPreference);
 
         ownNamePreference = findPreference(Configuration.PREFS_KEY_OWN_NAME);
         ownNamePreference.setOnPreferenceChangeListener(this);
@@ -144,6 +148,19 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         bluetoothAddressPreference.getEditText().setFilters(new InputFilter[] { maxLength, allCaps, hex });
         bluetoothAddressPreference.getEditText().addTextChangedListener(colonFormat);
 
+        // Initialize biometric preference
+        biometricPreference = (android.preference.CheckBoxPreference) findPreference("biometric_enabled");
+        if (biometricPreference != null) {
+            // Check if biometric is available
+            if (!BiometricHelper.isBiometricAvailable(activity)) {
+                biometricPreference.setEnabled(false);
+                biometricPreference.setSummary(R.string.biometric_not_available);
+            } else {
+                biometricPreference.setChecked(BiometricHelper.isBiometricEnabled(activity));
+                biometricPreference.setOnPreferenceChangeListener(this);
+            }
+        }
+
         updateTrustedPeer();
         updateOwnName();
         updateBluetoothAddress();
@@ -156,6 +173,9 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         ownNamePreference.setOnPreferenceChangeListener(null);
         trustedPeerOnlyPreference.setOnPreferenceChangeListener(null);
         trustedPeerPreference.setOnPreferenceChangeListener(null);
+        if (biometricPreference != null) {
+            biometricPreference.setOnPreferenceChangeListener(null);
+        }
 
         backgroundThread.getLooper().quit();
 
@@ -172,6 +192,8 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 updateOwnName();
             else if (preference.equals(bluetoothAddressPreference))
                 updateBluetoothAddress();
+            else if (preference.equals(biometricPreference))
+                updateBiometricPreference((Boolean) newValue);
         });
         return true;
     }
@@ -246,6 +268,20 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             }
         } else {
             removeOrDisablePreference(bluetoothAddressPreference);
+        }
+    }
+
+    private void updateBiometricPreference(boolean enabled) {
+        if (enabled) {
+            // Enable biometric authentication
+            BiometricHelper.setBiometricEnabled(activity, true);
+            BiometricHelper.setBiometricSetup(activity, true);
+            android.widget.Toast.makeText(activity, R.string.biometric_enable, android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            // Disable biometric authentication
+            BiometricHelper.setBiometricEnabled(activity, false);
+            BiometricHelper.setBiometricSetup(activity, false);
+            android.widget.Toast.makeText(activity, R.string.biometric_disable, android.widget.Toast.LENGTH_SHORT).show();
         }
     }
 

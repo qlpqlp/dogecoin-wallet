@@ -17,6 +17,7 @@
 
 package de.schildbach.wallet;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -24,6 +25,7 @@ import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.os.Bundle;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -45,6 +47,7 @@ import com.google.common.util.concurrent.SettableFuture;
 import de.schildbach.wallet.service.BlockchainService;
 import de.schildbach.wallet.service.BlockchainState;
 import de.schildbach.wallet.ui.Event;
+import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.Toast;
@@ -83,6 +86,10 @@ public class WalletApplication extends Application {
     public final MutableLiveData<Integer> peerState = new MutableLiveData<>();
     public final MutableLiveData<Integer> totalDiscoveredPeers = new MutableLiveData<>();
     public final MutableLiveData<Event<Void>> walletChanged = new MutableLiveData<>();
+    
+    // Activity lifecycle tracking for biometric authentication
+    private int activityCount = 0;
+    private boolean isAppInBackground = false;
 
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
     private static final String BIP39_WORDLIST_FILENAME = "bip39-wordlist.txt";
@@ -135,6 +142,54 @@ public class WalletApplication extends Application {
         cleanupFiles();
 
         initNotificationManager();
+        
+        // Register activity lifecycle callbacks to track app background/foreground state
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                // No action needed
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                activityCount++;
+                if (isAppInBackground && activityCount == 1) {
+                    // App is coming back to foreground
+                    isAppInBackground = false;
+                }
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                // No action needed
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                // No action needed
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                activityCount--;
+                if (activityCount == 0) {
+                    // App is going to background
+                    isAppInBackground = true;
+                    // Reset biometric authentication when app goes to background
+                    resetBiometricAuthentication();
+                }
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+                // No action needed
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                // No action needed
+            }
+        });
     }
 
     public synchronized Configuration getConfiguration() {
@@ -364,6 +419,22 @@ public class WalletApplication extends Application {
 
     public boolean fullSyncCapable() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && activityManager.getMemoryClass() >= 128;
+    }
+    
+    /**
+     * Check if the app is currently in background
+     */
+    public boolean isAppInBackground() {
+        return isAppInBackground;
+    }
+    
+    /**
+     * Reset biometric authentication when app goes to background
+     */
+    public void resetBiometricAuthentication() {
+        if (BiometricHelper.isBiometricEnabled(this)) {
+            BiometricHelper.setAuthenticated(this, false);
+        }
     }
 
     public static String versionLine(final PackageInfo packageInfo) {

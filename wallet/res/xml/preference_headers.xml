@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+   
     <header
         android:fragment="de.schildbach.wallet.ui.preference.SettingsFragment"
-        android:title="@string/preferences_activity_title" />
+        android:title="@string/preferences_activity_title"
+        android:summary="@string/preferences_activity_summary" />
     <header
-        android:fragment="de.schildbach.wallet.ui.preference.DiagnosticsFragment"
-        android:title="@string/preferences_category_diagnostics" />
+        android:fragment="de.schildbach.wallet.ui.preference.ExchangeRatesPreferenceFragment"
+        android:title="@string/exchange_rates_activity_title"
+        android:summary="@string/exchange_rates_fragment_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.NetworkMonitorPreferenceFragment"
+        android:title="@string/network_monitor_activity_title"
+        android:summary="@string/network_monitor_fragment_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.ExtendedPublicKeyPreferenceFragment"
+        android:title="@string/preferences_extended_public_key_title"
+        android:summary="@string/preferences_extended_public_key_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.ResetBlockchainPreferenceFragment"
+        android:title="@string/preferences_initiate_reset_title"
+        android:summary="@string/preferences_initiate_reset_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.ReportIssuePreferenceFragment"
+        android:title="@string/preferences_report_issue_title"
+        android:summary="@string/preferences_report_issue_summary" />
     <header
         android:fragment="de.schildbach.wallet.ui.preference.AboutFragment"
-        android:title="@string/about_title" />
+        android:title="@string/about_title"
+        android:summary="@string/about_summary" />
 </preference-headers>

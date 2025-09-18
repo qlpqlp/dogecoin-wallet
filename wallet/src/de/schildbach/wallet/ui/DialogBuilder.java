@@ -141,4 +141,33 @@ public class DialogBuilder extends AlertDialog.Builder {
 
         return this;
     }
+
+    @Override
+    public AlertDialog create() {
+        final AlertDialog dialog = super.create();
+        
+        // Apply custom styling to the dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background_rounded);
+        }
+        
+        // Apply button styling after dialog is created
+        dialog.setOnShowListener(dialogInterface -> {
+            // Style the buttons with transparent background and amber text
+            if (dialog.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundResource(R.drawable.dialog_button_background);
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+            }
+            if (dialog.getButton(AlertDialog.BUTTON_NEGATIVE) != null) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.dialog_button_background);
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+            }
+            if (dialog.getButton(AlertDialog.BUTTON_NEUTRAL) != null) {
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setBackgroundResource(R.drawable.dialog_button_background);
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+            }
+        });
+        
+        return dialog;
+    }
 }

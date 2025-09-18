@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_list_card"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Block Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/block_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Block #5,542,443"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network" />
+
+        <TextView
+            android:id="@+id/block_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2m ago"
+            android:textSize="12sp"
+            android:textColor="@color/fg_on_dark_bg_network"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Block Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/block_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hash: 8dcdfaefc49dad1d2e89e218ea10726481022d07ec38479fc83e2b0236c322d5"
+            android:textSize="12sp"
+            android:textColor="@color/fg_on_dark_bg_network"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/block_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transactions: 1,234"
+            android:textSize="12sp"
+            android:textColor="@color/fg_on_dark_bg_network"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/block_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Size: 1.2 MB"
+            android:textSize="12sp"
+            android:textColor="@color/fg_on_dark_bg_network"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/block_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Difficulty: 436,271,191"
+            android:textSize="12sp"
+            android:textColor="@color/fg_on_dark_bg_network"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

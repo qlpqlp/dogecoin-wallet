@@ -1,114 +1,112 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
+<string name="help_wallet">
 
-	<string name="help_wallet">
-<![CDATA[
-		<p>
-			V ľavej hornej časti obrazovky je Vaša aktuálna Bitcoin adresa, túto adresu potrebuje poznať odosielateľ, aby Vám mohol poslať Bitcoiny.
+		&lt;p&gt;
+			V ľavej hornej časti obrazovky je Vaša aktuálna Dogecoin adresa, túto adresu potrebuje poznať odosielateľ, aby Vám mohol poslať Dogecoiny.
 			Kliknutím na adresu ju môžte zmeniť.
-		</p>
-		<p>
-			QR kód na pravej strane obsahuje Vašu Bitcoin adresu, odosielateľ ho môže jednoducho naskenovať.
+		&lt;/p&gt;
+		&lt;p&gt;
+			QR kód na pravej strane obsahuje Vašu Dogecoin adresu, odosielateľ ho môže jednoducho naskenovať.
 			Kliknite na QR kód, aby ste ho zväčšili.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			V strede obrazovky je zobrazený aktuálny zostatok.
-			Hodnota Vašich Bitcoinov je zobrazená aj v inej zvolenej mene.
+			Hodnota Vašich Dogecoinov je zobrazená aj v inej zvolenej mene.
 			Kliknutím na zostatok zobrazíte zoznam cudzích mien, následným kliknutím na menu ju môžte nastaviť ako predvolenú.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			V spodnej časti obrazovky sa nachádza zoznam transakcií. Zoznam je na začiatku prázdny.
 			Aktuálne prebiehajúce transakcie sú šedé, až kým nie sú potvrdené.
 			Kliknutím na transakciu môžete pridať danú adresu do adresára.
-		</p>
-		<p>
-			Kliknutím na tlačidlá naspodku môžte poslať alebo vyžiadať Bitcoiny.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Kliknutím na tlačidlá naspodku môžte poslať alebo vyžiadať Dogecoiny.
 			Ďalšie možnosti sú v ponuke nastavení.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-	<string name="help_request_coins">
-<![CDATA[
-		<p>
-			Na tejto obrazovke môžete vyžiadať Bitcoiny od niekoho iného (kto má nainštalovanú aplikáciu Bitcoin Wallet).
-		</p>
-		<p>
-			Najprv zadajte sumu Bitcoinov, ktoré chcete vyžiadať.
-		</p>
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
+			Na tejto obrazovke môžete vyžiadať Dogecoiny od niekoho iného (kto má nainštalovanú aplikáciu Dogecoin Wallet).
+		&lt;/p&gt;
+		&lt;p&gt;
+			Najprv zadajte sumu Dogecoinov, ktoré chcete vyžiadať.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Potom dajte druhej strane naskenovať vygenerovaný QR kód
 			alebo môžte svoju žiadosť poslať použitím tlačidla zdieľať.
-			Druhá strana potom klikne na Bitcoin URL.
-		</p>
-		<p>
-			V oboch prípadoch druhá strana uvidí predvyplnenú obrazovku na odosielanie Bitcoinov.
+			Druhá strana potom klikne na Dogecoin URL.
+		&lt;/p&gt;
+		&lt;p&gt;
+			V oboch prípadoch druhá strana uvidí predvyplnenú obrazovku na odosielanie Dogecoinov.
 			Ak s transakciou súhlasí, tak ju iba potvrdí.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-	<string name="help_send_coins">
-<![CDATA[
-		<p>
-			Práve ste začali proces odosielania Bitcoinov.
-			Dostali ste sa sem z hlavnej obrazovky alebo kliknutím na Bitcoin adresu v prehliadači.
-		</p>
-		<p>
+<string name="help_send_coins">
+
+		&lt;p&gt;
+			Práve ste začali proces odosielania Dogecoinov.
+			Dostali ste sa sem z hlavnej obrazovky alebo kliknutím na Dogecoin adresu v prehliadači.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Najprv zadajte adresu, na ktorú chcete odoslať platbu.
 			Ak sa adresa nachádza v adresári, tak sa automaticky doplní.
-			Kliknutím na ikonu fotoaparátu môžete naskenovať QR kód s Bitcoin adresou alebo požiadavkou na zaplatenie.
-		</p>
-		<p>
-			Ďalej vidíte koľko Bitcoinov môžete aktuálne minúť.
-			Rozdiel medzi zostatkom na hlavnej obrazovke a počtom Bitcoinov, ktoré môžete minúť tvoria nepotvrdené transakcie.
-		</p>
-		<p>
+			Kliknutím na ikonu fotoaparátu môžete naskenovať QR kód s Dogecoin adresou alebo požiadavkou na zaplatenie.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Ďalej vidíte koľko Dogecoinov môžete aktuálne minúť.
+			Rozdiel medzi zostatkom na hlavnej obrazovke a počtom Dogecoinov, ktoré môžete minúť tvoria nepotvrdené transakcie.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Nakoniec zadajte sumu platby.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Môžete zadať platbu aj keď ste v offline režime.
 			Platba bude odoslaná pri ďalšom spustení aplikácie.
 			Ak chcete, aby platba bola spracovaná v čo najkratšom čase, uistite sa že máte rýchle pripojenie (napríklad WiFi).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Poznámka:
 			Transakcie nie je možné stornovať!
 			Vždy skontrolujte adresu príjemcu.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-	<string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Dôležité informácie o bezpečnosti:</b>
-		</p>
-		<p>
-			Bitcoiny sú uložené na Vašom zariadení.
-			<b>Ak zariadenie stratíte, prídete o všetky svoje Bitcoiny.</b>
-		</p>
-		<p>
-			To znamená, že by ste mali <b>zálohovať svoju peňaženku</b>!
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Dôležité informácie o bezpečnosti:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Dogecoiny sú uložené na Vašom zariadení.
+			&lt;b&gt;Ak zariadenie stratíte, prídete o všetky svoje Dogecoiny.&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			To znamená, že by ste mali &lt;b&gt;zálohovať svoju peňaženku&lt;/b&gt;!
 			Využite funkciu zálohovania v tejto aplikácii, neodporúča sa na zálohovanie použiť aplikácie tretích strán.
 			Svoju zálohu bezpečne uchovajte a nezabudnite heslo.
-		</p>
-		<p>
-			<b>Pred odinštalovaním</b> (alebo vymazaním dát/obnovením továrenských nastavení), <b>odošlite svoje Bitcoiny do inej peňaženky</b>.
-			Inak o svoje Bitcoiny prídete.
-		</p>
-		<p>
-			<b>Platby sa nedajú stornovať</b>.
-			Ak pošlete svoje Bitcoiny na nesprávnu adresu, je takmer nemožné získať ich späť.
-		</p>
-		<p>
-			<b>Chráňte si svoje zariadenie!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Pred odinštalovaním&lt;/b&gt; (alebo vymazaním dát/obnovením továrenských nastavení), &lt;b&gt;odošlite svoje Dogecoiny do inej peňaženky&lt;/b&gt;.
+			Inak o svoje Dogecoiny prídete.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Platby sa nedajú stornovať&lt;/b&gt;.
+			Ak pošlete svoje Dogecoiny na nesprávnu adresu, je takmer nemožné získať ich späť.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Chráňte si svoje zariadenie!&lt;/b&gt;
 			Nepoužívajte rootnuté zariadenie.
 			Inštalujte len aplikácie, ktorým dôverujete.
 			Škodlivé aplikácie sa môžu pokúsiť ukradnúť Vašu peňaženku.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Znížte riziko na minimum!
-			<b>Aplikáciu používajte len na malé sumy.</b>
-		</p>
-	]]>
+			&lt;b&gt;Aplikáciu používajte len na malé sumy.&lt;/b&gt;
+		&lt;/p&gt;
+	
 	</string>
-
 </resources>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Destination Address -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recurring_payments_destination_address"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinner_destination_address"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btn_add_destination_address"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/recurring_payments_add_address"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/ic_settings_white_24dp"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="16dp"
+            style="@style/My.Dialog.Button" />
+
+        <!-- Reference -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recurring_payments_reference"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edit_reference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:hint="Enter reference for OP_RETURN (optional)"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Amount -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recurring_payments_amount"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edit_amount"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:hint="0.0"
+            android:inputType="numberDecimal"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+
+
+        <!-- Payment Date and Time -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment Date &amp; Time"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btn_select_date"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@color/bg_level2"
+                android:text="Select Date"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_calendar_white_24dp"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:padding="16dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btn_select_time"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@color/bg_level2"
+                android:text="Select Time"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_clock_white_24dp"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:padding="16dp"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <!-- Recurring Monthly -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <CheckBox
+                android:id="@+id/checkbox_recurring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/recurring_payments_recurring_monthly"
+                android:textSize="16sp"
+                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/recurring_payments_cancel"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginEnd="8dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/recurring_payments_save"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:drawableStart="@drawable/ic_settings_white_24dp"
+                android:drawablePadding="8dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

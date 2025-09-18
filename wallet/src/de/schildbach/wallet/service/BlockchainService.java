@@ -55,6 +55,7 @@ import de.schildbach.wallet.addressbook.AddressBookDatabase;
 import de.schildbach.wallet.data.SelectedExchangeRateLiveData;
 import de.schildbach.wallet.data.WalletBalanceLiveData;
 import de.schildbach.wallet.data.WalletLiveData;
+import de.schildbach.wallet.data.DogecoinPeer;
 import de.schildbach.wallet.exchangerate.ExchangeRateEntry;
 import de.schildbach.wallet.service.BlockchainState.Impediment;
 import de.schildbach.wallet.ui.WalletActivity;
@@ -506,7 +507,17 @@ public class BlockchainService extends LifecycleService {
         registerReceiver(deviceIdleModeReceiver, new IntentFilter(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED));
         
         // Initialize independent worldwide peer discovery
-        worldwidePeerDiscovery = new WorldwidePeerDiscovery(application);
+        worldwidePeerDiscovery = new WorldwidePeerDiscovery(application, new WorldwidePeerDiscovery.PeerDiscoveryCallback() {
+            @Override
+            public void onPeerUpdated(DogecoinPeer peer) {
+                // No UI notification needed here as this is for the main wallet service
+            }
+
+            @Override
+            public void onTotalCountChanged(int totalCount) {
+                // No UI notification needed here as this is for the main wallet service
+            }
+        });
         worldwidePeerDiscovery.start();
 
         peerConnectivityListener = new PeerConnectivityListener();

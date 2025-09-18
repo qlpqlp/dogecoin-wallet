@@ -35,11 +35,11 @@ import de.schildbach.wallet.util.ZoomOutPageTransformer;
  * @author Andreas Schildbach
  */
 public final class NetworkMonitorActivity extends AbstractWalletActivity {
-    private static final int POSITION_PEER_LIST = 0;
-    private static final int POSITION_BLOCK_LIST = 1;
-    private static final int POSITION_TOTAL_NODES = 2;
-    private static final int[] TAB_LABELS = { R.string.network_monitor_peer_list_title,
-            R.string.network_monitor_block_list_title, R.string.total_nodes_title };
+    private static final int POSITION_TOTAL_NODES = 0;
+    private static final int POSITION_PEER_LIST = 1;
+    private static final int POSITION_BLOCK_LIST = 2;
+    private static final int[] TAB_LABELS = { R.string.total_nodes_title,
+            R.string.network_monitor_peer_list_title, R.string.network_monitor_block_list_title };
     
     private ViewPagerTabs pagerTabs;
 
@@ -96,12 +96,12 @@ public final class NetworkMonitorActivity extends AbstractWalletActivity {
         @NonNull
         @Override
         public Fragment createFragment(final int position) {
-            if (position == POSITION_PEER_LIST)
+            if (position == POSITION_TOTAL_NODES)
+                return new TotalNodesFragment();
+            else if (position == POSITION_PEER_LIST)
                 return new PeerListFragment();
             else if (position == POSITION_BLOCK_LIST)
                 return new BlockListFragment();
-            else if (position == POSITION_TOTAL_NODES)
-                return new TotalNodesFragment();
             else
                 throw new IllegalArgumentException();
         }

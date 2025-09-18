@@ -15,6 +15,7 @@ configurations {
 dependencies {
     implementation project(':integration-android')
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.biometric:biometric:1.1.0'
     implementation 'androidx.core:core:1.3.2'
     implementation 'androidx.activity:activity:1.1.0'
     implementation 'androidx.fragment:fragment:1.2.5'
@@ -38,6 +39,7 @@ dependencies {
     //noinspection GradleDependency
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.9'
     implementation 'com.squareup.moshi:moshi:1.9.3'
+    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'com.github.tony19:logback-android:2.0.0'
     testImplementation 'junit:junit:4.13.2'
@@ -196,9 +198,19 @@ android.applicationVariants.all{ variant ->
             }
         }
         doLast{
-            new File("${rootDir}/wallet/res/").eachFileRecurse (FileType.DIRECTORIES) { file ->
-                if (file.name.startsWith("values")) {
-                    "git restore -s@ -SW -- wallet/res/${file.name}/strings*.xml".execute([], rootDir).waitFor()
+            // Apply Bitcoin to Dogecoin replacements (without git restore)
+            new File("${rootDir}/wallet/res/").eachFileRecurse (FileType.FILES) { file ->
+                if (file.getName().matches("strings.*\\.xml")) {
+                    def content = file.text
+                    def originalContent = content
+                    
+                    // Apply all replacements
+                    content = LangUpdater.applyBitcoinToDogecoinReplacements(content)
+                    
+                    if (content != originalContent) {
+                        file.text = content
+                        println "Applied Bitcoin to Dogecoin replacements to: ${file.name}"
+                    }
                 }
             }
         }
@@ -247,6 +259,16 @@ class LangUpdater {
             return s
         }
         
+        // Skip replacement for the specific warning text
+        if (s == "Tip: This wallet works best if you don\'t use it for lots of tiny transactions. Too many small inputs can slow things down and make your coins take longer to show up.") {
+            return s
+        }
+        
+        // Skip replacement for the original warning text too
+        if (s == "Do not use this wallet for many transactions with lots of small outputs like for example mining pool or faucet payouts. These can slow down the wallet to a halt and make your coins inaccessible!") {
+            return s
+        }
+        
         // Do some specifics first
         res = res.replaceAll("bitcoinj", "libdohj")
         res = res.replaceAll("bitboy", "dogecoin.com")
@@ -261,11 +283,42 @@ class LangUpdater {
         // Chinese specifics
         res = res.replaceAll("比特", "狗狗")
 
-        // And the rest
+        // Comprehensive Bitcoin to Dogecoin replacements
         res = res.replaceAll("BTC", "DOGE")
         res = res.replaceAll("bitcoin", "dogecoin")
         res = res.replaceAll("Bitcoin", "Dogecoin")
+        res = res.replaceAll("BITCOIN", "DOGECOIN")
+        
+        // Handle plural forms
+        res = res.replaceAll("Bitcoins", "Dogecoins")
+        res = res.replaceAll("bitcoins", "dogecoins")
+        res = res.replaceAll("BITCOINS", "DOGECOINS")
+        
+        // Handle possessive forms
+        res = res.replaceAll("Bitcoin's", "Dogecoin's")
+        res = res.replaceAll("bitcoin's", "dogecoin's")
+        res = res.replaceAll("Bitcoin wallet", "Dogecoin wallet")
+        res = res.replaceAll("bitcoin wallet", "dogecoin wallet")
+        
+        // Handle network references
+        res = res.replaceAll("Bitcoin network", "Dogecoin network")
+        res = res.replaceAll("bitcoin network", "dogecoin network")
+        res = res.replaceAll("Bitcoin address", "Dogecoin address")
+        res = res.replaceAll("bitcoin address", "dogecoin address")
+        
+        // Handle transaction references
+        res = res.replaceAll("Bitcoin transaction", "Dogecoin transaction")
+        res = res.replaceAll("bitcoin transaction", "dogecoin transaction")
+        res = res.replaceAll("Bitcoin payment", "Dogecoin payment")
+        res = res.replaceAll("bitcoin payment", "dogecoin payment")
 
         return res
+    }
+    
+    /**
+     * Apply Bitcoin to Dogecoin replacements to a string
+     */
+    static def applyBitcoinToDogecoinReplacements(String content) {
+        return tryAllReplacements(content)
     }
 }

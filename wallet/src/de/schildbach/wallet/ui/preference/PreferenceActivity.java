@@ -43,7 +43,11 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
     @Override
     protected boolean isValidFragment(final String fragmentName) {
         return SettingsFragment.class.getName().equals(fragmentName)
-                || DiagnosticsFragment.class.getName().equals(fragmentName)
+                || ExchangeRatesPreferenceFragment.class.getName().equals(fragmentName)
+                || NetworkMonitorPreferenceFragment.class.getName().equals(fragmentName)
+                || ExtendedPublicKeyPreferenceFragment.class.getName().equals(fragmentName)
+                || ResetBlockchainPreferenceFragment.class.getName().equals(fragmentName)
+                || ReportIssuePreferenceFragment.class.getName().equals(fragmentName)
                 || AboutFragment.class.getName().equals(fragmentName);
     }
 }

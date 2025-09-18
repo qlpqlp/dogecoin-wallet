@@ -50,6 +50,12 @@
     <PreferenceCategory
         android:title="@string/preferences_category_privacy">
 
+        <CheckBoxPreference
+            android:key="biometric_enabled"
+            android:title="@string/biometric_enable"
+            android:summary="@string/biometric_auth_subtitle"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="sync_mode"
             android:title="@string/preferences_sync_mode_title"

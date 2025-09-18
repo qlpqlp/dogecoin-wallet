@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <!-- dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- group: CAMERA -->
@@ -195,6 +197,20 @@
             android:theme="@style/My.Theme.ChildActivity"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name="de.schildbach.wallet.ui.DigitalSignatureActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/digital_signature_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.RecurringPaymentsActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/recurring_payments_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.file_attachment"
@@ -203,6 +219,16 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
+        </provider>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="de.schildbach.wallet.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/camera_file_provider" />
         </provider>
 
         <receiver
@@ -227,6 +253,12 @@
             android:exported="false"
             android:directBootAware="false"
             android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name="de.schildbach.wallet.service.RecurringPaymentsService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false"
+            android:directBootAware="false" />
 
         <service
             android:name="de.schildbach.wallet.offline.AcceptBluetoothService"

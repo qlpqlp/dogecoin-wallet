@@ -168,17 +168,28 @@ public final class Constants {
     
     /** Dogecoin DNS seed servers for worldwide peer discovery */
     public static final String[] DOGECOIN_DNS_SEEDS = {
-        "seed.dogecoin.com",
-        "seed.multidoge.org", 
-        "seed.dogecoin.net",
-        "seed.dogecoin.io",
-        "seed.dogecoin.org"
+        "seed.multidoge.org",
+        "seed2.multidoge.org"
     };
     
     /** Interval for periodic worldwide peer discovery (in milliseconds) */
-    public static final long WORLDWIDE_PEER_DISCOVERY_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long WORLDWIDE_PEER_DISCOVERY_INTERVAL_MS = 15 * DateUtils.MINUTE_IN_MILLIS; // Increased from 5 to 15 minutes to reduce memory pressure
     public static final long DISCOVERY_TIMEOUT_MS = 2 * DateUtils.MINUTE_IN_MILLIS; // 2 minute timeout for better discovery
     public static final int MAX_DISCOVERY_ATTEMPTS = 15; // Try more times for better results
+    
+    /** Enhanced DNS discovery settings */
+    public static final int DNS_QUERY_RETRIES = 5; // Number of times to query each DNS seed
+    public static final int DNS_QUERY_DELAY_MS = 100; // Delay between DNS queries (ms)
+    public static final int DNS_ROTATION_DELAY_MIN_MS = 10000; // Minimum delay to catch DNS rotation (10 seconds)
+    public static final int DNS_ROTATION_DELAY_MAX_MS = 20000; // Maximum delay to catch DNS rotation (20 seconds)
+    public static final int MAX_PEERS_PER_DNS_QUERY = 50; // Maximum peers to get per DNS query
+    public static final int HANDSHAKE_TIMEOUT_MS = 5 * (int) DateUtils.SECOND_IN_MILLIS; // Handshake timeout
+    
+    /** Snowball peer discovery settings */
+    public static final int MAX_SNOWBALL_ROUNDS = 3; // Number of snowball discovery rounds
+    public static final int MAX_PEERS_PER_SNOWBALL_ROUND = 50; // Max peers to query per round
+    public static final int PEER_QUERY_TIMEOUT_MS = 10 * (int) DateUtils.SECOND_IN_MILLIS; // Timeout for peer queries
+    public static final int SNOWBALL_DELAY_MS = 2000; // Delay between snowball rounds (2 seconds)
 
     public static final long LAST_USAGE_THRESHOLD_JUST_MS = DateUtils.HOUR_IN_MILLIS;
     public static final long LAST_USAGE_THRESHOLD_TODAY_MS = DateUtils.DAY_IN_MILLIS;

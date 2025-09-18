@@ -1,104 +1,104 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			La parte in alto a sinistra dello schermo mostra il tuo saldo in Bitcoins e nella valuta nazionale selezionata.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			La parte in alto a sinistra dello schermo mostra il tuo saldo in Dogecoins e nella valuta nazionale selezionata.
 			Toccare per visualizzare la lista delle valute nazionali, e toccare una valuta per sceglierla come predefinita.
-		</p>
-		<p>
-			Il codice QR sulla destra contiene il vostro indirizzo bitcoin e può essere utilizzato per la scansione da parte di un altro soggetto.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Il codice QR sulla destra contiene il vostro indirizzo dogecoin e può essere utilizzato per la scansione da parte di un altro soggetto.
 			Toccare il codice QR per ingrandirlo.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			La parte inferiore dello schermo è occupata dalla lista delle transazioni, inizialmente è vuota.
 			Le operazioni in sospeso sono visualizzate in grigio finché non vengono confermate.
 			Toccare un elemento della lista per aggiungere l\'indirizzo del mittente o del destinatario nella rubrica degli indirizzi.
-		</p>
-		<p>
-			È possibile inviare o ricevere Bitcoins toccando i pulsanti nella barra delle azioni.
+		&lt;/p&gt;
+		&lt;p&gt;
+			È possibile inviare o ricevere Dogecoins toccando i pulsanti nella barra delle azioni.
 			Ulteriori opzioni sono disponibili nel menu delle opzioni.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
-			Utilizzando questa finestra puoi richiedere dei Bitcoin ad un\'altra persona
-			(che dovrebbe aver già installato Bitcoin Wallet).
-		</p>
-		<p>
-			Come prima cosa puoi inserire il numero di Bitcoin da richiedere.
-		</p>
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
+			Utilizzando questa finestra puoi richiedere dei Dogecoin ad un\'altra persona
+			(che dovrebbe aver già installato Dogecoin Wallet).
+		&lt;/p&gt;
+		&lt;p&gt;
+			Come prima cosa puoi inserire il numero di Dogecoin da richiedere.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Poi puoi generare dei codici QR da far acquisire all\'altra persona.
 			Oppure puoi inviare la richiesta con il tasto \"condividi\" nella barra azioni.
-			La persona che riceve la richiesta dovrà cliccare l\'URL Bitcoin.
-		</p>
-		<p>
-			In ogni modo alla persona ricevente verrà presentata un modulo precompilato per inviare i Bitcoin.
+			La persona che riceve la richiesta dovrà cliccare l\'URL Dogecoin.
+		&lt;/p&gt;
+		&lt;p&gt;
+			In ogni modo alla persona ricevente verrà presentata un modulo precompilato per inviare i Dogecoin.
 			Per confermare l\'invio dovrà solo accettare la transazione.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
-			Hai iniziato il processo per inviare Bitcoins.
-			Sei giunto qui a partire dalla schermata principale o cliccando su di un URL Bitcoin dal tuo browser.
-		</p>
-		<p>
-			Come prima cosa è necessario inserire l\'indirizzo Bitcoin a cui inviare.
+<string name="help_send_coins">
+
+		&lt;p&gt;
+			Hai iniziato il processo per inviare Dogecoins.
+			Sei giunto qui a partire dalla schermata principale o cliccando su di un URL Dogecoin dal tuo browser.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Come prima cosa è necessario inserire l\'indirizzo Dogecoin a cui inviare.
 			L\'indirizzo si autocompleterà in base al contenuto della tua rubrica.
-			Puoi anche acquisire un codice QR che contiene indirizzi Bitcoin o richieste Bitcoin premendo il tasto QR sulla barra azioni.
-		</p>
-		<p>
-			Ti è poi possibile visualizzare quanti Bitcoin puoi spendere.
+			Puoi anche acquisire un codice QR che contiene indirizzi Dogecoin o richieste Dogecoin premendo il tasto QR sulla barra azioni.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Ti è poi possibile visualizzare quanti Dogecoin puoi spendere.
 			Eventuali differenze con il saldo visualizzato sulla schermata principale fanno parte di transazioni
 			non ancora confermate il cui importo non può quindi essere ancora utilizzato.
-		</p>
-		<p>
-			Puoi infine inserire il numero di Bitcoin da inviare.
-		</p>
-		<p>
-			Puoi inserire una transazione anche senza collegamento ad Internet, verrà inviata alla prossima esecuzione di Bitcoin Wallet.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Puoi infine inserire il numero di Dogecoin da inviare.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Puoi inserire una transazione anche senza collegamento ad Internet, verrà inviata alla prossima esecuzione di Dogecoin Wallet.
 			Se vuoi che la transazione venga processata il prima possibile assicurati di avere un buon collegamento ad Internet.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Nota:
 			I pagamenti non possono essere annullate!
 			Controlla sempre la correttezza degli indirizzi di destinazione.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Alcune informazioni riguardo la sicurezza relativa ai vostri Bitcoins:</b>
-		</p>
-		<p>
-			I Bitcoins di Bitcoin Wallet vengono memorizzati sul dispositivo.
-			<b>Se perdi il dispositivo, perdi i tuoi Bitcoin.</b>
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Alcune informazioni riguardo la sicurezza relativa ai vostri Dogecoins:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			I Dogecoins di Dogecoin Wallet vengono memorizzati sul dispositivo.
+			&lt;b&gt;Se perdi il dispositivo, perdi i tuoi Dogecoin.&lt;/b&gt;
 			Esattamente come denaro nel tuo vero portafoglio.
-		</p>
-		<p>
-			<b>Prima di disinstallare Bitcoin Wallet</b> (o cancellare i dati dell\'applicazione o del dispositivo), <b>trasferisci i tuoi Bitcoins ad un altro portafoglio</b>.
-			Eventuali Bitcoin non trasferiti saranno persi per sempre.
-		</p>
-		<p>
-			<b>I pagamenti non possono essere annullati</b>.
-			Se invi i tuoi Bitcoin ad indirizzi errati non c\'è modo di riaverli indietro
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Prima di disinstallare Dogecoin Wallet&lt;/b&gt; (o cancellare i dati dell\'applicazione o del dispositivo), &lt;b&gt;trasferisci i tuoi Dogecoins ad un altro portafoglio&lt;/b&gt;.
+			Eventuali Dogecoin non trasferiti saranno persi per sempre.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;I pagamenti non possono essere annullati&lt;/b&gt;.
+			Se invi i tuoi Dogecoin ad indirizzi errati non c\'è modo di riaverli indietro
 			a meno che tu non conosca il ricevente e che sia disponibile a restituirli.
-		</p>
-		<p>
-			<b>Proteggi il tuo dispositivo Android!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Proteggi il tuo dispositivo Android!&lt;/b&gt;
 			Installa solo applicazioni di cui ti fidi completamente.
 			Applicazioni malevole potrebbero provare a rubare il tuo portafoglio.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Tieni basso il rischio!
-			<b>Usa Bitcoin Wallet solo con piccoli importi</b> sufficienti per l\'uso quotidiano.
-		</p>
-	]]>
+			&lt;b&gt;Usa Dogecoin Wallet solo con piccoli importi&lt;/b&gt; sufficienti per l\'uso quotidiano.
+		&lt;/p&gt;
+	
 	</string>
 </resources>

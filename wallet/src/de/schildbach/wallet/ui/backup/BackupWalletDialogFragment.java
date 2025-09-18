@@ -169,6 +169,14 @@ public class BackupWalletDialogFragment extends DialogFragment {
                 activity.finish();
             });
 
+            // Apply amber text color to buttons
+            if (dialog.getButton(DialogInterface.BUTTON_POSITIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
+            if (dialog.getButton(DialogInterface.BUTTON_NEGATIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
+
             passwordView.addTextChangedListener(textWatcher);
             passwordAgainView.addTextChangedListener(textWatcher);
 

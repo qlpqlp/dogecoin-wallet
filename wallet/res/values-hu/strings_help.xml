@@ -1,107 +1,107 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="help_wallet">
-<![CDATA[
-		<p>
-			A bal felső része a képernyőnek megjeleníti az egyenleged Bitcoin-ban és egy választott nemzeti valutát.
+<string name="help_wallet">
+
+		&lt;p&gt;
+			A bal felső része a képernyőnek megjeleníti az egyenleged Dogecoin-ban és egy választott nemzeti valutát.
 			Érintsd meg a nemzeti valuták listájához, és érints meg egy valutát az alapértelmezettként választáshoz.
-		</p>
-		<p>
-			A QR a jobb oldalon tartalmazza a bitcoin címed és használható másik fél általi beolvasásra.
+		&lt;/p&gt;
+		&lt;p&gt;
+			A QR a jobb oldalon tartalmazza a dogecoin címed és használható másik fél általi beolvasásra.
 			Érintsd meg a QR kódot, hogy megkapd nagyobb verzióban.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			A képernyő alja a tranzakciós listáddal van fedve, ami kezdetben üres.
 			A függő tranzakciók ki vannak szürkülve,  amíg nincsenek megerősítve.
 			Érints meg egy bejegyzést, hogy hozzáadd a küldők vagy fogadók címét a címjegyzékbe.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Küldhetsz vagy kérhetsz érméket a gombok megérintésével az akciósávban.
 			További lehetőségek elérhetők az opciók menüben.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_request_coins">
-<![CDATA[
-		<p>
-			Ezt a dialógot használva kérhetsz érméket másik személytől (akinek már fel van telepítve a Bitcoin Wallet).
-		</p>
-		<p>
-			Először adj meg egy Bitcoin összeget a kéréshez.
-		</p>
-		<p>
+<string name="help_request_coins">
+
+		&lt;p&gt;
+			Ezt a dialógot használva kérhetsz érméket másik személytől (akinek már fel van telepítve a Dogecoin Wallet).
+		&lt;/p&gt;
+		&lt;p&gt;
+			Először adj meg egy Dogecoin összeget a kéréshez.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Aztán egyikőtöknek megvan a generált QR kód a másik személy által beolvasva.
 			Vagy elküldheted a kérésed egy irányító személynek az akciósávban a megosztás gombbal.
-			A másik személynek rá kell kattintania a Bitcoin URL-re.
-		</p>
-		<p>
+			A másik személynek rá kell kattintania a Dogecoin URL-re.
+		&lt;/p&gt;
+		&lt;p&gt;
 			Akárhogy is, de a másik személy bemutat egy dialógot az érmeküldésről minden mezővel előre kitöltve.
 			Ha elfogadja, akkor csak annyit kell tennie, hogy küldi a fizetést.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_send_coins">
-<![CDATA[
-		<p>
+<string name="help_send_coins">
+
+		&lt;p&gt;
 			Érmeküldési folyamatot kezdeményeztél.
-			Vagy a főképernyőn keresztül jöttél ide, vagy rákattintottál a Bitcoin URL-re a mobil böngésződben.
-		</p>
-		<p>
-			Először írd be a Bitcoin címet a fizetéshez.
+			Vagy a főképernyőn keresztül jöttél ide, vagy rákattintottál a Dogecoin URL-re a mobil böngésződben.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Először írd be a Dogecoin címet a fizetéshez.
 			A cím automatikusan kitöltődik a címjegyzékedből ismert bejegyzésekből.
-			Be is olvashatsz QR kódokat Bitcoin címekkel vagy Bitcoin kéréseket az akciósávon a QR gomb megnyomásával.
-		</p>
-		<p>
-			Következőként láthatod, hogy mennyi Bitcoin-t tudsz ebben a pillanatban elkölteni.
+			Be is olvashatsz QR kódokat Dogecoin címekkel vagy Dogecoin kéréseket az akciósávon a QR gomb megnyomásával.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Következőként láthatod, hogy mennyi Dogecoin-t tudsz ebben a pillanatban elkölteni.
 			Bármilyen különbség a főképernyőn lévő egyenleghez képest még nincs megerősítve és így még nem lehet elkölteni.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Utoljára beírod a fizetés összegét.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Adhatsz meg kifizetést amíg offline vagy.
-			A Bitcoin Wallet következő újraindításánál lesz elküldve.
+			A Dogecoin Wallet következő újraindításánál lesz elküldve.
 			Ha azt szeretnéd, hogy a fizetés olyan gyorsan legyen feldolgozva, amennyire csak lehet, akkor bizonyosodj meg róla, hogy jól kapcsolódsz (azaz egy WLAN-on).
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Megjegyzés:
 			A kifizetések visszavonhatatlanok!
 			Mindig ellenőrizd a fogadó címét.
-		</p>
-	]]>
+		&lt;/p&gt;
+	
 	</string>
-  <string name="help_safety">
-<![CDATA[
-		<p>
-			<b>Fontos biztonsági tudnivalók:</b>
-		</p>
-		<p>
-			A Bitcoin-ok a készüléken vannak tárolva.
-			<b>Ha elveszted, akkor elveszted a Bitcoin-jaidat is.</b>
-		</p>
-		<p>
-			Ez azt jelenti, hogy készítened kell <b>biztonsági mentést a tárcádról</b>!
+<string name="help_safety">
+
+		&lt;p&gt;
+			&lt;b&gt;Fontos biztonsági tudnivalók:&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			A Dogecoin-ok a készüléken vannak tárolva.
+			&lt;b&gt;Ha elveszted, akkor elveszted a Dogecoin-jaidat is.&lt;/b&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+			Ez azt jelenti, hogy készítened kell &lt;b&gt;biztonsági mentést a tárcádról&lt;/b&gt;!
 			Erre inkább az alkalmazáson belüli biztonsági mentés lehetőséget használd, mint egy harmadik fél biztonsági mentés alkalmazását.
 			Tartsd a biztonsági mentésed biztonságban és emlékezz a jelszóra.
-		</p>
-		<p>
-			<b>Eltávolítás előtt</b> (vagy alkalmazás adatainak törlése/készüléked törlése előtt), <b>utald át a Bitcoin-jaidat másik tárcába</b>.
-			A fennmaradó Bitcoin-ok elvesznek.
-		</p>
-		<p>
-			<b>A kifizetések visszafordíthatatlanok</b>.
-			Ha elküldöd a Bitcoin-jaidat a semmibe, szinte nincs rá mód, hogy visszakapd.
-		</p>
-		<p>
-			<b>Tartsd a mobilkészüléked biztonságban!</b>
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Eltávolítás előtt&lt;/b&gt; (vagy alkalmazás adatainak törlése/készüléked törlése előtt), &lt;b&gt;utald át a Dogecoin-jaidat másik tárcába&lt;/b&gt;.
+			A fennmaradó Dogecoin-ok elvesznek.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;A kifizetések visszafordíthatatlanok&lt;/b&gt;.
+			Ha elküldöd a Dogecoin-jaidat a semmibe, szinte nincs rá mód, hogy visszakapd.
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;b&gt;Tartsd a mobilkészüléked biztonságban!&lt;/b&gt;
 			Ne root-old a készüléked.
 			Csak olyan alkalmazásokat telepíts, amikben teljesen megbízol.
 			A rosszindulatú alkalmazások megpróbálhatják ellopni a tárcádat.
-		</p>
-		<p>
+		&lt;/p&gt;
+		&lt;p&gt;
 			Tartsd alacsonyan a kockázatot!
-			<b>Csak kicsi összegeket használj</b> napi használatra.
-		</p>
-	]]>
+			&lt;b&gt;Csak kicsi összegeket használj&lt;/b&gt; napi használatra.
+		&lt;/p&gt;
+	
 	</string>
 </resources>

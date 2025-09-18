@@ -65,6 +65,26 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **IPv6 & TOR Support**: Discovers nodes across different network types
 - **Live Updates**: Real-time display of discovered nodes with progress indicators
 
+### 📝 Digital Document Signing
+- **Document & Message Signing**: Sign any text, document, or message with your Dogecoin private key
+- **File Hash Generation**: Automatically generates SHA256 hash for file verification
+- **Camera Integration**: Take photos and sign them directly from the camera
+- **Easy Sharing**: Share signed documents and signatures via any Android sharing method
+- **Signature Verification**: Verify signatures against original text or file hashes
+- **Secure Storage**: Signed photos are stored in a dedicated "signed" folder
+- **Multiple Formats**: Support for text messages, file hashes, and photo signatures
+
+### 💳 Recurring Payments & Scheduled Transactions
+- **One-Time & Recurring Payments**: Schedule payments for specific dates or recurring monthly
+- **Precise Scheduling**: Set exact date and time for payment execution
+- **Reference Field**: Add custom reference data (OP_RETURN) for bill payments, client IDs, or service identification
+- **Address Book Integration**: Select from existing addresses or add new labeled addresses
+- **Background Execution**: Automatic payment processing via background service
+- **Enable/Disable Control**: Toggle recurring payments on/off as needed
+- **Edit & Manage**: Full CRUD operations for scheduled payments
+- **Blockchain Storage**: Reference data is permanently stored on the Dogecoin blockchain
+- **Real-Time Monitoring**: Live status updates and payment history
+
 ### Core Network Changes
 - **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`
 - **Library Migration**: Replaced `bitcoinj` with `libdohj` (DogecoinJ library) version 0.15
@@ -109,6 +129,21 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **User Agent**: Changed to "Dogecoin Wallet"
 - **Network Security**: Maintained all original security features
 
+### Digital Signing Implementation
+- **Cryptographic Signing**: Uses ECDSA with secp256k1 curve for document authentication
+- **SHA256 Hashing**: Secure file hash generation for integrity verification
+- **Private Key Security**: Signing uses wallet's private keys without exposing them
+- **File Provider**: Secure file sharing for camera-captured photos
+- **Signature Format**: Base64-encoded signatures for easy sharing and verification
+
+### Recurring Payments Implementation
+- **SQLite Database**: Local storage for payment schedules and configuration
+- **JobScheduler**: Android JobScheduler for reliable background execution
+- **OP_RETURN Support**: Custom reference data stored on Dogecoin blockchain
+- **Address Book Integration**: Room database for managing payment destinations
+- **Context Management**: Proper BitcoinJ context initialization for transaction execution
+- **Error Handling**: Comprehensive error handling and logging for payment failures
+
 ## 📱 FEATURES
 
 • **Decentralized**: No registration, web service or cloud needed! This wallet is peer-to-peer.
@@ -122,6 +157,17 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 • **Low Fees**: Uses official Dogecoin fee recommendations (0.01 DOGE per KB) for affordable transactions.
 • **Security**: Supports SegWit and modern address formats.
 • **Privacy**: Supports Tor via the separate Orbot app.
+
+### 🆕 NEW ADVANCED FEATURES
+
+• **📝 Digital Document Signing**: Sign any text, document, or photo with your Dogecoin private key for authentication and verification.
+• **💳 Recurring Payments**: Schedule one-time or monthly recurring payments with precise date/time control.
+• **🏷️ Reference Data**: Add custom reference information (OP_RETURN) to payments for bill identification, client IDs, or service tracking.
+• **📸 Camera Integration**: Take photos and sign them directly from the camera for document authentication.
+• **🔄 Background Processing**: Automatic execution of scheduled payments via background service.
+• **📋 Address Management**: Integrated address book for easy payment destination selection.
+• **✅ Signature Verification**: Verify document signatures against original content for authenticity.
+• **🌐 Blockchain Storage**: Reference data is permanently stored on the Dogecoin blockchain for decentralized verification.
 
 ## 💰 TRANSACTION FEES
 

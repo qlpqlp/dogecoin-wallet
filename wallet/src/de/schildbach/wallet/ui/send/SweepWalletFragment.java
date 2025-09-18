@@ -21,13 +21,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.SurfaceTexture;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.YuvImage;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.PreviewCallback;
+import android.os.Vibrator;
+import java.io.ByteArrayOutputStream;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Process;
 import android.text.SpannableStringBuilder;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.Surface;
+import android.view.TextureView;
+import android.view.View;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +51,18 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -85,6 +112,7 @@ import org.bitcoinj.wallet.WalletTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,7 +124,7 @@ import static androidx.core.util.Preconditions.checkState;
 /**
  * @author Andreas Schildbach
  */
-public class SweepWalletFragment extends Fragment {
+public class SweepWalletFragment extends Fragment implements TextureView.SurfaceTextureListener {
     private AbstractWalletActivity activity;
     private WalletApplication application;
     private Configuration config;
@@ -116,6 +144,14 @@ public class SweepWalletFragment extends Fragment {
     private TransactionsAdapter.TransactionViewHolder sweepTransactionViewHolder;
     private Button viewGo;
     private Button viewCancel;
+
+    // Scanner related views
+    private FrameLayout scannerContainer;
+    private TextureView previewView;
+    private de.schildbach.wallet.ui.scan.ScannerView scannerView;
+    private de.schildbach.wallet.ui.scan.CameraManager cameraManager;
+    private Vibrator vibrator;
+    private BarcodeScanner barcodeScanner;
 
     private MenuItem reloadAction;
     private MenuItem scanAction;
@@ -221,6 +257,22 @@ public class SweepWalletFragment extends Fragment {
 
         hintView = view.findViewById(R.id.sweep_wallet_fragment_hint);
 
+        // Initialize scanner views
+        scannerContainer = view.findViewById(R.id.sweep_wallet_fragment_scanner_container);
+        previewView = view.findViewById(R.id.sweep_wallet_fragment_preview);
+        scannerView = view.findViewById(R.id.sweep_wallet_fragment_scanner);
+        previewView.setSurfaceTextureListener(this);
+        
+        // Initialize camera manager (same as ScanActivity)
+        cameraManager = new de.schildbach.wallet.ui.scan.CameraManager();
+        vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+        
+        // Initialize ML Kit barcode scanner
+        BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+            .build();
+        barcodeScanner = BarcodeScanning.getClient(options);
+
         sweepTransactionView = view.findViewById(R.id.transaction_row);
         sweepTransactionView.setVisibility(View.GONE);
         sweepTransactionView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(activity,
@@ -242,7 +294,22 @@ public class SweepWalletFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        startCamera();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopCamera();
+    }
+
+    @Override
     public void onDestroy() {
+        if (barcodeScanner != null) {
+            barcodeScanner.close();
+        }
         backgroundThread.getLooper().quit();
         super.onDestroy();
     }
@@ -459,11 +526,14 @@ public class SweepWalletFragment extends Fragment {
         if (viewModel.state == SweepWalletViewModel.State.DECODE_KEY && privateKeyToSweep == null) {
             messageView.setVisibility(View.VISIBLE);
             messageView.setText(R.string.sweep_wallet_fragment_wallet_unknown);
+            scannerContainer.setVisibility(View.VISIBLE);
         } else if (viewModel.state == SweepWalletViewModel.State.DECODE_KEY && privateKeyToSweep != null) {
             messageView.setVisibility(View.VISIBLE);
             messageView.setText(R.string.sweep_wallet_fragment_encrypted);
+            scannerContainer.setVisibility(View.GONE);
         } else if (privateKeyToSweep != null) {
             messageView.setVisibility(View.GONE);
+            scannerContainer.setVisibility(View.GONE);
         }
 
         passwordViewGroup.setVisibility(
@@ -601,5 +671,191 @@ public class SweepWalletFragment extends Fragment {
         public Sha256Hash getWTxId() {
             return wTxId;
         }
+    }
+
+    private volatile boolean surfaceCreated = false;
+    private static final long VIBRATE_DURATION = 50L;
+    private static final long AUTO_FOCUS_INTERVAL_MS = 2500L;
+
+    private void startCamera() {
+        if (surfaceCreated && ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            backgroundHandler.post(openRunnable);
+        } else if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.CAMERA}, 1);
+        }
+    }
+
+    private void stopCamera() {
+        backgroundHandler.post(closeRunnable);
+    }
+
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        surfaceCreated = true;
+        startCamera();
+    }
+
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        // No-op
+    }
+
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        surfaceCreated = false;
+        return true;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        // No-op
+    }
+
+    private final Runnable openRunnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                final Camera camera = cameraManager.open(previewView, displayRotation());
+
+                final Rect framingRect = cameraManager.getFrame();
+                final RectF framingRectInPreview = new RectF(cameraManager.getFramePreview());
+                framingRectInPreview.offsetTo(0, 0);
+                final boolean cameraFlip = cameraManager.getFacing() == CameraInfo.CAMERA_FACING_FRONT;
+                final int cameraRotation = cameraManager.getOrientation();
+
+                activity.runOnUiThread(() -> scannerView.setFraming(framingRect, framingRectInPreview, displayRotation(), cameraRotation, cameraFlip));
+
+                final String focusMode = camera.getParameters().getFocusMode();
+                final boolean nonContinuousAutoFocus = Camera.Parameters.FOCUS_MODE_AUTO.equals(focusMode)
+                        || Camera.Parameters.FOCUS_MODE_MACRO.equals(focusMode);
+
+                if (nonContinuousAutoFocus)
+                    backgroundHandler.post(new AutoFocusRunnable(camera));
+                backgroundHandler.post(fetchAndDecodeRunnable);
+            } catch (final Exception x) {
+                // Handle error
+            }
+        }
+
+        private int displayRotation() {
+            final int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+            if (rotation == Surface.ROTATION_0)
+                return 0;
+            else if (rotation == Surface.ROTATION_90)
+                return 90;
+            else if (rotation == Surface.ROTATION_180)
+                return 180;
+            else if (rotation == Surface.ROTATION_270)
+                return 270;
+            else
+                throw new IllegalStateException("rotation: " + rotation);
+        }
+    };
+
+    private final Runnable closeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            backgroundHandler.removeCallbacksAndMessages(null);
+            cameraManager.close();
+        }
+    };
+
+    private final class AutoFocusRunnable implements Runnable {
+        private final Camera camera;
+
+        public AutoFocusRunnable(final Camera camera) {
+            this.camera = camera;
+        }
+
+        @Override
+        public void run() {
+            try {
+                camera.autoFocus(autoFocusCallback);
+            } catch (final Exception x) {
+                // Handle error
+            }
+        }
+
+        private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(final boolean success, final Camera camera) {
+                // schedule again
+                backgroundHandler.postDelayed(AutoFocusRunnable.this, AUTO_FOCUS_INTERVAL_MS);
+            }
+        };
+    }
+
+    private final Runnable fetchAndDecodeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            cameraManager.requestPreviewFrame((data, camera) -> decode(data));
+        }
+
+        private void decode(final byte[] data) {
+            try {
+                // Convert camera data to Bitmap for ML Kit
+                final Camera.Size previewSize = cameraManager.getCameraResolution();
+                final YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
+                final ByteArrayOutputStream out = new ByteArrayOutputStream();
+                yuvImage.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 50, out);
+                final byte[] imageBytes = out.toByteArray();
+                final Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                
+                // Create InputImage for ML Kit
+                final InputImage image = InputImage.fromBitmap(bitmap, 0);
+                
+                // Process with ML Kit
+                barcodeScanner.process(image)
+                    .addOnSuccessListener(barcodes -> {
+                        if (!barcodes.isEmpty()) {
+                            final Barcode barcode = barcodes.get(0);
+                            final String qrText = barcode.getRawValue();
+                            if (qrText != null && !qrText.isEmpty()) {
+                                activity.runOnUiThread(() -> handleQRCode(qrText));
+                                return;
+                            }
+                        }
+                        // No QR code found, retry
+                        backgroundHandler.post(fetchAndDecodeRunnable);
+                    })
+                    .addOnFailureListener(e -> {
+                        // Retry on failure
+                        backgroundHandler.post(fetchAndDecodeRunnable);
+                    });
+                    
+            } catch (final Exception e) {
+                // Retry on error
+                backgroundHandler.post(fetchAndDecodeRunnable);
+            }
+        }
+    };
+
+    private void handleQRCode(String qrText) {
+        vibrator.vibrate(VIBRATE_DURATION);
+        scannerView.setIsResult(true);
+        
+        new StringInputParser(qrText) {
+            @Override
+            protected void handlePrivateKey(final PrefixedChecksummedBytes key) {
+                viewModel.privateKeyToSweep.setValue(key);
+                setState(SweepWalletViewModel.State.DECODE_KEY);
+                maybeDecodeKey();
+            }
+
+            @Override
+            protected void handlePaymentIntent(final PaymentIntent paymentIntent) {
+                // Not applicable for sweep wallet
+            }
+
+            @Override
+            protected void handleDirectTransaction(final Transaction transaction) throws VerificationException {
+                // Not applicable for sweep wallet
+            }
+
+            @Override
+            protected void error(final int messageResId, final Object... messageArgs) {
+                // Handle error silently for now
+            }
+        }.parse();
     }
 }

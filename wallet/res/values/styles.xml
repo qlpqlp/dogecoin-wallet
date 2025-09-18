@@ -36,7 +36,51 @@
     </style>
 
     <style name="My.Theme.Dialog" parent="@android:style/Theme.Material.Light.Dialog.Alert">
-        <item name="android:background">@color/bg_level3</item>
+        <item name="android:background">@drawable/dialog_background_rounded</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:buttonBarButtonStyle">@style/My.Dialog.Button</item>
+        <item name="android:buttonBarStyle">@style/My.Dialog.ButtonBar</item>
+    </style>
+
+    <!-- Custom Dialog Title Style -->
+    <style name="My.Dialog.Title" parent="@android:style/TextAppearance.Material">
+        <item name="android:textColor">@color/fg_significant</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <!-- Custom Dialog Button Style -->
+    <style name="My.Dialog.Button" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/dialog_button_background</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <!-- Custom Dialog Button Bar Style -->
+    <style name="My.Dialog.ButtonBar" parent="@android:style/Widget.Material.ButtonBar">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:divider">@null</item>
+        <item name="android:showDividers">none</item>
+    </style>
+
+
+    <!-- Custom DialogFragment Style -->
+    <style name="My.DialogFragment" parent="@android:style/Theme.Material.Light.Dialog">
+        <item name="android:background">@drawable/dialog_background_rounded</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="My.ThemeOverlay.ActionBar" parent="@android:style/ThemeOverlay.Material.ActionBar">
@@ -81,6 +125,7 @@
         <item name="android:minHeight">?android:attr/actionBarSize</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:tint">@color/fg_on_dark_bg_network_significant</item>
+        <item name="android:src">@drawable/ic_settings_white_24dp</item>
     </style>
 
     <style name="My.Widget.ActionButton.Floating" parent="@android:style/Widget.Material.ActionButton">
@@ -104,6 +149,7 @@
 
     <style name="My.Widget.ActionButton.Context.Overflow" parent="@android:style/Widget.Material.ActionButton.Overflow">
         <item name="android:tint">@color/fg_insignificant</item>
+        <item name="android:src">@drawable/ic_settings_white_24dp</item>
     </style>
 
     <style name="My.Widget.TextView" parent="@android:style/Widget.Material.Light.TextView">

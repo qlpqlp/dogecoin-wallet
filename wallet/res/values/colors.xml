@@ -53,4 +53,8 @@
     <color name="colorPrimaryDark">#ff8f00</color>               <!-- Darker amber color -->
     <color name="colorAccent">#ffc107</color>                    <!-- Accent amber color -->
     <color name="colorSecondary">#ffc107</color>                 <!-- Secondary amber color -->
+    
+    <!-- Peer Details Colors -->
+    <color name="bg_peer_details">#1a1a1a</color>                <!-- Dark background for peer details -->
+    <color name="border_peer_details">#333333</color>            <!-- Border color for peer details -->
 </resources>

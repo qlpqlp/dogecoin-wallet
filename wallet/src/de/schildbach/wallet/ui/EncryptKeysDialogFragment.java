@@ -175,6 +175,14 @@ public class EncryptKeysDialogFragment extends DialogFragment {
 
             EncryptKeysDialogFragment.this.dialog = dialog;
             updateView();
+
+            // Apply amber text color to buttons
+            if (dialog.getButton(DialogInterface.BUTTON_POSITIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
+            if (dialog.getButton(DialogInterface.BUTTON_NEGATIVE) != null) {
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            }
         });
 
         return dialog;

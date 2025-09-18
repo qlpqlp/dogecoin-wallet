@@ -116,6 +116,6 @@ public final class AboutFragment extends PreferenceFragment {
             marketPref.setEnabled(true);
         }
         findPreference(KEY_ABOUT_CREDITS_BITCOINJ)
-                .setTitle(getString(R.string.about_credits_bitcoinj_title, "0.14"));
+                .setTitle(getString(R.string.about_credits_libdohj_title, "0.14"));
     }
 }

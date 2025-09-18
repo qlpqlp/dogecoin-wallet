@@ -44,9 +44,6 @@ public final class DiagnosticsFragment extends PreferenceFragment {
     private WalletApplication application;
     private Configuration config;
 
-    private static final String PREFS_KEY_INITIATE_RESET = "initiate_reset";
-    private static final String PREFS_KEY_EXTENDED_PUBLIC_KEY = "extended_public_key";
-
     private static final Logger log = LoggerFactory.getLogger(DiagnosticsFragment.class);
 
     @Override
@@ -62,44 +59,8 @@ public final class DiagnosticsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preference_diagnostics);
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen, final Preference preference) {
-        final String key = preference.getKey();
-
-        if (PREFS_KEY_INITIATE_RESET.equals(key)) {
-            handleInitiateReset();
-            return true;
-        } else if (PREFS_KEY_EXTENDED_PUBLIC_KEY.equals(key)) {
-            handleExtendedPublicKey();
-            return true;
-        }
-
-        return false;
-    }
-
-    private void handleInitiateReset() {
-        final DialogBuilder dialog = DialogBuilder.dialog(activity, R.string.preferences_initiate_reset_title,
-                R.string.preferences_initiate_reset_dialog_message);
-        dialog.setPositiveButton(R.string.preferences_initiate_reset_dialog_positive, (d, which) -> {
-            log.info("manually initiated block chain reset");
-            BlockchainService.resetBlockchain(activity);
-            config.resetBestChainHeightEver();
-            config.updateLastBlockchainResetTime();
-            activity.finish(); // TODO doesn't fully finish prefs on single pane layouts
-        });
-        dialog.setNegativeButton(R.string.button_dismiss, null);
-        dialog.show();
-    }
-
-    private void handleExtendedPublicKey() {
-        final DeterministicKeyChain activeKeyChain = application.getWallet().getActiveKeyChain();
-        final DeterministicKey extendedKey = activeKeyChain.getWatchingKey();
-        final Script.ScriptType outputScriptType = activeKeyChain.getOutputScriptType();
-        final long creationTimeSeconds = extendedKey.getCreationTimeSeconds();
-        final String base58 = String.format(Locale.US, "%s?c=%d&h=bip32",
-                extendedKey.serializePubB58(Constants.NETWORK_PARAMETERS, outputScriptType), creationTimeSeconds);
-        ExtendedPublicKeyFragment.show(getFragmentManager(), (CharSequence) base58);
+        
+        // The Extended Public Key and Reset Blockchain options have been moved to the main menu
+        // This diagnostics screen is now empty but kept for future diagnostic features
     }
 }
