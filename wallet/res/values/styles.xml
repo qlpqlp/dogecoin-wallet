@@ -5,7 +5,7 @@
     <style name="My.Theme" parent="@android:style/Theme.Material.Light.DarkActionBar">
         <item name="android:actionBarTheme">@style/My.ThemeOverlay.ActionBar</item>
         <item name="android:actionBarStyle">@style/My.Widget.ActionBar</item>
-        <item name="android:actionMenuTextColor">@color/fg_on_dark_bg_network</item>
+        <item name="android:actionMenuTextColor">@color/fg_significant</item>
         <item name="android:actionButtonStyle">@style/My.Widget.ActionButton</item>
         <item name="android:actionOverflowButtonStyle">@style/My.Widget.ActionButton.Overflow</item>
         <item name="android:actionOverflowMenuStyle">@style/My.Widget.PopupMenu.Overflow</item>
@@ -84,7 +84,7 @@
     </style>
 
     <style name="My.ThemeOverlay.ActionBar" parent="@android:style/ThemeOverlay.Material.ActionBar">
-        <item name="android:colorControlNormal">@color/fg_on_dark_bg_network_significant</item>
+        <item name="android:colorControlNormal">@color/fg_significant</item>
     </style>
 
     <style name="My.Widget.ActionBar" parent="@android:style/Widget.Material.Light.ActionBar.Solid">
@@ -100,12 +100,12 @@
     </style>
 
     <style name="My.TextAppearance.Widget.ActionBar.Title" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/fg_on_dark_bg_network_significant</item>
+        <item name="android:textColor">@color/fg_significant</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="My.TextAppearance.Widget.ActionBar.Subtitle" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Subtitle">
-        <item name="android:textColor">@color/fg_on_dark_bg_network_insignificant</item>
+        <item name="android:textColor">@color/fg_less_significant</item>
         <item name="android:textStyle">normal</item>
     </style>
 
@@ -113,10 +113,10 @@
         <item name="android:minHeight">?android:attr/actionBarSize</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:drawablePadding">4dp</item>
-        <item name="android:drawableTint">@color/fg_on_dark_bg_network_significant</item>
+        <item name="android:drawableTint">@color/fg_significant</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/fg_on_dark_bg_network</item>
+        <item name="android:textColor">@color/fg_significant</item>
         <item name="android:textSize">@dimen/font_size_tiny</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -124,7 +124,7 @@
     <style name="My.Widget.ActionButton.Overflow" parent="@android:style/Widget.Material.ActionButton.Overflow">
         <item name="android:minHeight">?android:attr/actionBarSize</item>
         <item name="android:minWidth">48dp</item>
-        <item name="android:tint">@color/fg_on_dark_bg_network_significant</item>
+        <item name="android:tint">@color/fg_significant</item>
         <item name="android:src">@drawable/ic_settings_white_24dp</item>
     </style>
 

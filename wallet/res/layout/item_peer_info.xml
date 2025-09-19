@@ -22,7 +22,7 @@
             android:text="192.168.1.1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <TextView
             android:id="@+id/peer_port"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text=":22556"
             android:textSize="14sp"
-            android:textColor="@color/fg_on_dark_bg_network"
+            android:textColor="@color/fg_significant"
             android:layout_marginStart="4dp" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:text="Version: 70015"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <TextView
             android:id="@+id/peer_subversion"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Sub-version: /Shibetoshi:1.14.6/"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <TextView
             android:id="@+id/peer_services"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:text="Services: NODE_NETWORK"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <TextView
             android:id="@+id/peer_latency"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="Latency: 45ms"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <TextView
             android:id="@+id/peer_last_seen"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="Last seen: 2m ago"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
     </LinearLayout>
 

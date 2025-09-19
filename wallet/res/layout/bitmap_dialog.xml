@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bitmap_dialog_image"
-    android:layout_width="@dimen/bitmap_dialog_qr_size"
-    android:layout_height="@dimen/bitmap_dialog_qr_size"
-    android:background="@drawable/qr_code_background_modern_shadow"
-    android:contentDescription="@string/qr_code"
-    android:keepScreenOn="true"
-    android:padding="12dp"
-    android:scaleType="fitXY" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/qr_dialog_background_modern"
+    android:padding="24dp">
+
+    <!-- Header with title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/qr_code"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/fg_significant"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- QR Code with modern styling -->
+    <ImageView
+        android:id="@+id/bitmap_dialog_image"
+        android:layout_width="@dimen/bitmap_dialog_qr_size"
+        android:layout_height="@dimen/bitmap_dialog_qr_size"
+        android:background="@drawable/qr_code_background_modern_enhanced"
+        android:contentDescription="@string/qr_code"
+        android:keepScreenOn="true"
+        android:padding="16dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

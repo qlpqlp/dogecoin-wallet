@@ -5,10 +5,18 @@
     <color name="fg_less_significant">#ffe5e9f0</color>
     <color name="fg_insignificant">#ffd8dee9</color>
     <color name="fg_value_positive">#ff96f080</color>
-    <color name="fg_value_negative">#ffc107</color>
+    <color name="fg_value_negative">#FFCC33</color>
     <color name="fg_network_significant">#ffeceff4</color>
     <color name="fg_network_less_significant">#cceceff4</color>
-    <color name="fg_balance_warning">#ffc107</color>
+    <color name="fg_balance_warning">#FFCC33</color>
+    
+    <!-- Peer Details Colors -->
+    <color name="bg_peer_details">#ff1a1a1a</color>                <!-- Dark background for peer details -->
+    <color name="border_peer_details">#ff333333</color>            <!-- Dark border color for peer details -->
+    
+    <!-- Icon Colors -->
+    <color name="icon_primary">#ffffffff</color>                  <!-- White icons for dark theme -->
+    <color name="icon_secondary">#ffa0a0a0</color>                <!-- Secondary white icons for dark theme -->
 
     <!-- background -->
     <color name="bg_level3">#ff384050</color>
@@ -19,8 +27,19 @@
     <color name="bg_qr_thumb">#ffa0a8b0</color>
 
     <!-- password strength -->
-    <color name="fg_password_strength_weak">#ffc107</color>
+    <color name="fg_password_strength_weak">#FFCC33</color>
     <color name="fg_password_strength_fair">#ffdfa870</color>
     <color name="fg_password_strength_good">#ffa0a8a0</color>
     <color name="fg_password_strength_strong">#ffa3e08c</color>
+
+    <!-- Material Design Theme Colors for Dark Mode -->
+    <color name="colorPrimary">#FFCC33</color>                   <!-- Primary yellow color for dark mode -->
+    <color name="colorPrimaryDark">#E6B82E</color>               <!-- Darker yellow color for dark mode -->
+    <color name="colorAccent">#FFCC33</color>                    <!-- Accent yellow color for dark mode -->
+    <color name="colorSecondary">#FFCC33</color>                 <!-- Secondary yellow color for dark mode -->
+    
+    <!-- Additional colors for dark mode -->
+    <color name="fg_error">#FFCC33</color>                       <!-- Error text color for dark mode -->
+    <color name="scan_laser">#FFCC33</color>                     <!-- Scanner laser color for dark mode -->
+    <color name="qr_button_icon_tint">#ff000000</color>          <!-- Black QR button icon for dark theme -->
 </resources>

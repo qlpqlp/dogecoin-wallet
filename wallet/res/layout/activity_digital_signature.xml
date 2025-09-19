@@ -18,7 +18,7 @@
             android:text="@string/digital_signature_activity_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:text="Sign Text"
                 android:textSize="12sp"
-                android:drawableTop="@drawable/ic_text_white_24dp"
+                android:drawableTop="@drawable/ic_text_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:layout_marginEnd="4dp"
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:text="Sign File"
                 android:textSize="12sp"
-                android:drawableTop="@drawable/ic_file_white_24dp"
+                android:drawableTop="@drawable/ic_file_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:layout_marginStart="4dp"
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:text="Verify"
                 android:textSize="12sp"
-                android:drawableTop="@drawable/ic_verify_white_24dp"
+                android:drawableTop="@drawable/ic_verify_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:layout_marginStart="4dp"
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/digital_signature_enter_text"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -97,7 +97,7 @@
                 android:layout_height="120dp"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:hint="Enter text to sign..."
                 android:gravity="top"
                 android:inputType="textMultiLine"
@@ -110,7 +110,7 @@
                 android:layout_height="48dp"
                 android:text="Generate Signature"
                 android:textSize="14sp"
-                android:drawableStart="@drawable/ic_signature_white_24dp"
+                android:drawableStart="@drawable/ic_signature_24dp"
                 android:drawablePadding="8dp"
                 android:layout_marginTop="16dp"
                 style="@style/My.Dialog.Button" />
@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/digital_signature_select_file"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -150,7 +150,7 @@
                     android:layout_weight="1"
                     android:text="Select File"
                     android:textSize="14sp"
-                    android:drawableStart="@drawable/ic_file_white_24dp"
+                    android:drawableStart="@drawable/ic_file_24dp"
                     android:drawablePadding="8dp"
                     android:layout_marginEnd="8dp"
                     style="@style/My.Dialog.Button" />
@@ -162,7 +162,7 @@
                     android:layout_weight="1"
                     android:text="Take Photo"
                     android:textSize="14sp"
-                    android:drawableStart="@drawable/ic_camera_white_24dp"
+                    android:drawableStart="@drawable/ic_camera_24dp"
                     android:drawablePadding="8dp"
                     android:layout_marginStart="8dp"
                     style="@style/My.Dialog.Button" />
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No file selected"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
                 android:textSize="14sp"
@@ -187,7 +187,7 @@
                 android:layout_height="48dp"
                 android:text="Sign Selected File"
                 android:textSize="14sp"
-                android:drawableStart="@drawable/ic_signature_white_24dp"
+                android:drawableStart="@drawable/ic_signature_24dp"
                 android:drawablePadding="8dp"
                 android:enabled="false"
                 style="@style/My.Dialog.Button" />
@@ -209,7 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/digital_signature_enter_original_text"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -220,7 +220,7 @@
                 android:layout_height="100dp"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:hint="Enter original text..."
                 android:gravity="top"
                 android:inputType="textMultiLine"
@@ -232,7 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/digital_signature_enter_signature"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -243,7 +243,7 @@
                 android:layout_height="100dp"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:hint="Enter signature..."
                 android:gravity="top"
                 android:inputType="textMultiLine"
@@ -255,7 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/digital_signature_enter_address"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -266,7 +266,7 @@
                 android:layout_height="60dp"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:hint="Enter Dogecoin address..."
                 android:inputType="text"
                 android:textSize="14sp"
@@ -278,7 +278,7 @@
                 android:layout_height="48dp"
                 android:text="Verify Signature"
                 android:textSize="14sp"
-                android:drawableStart="@drawable/ic_verify_white_24dp"
+                android:drawableStart="@drawable/ic_verify_24dp"
                 android:drawablePadding="8dp"
                 style="@style/My.Dialog.Button" />
 
@@ -301,7 +301,7 @@
                 android:text="Results:"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginBottom="16dp" />
 
             <TextView
@@ -311,7 +311,7 @@
                 android:text="Signed text:"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginBottom="8dp"
                 android:visibility="gone" />
 
@@ -320,7 +320,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
                 android:textSize="12sp"
@@ -336,7 +336,7 @@
                 android:text="File Hash (SHA256):"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginBottom="8dp"
                 android:visibility="gone" />
 
@@ -345,7 +345,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
                 android:textSize="12sp"
@@ -360,7 +360,7 @@
                 android:text="Signature:"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -368,7 +368,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
                 android:textSize="12sp"
@@ -382,7 +382,7 @@
                 android:text="Doge Address:"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -390,7 +390,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:background="@color/bg_level2"
                 android:padding="16dp"
                 android:textSize="12sp"
@@ -410,7 +410,7 @@
                     android:layout_weight="1"
                     android:text="Copy"
                     android:textSize="12sp"
-                    android:drawableStart="@drawable/ic_copy_white_24dp"
+                    android:drawableStart="@drawable/ic_copy_24dp"
                     android:drawablePadding="4dp"
                     android:layout_marginEnd="8dp"
                     style="@style/My.Dialog.Button" />
@@ -422,7 +422,7 @@
                     android:layout_weight="1"
                     android:text="Share"
                     android:textSize="12sp"
-                    android:drawableStart="@drawable/ic_share_white_24dp"
+                    android:drawableStart="@drawable/ic_share_24dp"
                     android:drawablePadding="4dp"
                     android:layout_marginStart="8dp"
                     style="@style/My.Dialog.Button" />
@@ -435,7 +435,7 @@
                 android:layout_height="48dp"
                 android:text="@string/digital_signature_clear"
                 android:textSize="14sp"
-                android:drawableStart="@drawable/ic_clear_white_24dp"
+                android:drawableStart="@drawable/ic_clear_24dp"
                 android:drawablePadding="8dp"
                 android:layout_marginTop="16dp"
                 style="@style/My.Dialog.Button" />

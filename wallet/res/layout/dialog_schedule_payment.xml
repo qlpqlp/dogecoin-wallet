@@ -16,7 +16,7 @@
             android:text="@string/recurring_payments_destination_address"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:layout_marginBottom="8dp" />
 
         <Spinner
@@ -33,7 +33,7 @@
             android:layout_height="48dp"
             android:text="@string/recurring_payments_add_address"
             android:textSize="14sp"
-            android:drawableStart="@drawable/ic_settings_white_24dp"
+            android:drawableStart="@drawable/ic_settings_24dp"
             android:drawablePadding="8dp"
             android:layout_marginBottom="16dp"
             style="@style/My.Dialog.Button" />
@@ -45,7 +45,7 @@
             android:text="@string/recurring_payments_reference"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:layout_marginBottom="8dp" />
 
         <EditText
@@ -54,7 +54,7 @@
             android:layout_height="60dp"
             android:background="@color/bg_level2"
             android:padding="16dp"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:hint="Enter reference for OP_RETURN (optional)"
             android:inputType="text"
             android:textSize="14sp"
@@ -67,7 +67,7 @@
             android:text="@string/recurring_payments_amount"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:layout_marginBottom="8dp" />
 
         <EditText
@@ -76,7 +76,7 @@
             android:layout_height="60dp"
             android:background="@color/bg_level2"
             android:padding="16dp"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:hint="0.0"
             android:inputType="numberDecimal"
             android:textSize="14sp"
@@ -91,7 +91,7 @@
             android:text="Payment Date &amp; Time"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:layout_marginBottom="8dp" />
 
         <LinearLayout
@@ -107,7 +107,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_level2"
                 android:text="Select Date"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="14sp"
                 android:drawableStart="@drawable/ic_calendar_white_24dp"
                 android:drawablePadding="8dp"
@@ -122,7 +122,7 @@
                 android:layout_weight="1"
                 android:background="@color/bg_level2"
                 android:text="Select Time"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:textSize="14sp"
                 android:drawableStart="@drawable/ic_clock_white_24dp"
                 android:drawablePadding="8dp"
@@ -152,7 +152,7 @@
                 android:layout_weight="1"
                 android:text="@string/recurring_payments_recurring_monthly"
                 android:textSize="16sp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:layout_marginStart="8dp" />
 
         </LinearLayout>
@@ -183,7 +183,7 @@
                 android:textSize="14sp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:drawableStart="@drawable/ic_settings_white_24dp"
+                android:drawableStart="@drawable/ic_settings_24dp"
                 android:drawablePadding="8dp"
                 style="@style/My.Dialog.Button" />
 

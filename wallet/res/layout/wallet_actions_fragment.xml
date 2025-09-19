@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:attr/actionBarSplitStyle"
-    android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"
+    android:theme="@android:style/ThemeOverlay.Material.ActionBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:measureWithLargestChild="true"
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_send_flipped_white_24dp"
+        android:drawableLeft="@drawable/ic_send_flipped_24dp"
         android:text="@string/button_request_coins" />
 
     <Space
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:drawableRight="@drawable/ic_send_white_24dp"
+        android:drawableRight="@drawable/ic_send_24dp"
         android:text="@string/button_send_coins" />
 
     <ImageButton
@@ -39,8 +39,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/list_entry_padding_horizontal_cram"
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_cram"
-        android:backgroundTint="@color/fg_balance_warning"
+        android:backgroundTint="@color/colorPrimary"
         android:contentDescription="@string/button_scan"
-        android:src="@drawable/ic_photo_camera_white_24dp"
-        android:tint="@color/bg_action_bar" />
+        android:src="@drawable/ic_qrcode_24dp"
+        android:tint="@color/qr_button_icon_tint" />
 </LinearLayout>

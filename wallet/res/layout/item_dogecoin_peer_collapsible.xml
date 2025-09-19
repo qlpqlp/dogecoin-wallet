@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Loading..."
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Protocol:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Client:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -119,7 +119,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -135,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Services:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -162,7 +162,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Blocks:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -173,7 +173,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -189,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Latency:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -200,7 +200,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Source:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -227,7 +227,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -242,7 +242,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Last Seen:"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -253,7 +253,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:text="Unknown"
-                        android:textColor="@color/fg_on_dark_bg_network"
+                        android:textColor="@color/fg_significant"
                         android:textSize="14sp" />
 
                 </LinearLayout>

@@ -24,6 +24,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.app.ShareCompat;
@@ -45,6 +46,7 @@ public class WalletAddressDialogFragment extends DialogFragment {
 
     private ImageView imageView;
     private TextView labelView;
+    private ImageButton closeButton;
     private WalletAddressViewModel viewModel;
 
     private static final Logger log = LoggerFactory.getLogger(WalletAddressDialogFragment.class);
@@ -92,6 +94,10 @@ public class WalletAddressDialogFragment extends DialogFragment {
 
         imageView = dialog.findViewById(R.id.wallet_address_dialog_image);
         labelView = dialog.findViewById(R.id.wallet_address_dialog_label);
+        closeButton = dialog.findViewById(R.id.wallet_address_dialog_close);
+
+        // Set up close button click handler
+        closeButton.setOnClickListener(v -> dismissAllowingStateLoss());
 
         final View labelButtonView = dialog.findViewById(R.id.wallet_address_dialog_label_button);
         labelButtonView.setVisibility(View.VISIBLE);

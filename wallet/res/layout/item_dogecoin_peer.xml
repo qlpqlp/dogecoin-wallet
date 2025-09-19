@@ -22,7 +22,7 @@
             android:text="192.168.1.1:22556"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/fg_on_dark_bg_network" />
+            android:textColor="@color/fg_significant" />
 
         <View
             android:id="@+id/peer_status_bullet"
@@ -53,7 +53,7 @@
                 android:layout_weight="1"
                 android:text="Protocol: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:text="70015"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network" />
+                android:textColor="@color/fg_significant" />
 
             <TextView
                 android:layout_width="0dp"
@@ -71,7 +71,7 @@
                 android:layout_weight="2"
                 android:text="Sub: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -81,7 +81,7 @@
                 android:layout_weight="3"
                 android:text="/Shibetoshi:1.14.9/"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:singleLine="true"
                 android:ellipsize="end" />
 
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:text="Services: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -109,7 +109,7 @@
                 android:layout_weight="1"
                 android:text="NETWORK &amp; BLOOM"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:singleLine="true"
                 android:ellipsize="end" />
 
@@ -128,7 +128,7 @@
                 android:layout_weight="1"
                 android:text="Synced: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_weight="1"
                 android:text="4,500,000"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network" />
+                android:textColor="@color/fg_significant" />
 
             <TextView
                 android:layout_width="0dp"
@@ -146,7 +146,7 @@
                 android:layout_weight="1"
                 android:text="Source: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -156,7 +156,7 @@
                 android:layout_weight="1"
                 android:text="DNS"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network" />
+                android:textColor="@color/fg_significant" />
 
         </LinearLayout>
 
@@ -172,7 +172,7 @@
                 android:layout_weight="1"
                 android:text="Last Seen: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -182,7 +182,7 @@
                 android:layout_weight="1"
                 android:text="2m ago"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network" />
+                android:textColor="@color/fg_significant" />
 
             <TextView
                 android:layout_width="0dp"
@@ -190,7 +190,7 @@
                 android:layout_weight="1"
                 android:text="Latency: "
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network"
+                android:textColor="@color/fg_significant"
                 android:textStyle="bold" />
 
             <TextView
@@ -200,7 +200,7 @@
                 android:layout_weight="1"
                 android:text="150ms (Good)"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network" />
+                android:textColor="@color/fg_significant" />
 
         </LinearLayout>
 

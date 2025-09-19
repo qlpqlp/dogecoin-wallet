@@ -31,7 +31,7 @@
                 android:text="100 DOGE"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/fg_on_dark_bg_network_significant" />
+                android:textColor="@color/fg_significant" />
 
             <TextView
                 android:id="@+id/text_frequency"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="Monthly"
                 android:textSize="12sp"
-                android:textColor="@color/fg_on_dark_bg_network_significant"
+                android:textColor="@color/fg_significant"
                 android:alpha="0.7" />
 
         </LinearLayout>
@@ -67,7 +67,7 @@
             android:layout_weight="1"
             android:text="To: D7Y55...X9K2"
             android:textSize="14sp"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:fontFamily="monospace"
             android:singleLine="true"
             android:ellipsize="middle" />
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="Next: Jan 15"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:alpha="0.7" />
 
     </LinearLayout>
@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:text="Ref: Payment for services"
             android:textSize="12sp"
-            android:textColor="@color/fg_on_dark_bg_network_significant"
+            android:textColor="@color/fg_significant"
             android:alpha="0.7"
             android:singleLine="true"
             android:ellipsize="end" />
