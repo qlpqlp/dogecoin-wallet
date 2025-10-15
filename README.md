@@ -3,27 +3,16 @@
 Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dogecoin payment wallet app for your Android device! This is a fork of the original Bitcoin Wallet, converted to support Dogecoin Blockchain.
 
 
-## Screenshots
+## 📱 App Demo & RadioDoge Integration
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="img/001.jpg" width="30%" />
-  <img src="img/002.jpg" width="30%" />
-  <img src="img/003.jpg" width="30%" />
-  <img src="img/004.jpg" width="30%" />
-  <img src="img/005.jpg" width="30%" />
-  <img src="img/006.jpg" width="30%" />
-  <img src="img/007.jpg" width="30%" />
-  <img src="img/008.jpg" width="30%" />
-  <img src="img/009.jpg" width="30%" />
-  <img src="img/010.jpg" width="30%" />
-  <img src="img/011.jpg" width="30%" />
-  <img src="img/012.jpg" width="30%" />
-  <img src="img/013.jpg" width="30%" />
-  <img src="img/014.jpg" width="30%" />
-  <img src="img/015.jpg" width="30%" />
-  <img src="img/016.jpg" width="30%" />
-  <img src="img/017.jpg" width="30%" />
-</div>
+### App Demo Video
+<video width="300" height="600" controls>
+  <source src="docs/images/DogecoinWalletScreen.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+### RadioDoge Integration
+<img src="docs/images/back-phone-radiodoge.png" width="300" alt="RadioDoge Integration" />
 
 
 This project contains several sub-projects:
@@ -207,6 +196,46 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 • **🌐 Blockchain Storage**: Reference data is permanently stored on the Dogecoin blockchain for decentralized verification.
 • **🔐 Child Wallet Security**: HD key derivation and QR code sharing for secure family wallet management.
 • **🔒 Address Exclusion Control**: Exclude specific addresses from spending to protect child funds and manage reserved balances.
+• **📡 RadioDoge Integration**: Send signed Dogecoin transactions without internet using LoRa technology! Connect with KeyChain LoRa or any LoRa-enabled device for offline transactions. Powered by [RadioDoge V3 from Dogecoin Foundation](https://github.com/dogecoinfoundation/radiodoge).
+
+### 📡 RadioDoge - Offline Dogecoin Transactions
+
+RadioDoge is a revolutionary feature that enables Dogecoin transactions without internet connectivity using LoRa (Long Range) radio technology. This makes the wallet perfect for remote areas, emergency situations, or any scenario where internet access is limited or unavailable.
+
+#### Key Features:
+- **🌐 No Internet Required**: Send transactions completely offline using LoRa radio waves
+- **📡 LoRa Technology**: Long-range, low-power radio communication (up to 10+ km range)
+- **🔒 Secure Broadcasting**: Transactions are signed locally and broadcast via RadioDoge devices
+- **⚡ Automatic Detection**: Automatically detects RadioDoge WiFi network and switches to offline mode
+- **🔄 Smart Fallback**: Falls back to normal internet broadcasting when connectivity is available
+- **⚙️ Configurable**: Enable/disable RadioDoge functionality in app settings
+- **🌍 Global Reach**: Works with any LoRa-enabled device, not just specific hardware
+
+#### How It Works:
+1. **Connect to RadioDoge**: Connect to "RadioDoge" WiFi network from a LoRa device
+2. **Create Transaction**: Send Dogecoin as normal - the wallet detects the offline environment
+3. **Automatic Broadcasting**: Transaction is automatically broadcast via RadioDoge instead of internet
+4. **Global Propagation**: RadioDoge devices relay the transaction to the broader network
+
+#### Compatible Devices:
+- **KeyChain LoRa**: Official RadioDoge hardware from Dogecoin Foundation
+- **Custom LoRa Devices**: Any LoRa-enabled device running RadioDoge V3 software
+- **Community Networks**: Connect to existing RadioDoge mesh networks
+
+This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoinfoundation/radiodoge) from the Dogecoin Foundation, ensuring compatibility and ongoing development support.
+
+## 📱 Platform Support
+
+### Android
+- **Current Version**: Available now on Google Play Store
+- **Features**: Full feature set including RadioDoge, Family Mode, and all advanced features
+- **Requirements**: Android 7.0+ (API Level 24)
+
+### iOS
+- **Coming Soon**: iOS version currently in development
+- **Expected Features**: Full feature parity with Android version
+- **Timeline**: Expected release in Q2 2025
+- **Updates**: Follow our GitHub repository for development progress
 
 ## 💰 TRANSACTION FEES
 
