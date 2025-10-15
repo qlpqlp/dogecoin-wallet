@@ -2,6 +2,22 @@
 
 A modern, responsive website for the Dogecoin Wallet Android application.
 
+## 📱 App Demo & RadioDoge Integration
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center;">
+  <div style="text-align: center;">
+    <h4>Dogecoin Wallet App</h4>
+    <img src="images/dogecoinwallet.png" width="300" alt="Dogecoin Wallet App" />
+  </div>
+  <div style="text-align: center;">
+    <h4>RadioDoge Integration</h4>
+    <img src="images/back-phone-radiodoge.png" width="300" alt="RadioDoge Integration" />
+  </div>
+</div>
+
+### 🌐 More Information & Documentation
+Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
+
 ## 🚀 Features
 
 - **Modern Design**: Clean, Dogecoin-themed design with amber/yellow color scheme
