@@ -2,6 +2,15 @@
 
 A modern, responsive website for the Dogecoin Wallet Android application.
 
+## 📱 Current Version Information
+
+- **Version**: v1.0 (Version Code: 61)
+- **Target SDK**: API 35 (Android 15)
+- **Minimum SDK**: API 24 (Android 7.0)
+- **Build Size**: ~14.3 MB (minified AAB)
+- **Status**: Available on Google Play Store
+- **Android 15 Compatible**: ✅ Fixed BOOT_COMPLETED foreground service restrictions
+
 ## 📱 App Demo & RadioDoge Integration
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center;">
@@ -116,7 +125,75 @@ The website requires several images to be added to the `images/` directory:
 - `download-hero.png` (300x600px)
 - `screenshot-1.png` through `screenshot-6.png` (250x500px each)
 
-## 🚀 Deployment
+## 🏗️ Building the Dogecoin Wallet
+
+### Quick Build Commands
+
+#### **Build Android App Bundle (AAB) for Google Play Console**:
+```bash
+# Navigate to project root
+cd dogecoin-wallet
+
+# Clean previous builds
+.\gradlew clean
+
+# Build release AAB
+.\gradlew :wallet:bundleRelease
+```
+
+#### **Build APK for Testing**:
+```bash
+# Build debug APK
+.\gradlew :wallet:assembleDebug
+
+# Build release APK
+.\gradlew :wallet:assembleRelease
+```
+
+### 📦 Build Outputs
+
+After building, you'll find:
+- **AAB File**: `wallet/build/outputs/bundle/release/wallet-release.aab`
+- **APK Files**: `wallet/build/outputs/apk/release/` or `debug/`
+- **R8 Mapping**: `wallet/build/outputs/mapping/release/mapping.txt`
+
+### 🛠️ Prerequisites
+
+- **Android Studio**: Version 2023.1.1 or later
+- **Android SDK**: API Level 35 (Android 15)
+- **Build Tools**: 35.0.0 or later
+- **Java**: Java 8 SDK or later
+- **Gradle**: 8.12.2 (included with Android Studio)
+
+### 🔧 Current Build Configuration
+
+- **Version Name**: 1.0
+- **Version Code**: 61
+- **Target SDK**: 35 (Android 15)
+- **Minify**: Enabled (R8)
+- **Signing**: Release keystore configured
+- **File Size**: ~14.3 MB (minified AAB)
+- **Android 15 Fix**: BOOT_COMPLETED restrictions resolved
+
+### 📱 Google Play Console Requirements
+
+- **Target SDK**: API 35 ✅
+- **Version Code**: Unique and incrementing ✅
+- **R8 Mapping**: Upload `mapping.txt` ✅
+- **App Bundle**: AAB format ✅
+- **Signing**: Release keystore ✅
+- **Android 15 Compatibility**: BOOT_COMPLETED restrictions fixed ✅
+
+### 🤖 Android 15 Compatibility Fix
+
+The latest version (v39) includes a critical fix for Android 15 compatibility:
+
+- **Issue**: Android 15+ restricts certain foreground service types from being started by `BOOT_COMPLETED` receivers
+- **Solution**: Modified `BootstrapReceiver` to schedule blockchain service with delay on Android 15+
+- **Result**: App no longer crashes on Android 15+ devices and passes Google Play Console validation
+- **Backward Compatibility**: Maintains full functionality on older Android versions
+
+## 🚀 Website Deployment
 
 1. **Static Hosting**: Upload all files to any static hosting service
 2. **GitHub Pages**: Push to GitHub and enable Pages

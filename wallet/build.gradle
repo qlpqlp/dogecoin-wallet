@@ -51,15 +51,15 @@ ext {
 
 android {
     namespace 'de.schildbach.wallet'
-    compileSdkVersion 'android-34'
-    buildToolsVersion '33.0.2'
+    compileSdkVersion 'android-35'
+    buildToolsVersion '35.0.0'
     
 
     defaultConfig {
         applicationId 'org.dogecoin.wallet'
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 36
+        targetSdkVersion 35
+        versionCode 61
         versionName '1.0'
         vectorDrawables.useSupportLibrary = true
 
@@ -85,21 +85,25 @@ android {
         }
     }
 
-    buildTypes {
-        all {
-            minifyEnabled false
-            shrinkResources false
-            crunchPngs false
-            proguardFile 'proguard.cfg'
-        }
+        buildTypes {
+            all {
+                minifyEnabled true
+                shrinkResources true
+                crunchPngs true
+                proguardFile 'proguard.cfg'
+            }
         debug {
             debuggable true
         }
         release {
-            minifyEnabled false
-            shrinkResources false
-            crunchPngs false
+            minifyEnabled true
+            shrinkResources true
+            crunchPngs true
             signingConfig signingConfigs.release
+            // Enable native debug symbols
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
         }
     }
 
@@ -141,6 +145,7 @@ android {
     buildFeatures {
         buildConfig true
     }
+    
     packagingOptions {
         jniLibs {
             excludes += ['lib/x86_64/freebsd/libscrypt.so', 'lib/x86_64/linux/libscrypt.so', 'META-INF/proguard/**', 'META-INF/services/**', 'kotlin/**', 'kotlinx/**', 'commonMain/**', 'nonJvmMain/**', 'okhttp3/internal/publicsuffix/*']

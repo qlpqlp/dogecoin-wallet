@@ -37,6 +37,14 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
+### 📱 Current Release (v1.0 - Version Code 61)
+- **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
+- **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
+- **Build Optimization**: Enabled R8 minification for smaller app size (~14.3 MB)
+- **Google Play Ready**: Fully compliant with all Google Play Console requirements
+- **Version Management**: Incremental version code system for continuous updates
+- **UI Improvements**: Fixed status bar and navigation bar handling for all devices
+
 ## ✨ NEW FEATURES & IMPROVEMENTS
 
 ### 🔍 Advanced QR Code Scanner
@@ -50,6 +58,12 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **New Permission**: Added `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` permission
 - **Settings Integration**: Added battery optimization preference in app settings
 - **Reliable Sync**: Headers now sync consistently without being put to sleep
+
+### 🤖 Android 15 Compatibility Fix
+- **BOOT_COMPLETED Restrictions**: Fixed Android 15+ foreground service restrictions from boot receivers
+- **Smart Service Scheduling**: Blockchain service now schedules with delay on Android 15+ to avoid crashes
+- **Backward Compatibility**: Maintains full functionality on older Android versions
+- **Google Play Compliance**: Resolves all Android 15 compatibility warnings
 
 ### 🌐 Worldwide Node Discovery
 - **New Total Nodes Tab**: Added comprehensive network monitoring in the Network Monitor
@@ -232,9 +246,13 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: Available now on Google Play Store
+- **Current Version**: v1.0 (Version Code: 61)
+- **Target SDK**: API 35 (Android 15)
+- **Minimum SDK**: API 24 (Android 7.0)
+- **Status**: Available now on Google Play Store
 - **Features**: Full feature set including RadioDoge, Family Mode, and all advanced features
-- **Requirements**: Android 7.0+ (API Level 24)
+- **Build Size**: ~14.3 MB (minified AAB)
+- **Android 15 Compatible**: ✅ Fixed BOOT_COMPLETED foreground service restrictions
 
 ### iOS
 - **Coming Soon**: iOS version currently in development
@@ -267,7 +285,8 @@ This wallet follows the official Dogecoin fee recommendations for optimal networ
 - **Operating System**: Windows 10/11, macOS, or Linux
 - **Java**: Java 8 SDK or later (OpenJDK recommended)
 - **Android Studio**: Version 2023.1.1 or later
-- **Android SDK**: API Level 34 (Android 14)
+- **Android SDK**: API Level 35 (Android 15) - Required for Google Play Console
+- **Build Tools**: 35.0.0 or later
 - **Gradle**: 8.12.2 (included with Android Studio)
 
 ### Required Tools
@@ -276,7 +295,36 @@ This wallet follows the official Dogecoin fee recommendations for optimal networ
 - Android SDK Tools
 - Java Development Kit (JDK 8 or later)
 
-## 🏗️ BUILDING WITH ANDROID STUDIO
+## 🏗️ BUILDING THE DOGECOIN WALLET
+
+### Quick Build Commands
+
+#### **Build Android App Bundle (AAB) for Google Play Console**:
+```bash
+# Clean previous builds
+.\gradlew clean
+
+# Build release AAB
+.\gradlew :wallet:bundleRelease
+```
+
+#### **Build APK for Testing**:
+```bash
+# Build debug APK
+.\gradlew :wallet:assembleDebug
+
+# Build release APK
+.\gradlew :wallet:assembleRelease
+```
+
+### 📦 Build Outputs
+
+After building, you'll find:
+- **AAB File**: `wallet/build/outputs/bundle/release/wallet-release.aab`
+- **APK Files**: `wallet/build/outputs/apk/release/` or `debug/`
+- **R8 Mapping**: `wallet/build/outputs/mapping/release/mapping.txt`
+
+### 🏗️ BUILDING WITH ANDROID STUDIO
 
 ### 1. Initial Setup
 
@@ -295,7 +343,7 @@ This wallet follows the official Dogecoin fee recommendations for optimal networ
 3. **Configure Android SDK**:
    - Go to `File` → `Project Structure` → `SDK Location`
    - Ensure Android SDK is properly configured
-   - Verify that API Level 34 is installed
+   - Verify that API Level 35 is installed
 
 ### 2. Project Configuration
 
@@ -343,7 +391,24 @@ This wallet follows the official Dogecoin fee recommendations for optimal networ
    - Select your connected device or emulator
    - The app will be installed and launched
 
-### 5. Troubleshooting Common Issues
+### 5. Google Play Console Requirements
+
+#### **For Production Release**:
+- **Target SDK**: API 35 (Android 15) ✅
+- **Version Code**: Must be unique and incrementing ✅
+- **R8 Mapping**: Upload `mapping.txt` for crash analysis ✅
+- **App Bundle**: Use AAB format (not APK) ✅
+- **Signing**: Must be signed with release keystore ✅
+
+#### **Current Build Configuration**:
+- **Version Name**: 1.0
+- **Version Code**: 61
+- **Target SDK**: 35
+- **Minify**: Enabled (R8)
+- **Signing**: Release keystore configured
+- **Android 15 Fix**: BOOT_COMPLETED restrictions resolved
+
+### 6. Troubleshooting Common Issues
 
 #### Build Errors
 - **Gradle Sync Issues**: Clean and rebuild project (`Build` → `Clean Project`, then `Build` → `Rebuild Project`)
@@ -420,7 +485,7 @@ Always backup your wallet and test with small amounts before using for significa
 ## 📞 SUPPORT
 
 For issues and support:
-- **Email**: report@inevitable360.com
+- **Email**: report@dogecoinwallet.org
 - **GitHub Issues**: [Create an issue](https://github.com/qlpqlp/dogecoin-wallet/issues)
 - **Documentation**: Check the [wiki](https://github.com/qlpqlp/dogecoin-wallet/wiki)
 
@@ -428,7 +493,7 @@ For issues and support:
 
 - **Original Bitcoin Wallet**: Andreas Schildbach
 - **Dogecoin Wallet Conversion**: Langer Hans [@langer_hans](https://x.com/langer_hans)
-- **Additional Contributors**: inevitable360 [@inevitable360](https://x.com/inevitable360) and other contributors
+- **Additional Contributors**: Paulo Vidal (Dogecoin Foundation Developer) and other contributors
 - **DogecoinJ Library**: [libdohj](https://github.com/dogecoin/libdohj)
 - **Google ML Kit**: Advanced QR code scanning with machine learning
 - **ZXing**: Legacy QR code scanning library (kept for compatibility)

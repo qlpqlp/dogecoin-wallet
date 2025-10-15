@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import androidx.fragment.app.FragmentActivity;
 import de.schildbach.wallet.R;
@@ -42,9 +43,67 @@ public abstract class AbstractWalletActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // Add padding for status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().post(new Runnable() {
+                @Override
+                public void run() {
+                    addStatusBarPadding();
+                }
+            });
+        }
+        
         application = (WalletApplication) getApplication();
         setTaskDescription(new TaskDescription(null, null, getColor(R.color.bg_action_bar)));
-        super.onCreate(savedInstanceState);
+    }
+    
+    private void addStatusBarPadding() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int statusBarHeight = getStatusBarHeight();
+            // Add moderate extra padding to ensure content is fully visible
+            int extraPadding = (int) (getResources().getDisplayMetrics().density * 60); // 60dp extra
+            int totalPadding = statusBarHeight + extraPadding;
+            
+            // Get navigation bar height and add it to bottom padding
+            int navigationBarHeight = getNavigationBarHeight();
+            
+            // Dynamic bottom padding based on screen size + navigation bar
+            int screenHeight = getResources().getDisplayMetrics().heightPixels;
+            
+            // Calculate dynamic bottom padding (smaller for larger screens)
+            int baseBottomPadding = (int) (getResources().getDisplayMetrics().density * 8); // 8dp base
+            int dynamicBottomPadding = Math.max(baseBottomPadding, screenHeight / 100); // Scale with screen height
+            int maxBottomPadding = (int) (getResources().getDisplayMetrics().density * 20); // Max 20dp
+            int calculatedBottomPadding = Math.min(dynamicBottomPadding, maxBottomPadding);
+            
+            // Add navigation bar height to ensure content is above it
+            int finalBottomPadding = calculatedBottomPadding + navigationBarHeight;
+            
+            View contentView = findViewById(android.R.id.content);
+            if (contentView != null) {
+                contentView.setPadding(0, totalPadding, 0, finalBottomPadding);
+            }
+        }
+    }
+    
+    private int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+    
+    private int getNavigationBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     public WalletApplication getWalletApplication() {

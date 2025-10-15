@@ -7,11 +7,11 @@
         android:title="@string/about_version_title" />
     <Preference
         android:key="about_copyright"
-        android:summary="© 2011-2020, the Bitcoin Wallet developers\n© 2013-2025, the Dogecoin Wallet developers\nMaintained by: Paulo Vidal (@inevitable360)"
+        android:summary="© 2011-2020, the Bitcoin Wallet developers\n© 2013-2025, the Dogecoin Wallet developers\n© 2013-2025 Dogecoin Foundation"
         android:title="@string/about_copyright_title" />
     <Preference
         android:key="about_author"
-        android:summary="Paulo Vidal (@inevitable360)\nLanger Hans (@langer_hans)"
+        android:summary="Paulo Vidal (Dogecoin Foundation)\nLanger Hans (Dogecoin Deweloper)"
         android:title="Authors" />
     <Preference
         android:key="about_license"
@@ -23,11 +23,11 @@
     </Preference>
     <Preference
         android:key="about_license"
-        android:summary="https://github.com/qlpqlp/dogecoin-wallet/wiki/PrivacyPolicy"
+        android:summary="https://dogecoinwallet.org/docs/privacy-policy.html"
         android:title="@string/about_privacy_title" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://github.com/qlpqlp/dogecoin-wallet/wiki/PrivacyPolicy" />
+            android:data="https://dogecoinwallet.org/docs/privacy-policy.html" />
     </Preference>
     <Preference
         android:key="about_source"
@@ -44,11 +44,19 @@
         android:title="@string/about_market_app_title" />
     <Preference
         android:key="about_twitter"
-        android:summary="\@inevitable360\n\@langer_hans"
+        android:summary="Paulo Vidal (@inevitable360)\n\Langer Hans (@langer_hans)"
         android:title="X (formerly Twitter)">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="https://x.com/inevitable360" />
+    </Preference>
+    <Preference
+        android:key="about_github"
+        android:summary="Paulo Vidal (@qlpqlp)\nLanger Hans (@langer_hans)"
+        android:title="GitHub">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/qlpqlp" />
     </Preference>
 
     <PreferenceCategory

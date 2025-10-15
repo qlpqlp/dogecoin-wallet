@@ -134,7 +134,7 @@ public final class Constants {
     public static final String DONATION_ADDRESS = null;
 
     /** Recipient e-mail address for reports. */
-    public static final String REPORT_EMAIL = "report@inevitable360.com";
+    public static final String REPORT_EMAIL = "report@dogecoinwallet.org";
 
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";

@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import androidx.annotation.WorkerThread;
 import androidx.core.app.NotificationCompat;
 import de.schildbach.wallet.Configuration;
@@ -73,11 +74,21 @@ public class BootstrapReceiver extends BroadcastReceiver {
             if (packageReplaced)
                 maybeUpgradeWallet(application.getWallet());
 
-            // make sure there is always a blockchain sync scheduled
-            StartBlockchainService.schedule(application, true);
-
-            // make sure recurring payments service is scheduled
-            RecurringPaymentsService.schedule(application);
+            // For Android 15+ (API 35+), we cannot start restricted foreground services
+            // from BOOT_COMPLETED receivers. Skip scheduling entirely on boot for Android 15+.
+            if (bootCompleted && Build.VERSION.SDK_INT >= 35) {
+                // On Android 15+, do not schedule blockchain service on boot to avoid
+                // the restricted foreground service type restriction.
+                // The service will be started when the user opens the app.
+                log.info("Android 15+ detected, skipping blockchain service scheduling on boot to avoid BOOT_COMPLETED restriction");
+                // Only schedule recurring payments service which doesn't use restricted foreground services
+                RecurringPaymentsService.schedule(application);
+            } else {
+                // For older Android versions or package replacement, use the original logic
+                StartBlockchainService.schedule(application, true);
+                // make sure recurring payments service is scheduled
+                RecurringPaymentsService.schedule(application);
+            }
 
             // if the app hasn't been used for a while and contains coins, maybe show reminder
             maybeShowInactivityNotification(application);
