@@ -5,14 +5,14 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 
 ## 📱 App Demo & RadioDoge Integration
 
-### App Demo Video
-<video width="300" height="600" controls>
-  <source src="docs/images/DogecoinWalletScreen.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+### Dogecoin Wallet App
+<img src="docs/images/dogecoinwallet.png" width="300" alt="Dogecoin Wallet App" />
 
 ### RadioDoge Integration
 <img src="docs/images/back-phone-radiodoge.png" width="300" alt="RadioDoge Integration" />
+
+### 🌐 More Information & Documentation
+Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
 
 This project contains several sub-projects:
