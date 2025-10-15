@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Guide - Dogecoin Wallet</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../images/dogecoin.svg">
+    <link rel="apple-touch-icon" href="../images/dogecoin.svg">    
+    <style>
+        .doc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            line-height: 1.8;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content h1 { 
+            color: var(--dogecoin-yellow); 
+            margin-bottom: 30px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h2 { 
+            color: var(--text-color); 
+            margin-top: 40px; 
+            margin-bottom: 20px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h3 { 
+            color: var(--text-light); 
+            margin-top: 30px; 
+            margin-bottom: 15px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content p { 
+            margin-bottom: 20px; 
+            color: var(--text-light); 
+            transition: color 0.3s ease;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--dogecoin-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--dogecoin-orange);
+        }
+        .code-block {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content ul, .doc-content ol {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        /* Modern bullet points and numbering */
+        .doc-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .doc-content ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ul li::before {
+            content: "▶";
+            color: var(--dogecoin-yellow);
+            font-size: 12px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .doc-content ol {
+            counter-reset: custom-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .doc-content ol li {
+            counter-increment: custom-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ol li::before {
+            content: counter(custom-counter);
+            color: #000000;
+            background: #ffc107;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            z-index: 1;
+        }
+        .doc-content a {
+            color: var(--dogecoin-yellow);
+            transition: color 0.3s ease;
+        }
+        .doc-content a:hover {
+            color: var(--dogecoin-orange);
+        }
+        .doc-content h2 i {
+            color: var(--dogecoin-yellow);
+            margin-right: 10px;
+        }
+        .doc-content strong i {
+            color: var(--dogecoin-orange);
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-content">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Developer Guide - Dogecoin Wallet</h1>
+        <p>Welcome, developers! This guide will help you contribute to the Dogecoin Wallet project and understand its architecture.</p>
+        
+        <h2><i class="fas fa-project-diagram"></i> Project Structure</h2>
+        <div class="code-block">
+dogecoin-wallet/
+├── wallet/                 # Main Android app
+│   ├── src/               # Java source code
+│   ├── res/               # Android resources
+│   └── build.gradle       # App build configuration
+├── integration-android/   # Integration library
+└── website/              # Project website
+        </div>
+        
+        <h2><i class="fas fa-tools"></i> Prerequisites</h2>
+        <ul>
+            <li>Android Studio 2023.1.1+</li>
+            <li>Android SDK API Level 34</li>
+            <li>Java 8+</li>
+            <li>Git</li>
+        </ul>
+        
+        <h2><i class="fas fa-hammer"></i> Building the Project</h2>
+        <h3>Clone Repository</h3>
+        <div class="code-block">
+git clone https://github.com/qlpqlp/dogecoin-wallet.git
+cd dogecoin-wallet
+        </div>
+        
+        <h3>Open in Android Studio</h3>
+        <ol>
+            <li>Open Android Studio</li>
+            <li>Select "Open an existing project"</li>
+            <li>Navigate to the cloned repository</li>
+            <li>Wait for Gradle sync to complete</li>
+        </ol>
+        
+        <h3>Build Commands</h3>
+        <div class="code-block">
+# Debug build
+./gradlew assembleDebug
+
+# Release build
+./gradlew assembleRelease
+
+# Run tests
+./gradlew test
+        </div>
+        
+        <h2><i class="fas fa-building"></i> Architecture</h2>
+        <h3>Core Libraries</h3>
+        <ul>
+            <li><strong>libdohj 0.15:</strong> Dogecoin protocol implementation</li>
+            <li><strong>AndroidX:</strong> Modern Android libraries</li>
+            <li><strong>Room:</strong> Local database</li>
+            <li><strong>ML Kit:</strong> QR code scanning</li>
+        </ul>
+        
+        <h3>Key Components</h3>
+        <ul>
+            <li><strong>WalletService:</strong> Background synchronization</li>
+            <li><strong>AddressBookAdapter:</strong> Address management</li>
+            <li><strong>FamilyModeManager:</strong> Child wallet functionality</li>
+            <li><strong>DigitalSigningService:</strong> Document signing</li>
+        </ul>
+        
+        <h2><i class="fas fa-code"></i> Development Guidelines</h2>
+        <h3>Code Style</h3>
+        <ul>
+            <li>Follow Android coding standards</li>
+            <li>Use meaningful variable names</li>
+            <li>Add comments for complex logic</li>
+            <li>Write unit tests for new features</li>
+        </ul>
+        
+        <h3>Git Workflow</h3>
+        <ol>
+            <li>Fork the repository</li>
+            <li>Create a feature branch</li>
+            <li>Make your changes</li>
+            <li>Test thoroughly</li>
+            <li>Submit a pull request</li>
+        </ol>
+        
+        <h2><i class="fas fa-globe"></i> Contributing Areas</h2>
+        <h3>Code Contributions</h3>
+        <ul>
+            <li>Bug fixes</li>
+            <li>New features</li>
+            <li>Performance improvements</li>
+            <li>Security enhancements</li>
+        </ul>
+        
+        <h3>Translations</h3>
+        <ul>
+            <li>Add new language support</li>
+            <li>Improve existing translations</li>
+            <li>Update string resources</li>
+        </ul>
+        
+        <h3>Documentation</h3>
+        <ul>
+            <li>Update user guides</li>
+            <li>Improve code comments</li>
+            <li>Create tutorials</li>
+        </ul>
+        
+        <h2><i class="fas fa-bug"></i> Testing</h2>
+        <h3>Unit Tests</h3>
+        <div class="code-block">
+./gradlew testDebugUnitTest
+        </div>
+        
+        <h3>Integration Tests</h3>
+        <div class="code-block">
+./gradlew connectedAndroidTest
+        </div>
+        
+        <h2><i class="fas fa-box"></i> Release Process</h2>
+        <ol>
+            <li>Update version numbers</li>
+            <li>Run full test suite</li>
+            <li>Build release APK</li>
+            <li>Sign with release key</li>
+            <li>Upload to Google Play Console</li>
+        </ol>
+        
+        <h2><i class="fas fa-lock"></i> Security Considerations</h2>
+        <ul>
+            <li>Never log private keys or sensitive data</li>
+            <li>Use secure random number generation</li>
+            <li>Validate all user inputs</li>
+            <li>Follow Android security best practices</li>
+        </ul>
+        
+        <h2><i class="fa-solid fa-info"></i> Getting Help</h2>
+        <ul>
+            <li>GitHub Issues: <a href="https://github.com/qlpqlp/dogecoin-wallet/issues">Report bugs</a></li>
+            <li>Discussions: <a href="https://github.com/qlpqlp/dogecoin-wallet/discussions">Ask questions</a></li>
+        </ul>
+        
+        <h2><i class="fas fa-file-alt"></i> License</h2>
+        <p>This project is licensed under GPL v3.0. See <a href="license.html">License</a> for details.</p>
+        
+        <p><strong><i class="fas fa-paw"></i> Much contribute, very community! Let's make Dogecoin Wallet even better together!</strong></p>
+    </div>
+</body>
+</html>

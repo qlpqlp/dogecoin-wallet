@@ -183,7 +183,7 @@ task svgToPngMipmapProd(type: fr.avianey.androidsvgdrawable.gradle.SvgDrawableTa
 android.applicationVariants.all{ variant ->
     variant.mergeResourcesProvider.configure {
         doFirst{
-            LangUpdater.main(new File("${rootDir}/wallet/res/"))
+            // LangUpdater.main(new File("${rootDir}/wallet/res/")) // Temporarily disabled to preserve new strings
             // Add the missing total_nodes_title string before compilation
             def stringsFile = new File("${rootDir}/wallet/res/values/strings.xml")
             if (stringsFile.exists()) {
@@ -198,21 +198,21 @@ android.applicationVariants.all{ variant ->
             }
         }
         doLast{
-            // Apply Bitcoin to Dogecoin replacements (without git restore)
-            new File("${rootDir}/wallet/res/").eachFileRecurse (FileType.FILES) { file ->
-                if (file.getName().matches("strings.*\\.xml")) {
-                    def content = file.text
-                    def originalContent = content
-                    
-                    // Apply all replacements
-                    content = LangUpdater.applyBitcoinToDogecoinReplacements(content)
-                    
-                    if (content != originalContent) {
-                        file.text = content
-                        println "Applied Bitcoin to Dogecoin replacements to: ${file.name}"
-                    }
-                }
-            }
+            // Apply Bitcoin to Dogecoin replacements (without git restore) - DISABLED to preserve translations
+            // new File("${rootDir}/wallet/res/").eachFileRecurse (FileType.FILES) { file ->
+            //     if (file.getName().matches("strings.*\\.xml")) {
+            //         def content = file.text
+            //         def originalContent = content
+            //         
+            //         // Apply all replacements
+            //         content = LangUpdater.applyBitcoinToDogecoinReplacements(content)
+            //         
+            //         if (content != originalContent) {
+            //             file.text = content
+            //             println "Applied Bitcoin to Dogecoin replacements to: ${file.name}"
+            //         }
+            //     }
+            // }
         }
     }
 }

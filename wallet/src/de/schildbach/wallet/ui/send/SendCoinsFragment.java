@@ -81,8 +81,11 @@ import de.schildbach.wallet.ui.ProgressDialogFragment;
 import de.schildbach.wallet.ui.TransactionsAdapter;
 import de.schildbach.wallet.ui.scan.ScanActivity;
 import de.schildbach.wallet.util.Bluetooth;
+import de.schildbach.wallet.util.ChildModeHelper;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.WalletUtils;
+import de.schildbach.wallet.util.RadioDogeStatusChecker;
 import org.bitcoin.protocols.payments.Protos.Payment;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.AddressFormatException;
@@ -158,6 +161,9 @@ public final class SendCoinsFragment extends Fragment {
 
     private AbstractWalletActivityViewModel walletActivityViewModel;
     private SendCoinsViewModel viewModel;
+
+    private RadioDogeStatusChecker radiodogeStatusChecker;
+    private View radiodogeStatusBanner;
 
     private static final Logger log = LoggerFactory.getLogger(SendCoinsFragment.class);
 
@@ -449,6 +455,13 @@ public final class SendCoinsFragment extends Fragment {
         viewCancel = view.findViewById(R.id.send_coins_cancel);
         viewCancel.setOnClickListener(v -> handleCancel());
 
+        // Initialize RadioDoge status checker
+        radiodogeStatusChecker = new RadioDogeStatusChecker(activity);
+        radiodogeStatusBanner = view.findViewById(R.id.send_coins_radiodoge_status_banner);
+        if (radiodogeStatusChecker != null && radiodogeStatusBanner != null) {
+            radiodogeStatusChecker.setBannerView(radiodogeStatusBanner);
+        }
+
         return view;
     }
 
@@ -466,6 +479,11 @@ public final class SendCoinsFragment extends Fragment {
         amountCalculatorLink.setListener(amountsListener);
         privateKeyPasswordView.addTextChangedListener(privateKeyPasswordListener);
 
+        // Start RadioDoge status checking
+        if (radiodogeStatusChecker != null) {
+            radiodogeStatusChecker.startChecking();
+        }
+
         updateView();
         handler.post(dryrunRunnable);
     }
@@ -474,6 +492,11 @@ public final class SendCoinsFragment extends Fragment {
     public void onPause() {
         privateKeyPasswordView.removeTextChangedListener(privateKeyPasswordListener);
         amountCalculatorLink.setListener(null);
+
+        // Stop RadioDoge status checking
+        if (radiodogeStatusChecker != null) {
+            radiodogeStatusChecker.stopChecking();
+        }
 
         super.onPause();
     }
@@ -688,7 +711,7 @@ public final class SendCoinsFragment extends Fragment {
         final Wallet wallet = walletActivityViewModel.wallet.getValue();
         final SendRequest sendRequest = finalPaymentIntent.toSendRequest();
         sendRequest.emptyWallet = viewModel.paymentIntent.mayEditAmount()
-                && finalAmount.equals(wallet.getBalance(BalanceType.AVAILABLE));
+                && finalAmount.equals(ExcludedAddressHelper.getAvailableBalanceExcludingReserved(wallet));
         sendRequest.feePerKb = fees.get(viewModel.feeCategory);
         sendRequest.memo = viewModel.paymentIntent.memo;
         sendRequest.exchangeRate = amountCalculatorLink.getExchangeRate();
@@ -713,7 +736,22 @@ public final class SendCoinsFragment extends Fragment {
 
     private void sendPayment(final SendRequest sendRequest, final Coin finalAmount) {
         final Wallet wallet = walletActivityViewModel.wallet.getValue();
-        new SendCoinsOfflineTask(wallet, backgroundHandler) {
+        
+        // Check if we have excluded addresses and need custom UTXO selection
+        // Always use custom task with RadioDoge support
+        // Check if Child Mode is active and set change address accordingly
+        Address childModeAddress = ChildModeHelper.getChildModeAddressObject(getContext());
+        if (childModeAddress != null) {
+            // Override the change address to use the child's address
+            sendRequest.changeAddress = childModeAddress;
+            log.info("Child Mode active: Using child address {} as change address", childModeAddress.toString());
+        }
+        
+        if (!ExcludedAddressHelper.getExcludedAddresses().isEmpty()) {
+            sendPaymentWithExcludedAddressSupport(sendRequest, finalAmount, wallet);
+        } else {
+            // Use custom task with RadioDoge support even when no addresses are excluded
+            new SendCoinsOfflineTaskWithExcludedAddressSupport(wallet, backgroundHandler, getContext()) {
             @Override
             protected void onSuccess(final Transaction transaction) {
                 viewModel.sentTransaction.setValue(transaction);
@@ -836,7 +874,139 @@ public final class SendCoinsFragment extends Fragment {
                 dialog.setNeutralButton(R.string.button_dismiss, null);
                 dialog.show();
             }
-        }.sendCoinsOffline(sendRequest); // send asynchronously
+
+        }.sendCoinsOfflineWithExcludedAddressSupport(sendRequest); // send asynchronously
+        }
+    }
+    
+    /**
+     * Custom payment method that respects excluded addresses by manually selecting UTXOs
+     */
+    private void sendPaymentWithExcludedAddressSupport(final SendRequest sendRequest, final Coin finalAmount, final Wallet wallet) {
+        new SendCoinsOfflineTaskWithExcludedAddressSupport(wallet, backgroundHandler, getContext()) {
+            @Override
+            protected void onSuccess(final Transaction transaction) {
+                viewModel.sentTransaction.setValue(transaction);
+                setState(SendCoinsViewModel.State.SENDING);
+
+                final Address refundAddress = viewModel.paymentIntent.standard == Standard.BIP70
+                        ? wallet.freshAddress(KeyPurpose.REFUND) : null;
+                final Payment payment = PaymentProtocol.createPaymentMessage(Collections.singletonList(transaction),
+                        finalAmount, refundAddress, null, viewModel.paymentIntent.payeeData);
+
+                if (directPaymentEnableView.isChecked())
+                    directPay(payment);
+
+                final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                future.addListener(() -> {
+                    // Auto-close the dialog after a short delay
+                    if (config.getSendCoinsAutoclose())
+                        handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                }, Threading.THREAD_POOL);
+
+                final ComponentName callingActivity = activity.getCallingActivity();
+                if (callingActivity != null) {
+                    final Intent result = new Intent();
+                    BitcoinIntegration.transactionHashToResult(result, transaction.getTxId().toString());
+                    activity.setResult(Activity.RESULT_OK, result);
+                }
+            }
+
+            @Override
+            protected void onInsufficientMoney(final Coin missing) {
+                setState(SendCoinsViewModel.State.INPUT);
+
+                final Coin estimated = wallet.getBalance(BalanceType.ESTIMATED);
+                final Coin available = ExcludedAddressHelper.getAvailableBalanceExcludingReserved(wallet);
+                final Coin pending = estimated.subtract(available);
+
+                final MonetaryFormat btcFormat = config.getFormat();
+                final StringBuilder msg = new StringBuilder();
+                msg.append(getString(R.string.send_coins_fragment_insufficient_money_msg1, btcFormat.format(available)));
+                if (pending.isPositive())
+                    msg.append(' ').append(getString(R.string.send_coins_fragment_insufficient_money_msg2,
+                            btcFormat.format(pending)));
+                if (missing != null)
+                    msg.append(' ').append(getString(R.string.send_coins_fragment_insufficient_money_msg2,
+                            btcFormat.format(missing)));
+
+                final DialogBuilder dialog = DialogBuilder.warn(activity, R.string.send_coins_fragment_insufficient_money_title, msg);
+                if (viewModel.paymentIntent.mayEditAmount()) {
+                    dialog.setPositiveButton(R.string.send_coins_options_empty, (d, which) -> handleEmpty());
+                    dialog.setNegativeButton(R.string.button_cancel, null);
+                } else {
+                    dialog.setNeutralButton(R.string.button_dismiss, null);
+                }
+                dialog.show();
+            }
+
+            @Override
+            protected void onInvalidEncryptionKey() {
+                setState(SendCoinsViewModel.State.INPUT);
+
+                privateKeyBadPasswordView.setVisibility(View.VISIBLE);
+                privateKeyPasswordView.requestFocus();
+            }
+
+            @Override
+            protected void onEmptyWalletFailed() {
+                setState(SendCoinsViewModel.State.INPUT);
+
+                final DialogBuilder dialog = DialogBuilder.warn(activity,
+                        R.string.send_coins_fragment_empty_wallet_failed_title,
+                        R.string.send_coins_fragment_hint_empty_wallet_failed);
+                dialog.setNeutralButton(R.string.button_dismiss, null);
+                dialog.show();
+            }
+
+            @Override
+            protected void onFailure(Exception exception) {
+                setState(SendCoinsViewModel.State.FAILED);
+
+                final DialogBuilder dialog = DialogBuilder.warn(activity, R.string.send_coins_error_msg,
+                        exception.toString());
+                dialog.setNeutralButton(R.string.button_dismiss, null);
+                dialog.show();
+            }
+        }.sendCoinsOfflineWithExcludedAddressSupport(sendRequest); // send asynchronously
+    }
+    
+    private void directPay(final Payment payment) {
+        final DirectPaymentTask.ResultCallback callback = new DirectPaymentTask.ResultCallback() {
+            @Override
+            public void onResult(final boolean ack) {
+                viewModel.directPaymentAck = ack;
+
+                if (viewModel.state == SendCoinsViewModel.State.SENDING)
+                    setState(SendCoinsViewModel.State.SENT);
+
+                updateView();
+            }
+
+            @Override
+            public void onFail(final int messageResId, final Object... messageArgs) {
+                final DialogBuilder dialog = DialogBuilder.warn(activity,
+                        R.string.send_coins_fragment_direct_payment_failed_title,
+                        viewModel.paymentIntent.paymentUrl + "\n" + getString(messageResId, messageArgs)
+                                + "\n\n" + getString(R.string.send_coins_fragment_direct_payment_failed_msg));
+                dialog.setPositiveButton(R.string.button_retry, (d, which) -> directPay(payment));
+                dialog.setNegativeButton(R.string.button_dismiss, null);
+                dialog.show();
+            }
+        };
+
+        if (viewModel.paymentIntent.isBluetoothPaymentUrl()) {
+            final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (bluetoothAdapter != null) {
+                final DirectPaymentTask.BluetoothPaymentTask task = new DirectPaymentTask.BluetoothPaymentTask(
+                        backgroundHandler, callback, bluetoothAdapter, viewModel.paymentIntent.paymentUrl);
+                task.send(payment);
+            }
+        } else {
+            final DirectPaymentTask.HttpPaymentTask task = new DirectPaymentTask.HttpPaymentTask(
+                    backgroundHandler, callback, viewModel.paymentIntent.paymentUrl, null);
+            task.send(payment);
+        }
     }
 
     private void handleFeeCategory(final FeeCategory feeCategory) {
@@ -879,7 +1049,7 @@ public final class SendCoinsFragment extends Fragment {
                             .toSendRequest();
                     sendRequest.signInputs = false;
                     sendRequest.emptyWallet = viewModel.paymentIntent.mayEditAmount()
-                            && amount.equals(wallet.getBalance(BalanceType.AVAILABLE));
+                            && amount.equals(ExcludedAddressHelper.getAvailableBalanceExcludingReserved(wallet));
                     sendRequest.feePerKb = fees.get(viewModel.feeCategory);
                     wallet.completeTx(sendRequest);
                     viewModel.dryrunTransaction = sendRequest.tx;

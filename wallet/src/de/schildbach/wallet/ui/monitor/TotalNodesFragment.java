@@ -283,7 +283,7 @@ public class TotalNodesFragment extends Fragment implements PeerDiscoveryService
                             log.info("User confirmed reset");
                             resetAllPeers();
                         })
-                        .setNegativeButton("Cancel", (dialog, which) -> {
+                        .setNegativeButton(R.string.common_cancel, (dialog, which) -> {
                             log.info("User cancelled reset");
                         })
                         .show();

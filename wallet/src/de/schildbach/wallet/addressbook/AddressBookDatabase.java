@@ -23,13 +23,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import de.schildbach.wallet.data.ExcludedAddress;
+import de.schildbach.wallet.data.ExcludedAddressDao;
 
 /**
  * @author Andreas Schildbach
  */
-@Database(entities = { AddressBookEntry.class }, version = 2, exportSchema = false)
+@Database(entities = { AddressBookEntry.class, ExcludedAddress.class }, version = 3, exportSchema = false)
 public abstract class AddressBookDatabase extends RoomDatabase {
     public abstract AddressBookDao addressBookDao();
+    public abstract ExcludedAddressDao excludedAddressDao();
 
     private static final String DATABASE_NAME = "address_book";
     private static AddressBookDatabase INSTANCE;
@@ -39,7 +42,7 @@ public abstract class AddressBookDatabase extends RoomDatabase {
             synchronized (AddressBookDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AddressBookDatabase.class, DATABASE_NAME)
-                            .addMigrations(MIGRATION_1_2).allowMainThreadQueries().build();
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3).allowMainThreadQueries().build();
                 }
             }
         }
@@ -55,6 +58,14 @@ public abstract class AddressBookDatabase extends RoomDatabase {
                     "INSERT OR IGNORE INTO address_book_new (address, label) SELECT address, label FROM address_book");
             database.execSQL("DROP TABLE address_book");
             database.execSQL("ALTER TABLE address_book_new RENAME TO address_book");
+        }
+    };
+
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(final SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE excluded_addresses (address TEXT NOT NULL, label TEXT, timestamp INTEGER NOT NULL, PRIMARY KEY(address))");
         }
     };
 }

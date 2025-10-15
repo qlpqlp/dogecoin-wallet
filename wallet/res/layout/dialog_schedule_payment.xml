@@ -55,7 +55,7 @@
             android:background="@color/bg_level2"
             android:padding="16dp"
             android:textColor="@color/fg_significant"
-            android:hint="Enter reference for OP_RETURN (optional)"
+            android:hint="@string/recurring_payments_reference_hint"
             android:inputType="text"
             android:textSize="14sp"
             android:layout_marginBottom="16dp" />
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Payment Date &amp; Time"
+            android:text="@string/recurring_payments_payment_date_time"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/fg_significant"
@@ -121,7 +121,7 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@color/bg_level2"
-                android:text="Select Time"
+                android:text="@string/recurring_payments_select_time"
                 android:textColor="@color/fg_significant"
                 android:textSize="14sp"
                 android:drawableStart="@drawable/ic_clock_white_24dp"

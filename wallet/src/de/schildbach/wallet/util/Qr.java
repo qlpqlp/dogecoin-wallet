@@ -49,7 +49,10 @@ public class Qr {
             final Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
             hints.put(EncodeHintType.MARGIN, 0);
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-            final BitMatrix result = QR_CODE_WRITER.encode(content, BarcodeFormat.QR_CODE, 0, 0, hints);
+            
+            // Generate QR code with larger size for better visibility
+            final int qrSize = 400; // Increased from 0 to 400 for better quality
+            final BitMatrix result = QR_CODE_WRITER.encode(content, BarcodeFormat.QR_CODE, qrSize, qrSize, hints);
 
             final int width = result.getWidth();
             final int height = result.getHeight();

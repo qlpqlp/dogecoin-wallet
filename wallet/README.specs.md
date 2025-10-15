@@ -3,7 +3,7 @@ SUPPORTED SPECIFICATIONS
 
 * [BIP-13](https://github.com/bitcoin/bips/blob/master/bip-0013.mediawiki): Address format for pay-to-script-hash
 * [BIP-14](https://github.com/bitcoin/bips/blob/master/bip-0014.mediawiki): Protocol version and user agent
-* [BIP-21](https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki): URI scheme for making Bitcoin payments
+* [BIP-21](https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki): URI scheme for making Dogecoin payments
 * [BIP-31](https://github.com/bitcoin/bips/blob/master/bip-0031.mediawiki): Pong message
 * [BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki): Hierarchical deterministic wallets
 * [BIP-35](https://github.com/bitcoin/bips/blob/master/bip-0035.mediawiki): Mempool message

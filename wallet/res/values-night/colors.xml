@@ -9,6 +9,8 @@
     <color name="fg_network_significant">#ffeceff4</color>
     <color name="fg_network_less_significant">#cceceff4</color>
     <color name="fg_balance_warning">#FFCC33</color>
+    <color name="excluded_badge_bg">#FFCC33</color>
+    <color name="excluded_badge_text">#000000</color>
     
     <!-- Peer Details Colors -->
     <color name="bg_peer_details">#ff1a1a1a</color>                <!-- Dark background for peer details -->
@@ -42,4 +44,5 @@
     <color name="fg_error">#FFCC33</color>                       <!-- Error text color for dark mode -->
     <color name="scan_laser">#FFCC33</color>                     <!-- Scanner laser color for dark mode -->
     <color name="qr_button_icon_tint">#ff000000</color>          <!-- Black QR button icon for dark theme -->
+    <color name="family_qr_icon_tint">#ffffffff</color>          <!-- White QR icon for Family Management -->
 </resources>

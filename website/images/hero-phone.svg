@@ -1,0 +1,134 @@
+<svg width="400" height="800" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="phoneGradientHero" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="headerGradientHero" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffc107;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8f00;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Phone Frame -->
+  <rect x="30" y="30" width="340" height="740" rx="40" fill="url(#phoneGradientHero)" stroke="#333" stroke-width="3"/>
+  <rect x="45" y="45" width="310" height="710" rx="30" fill="#000"/>
+  
+  <!-- Status Bar -->
+  <rect x="45" y="45" width="310" height="50" rx="30" fill="#333"/>
+  <circle cx="70" cy="70" r="4" fill="#4CAF50"/>
+  <text x="85" y="78" font-family="Arial, sans-serif" font-size="16" fill="white">9:41</text>
+  <text x="320" y="78" font-family="Arial, sans-serif" font-size="16" fill="white">100%</text>
+  
+  <!-- Header -->
+  <rect x="45" y="95" width="310" height="120" fill="url(#headerGradientHero)"/>
+  <text x="200" y="130" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Dogecoin Wallet</text>
+  <text x="200" y="155" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">Balance</text>
+  <text x="200" y="190" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="white">1,234.56 DOGE</text>
+  
+  <!-- QR Code Area -->
+  <rect x="120" y="240" width="160" height="160" rx="15" fill="white" stroke="#ddd" stroke-width="2"/>
+  <rect x="130" y="250" width="140" height="140" fill="#000"/>
+  <!-- QR Code Pattern -->
+  <rect x="135" y="255" width="12" height="12" fill="white"/>
+  <rect x="151" y="255" width="12" height="12" fill="white"/>
+  <rect x="167" y="255" width="12" height="12" fill="white"/>
+  <rect x="183" y="255" width="12" height="12" fill="white"/>
+  <rect x="199" y="255" width="12" height="12" fill="white"/>
+  <rect x="215" y="255" width="12" height="12" fill="white"/>
+  <rect x="231" y="255" width="12" height="12" fill="white"/>
+  <rect x="247" y="255" width="12" height="12" fill="white"/>
+  <rect x="135" y="271" width="12" height="12" fill="white"/>
+  <rect x="167" y="271" width="12" height="12" fill="white"/>
+  <rect x="183" y="271" width="12" height="12" fill="white"/>
+  <rect x="215" y="271" width="12" height="12" fill="white"/>
+  <rect x="231" y="271" width="12" height="12" fill="white"/>
+  <rect x="247" y="271" width="12" height="12" fill="white"/>
+  <rect x="135" y="287" width="12" height="12" fill="white"/>
+  <rect x="151" y="287" width="12" height="12" fill="white"/>
+  <rect x="167" y="287" width="12" height="12" fill="white"/>
+  <rect x="199" y="287" width="12" height="12" fill="white"/>
+  <rect x="215" y="287" width="12" height="12" fill="white"/>
+  <rect x="247" y="287" width="12" height="12" fill="white"/>
+  <rect x="135" y="303" width="12" height="12" fill="white"/>
+  <rect x="151" y="303" width="12" height="12" fill="white"/>
+  <rect x="167" y="303" width="12" height="12" fill="white"/>
+  <rect x="183" y="303" width="12" height="12" fill="white"/>
+  <rect x="199" y="303" width="12" height="12" fill="white"/>
+  <rect x="215" y="303" width="12" height="12" fill="white"/>
+  <rect x="231" y="303" width="12" height="12" fill="white"/>
+  <rect x="247" y="303" width="12" height="12" fill="white"/>
+  <rect x="135" y="319" width="12" height="12" fill="white"/>
+  <rect x="167" y="319" width="12" height="12" fill="white"/>
+  <rect x="183" y="319" width="12" height="12" fill="white"/>
+  <rect x="199" y="319" width="12" height="12" fill="white"/>
+  <rect x="215" y="319" width="12" height="12" fill="white"/>
+  <rect x="231" y="319" width="12" height="12" fill="white"/>
+  <rect x="247" y="319" width="12" height="12" fill="white"/>
+  <rect x="135" y="335" width="12" height="12" fill="white"/>
+  <rect x="151" y="335" width="12" height="12" fill="white"/>
+  <rect x="167" y="335" width="12" height="12" fill="white"/>
+  <rect x="183" y="335" width="12" height="12" fill="white"/>
+  <rect x="199" y="335" width="12" height="12" fill="white"/>
+  <rect x="215" y="335" width="12" height="12" fill="white"/>
+  <rect x="231" y="335" width="12" height="12" fill="white"/>
+  <rect x="247" y="335" width="12" height="12" fill="white"/>
+  <rect x="135" y="351" width="12" height="12" fill="white"/>
+  <rect x="151" y="351" width="12" height="12" fill="white"/>
+  <rect x="167" y="351" width="12" height="12" fill="white"/>
+  <rect x="183" y="351" width="12" height="12" fill="white"/>
+  <rect x="199" y="351" width="12" height="12" fill="white"/>
+  <rect x="215" y="351" width="12" height="12" fill="white"/>
+  <rect x="231" y="351" width="12" height="12" fill="white"/>
+  <rect x="247" y="351" width="12" height="12" fill="white"/>
+  <rect x="135" y="367" width="12" height="12" fill="white"/>
+  <rect x="151" y="367" width="12" height="12" fill="white"/>
+  <rect x="167" y="367" width="12" height="12" fill="white"/>
+  <rect x="183" y="367" width="12" height="12" fill="white"/>
+  <rect x="199" y="367" width="12" height="12" fill="white"/>
+  <rect x="215" y="367" width="12" height="12" fill="white"/>
+  <rect x="231" y="367" width="12" height="12" fill="white"/>
+  <rect x="247" y="367" width="12" height="12" fill="white"/>
+  <rect x="135" y="383" width="12" height="12" fill="white"/>
+  <rect x="151" y="383" width="12" height="12" fill="white"/>
+  <rect x="167" y="383" width="12" height="12" fill="white"/>
+  <rect x="183" y="383" width="12" height="12" fill="white"/>
+  <rect x="199" y="383" width="12" height="12" fill="white"/>
+  <rect x="215" y="383" width="12" height="12" fill="white"/>
+  <rect x="231" y="383" width="12" height="12" fill="white"/>
+  <rect x="247" y="383" width="12" height="12" fill="white"/>
+  
+  <!-- Address -->
+  <text x="200" y="430" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">D7Y55v3HTda9XyBc5ohw4rqK3sf39M5jSX</text>
+  
+  <!-- Action Buttons -->
+  <rect x="80" y="460" width="100" height="50" rx="25" fill="#4CAF50"/>
+  <text x="130" y="490" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Send</text>
+  
+  <rect x="220" y="460" width="100" height="50" rx="25" fill="#2196F3"/>
+  <text x="270" y="490" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Receive</text>
+  
+  <!-- Recent Transactions -->
+  <text x="50" y="540" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">Recent Transactions</text>
+  
+  <!-- Transaction 1 -->
+  <rect x="50" y="560" width="300" height="60" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <circle cx="80" cy="590" r="10" fill="#4CAF50"/>
+  <text x="100" y="585" font-family="Arial, sans-serif" font-size="14" fill="#333">Received</text>
+  <text x="100" y="605" font-family="Arial, sans-serif" font-size="12" fill="#666">2 hours ago</text>
+  <text x="330" y="590" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#4CAF50">+50.00 DOGE</text>
+  
+  <!-- Transaction 2 -->
+  <rect x="50" y="630" width="300" height="60" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <circle cx="80" cy="660" r="10" fill="#f44336"/>
+  <text x="100" y="655" font-family="Arial, sans-serif" font-size="14" fill="#333">Sent</text>
+  <text x="100" y="675" font-family="Arial, sans-serif" font-size="12" fill="#666">1 day ago</text>
+  <text x="330" y="660" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#f44336">-25.50 DOGE</text>
+  
+  <!-- Transaction 3 -->
+  <rect x="50" y="700" width="300" height="60" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <circle cx="80" cy="730" r="10" fill="#4CAF50"/>
+  <text x="100" y="725" font-family="Arial, sans-serif" font-size="14" fill="#333">Received</text>
+  <text x="100" y="745" font-family="Arial, sans-serif" font-size="12" fill="#666">3 days ago</text>
+  <text x="330" y="730" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#4CAF50">+100.00 DOGE</text>
+</svg>

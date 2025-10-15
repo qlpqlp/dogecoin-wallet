@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer - Dogecoin Wallet</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../images/dogecoin.svg">
+    <link rel="apple-touch-icon" href="../images/dogecoin.svg">    
+    <style>
+        .doc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            line-height: 1.8;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content h1 { 
+            color: var(--dogecoin-yellow); 
+            margin-bottom: 30px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h2 { 
+            color: var(--text-color); 
+            margin-top: 40px; 
+            margin-bottom: 20px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h3 {
+            color: var(--text-light);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+        .doc-content p { 
+            margin-bottom: 20px; 
+            color: var(--text-light); 
+            transition: color 0.3s ease;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--dogecoin-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--dogecoin-orange);
+        }
+        .warning {
+            background: var(--bg-card);
+            border: 1px solid #f44336;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .important {
+            background: var(--bg-card);
+            border: 1px solid var(--dogecoin-orange);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content ul, .doc-content ol {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        /* Modern bullet points and numbering */
+        .doc-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .doc-content ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ul li::before {
+            content: "▶";
+            color: var(--dogecoin-yellow);
+            font-size: 12px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .doc-content ol {
+            counter-reset: custom-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .doc-content ol li {
+            counter-increment: custom-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ol li::before {
+            content: counter(custom-counter);
+            color: #000000;
+            background: #ffc107;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            z-index: 1;
+        }
+        .doc-content a {
+            color: var(--dogecoin-yellow);
+            transition: color 0.3s ease;
+        }
+        .doc-content a:hover {
+            color: var(--dogecoin-orange);
+        }
+        .doc-content h2 i {
+            color: var(--dogecoin-yellow);
+            margin-right: 10px;
+        }
+        .doc-content strong i {
+            color: var(--dogecoin-orange);
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-content">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>Disclaimer</h1>
+        <p><strong>Last updated:</strong> December 2024</p>
+        
+        <div class="warning">
+            <strong><i class="fas fa-exclamation-triangle"></i> CRITICAL WARNING:</strong> This software is provided "as is" without any warranty. Use at your own risk. The developers are not responsible for any loss of funds, damages, or other consequences.
+        </div>
+        
+        <h2><i class="fas fa-exclamation-triangle"></i> 1. No Warranty</h2>
+        <p>DOGECOIN WALLET IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.</p>
+        
+        <h2><i class="fas fa-exclamation-circle"></i> 2. Risk Acknowledgment</h2>
+        <p>You acknowledge and agree that:</p>
+        <ul>
+            <li>Cryptocurrency transactions are irreversible</li>
+            <li>Cryptocurrency values are highly volatile and unpredictable</li>
+            <li>Loss of private keys results in permanent loss of funds</li>
+            <li>Technology failures may result in loss of funds</li>
+            <li>Regulatory changes may affect the use of cryptocurrency</li>
+            <li>Network congestion may delay or prevent transactions</li>
+            <li>Third-party services may fail or be compromised</li>
+        </ul>
+        
+        <h2><i class="fas fa-shield-alt"></i> 3. Limitation of Liability</h2>
+        <p>IN NO EVENT SHALL THE DEVELOPERS, CONTRIBUTORS, OR ANY OTHER PARTY BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR USE, ARISING OUT OF OR IN CONNECTION WITH THE USE OF THIS SOFTWARE.</p>
+        
+        <h2><i class="fas fa-lock"></i> 4. Security Risks</h2>
+        <div class="important">
+            <strong>Security Considerations:</strong>
+            <ul>
+                <li>Keep your device secure and free from malware</li>
+                <li>Always backup your wallet and private keys</li>
+                <li>Never share your private keys or recovery phrase</li>
+                <li>Verify all transaction details before confirming</li>
+                <li>Use strong passwords and PINs</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-balance-scale"></i> 5. Regulatory Compliance</h2>
+        <p>You are solely responsible for:</p>
+        <ul>
+            <li>Complying with all applicable laws and regulations</li>
+            <li>Understanding the legal status of cryptocurrency in your jurisdiction</li>
+            <li>Paying any applicable taxes</li>
+            <li>Reporting transactions as required by law</li>
+        </ul>
+        
+        <h2><i class="fas fa-external-link-alt"></i> 6. Third-Party Services</h2>
+        <p>This software may interact with third-party services such as:</p>
+        <ul>
+            <li>Exchange rate providers</li>
+            <li>Blockchain networks</li>
+            <li>Node operators</li>
+            <li>Other external services</li>
+        </ul>
+        <p>We do not control these services and are not responsible for their availability, security, or accuracy.</p>
+        
+        <h2><i class="fas fa-code"></i> 7. Open Source Nature</h2>
+        <p>This is an open-source project. While this provides transparency and community oversight, it also means:</p>
+        <ul>
+            <li>No formal support or guarantee of functionality</li>
+            <li>Potential for bugs or vulnerabilities</li>
+            <li>Dependence on community contributions</li>
+            <li>No commercial backing or insurance</li>
+        </ul>
+        
+        <h2><i class="fas fa-edit"></i> 8. Updates and Changes</h2>
+        <p>We may update the software at any time without notice. Updates may:</p>
+        <ul>
+            <li>Change functionality or features</li>
+            <li>Introduce new bugs or issues</li>
+            <li>Require additional permissions</li>
+            <li>Modify the user interface</li>
+        </ul>
+        
+        <h2><i class="fas fa-user-check"></i> 9. User Responsibility</h2>
+        <p>You are solely responsible for:</p>
+        <ul>
+            <li>Understanding how the software works</li>
+            <li>Keeping your software updated</li>
+            <li>Backing up your data</li>
+            <li>Securing your device and accounts</li>
+            <li>Making informed decisions about transactions</li>
+        </ul>
+        
+        <h2><i class="fas fa-chart-line"></i> 10. No Financial Advice</h2>
+        <p>This software does not provide financial, investment, or legal advice. Any information provided is for educational purposes only.</p>
+        
+        <h2><i class="fas fa-envelope"></i> 11. Contact Information</h2>
+        <p>If you have questions about this disclaimer, please contact us at:</p>
+        <p>GitHub: https://github.com/qlpqlp/dogecoin-wallet</p>
+        
+        <div class="warning">
+            <strong><i class="fas fa-paw"></i> Final Reminder:</strong> Much responsibility, very important! Always verify your transactions, keep your private keys safe, and use this software at your own risk. Such disclaimer, very legal!
+        </div>
+    </div>
+</body>
+</html>

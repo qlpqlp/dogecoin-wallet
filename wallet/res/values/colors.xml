@@ -18,6 +18,8 @@
     <color name="fg_network_less_significant_darkdefault">#cceceff4</color>
     <color name="fg_shortcut">#ffa0a0a0</color>
     <color name="fg_balance_warning">#806F2B</color>
+    <color name="excluded_badge_bg">#806F2B</color>
+    <color name="excluded_badge_text">#ffffff</color>
 
     <!-- background -->
     <color name="bg_level3">#ffffffff</color>
@@ -62,4 +64,5 @@
     <color name="icon_primary">#ff000000</color>                  <!-- Dark icons for light theme -->
     <color name="icon_secondary">#ff666666</color>                <!-- Secondary dark icons for light theme -->
     <color name="qr_button_icon_tint">#ffffffff</color>           <!-- White QR button icon for light theme -->
+    <color name="family_qr_icon_tint">#ff000000</color>           <!-- Black QR icon for Family Management -->
 </resources>

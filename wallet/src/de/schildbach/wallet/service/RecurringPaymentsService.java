@@ -26,6 +26,7 @@ import java.util.List;
 import com.google.common.util.concurrent.ListenableFuture;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.data.PaymentIntent;
 import de.schildbach.wallet.data.PaymentIntent.Standard;
 import de.schildbach.wallet.data.RecurringPayment;
@@ -115,7 +116,7 @@ public class RecurringPaymentsService extends JobService {
         List<RecurringPayment> payments = database.getAllPayments();
         Date now = new Date();
         
-        log.info("Found {} recurring payments, checking for due payments", payments.size());
+        log.info("Found {} recurring payments, checking for due payments (including overdue ones)", payments.size());
         
         for (RecurringPayment payment : payments) {
             if (!payment.isEnabled()) {
@@ -129,14 +130,15 @@ public class RecurringPaymentsService extends JobService {
                 continue;
             }
             
-            // Check if payment is due (within 2 minutes window to account for timing)
+            // Check if payment is due (always execute if date/time is equal to or older than current time)
             long timeDiff = now.getTime() - nextPaymentDate.getTime();
             log.info("Payment ID {} - Next: {}, Now: {}, Diff: {}ms, Enabled: {}", 
                 payment.getId(), nextPaymentDate, now, timeDiff, payment.isEnabled());
             
-            // Execute if payment is due (within 2 minutes window: -2min to +1min)
-            if (timeDiff >= -DateUtils.MINUTE_IN_MILLIS * 2 && timeDiff <= DateUtils.MINUTE_IN_MILLIS) {
-                log.info("Payment ID {} is due, executing...", payment.getId());
+            // Execute if payment is due (date/time is equal to or older than current time)
+            // Allow 1 minute grace period for timing precision, but always try overdue payments
+            if (timeDiff >= -DateUtils.MINUTE_IN_MILLIS) {
+                log.info("Payment ID {} is due (overdue by {}ms), executing...", payment.getId(), timeDiff);
                 executePayment(payment);
             } else {
                 log.info("Payment ID {} not due yet. Next: {}, Now: {}, Diff: {}ms", 
@@ -150,8 +152,12 @@ public class RecurringPaymentsService extends JobService {
     
     private void executePayment(RecurringPayment payment) {
         try {
-            log.info("Executing payment ID: {} to address: {} amount: {} DOGE", 
-                payment.getId(), payment.getDestinationAddress(), payment.getAmount());
+            Date now = new Date();
+            long timeDiff = now.getTime() - payment.getNextPaymentDate().getTime();
+            boolean isOverdue = timeDiff > DateUtils.MINUTE_IN_MILLIS;
+            
+            log.info("Executing payment ID: {} to address: {} amount: {} DOGE (Overdue: {}, Diff: {}ms)", 
+                payment.getId(), payment.getDestinationAddress(), payment.getAmount(), isOverdue, timeDiff);
             
             // Get wallet from application
             WalletApplication app = (WalletApplication) getApplication();
@@ -185,7 +191,7 @@ public class RecurringPaymentsService extends JobService {
             }
             
             // Check if wallet has sufficient balance
-            Coin availableBalance = wallet.getBalance(Wallet.BalanceType.AVAILABLE);
+            Coin availableBalance = ExcludedAddressHelper.getAvailableBalanceExcludingReserved(wallet);
             Coin paymentAmount = Coin.valueOf((long) (payment.getAmount() * Coin.COIN.value));
             
             if (availableBalance.isLessThan(paymentAmount)) {
@@ -219,7 +225,13 @@ public class RecurringPaymentsService extends JobService {
             // Create send request
             SendRequest sendRequest = paymentIntent.toSendRequest();
             sendRequest.feePerKb = Coin.valueOf(1000000); // 1 DOGE per KB fee
-            sendRequest.memo = "Recurring payment #" + payment.getId();
+            
+            // Set memo with reference if provided
+            String memo = "Recurring payment #" + payment.getId();
+            if (payment.getReference() != null && !payment.getReference().trim().isEmpty()) {
+                memo += " - Ref: " + payment.getReference();
+            }
+            sendRequest.memo = memo;
             
             // Execute the transaction
             log.info("Sending transaction for payment ID: {}", payment.getId());

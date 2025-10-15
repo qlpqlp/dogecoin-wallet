@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/bg_level3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Name and Balance Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/text_child_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="John Doe"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant" />
+
+            <TextView
+                android:id="@+id/text_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.5 DOGE"
+                android:textSize="14sp"
+                android:textColor="@color/fg_value_positive"
+                android:fontFamily="monospace" />
+
+        </LinearLayout>
+
+        <!-- Address Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="D7Y55...X9K2"
+                android:textSize="12sp"
+                android:textColor="@color/fg_less_significant"
+                android:fontFamily="monospace"
+                android:singleLine="true"
+                android:ellipsize="middle" />
+
+            <ImageButton
+                android:id="@+id/btn_copy_address"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_copy_24dp"
+                android:tint="@color/fg_less_significant"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/common_copy_address" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageButton
+                android:id="@+id/btn_send_coins"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_send_24dp"
+                android:tint="@color/icon_primary"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/family_mode_send_coins"
+                android:layout_marginEnd="8dp" />
+
+            <ImageButton
+                android:id="@+id/btn_show_qr"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_qrcode_24dp"
+                android:tint="@color/family_qr_icon_tint"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/family_mode_show_qr"
+                android:layout_marginEnd="8dp" />
+
+            <ImageButton
+                android:id="@+id/btn_edit_name"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_edit_24dp"
+                android:tint="@color/icon_primary"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/family_mode_edit_name" />
+
+            <ImageButton
+                android:id="@+id/btn_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_clear_24dp"
+                android:tint="@color/fg_error"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/common_delete" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

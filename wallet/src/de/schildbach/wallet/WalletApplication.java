@@ -48,6 +48,7 @@ import de.schildbach.wallet.service.BlockchainService;
 import de.schildbach.wallet.service.BlockchainState;
 import de.schildbach.wallet.ui.Event;
 import de.schildbach.wallet.util.BiometricHelper;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.Toast;
@@ -114,6 +115,9 @@ public class WalletApplication extends Application {
         Networks.register(Constants.NETWORK_PARAMETERS);
 
         super.onCreate();
+
+        // Initialize excluded address helper
+        ExcludedAddressHelper.initialize(this);
 
         CrashReporter.init(getCacheDir());
 

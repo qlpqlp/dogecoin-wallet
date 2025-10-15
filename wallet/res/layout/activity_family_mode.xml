@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_level0">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/bg_level3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/family_mode_activity_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant" />
+
+        <Button
+            android:id="@+id/btn_add_child"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/family_mode_add_child"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/ic_add_24dp"
+            android:drawablePadding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            style="@style/My.Dialog.Button" />
+
+    </LinearLayout>
+
+    <!-- Family Members List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_family_members"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:clipToPadding="false" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/layout_empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_settings_24dp"
+            android:tint="@color/fg_less_significant"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_no_members_yet"
+            android:textSize="16sp"
+            android:textColor="@color/fg_less_significant"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_add_child_to_start"
+            android:textSize="14sp"
+            android:textColor="@color/fg_insignificant" />
+
+    </LinearLayout>
+
+    <!-- Bottom Actions -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@color/bg_level3">
+
+        <Button
+            android:id="@+id/btn_activate_child"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/family_mode_activate_child"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/ic_qrcode_24dp"
+            android:drawablePadding="8dp"
+            android:layout_marginEnd="8dp"
+            style="@style/My.Dialog.Button" />
+
+        <Button
+            android:id="@+id/btn_deactivate_child"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/family_mode_deactivate_child"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/ic_settings_24dp"
+            android:drawablePadding="8dp"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"
+            style="@style/My.Dialog.Button" />
+
+    </LinearLayout>
+
+</LinearLayout>

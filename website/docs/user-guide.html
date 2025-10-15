@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - Dogecoin Wallet | Complete Tutorial & Features</title>
+    <meta name="description" content="Complete user guide for Dogecoin Wallet. Learn how to use all features including RadioDoge offline transactions, family mode, digital signing, and more. Much helpful, very wow!">
+    <meta name="keywords" content="dogecoin wallet guide, tutorial, radiodoge, family mode, digital signing, user manual, help, features">
+    <meta name="author" content="Dogecoin Wallet Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Dogecoin Wallet">
+    <meta property="og:title" content="User Guide - Dogecoin Wallet | Complete Tutorial & Features">
+    <meta property="og:description" content="Complete user guide for Dogecoin Wallet. Learn how to use all features including RadioDoge offline transactions, family mode, and digital signing.">
+    <meta property="og:url" content="https://dogecoinwallet.org/docs/user-guide.html">
+    <meta property="og:image" content="https://dogecoinwallet.org/images/og-user-guide.png">
+    
+    <!-- Article Meta Tags -->
+    <meta property="article:section" content="Documentation">
+    <meta property="article:tag" content="User Guide">
+    <meta property="article:tag" content="Tutorial">
+    <meta property="article:tag" content="Help">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="User Guide - Dogecoin Wallet">
+    <meta name="twitter:description" content="Complete user guide for Dogecoin Wallet with RadioDoge and all features.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dogecoinwallet.org/docs/user-guide.html">
+    
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../images/dogecoin.svg">
+    <link rel="apple-touch-icon" href="../images/dogecoin.svg">    
+    <style>
+        .doc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            line-height: 1.8;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content h1 { 
+            color: var(--dogecoin-yellow); 
+            margin-bottom: 30px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h2 { 
+            color: var(--text-color); 
+            margin-top: 40px; 
+            margin-bottom: 20px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h3 { 
+            color: var(--text-light); 
+            margin-top: 30px; 
+            margin-bottom: 15px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content p { 
+            margin-bottom: 20px; 
+            color: var(--text-light); 
+            transition: color 0.3s ease;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--dogecoin-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--dogecoin-orange);
+        }
+        .feature-box {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--dogecoin-yellow);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .doc-content ul, .doc-content ol {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        /* Modern bullet points and numbering */
+        .doc-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .doc-content ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ul li::before {
+            content: "▶";
+            color: var(--dogecoin-yellow);
+            font-size: 12px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .doc-content ol {
+            counter-reset: custom-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .doc-content ol li {
+            counter-increment: custom-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ol li::before {
+            content: counter(custom-counter);
+            color: #000000;
+            background: #ffc107;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            z-index: 1;
+        }
+        .doc-content a {
+            color: var(--dogecoin-yellow);
+            transition: color 0.3s ease;
+        }
+        .doc-content a:hover {
+            color: var(--dogecoin-orange);
+        }
+        .doc-content h2 i {
+            color: var(--dogecoin-yellow);
+            margin-right: 10px;
+        }
+        .doc-content strong i {
+            color: var(--dogecoin-orange);
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-content">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>User Guide - Dogecoin Wallet</h1>
+        <p>Welcome to the most advanced Dogecoin wallet for Android! This guide will help you get started and make the most of all features.</p>
+        
+        <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+        <h3>First Launch</h3>
+        <p>When you first open the app, you'll be guided through:</p>
+        <ul>
+            <li>Creating a new wallet or restoring from backup</li>
+            <li>Setting up a PIN for security</li>
+            <li>Backing up your wallet</li>
+        </ul>
+        
+        <h3>Wallet Backup</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Always backup your wallet! Write down your recovery phrase and store it safely. Without a backup, you cannot recover your funds if you lose your device.
+        </div>
+        
+        <h2><i class="fas fa-coins"></i> Basic Operations</h2>
+        <h3>Sending Dogecoin</h3>
+        <ol>
+            <li>Tap "Send" on the main screen</li>
+            <li>Enter the recipient's address or scan QR code</li>
+            <li>Enter the amount to send</li>
+            <li>Review and confirm the transaction</li>
+        </ol>
+        
+        <h3>Receiving Dogecoin</h3>
+        <ol>
+            <li>Tap "Receive" on the main screen</li>
+            <li>Share your address or QR code</li>
+            <li>Wait for the transaction to be confirmed</li>
+        </ol>
+        
+        <h2><i class="fas fa-users"></i> Family Mode</h2>
+        <p>Create child wallets for family members:</p>
+        <ol>
+            <li>Go to Settings → Family Mode</li>
+            <li>Add a new family member</li>
+            <li>Share the QR code with them</li>
+            <li>Monitor their transactions and balance</li>
+        </ol>
+        
+        <h2><i class="fas fa-signature"></i> Digital Signing</h2>
+        <p>Sign documents with your Dogecoin private key:</p>
+        <ol>
+            <li>Go to Tools → Digital Signing</li>
+            <li>Enter text or select a file</li>
+            <li>Generate your signature</li>
+            <li>Share the signed document</li>
+        </ol>
+        
+        <h2><i class="fas fa-credit-card"></i> Recurring Payments</h2>
+        <p>Schedule automatic payments:</p>
+        <ol>
+            <li>Go to Tools → Recurring Payments</li>
+            <li>Create a new payment schedule</li>
+            <li>Set amount, frequency, and destination</li>
+            <li>Enable/disable as needed</li>
+        </ol>
+        
+        <h2><i class="fas fa-cogs"></i> Advanced Features</h2>
+        <h3>Network Monitor</h3>
+        <p>Monitor your connection to the Dogecoin network and view discovered nodes worldwide.</p>
+        
+        <h3>Address Book</h3>
+        <p>Save frequently used addresses for quick access when sending payments.</p>
+        
+        <h3>Exchange Rates</h3>
+        <p>View real-time Dogecoin prices in various fiat currencies.</p>
+        
+        <h2 id="radiodoge"><i class="fas fa-broadcast-tower"></i> RadioDoge - Offline Transactions</h2>
+        <p>Send Dogecoin transactions without internet using LoRa technology powered by <a href="https://github.com/dogecoinfoundation/radiodoge" target="_blank">RadioDoge V3 from Dogecoin Foundation</a>.</p>
+        
+        <h3>What is RadioDoge?</h3>
+        <p>RadioDoge is a revolutionary technology that enables Dogecoin transactions to be sent without an internet connection using LoRa (Long Range) radio technology. This is perfect for remote areas or emergency situations where internet connectivity is not available.</p>
+        
+        <h3>How RadioDoge Works</h3>
+        <ol>
+            <li><strong>Create Transaction:</strong> Create a Dogecoin transaction in the wallet as you normally would</li>
+            <li><strong>Sign Transaction:</strong> The transaction is signed with your private key, creating a signed transaction</li>
+            <li><strong>Transmit via LoRa:</strong> The signed transaction is transmitted using LoRa radio to nearby RadioDoge nodes</li>
+            <li><strong>Relay to Network:</strong> RadioDoge nodes relay the transaction to the Dogecoin network when internet connectivity is available</li>
+        </ol>
+        
+        <h3>Setting Up RadioDoge</h3>
+        <ol>
+            <li><strong>Enable RadioDoge:</strong> Go to Settings → General → Enable RadioDoge</li>
+            <li><strong>Connect LoRa Device:</strong> Connect a compatible LoRa device such as KeyChain LoRa</li>
+            <li><strong>Configure Settings:</strong> Set up your RadioDoge node preferences and transmission parameters</li>
+        </ol>
+        
+        <h3>Using RadioDoge for Transactions</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-broadcast-tower"></i> Offline Transactions:</strong> Send Dogecoin even when you have no internet connection. Perfect for remote areas or emergency situations.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Secure & Private:</strong> Transactions are signed locally and transmitted securely via LoRa radio waves.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-globe"></i> Long Range:</strong> LoRa technology provides long-range communication, reaching RadioDoge nodes kilometers away.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-battery-full"></i> Low Power:</strong> LoRa devices consume minimal power, making them ideal for portable and battery-operated setups.
+        </div>
+        
+        <h3>Compatible Devices</h3>
+        <ul>
+            <li><strong>KeyChain LoRa:</strong> A portable LoRa device specifically designed for RadioDoge transactions</li>
+            <li><strong>Custom LoRa Devices:</strong> Any LoRa-enabled device that supports the RadioDoge protocol</li>
+        </ul>
+        
+        <h3>Safety & Best Practices</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Important Safety Notes:</strong>
+            <ul>
+                <li>Always verify transaction details before signing</li>
+                <li>Keep your LoRa device secure and private</li>
+                <li>Test with small amounts first</li>
+                <li>Ensure your device is compatible with RadioDoge V3</li>
+                <li>Transactions may take longer to confirm than regular internet transactions</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-shield-alt"></i> Security Tips</h2>
+        <ul>
+            <li>Always verify addresses before sending</li>
+            <li>Keep your device secure and updated</li>
+            <li>Never share your private keys or recovery phrase</li>
+            <li>Use a strong PIN</li>
+            <li>Regularly backup your wallet</li>
+        </ul>
+        
+        <h2><i class="fas fa-question-circle"></i> Troubleshooting</h2>
+        <h3>Transaction Not Confirming</h3>
+        <p>Check your internet connection and wait for network confirmation. Large transactions may take longer.</p>
+        
+        <h3>App Not Syncing</h3>
+        <p>Go to Settings → Battery Optimization and disable it for the wallet app.</p>
+        
+        <h3>Lost Device</h3>
+        <p>If you have a backup, you can restore your wallet on a new device using the recovery phrase.</p>
+        
+        <h2><i class="fa-solid fa-info"></i> Support</h2>
+        <p>Need help? Contact us:</p>
+        <ul>
+            <li>GitHub Issues: <a href="https://github.com/qlpqlp/dogecoin-wallet/issues">Report a bug</a></li>
+        </ul>
+        
+        <p><strong><i class="fas fa-paw"></i> Much features, very wow! Enjoy using your Dogecoin Wallet!</strong></p>
+    </div>
+</body>
+</html>

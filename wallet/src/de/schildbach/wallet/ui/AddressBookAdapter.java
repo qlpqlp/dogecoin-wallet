@@ -17,6 +17,7 @@
 
 package de.schildbach.wallet.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +25,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toolbar;
 import androidx.annotation.ColorInt;
@@ -39,6 +42,7 @@ import com.google.common.hash.Hashing;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.addressbook.AddressBookEntry;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.util.WalletUtils;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -200,6 +204,7 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
     private final OnClickListener onClickListener;
     @Nullable
     private final ContextMenuCallback contextMenuCallback;
+    private final boolean showExclusion;
     @Nullable
     private Address selectedAddress;
 
@@ -208,6 +213,11 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
 
     public AddressBookAdapter(final Context context, @Nullable final OnClickListener onClickListener,
                               @Nullable final ContextMenuCallback contextMenuCallback) {
+        this(context, onClickListener, contextMenuCallback, true); // Default to showing exclusion
+    }
+
+    public AddressBookAdapter(final Context context, @Nullable final OnClickListener onClickListener,
+                              @Nullable final ContextMenuCallback contextMenuCallback, final boolean showExclusion) {
         super(new DiffUtil.ItemCallback<ListItem>() {
             @Override
             public boolean areItemsTheSame(final ListItem oldItem, final ListItem newItem) {
@@ -242,6 +252,7 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
         this.menuInflater = new MenuInflater(context);
         this.onClickListener = onClickListener;
         this.contextMenuCallback = contextMenuCallback;
+        this.showExclusion = showExclusion;
         this.labelUnlabeled = context.getString(R.string.address_unlabeled);
         this.cardElevationSelected = context.getResources().getDimensionPixelOffset(R.dimen.card_elevation_selected);
 
@@ -313,10 +324,38 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
             addressHolder.address.setTextColor(addressItem.addressColor);
             addressHolder.message.setVisibility(addressItem.message != null ? View.VISIBLE : View.GONE);
             addressHolder.message.setText(addressItem.message);
-            addressHolder.message.setTextColor(addressItem.messageColor);
+            addressHolder.message.setTextColor(addressItem.messageColor);            
+            // Handle exclusion toggle (only show if showExclusion is true)
+            if (showExclusion) {
+                final boolean isExcluded = ExcludedAddressHelper.isAddressExcluded(addressItem.address.toString());
+                addressHolder.excludedLabel.setVisibility(isExcluded ? View.VISIBLE : View.GONE);
+                addressHolder.layoutExcludedStatus.setVisibility(isExcluded ? View.VISIBLE : View.GONE);
+                
+                // Clear any existing listener first to prevent multiple listeners
+                addressHolder.excludeSwitch.setOnCheckedChangeListener(null);
+                
+                // Set the checked state without triggering the listener
+                addressHolder.excludeSwitch.setChecked(isExcluded);
+                
+                // Set up exclusion toggle listener after setting the state
+                addressHolder.excludeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        showExcludeConfirmation(addressItem.address.toString(), addressItem.label, addressHolder);
+                    } else {
+                        showIncludeConfirmation(addressItem.address.toString(), addressHolder);
+                    }
+                });
+            } else {
+                // Hide exclusion UI for sending addresses
+                addressHolder.excludedLabel.setVisibility(View.GONE);
+                addressHolder.layoutExcludedStatus.setVisibility(View.GONE);
+                addressHolder.excludeSwitch.setVisibility(View.GONE);
+                // Clear any existing listener when hiding the switch
+                addressHolder.excludeSwitch.setOnCheckedChangeListener(null);
+            }
+            
             final boolean isSelected = addressItem.address.equals(selectedAddress);
             addressHolder.itemView.setSelected(isSelected);
-            ((CardView) addressHolder.itemView).setCardElevation(isSelected ? cardElevationSelected : 0);
             if (onClickListener != null)
                 addressHolder.itemView.setOnClickListener(v -> onClickListener.onAddressClick(v, addressItem.address,
                         addressItem.label));
@@ -343,6 +382,10 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
         private final TextView address;
         private final TextView message;
         private final Toolbar contextBar;
+        private final TextView excludedLabel;
+        private final Switch excludeSwitch;
+        private final LinearLayout layoutExcludedStatus;
+        private final TextView textExcludedInfo;
 
         private AddressViewHolder(final View itemView) {
             super(itemView);
@@ -350,6 +393,84 @@ public class AddressBookAdapter extends ListAdapter<AddressBookAdapter.ListItem,
             address = itemView.findViewById(R.id.address_book_row_address);
             message = itemView.findViewById(R.id.address_book_row_message);
             contextBar = itemView.findViewById(R.id.address_book_row_context_bar);
+            excludedLabel = itemView.findViewById(R.id.address_book_row_excluded_label);
+            excludeSwitch = itemView.findViewById(R.id.address_book_row_exclude_switch);
+            layoutExcludedStatus = itemView.findViewById(R.id.layout_excluded_status);
+            textExcludedInfo = itemView.findViewById(R.id.text_excluded_info);
         }
+    }
+    
+    private void showExcludeConfirmation(String address, String label, AddressViewHolder holder) {
+        Context context = holder.itemView.getContext();
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.address_exclude_confirm_title)
+                .setMessage(R.string.address_exclude_confirm_message)
+                .setPositiveButton(R.string.button_ok, (dialog, which) -> {
+                    ExcludedAddressHelper.excludeAddress(address, label);
+                    holder.excludedLabel.setVisibility(View.VISIBLE);
+                    holder.layoutExcludedStatus.setVisibility(View.VISIBLE);
+                })
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> {
+                    // Revert the switch state without triggering listener
+                    holder.excludeSwitch.setOnCheckedChangeListener(null);
+                    holder.excludeSwitch.setChecked(false);
+                    holder.excludeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        if (isChecked) {
+                            showExcludeConfirmation(address, label, holder);
+                        } else {
+                            showIncludeConfirmation(address, holder);
+                        }
+                    });
+                })
+                .setOnCancelListener(dialog -> {
+                    // Revert the switch state without triggering listener
+                    holder.excludeSwitch.setOnCheckedChangeListener(null);
+                    holder.excludeSwitch.setChecked(false);
+                    holder.excludeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        if (isChecked) {
+                            showExcludeConfirmation(address, label, holder);
+                        } else {
+                            showIncludeConfirmation(address, holder);
+                        }
+                    });
+                })
+                .show();
+    }
+    
+    private void showIncludeConfirmation(String address, AddressViewHolder holder) {
+        Context context = holder.itemView.getContext();
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.address_include_confirm_title)
+                .setMessage(R.string.address_include_confirm_message)
+                .setPositiveButton(R.string.button_ok, (dialog, which) -> {
+                    ExcludedAddressHelper.includeAddress(address);
+                    holder.excludedLabel.setVisibility(View.GONE);
+                    holder.layoutExcludedStatus.setVisibility(View.GONE);
+                })
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> {
+                    // Revert the switch state without triggering listener
+                    holder.excludeSwitch.setOnCheckedChangeListener(null);
+                    holder.excludeSwitch.setChecked(true);
+                    holder.excludeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        if (isChecked) {
+                            showExcludeConfirmation(address, "", holder);
+                        } else {
+                            showIncludeConfirmation(address, holder);
+                        }
+                    });
+                })
+                .setOnCancelListener(dialog -> {
+                    // Revert the switch state without triggering listener
+                    holder.excludeSwitch.setOnCheckedChangeListener(null);
+                    holder.excludeSwitch.setChecked(true);
+                    holder.excludeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        if (isChecked) {
+                            showExcludeConfirmation(address, "", holder);
+                        } else {
+                            showIncludeConfirmation(address, holder);
+                        }
+                    });
+                })
+                .show();
     }
 }

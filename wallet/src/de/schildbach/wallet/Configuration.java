@@ -59,6 +59,7 @@ public class Configuration {
     public static final String PREFS_KEY_REMIND_BALANCE = "remind_balance";
     public static final String PREFS_KEY_DISCLAIMER = "disclaimer";
     public static final String PREFS_KEY_BLUETOOTH_ADDRESS = "bluetooth_address";
+    public static final String PREFS_KEY_RADIODOGE_ENABLED = "radiodoge_enabled";
 
     private static final String PREFS_KEY_LAST_VERSION = "last_version";
     private static final String PREFS_KEY_LAST_USED = "last_used";
@@ -331,6 +332,14 @@ public class Configuration {
 
     public void setBluetoothAddress(final String bluetoothAddress) {
         prefs.edit().putString(PREFS_KEY_BLUETOOTH_ADDRESS, bluetoothAddress).apply();
+    }
+
+    public boolean getRadioDogeEnabled() {
+        return prefs.getBoolean(PREFS_KEY_RADIODOGE_ENABLED, false);
+    }
+
+    public void setRadioDogeEnabled(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_RADIODOGE_ENABLED, enabled).apply();
     }
 
     public void registerOnSharedPreferenceChangeListener(final OnSharedPreferenceChangeListener listener) {

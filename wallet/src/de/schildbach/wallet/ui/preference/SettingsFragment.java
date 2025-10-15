@@ -70,6 +70,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     private Preference ownNamePreference;
     private EditTextPreference bluetoothAddressPreference;
     private android.preference.CheckBoxPreference biometricPreference;
+    private android.preference.CheckBoxPreference radiodogePreference;
 
     private static final int BLUETOOTH_ADDRESS_LENGTH = 6 * 2 + 5; // including the colons
     private static final Logger log = LoggerFactory.getLogger(SettingsFragment.class);
@@ -161,6 +162,13 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             }
         }
 
+        // Initialize RadioDoge preference
+        radiodogePreference = (android.preference.CheckBoxPreference) findPreference(Configuration.PREFS_KEY_RADIODOGE_ENABLED);
+        if (radiodogePreference != null) {
+            radiodogePreference.setChecked(config.getRadioDogeEnabled());
+            radiodogePreference.setOnPreferenceChangeListener(this);
+        }
+
         updateTrustedPeer();
         updateOwnName();
         updateBluetoothAddress();
@@ -175,6 +183,9 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         trustedPeerPreference.setOnPreferenceChangeListener(null);
         if (biometricPreference != null) {
             biometricPreference.setOnPreferenceChangeListener(null);
+        }
+        if (radiodogePreference != null) {
+            radiodogePreference.setOnPreferenceChangeListener(null);
         }
 
         backgroundThread.getLooper().quit();
@@ -194,6 +205,8 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 updateBluetoothAddress();
             else if (preference.equals(biometricPreference))
                 updateBiometricPreference((Boolean) newValue);
+            else if (preference.equals(radiodogePreference))
+                updateRadioDogePreference((Boolean) newValue);
         });
         return true;
     }
@@ -282,6 +295,15 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             BiometricHelper.setBiometricEnabled(activity, false);
             BiometricHelper.setBiometricSetup(activity, false);
             android.widget.Toast.makeText(activity, R.string.biometric_disable, android.widget.Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateRadioDogePreference(boolean enabled) {
+        config.setRadioDogeEnabled(enabled);
+        if (enabled) {
+            android.widget.Toast.makeText(activity, "RadioDoge support enabled", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            android.widget.Toast.makeText(activity, "RadioDoge support disabled", android.widget.Toast.LENGTH_SHORT).show();
         }
     }
 

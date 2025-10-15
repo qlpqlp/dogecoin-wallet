@@ -85,6 +85,30 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Blockchain Storage**: Reference data is permanently stored on the Dogecoin blockchain
 - **Real-Time Monitoring**: Live status updates and payment history
 
+### 👨‍👩‍👧‍👦 Family Mode & Child Wallet Management
+- **Child Wallet Creation**: Generate unique derived keys for family members with individual addresses
+- **QR Code Sharing**: Share child wallet access via QR codes for easy device setup
+- **PIN Protection**: Secure access to sensitive features (Safety, Family Mode, Settings) with PIN authentication
+- **Child Mode Activation**: Import child wallet keys to restrict device to single address operation
+- **Address Management**: Each child gets their own Dogecoin address with individual balance tracking
+- **Transaction Monitoring**: Real-time monitoring of child wallet transactions and balance updates
+- **Parental Controls**: Parents can send coins to children and monitor their spending
+- **Secure Key Management**: HD wallet key derivation ensures unique addresses for each family member
+- **Easy Restoration**: Children can restore their wallet on any device using the shared QR code
+- **Balance Tracking**: Individual balance display for each family member's address
+- **Edit & Manage**: Full management of family members including name editing and wallet operations
+
+### 🔒 Address Exclusion & Spending Control
+- **Smart Address Management**: Exclude specific addresses from being used in regular payments
+- **Family Mode Integration**: Child addresses are automatically excluded from spending to protect their funds
+- **Reserved Balance Display**: Main wallet shows total reserved balance from excluded addresses
+- **Manual Control**: Toggle exclusion on/off for any address in "Your Addresses" tab
+- **Visual Indicators**: Clear badges and labels show which addresses are excluded from spending
+- **Balance Protection**: Prevents accidental spending of child's coins in daily transactions
+- **Parental Safety**: Ensures child funds remain separate and protected from parent's regular spending
+- **Modern UI**: Clean, intuitive interface with toggle switches and status indicators
+- **Real-time Updates**: Balance calculations automatically exclude reserved funds
+
 ### Core Network Changes
 - **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`
 - **Library Migration**: Replaced `bitcoinj` with `libdohj` (DogecoinJ library) version 0.15
@@ -144,6 +168,18 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Context Management**: Proper BitcoinJ context initialization for transaction execution
 - **Error Handling**: Comprehensive error handling and logging for payment failures
 
+### Family Mode Implementation
+- **HD Key Derivation**: Uses BitcoinJ's DeterministicKeyChain for secure child key generation
+- **SQLite Database**: Local storage for family member data and derived keys
+- **QR Code Generation**: ZXing library for sharing derived keys between devices
+- **PIN Authentication**: SharedPreferences-based PIN storage and validation
+- **Address Monitoring**: Real-time blockchain monitoring for child wallet addresses
+- **Key Import/Export**: Secure import and removal of derived keys from wallet
+- **Transaction Tracking**: Individual balance calculation and transaction monitoring per child
+- **UI State Management**: Dynamic UI updates based on child mode activation status
+- **Automatic Address Exclusion**: Child addresses are automatically excluded from spending to protect their funds
+- **Reserved Balance Management**: Main wallet balance excludes child funds to prevent accidental spending
+
 ## 📱 FEATURES
 
 • **Decentralized**: No registration, web service or cloud needed! This wallet is peer-to-peer.
@@ -162,12 +198,15 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 
 • **📝 Digital Document Signing**: Sign any text, document, or photo with your Dogecoin private key for authentication and verification.
 • **💳 Recurring Payments**: Schedule one-time or monthly recurring payments with precise date/time control.
+• **👨‍👩‍👧‍👦 Family Mode**: Create and manage child wallets with individual addresses, PIN protection, and parental controls.
 • **🏷️ Reference Data**: Add custom reference information (OP_RETURN) to payments for bill identification, client IDs, or service tracking.
 • **📸 Camera Integration**: Take photos and sign them directly from the camera for document authentication.
 • **🔄 Background Processing**: Automatic execution of scheduled payments via background service.
 • **📋 Address Management**: Integrated address book for easy payment destination selection.
 • **✅ Signature Verification**: Verify document signatures against original content for authenticity.
 • **🌐 Blockchain Storage**: Reference data is permanently stored on the Dogecoin blockchain for decentralized verification.
+• **🔐 Child Wallet Security**: HD key derivation and QR code sharing for secure family wallet management.
+• **🔒 Address Exclusion Control**: Exclude specific addresses from spending to protect child funds and manage reserved balances.
 
 ## 💰 TRANSACTION FEES
 

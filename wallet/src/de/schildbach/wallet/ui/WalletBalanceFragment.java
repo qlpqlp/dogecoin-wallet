@@ -35,6 +35,7 @@ import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.exchangerate.ExchangeRateEntry;
 import de.schildbach.wallet.service.BlockchainState;
 import de.schildbach.wallet.ui.send.FeeCategory;
@@ -42,6 +43,7 @@ import de.schildbach.wallet.ui.send.SendCoinsActivity;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.utils.Fiat;
+import org.bitcoinj.wallet.Wallet;
 import org.libdohj.params.AbstractDogecoinParams;
 
 /**
@@ -55,6 +57,7 @@ public final class WalletBalanceFragment extends Fragment {
     private View viewBalance;
     private CurrencyTextView viewBalanceBtc;
     private TextView viewBalanceWarning;
+    private TextView viewBalanceReserved;
     private CurrencyTextView viewBalanceLocal;
     private TextView viewProgress;
 
@@ -118,6 +121,7 @@ public final class WalletBalanceFragment extends Fragment {
         viewBalanceBtc.setPrefixScaleX(0.9f);
 
         viewBalanceWarning = view.findViewById(R.id.wallet_balance_warning);
+        viewBalanceReserved = view.findViewById(R.id.wallet_balance_reserved);
 
         viewBalanceLocal = view.findViewById(R.id.wallet_balance_local);
         viewBalanceLocal.setInsignificantRelativeSize(1);
@@ -223,6 +227,21 @@ public final class WalletBalanceFragment extends Fragment {
                 viewBalanceWarning.setText(R.string.wallet_balance_fragment_insecure_device);
             } else {
                 viewBalanceWarning.setVisibility(View.GONE);
+            }
+
+            // Display reserved balance if there are excluded addresses
+            final Wallet wallet = application.getWallet();
+            if (wallet != null) {
+                final Coin reservedBalance = ExcludedAddressHelper.getExcludedAddressesBalance(wallet);
+                if (reservedBalance.signum() > 0) {
+                    viewBalanceReserved.setVisibility(View.VISIBLE);
+                    viewBalanceReserved.setText(getString(R.string.address_excluded_balance, 
+                        config.getFormat().format(reservedBalance)));
+                } else {
+                    viewBalanceReserved.setVisibility(View.GONE);
+                }
+            } else {
+                viewBalanceReserved.setVisibility(View.GONE);
             }
 
             viewProgress.setVisibility(View.GONE);

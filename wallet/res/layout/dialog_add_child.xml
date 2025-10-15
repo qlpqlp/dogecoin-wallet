@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="400dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_add_child_dialog_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Child Name -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_child_name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edit_child_name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textColor="@color/fg_significant"
+            android:hint="@string/family_mode_enter_child_name"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Generated Derived Key -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_derived_key"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/text_derived_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="xprv9s21ZrQH143K..."
+                android:textSize="12sp"
+                android:textColor="@color/fg_less_significant"
+                android:fontFamily="monospace"
+                android:singleLine="true"
+                android:ellipsize="middle" />
+
+            <ImageButton
+                android:id="@+id/btn_copy_key"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_copy_24dp"
+                android:tint="@color/fg_less_significant"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/family_mode_copy_key" />
+
+        </LinearLayout>
+
+        <!-- QR Code for Derived Key -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/family_mode_qr_code_for_child"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/image_qr_code"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/qr_code_background_modern_enhanced"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/common_cancel"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginEnd="8dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/common_save"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:drawableStart="@drawable/ic_settings_24dp"
+                android:drawablePadding="8dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

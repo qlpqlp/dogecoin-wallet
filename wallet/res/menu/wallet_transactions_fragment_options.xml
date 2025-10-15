@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/wallet_transactions_options_retry_pending"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/wallet_transactions_options_retry_pending" />
+    
+    <item
         android:id="@+id/wallet_transactions_options_filter"
         android:icon="@drawable/ic_filter_list_white_24dp"
         android:showAsAction="always|withText"

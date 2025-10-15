@@ -1,3 +1,31 @@
+v1.0 (Dogecoin Wallet)
+
+* Complete conversion from Bitcoin to Dogecoin blockchain
+* Updated application ID from de.schildbach.wallet to org.dogecoin.wallet
+* Replaced bitcoinj with libdohj 0.15 for Dogecoin-specific functionality
+* Updated network parameters to use DogecoinMainNetParams
+* Changed currency symbol from BTC to DOGE throughout the interface
+* Updated app name from "Bitcoin Wallet" to "Dogecoin Wallet"
+* Implemented Dogecoin-themed amber/yellow color scheme
+* Updated MIME types to Dogecoin-specific formats
+* Added support for dogecoin: and DOGECOIN: URL schemes
+* Configured SoChain block explorer for Dogecoin blockchain exploration
+* Updated fee structure to follow official Dogecoin recommendations (0.01 DOGE per KB)
+* Updated checkpoints, electrum servers, and fee files for Dogecoin
+* Added comprehensive Family Mode with child wallet management
+* Implemented Digital Document Signing with ECDSA and SHA256
+* Added Recurring Payments with OP_RETURN support
+* Enhanced QR Code Scanner with Google ML Kit integration
+* Fixed battery optimization issues for background sync
+* Added worldwide node discovery in Network Monitor
+* Implemented address exclusion and spending control
+* Updated all user-facing text from Bitcoin to Dogecoin terminology
+* Modernized UI with Material Design principles
+* Added comprehensive multi-language support
+* Updated build configuration for Android API 34
+* Enhanced security and privacy features
+* Added advanced wallet management capabilities
+
 v8.08
 
 * Update translations from Transifex.

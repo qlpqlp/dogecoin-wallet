@@ -18,6 +18,34 @@
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
         android:orientation="vertical">
 
+        <!-- RadioDoge Status Banner -->
+        <LinearLayout
+            android:id="@+id/send_coins_radiodoge_status_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radiodoge_banner_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/list_entry_padding_vertical"
+            android:visibility="gone"
+            android:tag="radiodoge_banner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/list_entry_padding_horizontal"
+                android:text="📡"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radiodoge_status_message"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/send_coins_payee_group"
             android:layout_width="match_parent"

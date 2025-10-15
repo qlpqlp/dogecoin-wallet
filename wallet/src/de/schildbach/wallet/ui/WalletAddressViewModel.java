@@ -30,6 +30,7 @@ import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.data.AbstractWalletLiveData;
 import de.schildbach.wallet.data.ConfigOwnNameLiveData;
 import de.schildbach.wallet.util.Qr;
+import de.schildbach.wallet.util.ChildModeHelper;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.LegacyAddress;
@@ -59,7 +60,7 @@ public class WalletAddressViewModel extends AndroidViewModel {
     public WalletAddressViewModel(final Application application) {
         super(application);
         this.application = (WalletApplication) application;
-        this.currentAddress = new CurrentAddressLiveData(this.application);
+        this.currentAddress = new CurrentAddressLiveData(this.application, this.application);
         this.ownName = new ConfigOwnNameLiveData(this.application);
         this.qrCode.addSource(currentAddress, currentAddress -> maybeGenerateQrCode());
         this.qrCode.addSource(ownName, label -> maybeGenerateQrCode());
@@ -90,8 +91,11 @@ public class WalletAddressViewModel extends AndroidViewModel {
     }
 
     public static class CurrentAddressLiveData extends AbstractWalletLiveData<Address> {
-        public CurrentAddressLiveData(final WalletApplication application) {
+        private final WalletApplication walletApplication;
+        
+        public CurrentAddressLiveData(final WalletApplication application, final WalletApplication walletApplication) {
             super(application);
+            this.walletApplication = walletApplication;
         }
 
         @Override
@@ -124,7 +128,14 @@ public class WalletAddressViewModel extends AndroidViewModel {
             final Wallet wallet = getWallet();
             AsyncTask.execute(() -> {
                 org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
-                postValue(wallet.currentReceiveAddress());
+                
+                // Check if child mode is active and use child's address
+                Address childModeAddress = ChildModeHelper.getChildModeAddressObject(walletApplication);
+                if (childModeAddress != null) {
+                    postValue(childModeAddress);
+                } else {
+                    postValue(wallet.currentReceiveAddress());
+                }
             });
         }
 

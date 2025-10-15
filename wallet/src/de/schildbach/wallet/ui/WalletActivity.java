@@ -25,9 +25,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.content.res.Resources;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.os.Build;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -63,8 +67,14 @@ import de.schildbach.wallet.ui.scan.ScanActivity;
 import de.schildbach.wallet.ui.send.SendCoinsActivity;
 import de.schildbach.wallet.ui.send.SweepWalletActivity;
 import de.schildbach.wallet.ui.DigitalSignatureActivity;
+import de.schildbach.wallet.ui.FamilyModeActivity;
+import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.CrashReporter;
+import de.schildbach.wallet.util.PendingTransactionRetryService;
+import de.schildbach.wallet.util.RadioDogeHelper;
+import de.schildbach.wallet.util.RadioDogeLogChecker;
+import de.schildbach.wallet.util.RadioDogeStatusChecker;
 import de.schildbach.wallet.util.Nfc;
 import de.schildbach.wallet.util.OnFirstPreDraw;
 import org.bitcoinj.core.PrefixedChecksummedBytes;
@@ -80,6 +90,9 @@ public final class WalletActivity extends AbstractWalletActivity {
     
     private WalletApplication application;
     private Handler handler = new Handler();
+    private PendingTransactionRetryService pendingTransactionRetryService;
+    private RadioDogeStatusChecker radiodogeStatusChecker;
+    private View radiodogeStatusBanner;
 
     private AnimatorSet enterAnimation;
     private View contentView;
@@ -89,12 +102,19 @@ public final class WalletActivity extends AbstractWalletActivity {
     private WalletActivityViewModel viewModel;
 
     private static final int REQUEST_CODE_SCAN = 0;
+    private static final int REQUEST_CODE_SCAN_CHILD_ACTIVATION = 1001;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = getWalletApplication();
         final Configuration config = application.getConfiguration();
+        
+        // Initialize pending transaction retry service
+        pendingTransactionRetryService = new PendingTransactionRetryService(this);
+        
+        // Initialize RadioDoge status checker
+        radiodogeStatusChecker = new RadioDogeStatusChecker(this);
 
         // Request notification permission for Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -106,9 +126,15 @@ public final class WalletActivity extends AbstractWalletActivity {
         walletActivityViewModel = new ViewModelProvider(this).get(AbstractWalletActivityViewModel.class);
         viewModel = new ViewModelProvider(this).get(WalletActivityViewModel.class);
 
-        setContentView(R.layout.wallet_content);
+        setContentView(R.layout.wallet_activity_onepane_vertical);
         contentView = findViewById(android.R.id.content);
         levitateView = contentView.findViewWithTag("levitate");
+        radiodogeStatusBanner = findViewById(R.id.radiodoge_status_banner);
+        
+        // Set the banner view for the status checker
+        if (radiodogeStatusChecker != null) {
+            radiodogeStatusChecker.setBannerView(radiodogeStatusBanner);
+        }
 
         // Make view tagged with 'levitate' scroll away and quickly return.
         if (levitateView != null) {
@@ -219,12 +245,29 @@ public final class WalletActivity extends AbstractWalletActivity {
         } else {
             // User is already authenticated, biometric is disabled, or internal navigation
             startBlockchainService();
+            
+            // Check for pending transactions that can be retried via RadioDoge
+            handler.postDelayed(() -> {
+                if (pendingTransactionRetryService != null) {
+                    pendingTransactionRetryService.retryPendingTransactions();
+                }
+                
+                // Start RadioDoge status checking
+                if (radiodogeStatusChecker != null) {
+                    radiodogeStatusChecker.startChecking();
+                }
+            }, 100); // Reduced delay from 500ms to 100ms
         }
     }
 
     @Override
     protected void onPause() {
         handler.removeCallbacksAndMessages(null);
+        
+        // Stop RadioDoge status checking when paused
+        if (radiodogeStatusChecker != null) {
+            radiodogeStatusChecker.stopChecking();
+        }
 
         super.onPause();
     }
@@ -233,7 +276,7 @@ public final class WalletActivity extends AbstractWalletActivity {
         handler.postDelayed(() -> {
             // delayed start so that UI has enough time to initialize
             BlockchainService.start(WalletActivity.this, true);
-        }, 1000);
+        }, 200); // Reduced delay from 1000ms to 200ms
     }
 
     private void showBiometricAuthentication() {
@@ -258,6 +301,44 @@ public final class WalletActivity extends AbstractWalletActivity {
                 // User cancelled, exit the app
                 android.widget.Toast.makeText(WalletActivity.this, "Authentication required to access wallet", android.widget.Toast.LENGTH_SHORT).show();
                 finishAffinity();
+            }
+        });
+    }
+
+
+    /**
+     * Check RadioDoge logs for transaction confirmation
+     */
+    public void checkTransactionConfirmation(String transactionId) {
+        RadioDogeLogChecker.checkTransactionConfirmation(transactionId, new RadioDogeLogChecker.RadioDogeLogCallback() {
+            @Override
+            public void onTransactionConfirmed(String txId, String confirmationResult) {
+                log.info("Transaction confirmed via RadioDoge: {} -> {}", txId, confirmationResult);
+                // Update UI to show transaction is confirmed and navigate back to main page
+                handler.post(() -> {
+                    android.widget.Toast.makeText(WalletActivity.this, 
+                        "Transaction confirmed via RadioDoge: " + confirmationResult, 
+                        android.widget.Toast.LENGTH_LONG).show();
+                    
+                    // Navigate back to the main wallet page (transactions list)
+                    // This will close any send dialog and return to the main view
+                    finish();
+                });
+            }
+
+            @Override
+            public void onTransactionError(String txId, String errorMessage) {
+                log.warn("Transaction error via RadioDoge: {} -> {}", txId, errorMessage);
+                handler.post(() -> {
+                    android.widget.Toast.makeText(WalletActivity.this, 
+                        "Transaction error via RadioDoge: " + errorMessage, 
+                        android.widget.Toast.LENGTH_LONG).show();
+                });
+            }
+
+            @Override
+            public void onLogCheckFailed(String error) {
+                log.warn("Failed to check RadioDoge logs: {}", error);
             }
         });
     }
@@ -421,6 +502,17 @@ public final class WalletActivity extends AbstractWalletActivity {
                     }
                 }.parse();
             }
+        } else if (requestCode == REQUEST_CODE_SCAN_CHILD_ACTIVATION) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Handle child activation QR scan - start FamilyModeActivity with the scanned data
+                final String scannedData = intent.getStringExtra(ScanActivity.INTENT_EXTRA_RESULT);
+                if (scannedData != null) {
+                    // Start FamilyModeActivity with the scanned derived key
+                    Intent familyIntent = new Intent(this, FamilyModeActivity.class);
+                    familyIntent.putExtra("scanned_derived_key", scannedData);
+                    startActivity(familyIntent);
+                }
+            }
         } else {
             super.onActivityResult(requestCode, resultCode, intent);
         }
@@ -459,12 +551,51 @@ public final class WalletActivity extends AbstractWalletActivity {
             requestLegacyOption.setVisible(isLegacyFallback);
         }
 
+        // Check if child mode is active
+        boolean isChildModeActive = de.schildbach.wallet.util.ChildModeHelper.isChildModeActive(this);
+        
+        // Hide "Activate Child" if children already exist OR if child mode is active
+        try {
+            FamilyMemberDatabase familyDatabase = new FamilyMemberDatabase(this);
+            boolean hasChildren = !familyDatabase.getAllFamilyMembers().isEmpty();
+            final MenuItem activateChildOption = menu.findItem(R.id.wallet_options_activate_child);
+            if (activateChildOption != null) {
+                activateChildOption.setVisible(!hasChildren && !isChildModeActive);
+            }
+            
+            // Keep "Family Mode" visible but it will require PIN protection when child mode is active
+            // The PIN protection is handled in onOptionsItemSelected
+            
+        } catch (Exception e) {
+            // If there's an error checking for children, show the option
+            final MenuItem activateChildOption = menu.findItem(R.id.wallet_options_activate_child);
+            if (activateChildOption != null) {
+                activateChildOption.setVisible(!isChildModeActive);
+            }
+        }
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         int itemId = item.getItemId();
+        
+        // Check if child mode is active and PIN protection is needed
+        boolean isChildModeActive = de.schildbach.wallet.util.ChildModeHelper.isChildModeActive(this);
+        boolean needsPinProtection = isChildModeActive && (itemId == R.id.wallet_options_safety || 
+                                                          itemId == R.id.wallet_options_family_mode || 
+                                                          itemId == R.id.wallet_options_preferences ||
+                                                          itemId == R.id.wallet_options_encrypt_keys ||
+                                                          itemId == R.id.wallet_options_backup_wallet ||
+                                                          itemId == R.id.wallet_options_restore_wallet ||
+                                                          itemId == R.id.wallet_options_sweep_wallet);
+        
+        if (needsPinProtection) {
+            showPinProtectionDialog(itemId);
+            return true;
+        }
+        
         if (itemId == R.id.wallet_options_request) {
             handleRequestCoins();
             return true;
@@ -479,6 +610,13 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_address_book) {
             AddressBookActivity.start(this);
+            return true;
+        } else if (itemId == R.id.wallet_options_family_mode) {
+            startActivity(new Intent(this, FamilyModeActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_activate_child) {
+            // Start QR scanner for child activation - use the same scanner as FamilyModeActivity
+            ScanActivity.startForResult(this, REQUEST_CODE_SCAN_CHILD_ACTIVATION);
             return true;
         } else if (itemId == R.id.wallet_options_recurring_payments) {
             startActivity(new Intent(this, RecurringPaymentsActivity.class));
@@ -508,7 +646,9 @@ public final class WalletActivity extends AbstractWalletActivity {
             viewModel.showHelpDialog.setValue(new Event<>(R.string.help_technical_notes));
             return true;
         } else if (itemId == R.id.wallet_options_help) {
-            viewModel.showHelpDialog.setValue(new Event<>(R.string.help_wallet));
+            // Open the website documentation instead of showing help dialog
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://dogecoinwallet.org/#documentation"));
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -516,6 +656,62 @@ public final class WalletActivity extends AbstractWalletActivity {
 
     public void handleRequestCoins() {
         RequestCoinsActivity.start(this);
+    }
+    
+    private void showPinProtectionDialog(int menuItemId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("PIN Required");
+        builder.setMessage("Please enter the PIN to access this feature:");
+        
+        final EditText pinInput = new EditText(this);
+        pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        pinInput.setHint("Enter PIN");
+        builder.setView(pinInput);
+        
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String enteredPin = pinInput.getText().toString();
+            // For now, we'll use a simple PIN check (you can implement proper PIN validation)
+            if (validatePin(enteredPin)) {
+                // PIN is correct, proceed with the original action
+                handleMenuAction(menuItemId);
+            } else {
+                Toast.makeText(this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        builder.setNegativeButton(R.string.common_cancel, null);
+        builder.show();
+    }
+    
+    private boolean validatePin(String enteredPin) {
+        // Get the stored PIN from SharedPreferences
+        android.content.SharedPreferences prefs = getSharedPreferences("child_mode", android.content.Context.MODE_PRIVATE);
+        String storedPin = prefs.getString("child_mode_pin", null);
+        
+        if (storedPin == null) {
+            // No PIN set, allow access (shouldn't happen in child mode)
+            return true;
+        }
+        
+        return storedPin.equals(enteredPin);
+    }
+    
+    private void handleMenuAction(int menuItemId) {
+        if (menuItemId == R.id.wallet_options_safety) {
+            viewModel.showHelpDialog.setValue(new Event<>(R.string.help_safety));
+        } else if (menuItemId == R.id.wallet_options_family_mode) {
+            startActivity(new Intent(this, FamilyModeActivity.class));
+        } else if (menuItemId == R.id.wallet_options_preferences) {
+            startActivity(new Intent(this, PreferenceActivity.class));
+        } else if (menuItemId == R.id.wallet_options_encrypt_keys) {
+            viewModel.showEncryptKeysDialog.setValue(Event.simple());
+        } else if (menuItemId == R.id.wallet_options_backup_wallet) {
+            viewModel.showBackupWalletDialog.setValue(Event.simple());
+        } else if (menuItemId == R.id.wallet_options_restore_wallet) {
+            viewModel.showRestoreWalletDialog.setValue(Event.simple());
+        } else if (menuItemId == R.id.wallet_options_sweep_wallet) {
+            SweepWalletActivity.start(this);
+        }
     }
 
     public void handleSendCoins() {
@@ -543,4 +739,5 @@ public final class WalletActivity extends AbstractWalletActivity {
             child.setTranslationY(Floats.constrainToRange(child.getTranslationY() - dyConsumed, -child.getHeight(), 0));
         }
     }
+
 }

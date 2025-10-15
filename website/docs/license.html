@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License - Dogecoin Wallet</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../images/dogecoin.svg">
+    <link rel="apple-touch-icon" href="../images/dogecoin.svg">    
+    <style>
+        .doc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            line-height: 1.8;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content h1 { 
+            color: var(--dogecoin-yellow); 
+            margin-bottom: 30px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content h2 { 
+            color: var(--text-color); 
+            margin-top: 40px; 
+            margin-bottom: 20px; 
+            transition: color 0.3s ease;
+        }
+        .doc-content p { 
+            margin-bottom: 20px; 
+            color: var(--text-light); 
+            transition: color 0.3s ease;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--dogecoin-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--dogecoin-orange);
+        }
+        .license-text {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .doc-content ul, .doc-content ol {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        /* Modern bullet points and numbering */
+        .doc-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .doc-content ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ul li::before {
+            content: "▶";
+            color: var(--dogecoin-yellow);
+            font-size: 12px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .doc-content ol {
+            counter-reset: custom-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .doc-content ol li {
+            counter-increment: custom-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .doc-content ol li::before {
+            content: counter(custom-counter);
+            color: #000000;
+            background: #ffc107;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            z-index: 1;
+        }
+        .doc-content a {
+            color: var(--dogecoin-yellow);
+            transition: color 0.3s ease;
+        }
+        .doc-content a:hover {
+            color: var(--dogecoin-orange);
+        }
+        .doc-content h2 i {
+            color: var(--dogecoin-yellow);
+            margin-right: 10px;
+        }
+        .doc-content strong i {
+            color: var(--dogecoin-orange);
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-content">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>GNU General Public License v3.0</h1>
+        <p><strong>Dogecoin Wallet</strong> is released under the GNU General Public License v3.0 (GPL v3.0).</p>
+        
+        <h2><i class="fas fa-info-circle"></i> What This Means</h2>
+        <p>This license allows you to:</p>
+        <ul>
+            <li>✅ Use the software for any purpose</li>
+            <li>✅ Study how the software works</li>
+            <li>✅ Modify and improve the software</li>
+            <li>✅ Distribute copies of the software</li>
+            <li>✅ Distribute modified versions</li>
+        </ul>
+        
+        <h2><i class="fas fa-list-check"></i> Requirements</h2>
+        <p>When distributing the software, you must:</p>
+        <ul>
+            <li>Include the original license text</li>
+            <li>Make source code available</li>
+            <li>Use the same license for derivatives</li>
+            <li>Preserve copyright notices</li>
+        </ul>
+        
+        <h2><i class="fas fa-file-text"></i> Full License Text</h2>
+        <div class="license-text">
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc. &lt;https://fsf.org/&gt;
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+[Full GPL v3.0 license text would be included here]
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+        </div>
+        
+        <h2><i class="fas fa-code"></i> Source Code</h2>
+        <p>The complete source code is available at:</p>
+        <p><a href="https://github.com/qlpqlp/dogecoin-wallet" target="_blank">https://github.com/qlpqlp/dogecoin-wallet</a></p>
+        
+        <h2><i class="fas fa-users"></i> Contributing</h2>
+        <p>We welcome contributions! By contributing to this project, you agree that your contributions will be licensed under the same GPL v3.0 license.</p>
+        
+        <p><strong><i class="fas fa-paw"></i> Much open source, very freedom!</strong></p>
+    </div>
+</body>
+</html>

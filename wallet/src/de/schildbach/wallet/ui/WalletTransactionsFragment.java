@@ -50,14 +50,20 @@ import de.schildbach.wallet.addressbook.AddressBookDao;
 import de.schildbach.wallet.addressbook.AddressBookDatabase;
 import de.schildbach.wallet.ui.TransactionsAdapter.WarningType;
 import de.schildbach.wallet.ui.send.RaiseFeeDialogFragment;
+import de.schildbach.wallet.util.PendingTransactionRetryService;
 import de.schildbach.wallet.util.Qr;
 import de.schildbach.wallet.util.WalletUtils;
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.LegacyAddress;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.params.AbstractBitcoinNetParams;
+import org.bitcoinj.uri.BitcoinURI;
 import org.bitcoinj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Locale;
 
 /**
  * @author Andreas Schildbach
@@ -235,6 +241,18 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int itemId = item.getItemId();
+        if (itemId == R.id.wallet_transactions_options_retry_pending) {
+            // Retry pending transactions via RadioDoge
+            PendingTransactionRetryService retryService = new PendingTransactionRetryService(activity);
+            if (retryService.hasPendingTransactions()) {
+                retryService.retryPendingTransactions();
+                android.widget.Toast.makeText(activity, "Retrying pending transactions via RadioDoge...", android.widget.Toast.LENGTH_SHORT).show();
+            } else {
+                android.widget.Toast.makeText(activity, "No pending transactions to retry", android.widget.Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+        
         final WalletTransactionsViewModel.Direction direction;
         if (itemId == R.id.wallet_transactions_options_filter_all) {
             direction = null;
@@ -305,9 +323,19 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
             viewModel.showEditAddressBookEntryDialog.setValue(new Event<>(txAddress));
             return true;
         } else if (itemId == R.id.wallet_transactions_context_show_qr) {
-            final byte[] txSerialized = tx.unsafeBitcoinSerialize();
-            final Bitmap qrCodeBitmap = Qr.bitmap(Qr.encodeCompressBinary(txSerialized));
-            viewModel.showBitmapDialog.setValue(new Event<>(qrCodeBitmap));
+            // Show wallet address QR code instead of transaction data
+            final boolean txSent = tx.getValue(wallet).signum() < 0;
+            final Address txAddress = txSent ? WalletUtils.getToAddressOfSent(tx, wallet)
+                    : WalletUtils.getWalletAddressOfReceived(tx, wallet);
+            if (txAddress != null) {
+                final String ownName = application.getConfiguration().getOwnName();
+                final String uri;
+                if (txAddress instanceof LegacyAddress || ownName != null)
+                    uri = BitcoinURI.convertToBitcoinURI(txAddress, null, ownName, null).replace(AbstractBitcoinNetParams.BITCOIN_SCHEME, "dogecoin");
+                else
+                    uri = txAddress.toString().toUpperCase(Locale.US).replace(AbstractBitcoinNetParams.BITCOIN_SCHEME, "dogecoin");
+                viewModel.showBitmapDialog.setValue(new Event<>(Qr.bitmap(uri)));
+            }
             return true;
         } else if (itemId == R.id.wallet_transactions_context_raise_fee) {
             RaiseFeeDialogFragment.show(fragmentManager, transactionId);

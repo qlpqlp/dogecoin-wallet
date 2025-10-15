@@ -63,6 +63,14 @@
                 android:data="https://github.com/dogecoin/libdohj" />
         </Preference>
         <Preference
+            android:key="about_credits_radiodoge"
+            android:summary="https://github.com/dogecoinfoundation/radiodoge"
+            android:title="RadioDoge V3 - Dogecoin Foundation">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/dogecoinfoundation/radiodoge" />
+        </Preference>
+        <Preference
             android:key="about_credits_mlkit"
             android:summary="https://developers.google.com/ml-kit/vision/barcode-scanning"
             android:title="Google ML Kit Barcode Scanning">

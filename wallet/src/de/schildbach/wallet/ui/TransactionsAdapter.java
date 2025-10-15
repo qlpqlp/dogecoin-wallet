@@ -44,6 +44,8 @@ import de.schildbach.wallet.addressbook.AddressBookEntry;
 import de.schildbach.wallet.ui.TransactionsAdapter.ListItem.TransactionItem;
 import de.schildbach.wallet.util.Formats;
 import de.schildbach.wallet.util.WalletUtils;
+import de.schildbach.wallet.util.RadioDogeHelper;
+import de.schildbach.wallet.Configuration;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Sha256Hash;
@@ -64,6 +66,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Andreas Schildbach
@@ -172,7 +176,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
                     this.confidenceTextualColor = 0;
                     this.confidenceMessage = sent && confidence.numBroadcastPeers() == 0
                             ? SpannedString.valueOf(
-                                    context.getString(R.string.transaction_row_confidence_message_sent_unbroadcasted))
+                                    getUnbroadcastedMessage(tx, context))
                             : null;
                     this.confidenceMessageOnlyShownWhenSelected = false;
                 } else if (confidenceType == ConfidenceType.IN_CONFLICT) {
@@ -404,6 +408,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
     private final Context context;
     private final LayoutInflater inflater;
     private final MenuInflater menuInflater;
+    private final Configuration config;
 
     @Nullable
     private final OnClickListener onClickListener;
@@ -570,6 +575,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.menuInflater = new MenuInflater(context);
+        this.config = new Configuration(android.preference.PreferenceManager.getDefaultSharedPreferences(context), context.getResources());
         this.onClickListener = onClickListener;
         this.contextMenuCallback = contextMenuCallback;
 
@@ -865,5 +871,111 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
             super(itemView);
             message = itemView.findViewById(R.id.transaction_row_warning_message);
         }
+    }
+
+    /**
+     * Determines the appropriate message for unbroadcasted transactions.
+     * Shows RadioDoge success message only if RadioDoge logs confirm the transaction was sent successfully.
+     */
+    private static String getUnbroadcastedMessage(Transaction transaction, Context context) {
+        // Create Configuration instance
+        Configuration config = new Configuration(android.preference.PreferenceManager.getDefaultSharedPreferences(context), context.getResources());
+        
+        // Check if RadioDoge is enabled and active
+        if (config.getRadioDogeEnabled() && RadioDogeHelper.isConnectedToRadioDoge(context)) {
+            // Check if this transaction was confirmed by RadioDoge logs
+            if (isTransactionConfirmedByRadioDogeLogs(transaction, context)) {
+                return context.getString(R.string.transaction_row_confidence_message_sent_radiodoge_success);
+            }
+        }
+        
+        // Default message for unbroadcasted transactions
+        return context.getString(R.string.transaction_row_confidence_message_sent_unbroadcasted);
+    }
+    
+    /**
+     * Checks RadioDoge logs to see if a transaction was successfully sent and confirmed.
+     * Looks for the specific log patterns that indicate successful transmission.
+     */
+    private static boolean isTransactionConfirmedByRadioDogeLogs(Transaction transaction, Context context) {
+        try {
+            // Get transaction ID for matching
+            String transactionId = transaction.getTxId().toString();
+            
+            // Fetch RadioDoge logs
+            String logsJson = fetchRadioDogeLogs();
+            if (logsJson == null) {
+                return false;
+            }
+            
+            // Parse JSON to get logs array
+            JSONObject jsonResponse = new JSONObject(logsJson);
+            JSONArray logsArray = jsonResponse.getJSONArray("logs");
+            
+            // Look for transaction confirmation patterns
+            for (int i = 0; i < logsArray.length(); i++) {
+                String logEntry = logsArray.getString(i);
+                
+                // Look for DOGECOIN_RESPONSE patterns that indicate success
+                if (logEntry.contains("DOGECOIN_RESPONSE")) {
+                    // Check for successful result (transaction hash)
+                    if (logEntry.contains("\"result\":\"") && !logEntry.contains("\"result\":null")) {
+                        // Extract the transaction hash from the result
+                        String resultPattern = "\"result\":\"([a-f0-9]+)\"";
+                        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(resultPattern);
+                        java.util.regex.Matcher matcher = pattern.matcher(logEntry);
+                        if (matcher.find()) {
+                            String resultHash = matcher.group(1);
+                            // Check if this result matches our specific transaction
+                            if (resultHash.equals(transactionId)) {
+                                return true;
+                            }
+                        }
+                    }
+                    // Check for "transaction already in block chain" (also success)
+                    if (logEntry.contains("transaction already in block chain")) {
+                        // For "already in blockchain" errors, we can't match by hash
+                        // but we can check if this log entry is recent enough to be relevant
+                        // For now, we'll consider any "already in blockchain" as a success
+                        // since it means the transaction was processed
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        } catch (Exception e) {
+            // If there's any error checking logs, fall back to default behavior
+            return false;
+        }
+    }
+    
+    /**
+     * Fetches RadioDoge logs from the API endpoint.
+     */
+    private static String fetchRadioDogeLogs() {
+        try {
+            java.net.URL url = new java.net.URL("http://192.168.4.1/api/logs");
+            java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(10000);
+            
+            int responseCode = connection.getResponseCode();
+            if (responseCode == 200) {
+                java.io.BufferedReader reader = new java.io.BufferedReader(
+                    new java.io.InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                return response.toString();
+            }
+        } catch (Exception e) {
+            // Connection failed, return null
+        }
+        return null;
     }
 }

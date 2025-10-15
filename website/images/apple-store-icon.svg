@@ -1,0 +1,14 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="appleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#666;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="40" height="40" rx="8" fill="url(#appleGradient)"/>
+  <rect x="2" y="2" width="36" height="36" rx="6" fill="none" stroke="#fff" stroke-width="1"/>
+  
+  <!-- Apple Logo -->
+  <path d="M20 8C18.5 8 17 8.5 16 9.5C15 10.5 14.5 12 14.5 13.5C14.5 15 15 16.5 16 17.5C17 18.5 18.5 19 20 19C21.5 19 23 18.5 24 17.5C25 16.5 25.5 15 25.5 13.5C25.5 12 25 10.5 24 9.5C23 8.5 21.5 8 20 8Z" fill="white"/>
+  <path d="M20 8C18.5 8 17 8.5 16 9.5C15 10.5 14.5 12 14.5 13.5C14.5 15 15 16.5 16 17.5C17 18.5 18.5 19 20 19C21.5 19 23 18.5 24 17.5C25 16.5 25.5 15 25.5 13.5C25.5 12 25 10.5 24 9.5C23 8.5 21.5 8 20 8Z" fill="none" stroke="white" stroke-width="0.5"/>
+</svg>

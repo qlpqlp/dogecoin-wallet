@@ -1,67 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_margin_vertical"
-    android:layout_marginLeft="@dimen/card_margin_horizontal"
-    android:layout_marginRight="@dimen/card_margin_horizontal"
-    app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="@color/bg_list_card">
+    android:orientation="vertical"
+    android:background="@drawable/modal_background_modern"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
+    <!-- Header Row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
 
-        <de.schildbach.wallet.util.FillGapsLinearLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_entry_padding_vertical"
-            android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
-            android:layout_marginRight="@dimen/list_entry_padding_horizontal"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/address_book_row_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:singleLine="false"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/address_book_row_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_small"
-                    android:visibility="gone" />
-            </LinearLayout>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/address_book_row_address"
+                android:id="@+id/address_book_row_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/list_entry_padding_vertical_cram"
-                android:layout_marginLeft="@dimen/list_entry_padding_horizontal_cram"
-                android:layout_gravity="right" />
-        </de.schildbach.wallet.util.FillGapsLinearLayout>
+                android:text="My Address"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant" />
 
-        <Toolbar
-            android:id="@+id/address_book_row_context_bar"
-            android:theme="@style/My.ThemeOverlay.ContextBar"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/address_book_row_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current address"
+                android:textSize="12sp"
+                android:textColor="@color/fg_significant"
+                android:alpha="0.7"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/address_book_row_exclude_switch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginStart="16dp" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+    <!-- Address Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/address_book_row_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="D7Y55...X9K2"
+            android:textSize="14sp"
+            android:textColor="@color/fg_significant"
+            android:fontFamily="monospace"
+            android:singleLine="true"
+            android:ellipsize="middle" />
+
+        <TextView
+            android:id="@+id/address_book_row_excluded_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/address_excluded_from_spending"
+            android:textSize="12sp"
+            android:textColor="@color/fg_significant"
+            android:alpha="0.7"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Status Row (if excluded) -->
+    <LinearLayout
+        android:id="@+id/layout_excluded_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_excluded_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="This address is excluded from spending"
+            android:textSize="12sp"
+            android:textColor="@color/fg_significant"
+            android:alpha="0.7"
+            android:singleLine="true"
+            android:ellipsize="end" />
+
+    </LinearLayout>
+
+    <Toolbar
+        android:id="@+id/address_book_row_context_bar"
+        android:theme="@style/My.ThemeOverlay.ContextBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>

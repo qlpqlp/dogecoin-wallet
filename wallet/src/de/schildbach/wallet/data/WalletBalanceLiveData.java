@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.util.ExcludedAddressHelper;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.utils.Threading;
@@ -83,7 +84,15 @@ public final class WalletBalanceLiveData extends AbstractWalletLiveData<Coin>
         final Wallet wallet = getWallet();
         AsyncTask.execute(() -> {
             org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
-            postValue(wallet.getBalance(balanceType));
+            Coin balance;
+            if (balanceType == BalanceType.AVAILABLE) {
+                // Use excluded balance calculation for available balance
+                balance = ExcludedAddressHelper.getAvailableBalanceExcludingReserved(wallet);
+            } else {
+                // Use normal balance calculation for other balance types
+                balance = wallet.getBalance(balanceType);
+            }
+            postValue(balance);
         });
     }
 

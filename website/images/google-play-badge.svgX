@@ -1,0 +1,60 @@
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="googleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Google Play Icon Gradients -->
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00a0ff"/>
+      <stop offset="0.7%" style="stop-color:#00a1ff"/>
+      <stop offset="26%" style="stop-color:#00beff"/>
+      <stop offset="51.2%" style="stop-color:#00d2ff"/>
+      <stop offset="76%" style="stop-color:#00dfff"/>
+      <stop offset="100%" style="stop-color:#00e3ff"/>
+    </linearGradient>
+    
+    <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe000"/>
+      <stop offset="40.9%" style="stop-color:#ffbd00"/>
+      <stop offset="77.5%" style="stop-color:orange"/>
+      <stop offset="100%" style="stop-color:#ff9c00"/>
+    </linearGradient>
+    
+    <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff3a44"/>
+      <stop offset="100%" style="stop-color:#c31162"/>
+    </linearGradient>
+    
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#32a071"/>
+      <stop offset="6.9%" style="stop-color:#2da771"/>
+      <stop offset="47.6%" style="stop-color:#15cf74"/>
+      <stop offset="80.1%" style="stop-color:#06e775"/>
+      <stop offset="100%" style="stop-color:#00f076"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="180" height="50" rx="8" fill="url(#googleGradient)"/>
+  
+  <!-- Google Play Icon (scaled and positioned) -->
+  <g transform="translate(12, 8) scale(0.25)">
+    <!-- Blue triangle -->
+    <path d="M10.4 7.5c-.3.3-.4.8-.4 1.4V31c0 .6.2 1.1.5 1.4l.1.1L23 20.1v-.2L10.4 7.5z" fill="url(#blueGradient)"/>
+    
+    <!-- Yellow triangle -->
+    <path d="M27 24.3l-4.1-4.1V19.9l4.1-4.1.1.1 4.9 2.8c1.4.8 1.4 2.1 0 2.9l-5 2.7z" fill="url(#yellowGradient)"/>
+    
+    <!-- Red triangle -->
+    <path d="M27.1 24.2L22.9 20 10.4 32.5c.5.5 1.2.5 2.1.1l14.6-8.4" fill="url(#redGradient)"/>
+    
+    <!-- Green triangle -->
+    <path d="M27.1 15.8L12.5 7.5c-.9-.5-1.6-.4-2.1.1L22.9 20l4.2-4.2z" fill="url(#greenGradient)"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="40" y="18" font-family="Roboto, Arial, sans-serif" font-size="8" font-weight="400" fill="#9AA0A6">GET IT ON</text>
+  <text x="40" y="32" font-family="Roboto, Arial, sans-serif" font-size="12" font-weight="500" fill="white">Google Play</text>
+</svg>

@@ -6,21 +6,21 @@ Technical details
 Your wallet contains your private keys and various transaction related metadata. It is stored in app-private
 storage:
 
-    Mainnet: /data/data/de.schildbach.wallet/files/wallet-protobuf
-    Testnet: /data/data/de.schildbach.wallet_test/files/wallet-protobuf-testnet
+    Mainnet: /data/data/org.dogecoin.wallet/files/wallet-protobuf
+    Testnet: /data/data/org.dogecoin.wallet_test/files/wallet-protobuf-testnet
 
-The wallet file format is not compatible to wallet.dat (Satoshi client). Rather, it uses a custom protobuf format
-which should be compatible between clients using bitcoinj.
+The wallet file format is not compatible to wallet.dat (Dogecoin Core client). Rather, it uses a custom protobuf format
+which should be compatible between clients using libdohj (DogecoinJ).
 
 Certain actions cause automatic rolling backups of your wallet to app-private storage:
 
-    Mainnet: /data/data/de.schildbach.wallet/files/key-backup-protobuf
-    Testnet: /data/data/de.schildbach.wallet_test/files/key-backup-protobuf-testnet
+    Mainnet: /data/data/org.dogecoin.wallet/files/key-backup-protobuf
+    Testnet: /data/data/org.dogecoin.wallet_test/files/key-backup-protobuf-testnet
 
 Your wallet can be manually backed up to and restored from a share of the storage access framework (likely Google Drive):
 
-    Mainnet: bitcoin-wallet-backup-<yyyy-MM-dd-HH-mm>
-    Testnet: bitcoin-wallet-backup-testnet-<yyyy-MM-dd-HH-mm>
+    Mainnet: dogecoin-wallet-backup-<yyyy-MM-dd-HH-mm>
+    Testnet: dogecoin-wallet-backup-testnet-<yyyy-MM-dd-HH-mm>
 
 If you want to recover coins from manual backups and for whatever reason you cannot use the app
 itself to restore from the backup, see the separate [README.recover.md](README.recover.md) guide.
@@ -28,15 +28,15 @@ itself to restore from the backup, see the separate [README.recover.md](README.r
 The current fee rate for each of the fee categories (economic, normal, priority) is cached in
 app-private storage:
 
-    Mainnet: /data/data/de.schildbach.wallet/files/fees.txt
-    Testnet: /data/data/de.schildbach.wallet_test/files/fees-testnet.txt
+    Mainnet: /data/data/org.dogecoin.wallet/files/fees.txt
+    Testnet: /data/data/org.dogecoin.wallet_test/files/fees-testnet.txt
 
 
 ### DEBUGGING
 
 Wallet file for Testnet can be pulled from an (even un-rooted) device using:
 
-    adb pull /data/data/de.schildbach.wallet_test/files/wallet-protobuf-testnet
+    adb pull /data/data/org.dogecoin.wallet_test/files/wallet-protobuf-testnet
 
 Log messages can be viewed by:
 
@@ -53,19 +53,19 @@ If you haven't done already, follow the **Prerequisites for Building** section i
 It's important to know that the development version uses Testnet, is debuggable and the wallet file
 is world readable/writeable. The goal is to be able to debug easily.
 
-Finally, you can build Bitcoin Wallet and sign it with your development key. Again in your workspace,
+Finally, you can build Dogecoin Wallet and sign it with your development key. Again in your workspace,
 use:
 
     # each time
-    gradle clean test :wallet:assembleDevDebug
+    gradle clean test :wallet:assembleDebug
 
 You'll find the signed APK under this path:
 
-    wallet/build/outputs/apk/dev/debug/bitcoin-wallet-dev-debug.apk
+    wallet/build/outputs/apk/debug/dogecoin-wallet-debug.apk
 
 To install the app on your Android device, use:
 
-    gradle :wallet:installDevDebug
+    gradle :wallet:installDebug
 
 If installation fails, make sure "Developer options" and "USB debugging" are enabled on your Android device, and an ADB
 connection is established.
@@ -83,11 +83,11 @@ tag) as the development version. After you have cloned/updated the git repositor
 use:
 
     # each time
-    gradle clean test :wallet:assembleProdRelease
+    gradle clean test :wallet:assembleRelease
 
 You'll find the unsigned APK under this path:
 
-    wallet/build/outputs/apk/prod/release/bitcoin-wallet-prod-release-unsigned.apk
+    wallet/build/outputs/apk/release/dogecoin-wallet-release-unsigned.apk
 
 Apart from the missing signature and checksums in `META-INF/`, it should be identical to the APKs
 provided via the app stores.
@@ -100,7 +100,7 @@ You can import the project into IntelliJ IDEA or Android Studio, as it uses Grad
 
 ### TRANSLATIONS
 
-The source language is English. Translations for all languages except German [happen on Transifex](https://www.transifex.com/bitcoin-wallet/bitcoin-wallet/).
+The source language is English. Translations for all languages except German [happen on Transifex](https://www.transifex.com/dogecoin-wallet/dogecoin-wallet/).
 
 The English resources are pushed to Transifex. Changes are pulled and committed to the git
 repository from time to time. It can be done by manually downloading the files, but using the `tx`
@@ -127,7 +127,7 @@ corrected manually.
 
 ### NFC (Near field communication)
 
-Bitcoin Wallet supports reading Bitcoin requests via NFC, either from a passive NFC tag or from
+Dogecoin Wallet supports reading Dogecoin requests via NFC, either from a passive NFC tag or from
 another NFC capable Android device that is requesting coins.
 
 For this to work, just enable NFC in your phone and hold your phone to the tag or device (with
@@ -140,24 +140,24 @@ Instructions for preparing an NFC tag with your address:
 
 - Some tags have less than 50 bytes capacity, those won't work. 1 KB tags recommended.
 
-- The tag needs to contain a Bitcoin URI. You can construct one with the "Request coins" dialog,
+- The tag needs to contain a Dogecoin URI. You can construct one with the "Request coins" dialog,
   then share with messaging or email. You can also construct the URI manually. Mainnet example:
-  `bitcoin:1G2Y2jP5YFZ5RGk2PXaeWwbeA5y1ZtFhoL`
+  `dogecoin:D7Y55v3HTda9XyBc5ohw4rqK3sf39M5jSX`
 
 - The type of the message needs to be URI or URL (not Text).
 
 - If you put your tag at a public place, don't forget to enable write protect. Otherwise, someone
-  could overwrite the tag with his own Bitcoin address.
+  could overwrite the tag with his own Dogecoin address.
 
 
-### BITCOINJ
+### LIBDOHJ
 
-Bitcoin Wallet uses [bitcoinj](https://bitcoinj.github.io/) for Bitcoin specific logic.
+Dogecoin Wallet uses [libdohj](https://github.com/dogecoin/libdohj) for Dogecoin specific logic.
 
 
 ### EXCHANGE RATES
 
-Bitcoin Wallet reads this feed from "CoinGecko" for getting exchange rates:
+Dogecoin Wallet reads this feed from "CoinGecko" for getting exchange rates:
 
     https://api.coingecko.com/api/v3/exchange_rates
 
@@ -169,7 +169,7 @@ with the compile-time flag
 
 ### SWEEPING WALLETS
 
-When sweeping wallets, Bitcoin Wallet uses a set of Electrum servers to query for unspent transaction
+When sweeping wallets, Dogecoin Wallet uses a set of Electrum servers to query for unspent transaction
 outputs (UTXOs). This feature can be disabled with the compile-time flag:
 
     Constants.ENABLE_SWEEP_WALLET

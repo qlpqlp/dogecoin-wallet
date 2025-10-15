@@ -169,6 +169,7 @@
 <string name="edit_address_book_entry_dialog_button_edit">Save</string>
 <string name="transaction_row_fee">Network fee</string>
 <string name="transaction_row_confidence_message_sent_unbroadcasted">This payment has not been transmitted yet.</string>
+<string name="transaction_row_confidence_message_sent_radiodoge_success">Your payment was successfully sent using RadioDoge. It should reached the payee.</string>
 <string name="transaction_row_confidence_message_received_successful">This payment has been credited to your wallet.</string>
 <string name="transaction_row_confidence_message_sent_successful">Your payment was successful. It has reached the payee.</string>
 <string name="transaction_row_confidence_message_received_failed">This payment has failed.</string>
@@ -279,8 +280,12 @@
 <string name="preferences_show_disclaimer_summary">Have you really read the safety notes? Did you already back up your wallet to a safe place?</string>
 <string name="preferences_bluetooth_address_title">Bluetooth address</string>
 <string name="preferences_bluetooth_address_summary">Manually configure your own Bluetooth address so you can receive payments from payers without connectivity.</string>
-<string name="preferences_bluetooth_address_dialog_message">Unfortunately Android is preventing the automatic detection of your device\'s Bluetooth address. You need to look it up in the Android Bluetooth settings and enter it here.\n\nPlease make sure that every character is correct. Colons can be omitted, and case is not important.</string>
-<string name="preferences_report_issue_title">Report issue</string>
+    <string name="preferences_bluetooth_address_dialog_message">Unfortunately Android is preventing the automatic detection of your device\'s Bluetooth address. You need to look it up in the Android Bluetooth settings and enter it here.\n\nPlease make sure that every character is correct. Colons can be omitted, and case is not important.</string>
+    <string name="preferences_radiodoge_title">RadioDoge Support</string>
+    <string name="preferences_radiodoge_summary">Use RadioDoge to broadcast transactions when no internet connection is available</string>
+    <string name="wallet_transactions_options_retry_pending">Retry Pending</string>
+    <string name="radiodoge_status_message">Using RadioDoge for payments without Internet</string>
+    <string name="preferences_report_issue_title">Report issue</string>
 <string name="preferences_initiate_reset_title">Reset block chain</string>
 <string name="preferences_initiate_reset_summary">Reset block chain, transactions and wallet balance. Replay will take a while, so only do this if you know why.</string>
 <string name="preferences_initiate_reset_dialog_message">Would you like to reset and replay the block chain?\n\nThis will temporarily hide your wallet balance and remove transactions. Both will recover as block chain sync progresses. Make sure you\'ve got a reliable connection to the internet.</string>
@@ -361,6 +366,27 @@
 <string name="private_key_password">PIN</string>
 <string name="private_key_bad_password">bad PIN!</string>
 <string name="qr_code">QR code</string>
+<string name="family_mode_menu_title">Family Mode</string>
+<string name="family_mode_manage">Manage Family</string>
+<string name="family_mode_add_child">Add Child</string>
+<string name="family_mode_activate_child">Activate Child</string>
+<string name="family_mode_activity_title">Family Management</string>
+<string name="family_mode_add_child_dialog_title">Add New Family Member</string>
+<string name="family_mode_child_name">Child Name</string>
+<string name="family_mode_derived_key">Derived Key</string>
+<string name="family_mode_balance">Balance</string>
+<string name="family_mode_send_coins">Send Coins</string>
+<string name="family_mode_activate_dialog_title">Activate Child Mode</string>
+<string name="family_mode_scan_qr_instruction">Scan the QR code with the derived key to activate child mode</string>
+<string name="family_mode_pin_dialog_title">Enter Parent PIN</string>
+<string name="family_mode_pin_instruction">Enter the parent PIN to access Safety and Settings</string>
+<string name="family_mode_pin_incorrect">Incorrect PIN. Access denied.</string>
+<string name="family_mode_activated">Child mode activated successfully</string>
+<string name="family_mode_deactivated">Child mode deactivated</string>
+<string name="family_mode_enter_child_name">Enter Child\'s name</string>
+<string name="family_mode_qr_code_for_child">QR Code for Child Device</string>
+<string name="family_mode_no_members_yet">No family members yet</string>
+<string name="family_mode_add_child_to_start">Add a child to get started</string>
 <string name="error_io">I/O error: %s</string>
 <string name="error_parse">Parse error: %s</string>
 <string name="error_http">HTTP error %1$s:\n%2$s</string>
@@ -401,6 +427,10 @@
 <string name="digital_signature_address">Doge Address:</string>
 <string name="digital_signature_clear">Clear</string>
 <string name="digital_signature_file_picker_title">Select File to Sign</string>
+<string name="digital_signature_generate_signature">Generate Signature</string>
+<string name="digital_signature_take_photo">Take Photo</string>
+<string name="digital_signature_sign_selected_file">Sign Selected File</string>
+<string name="digital_signature_verify">Verify</string>
 <string name="recurring_payments_activity_title">Recurring Payments</string>
 <string name="recurring_payments_menu_title">Recurring Payments</string>
 <string name="recurring_payments_add_new">Add New Payment</string>
@@ -410,6 +440,8 @@
 <string name="recurring_payments_amount">Amount (DOGE)</string>
 <string name="recurring_payments_sending_address">Sending Address</string>
 <string name="recurring_payments_payment_date">Payment Date</string>
+<string name="recurring_payments_payment_date_time">Payment Date &amp; Time</string>
+<string name="recurring_payments_reference_hint">Enter reference for OP_RETURN (optional)</string>
 <string name="recurring_payments_recurring_monthly">Recurring Monthly</string>
 <string name="recurring_payments_enabled">Enabled</string>
 <string name="recurring_payments_disabled">Disabled</string>
@@ -428,4 +460,97 @@
 <string name="digital_signature_error_no_private_key">No private key available for signing</string>
 <string name="digital_signature_error_invalid_input">Invalid input for signing</string>
 <string name="digital_signature_error_verification_failed">Signature verification failed</string>
+<string name="family_mode_show_qr">Show QR</string>
+<string name="family_mode_deactivate_child">Deactivate Child</string>
+<string name="family_mode_deactivate_dialog_title">Deactivate Child Mode</string>
+<string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
+<string name="family_mode_derived_key_copied">Derived key copied to clipboard</string>
+<string name="family_mode_enter_name_error">Please enter a name</string>
+<string name="family_mode_member_added">Family member added successfully</string>
+<string name="family_mode_deactivated_toast">Child mode deactivated</string>
+<string name="family_mode_set_pin_title">Set PIN for Child Mode</string>
+<string name="family_mode_set_pin_message">Enter a PIN code to protect access to Safety and Settings when child mode is active.</string>
+<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_activated_for">Child mode activated for %s</string>
+<string name="digital_signature_sign_text_button">Sign Text</string>
+<string name="digital_signature_sign_file_button">Sign File</string>
+<string name="digital_signature_verify_button">Verify</string>
+<string name="digital_signature_generate_signature_button">Generate Signature</string>
+<string name="digital_signature_select_file_button">Select File</string>
+<string name="digital_signature_take_photo_button">Take Photo</string>
+<string name="digital_signature_no_file_selected">No file selected</string>
+<string name="digital_signature_sign_selected_file_button">Sign Selected File</string>
+<string name="digital_signature_verify_signature_button">Verify Signature</string>
+<string name="digital_signature_results">Results:</string>
+<string name="digital_signature_signed_text">Signed text:</string>
+<string name="digital_signature_file_hash">File Hash (SHA256):</string>
+<string name="digital_signature_signature_label">Signature:</string>
+<string name="digital_signature_doge_address_label">Doge Address:</string>
+<string name="digital_signature_copy_button">Copy</string>
+<string name="digital_signature_share_button">Share</string>
+<string name="recurring_payments_payment_date_time_label">Payment Date &amp; Time</string>
+<string name="recurring_payments_select_date">Select Date</string>
+<string name="recurring_payments_select_time">Select Time</string>
+<string name="recurring_payments_sample_amount">100 DOGE</string>
+<string name="recurring_payments_sample_frequency">Monthly</string>
+<string name="recurring_payments_sample_destination">To: D7Y55...X9K2</string>
+<string name="recurring_payments_sample_next">Next: Jan 15</string>
+<string name="recurring_payments_sample_reference">Ref: Payment for services</string>
+<string name="common_cancel">Cancel</string>
+<string name="common_save">Save</string>
+<string name="common_loading">Loading...</string>
+<string name="common_unknown">Unknown</string>
+<string name="common_handshake">Handshake</string>
+<string name="common_reset">Reset</string>
+<string name="common_online">Online</string>
+<string name="common_discovered">Discovered</string>
+<string name="common_never">Never</string>
+<string name="common_good">Good</string>
+<string name="common_dns">DNS</string>
+<string name="common_network_bloom">NETWORK &amp; BLOOM</string>
+<string name="common_node_network">NODE_NETWORK</string>
+<string name="common_protocol">Protocol:</string>
+<string name="common_client">Client:</string>
+<string name="common_services">Services:</string>
+<string name="common_blocks">Blocks:</string>
+<string name="common_latency">Latency:</string>
+<string name="common_source">Source:</string>
+<string name="common_last_seen">Last Seen:</string>
+<string name="common_version">Version:</string>
+<string name="common_sub_version">Sub Version:</string>
+<string name="common_synced_blocks">Synced Blocks:</string>
+<string name="common_last_updated">Last updated:</string>
+<string name="common_nodes_worldwide">Nodes Worldwide</string>
+<string name="common_discovered_nodes">Discovered Nodes</string>
+<string name="common_block_hash">Hash:</string>
+<string name="common_transactions">Transactions:</string>
+<string name="common_size">Size:</string>
+<string name="common_difficulty">Difficulty:</string>
+<string name="common_sub">Sub:</string>
+<string name="common_synced">Synced:</string>
+<string name="common_ago">ago</string>
+<string name="common_ms">ms</string>
+<string name="common_mb">MB</string>
+<string name="common_block_number">Block #%s</string>
+<string formatted="false" name="common_ip_port">%s:%s</string>
+<string formatted="false" name="common_ip">%s</string>
+<string formatted="false" name="common_port">:%s</string>
+<string formatted="false" name="common_time_ago">%s ago</string>
+<string formatted="false" name="common_latency_ms">%sms (%s)</string>
+<string formatted="false" name="common_blocks_count">%s</string>
+<string formatted="false" name="common_transactions_count">%s</string>
+<string formatted="false" name="common_size_mb">%s MB</string>
+    <string formatted="false" name="common_difficulty_value">%s</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Copy Key</string>
+    <string name="common_copy_address">Copy Address</string>
+    <string name="common_delete">Delete</string>
+    <string name="family_mode_edit_name">Edit Name</string>
+    <string name="address_excluded_from_spending">Excluded from spending</string>
+    <string name="address_exclude_confirm_title">Exclude Address from Spending</string>
+    <string name="address_exclude_confirm_message">This will prevent this address from being used in regular payments and recurring payments. The coins in this address will be reserved and not included in your available balance. Continue?</string>
+    <string name="address_include_confirm_title">Include Address in Spending</string>
+    <string name="address_include_confirm_message">This will allow this address to be used in regular payments and recurring payments again. The coins in this address will be included in your available balance. Continue?</string>
+    <string name="address_excluded_balance">Reserved Balance: %s</string>
 </resources>

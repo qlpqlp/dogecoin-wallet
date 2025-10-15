@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/qr_dialog_background_modern"
-    android:padding="24dp">
+    android:padding="20dp">
 
     <!-- Header with title -->
     <TextView
@@ -16,18 +16,24 @@
         android:textStyle="bold"
         android:textColor="@color/fg_significant"
         android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="12dp" />
 
     <!-- QR Code with modern styling -->
-    <ImageView
-        android:id="@+id/bitmap_dialog_image"
-        android:layout_width="@dimen/bitmap_dialog_qr_size"
-        android:layout_height="@dimen/bitmap_dialog_qr_size"
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:background="@drawable/qr_code_background_modern_enhanced"
-        android:contentDescription="@string/qr_code"
-        android:keepScreenOn="true"
-        android:padding="16dp"
-        android:scaleType="fitXY"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal">
+        
+        <ImageView
+            android:id="@+id/bitmap_dialog_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/qr_code"
+            android:keepScreenOn="true"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="false" />
+            
+    </FrameLayout>
 
 </LinearLayout>

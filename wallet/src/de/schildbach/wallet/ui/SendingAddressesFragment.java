@@ -112,7 +112,7 @@ public final class SendingAddressesFragment extends Fragment implements AddressB
             }
         });
 
-        adapter = new AddressBookAdapter(activity, this, this);
+        adapter = new AddressBookAdapter(activity, this, this, false); // Don't show exclusion for sending addresses
     }
 
     @Nullable

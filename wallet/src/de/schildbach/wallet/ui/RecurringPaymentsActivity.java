@@ -304,7 +304,7 @@ public class RecurringPaymentsActivity extends AbstractWalletActivity {
                        Toast.makeText(this, "Please enter a Dogecoin address", Toast.LENGTH_SHORT).show();
                    }
                })
-               .setNegativeButton("Cancel", null);
+               .setNegativeButton(R.string.common_cancel, null);
         
         builder.create().show();
     }
@@ -563,7 +563,7 @@ public class RecurringPaymentsActivity extends AbstractWalletActivity {
                                 }
                             }
                         })
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(R.string.common_cancel, null)
                         .show();
                 });
             }

@@ -29,6 +29,7 @@ import de.schildbach.wallet.addressbook.AddressBookDatabase;
 import de.schildbach.wallet.addressbook.AddressBookEntry;
 import de.schildbach.wallet.data.AbstractWalletLiveData;
 import de.schildbach.wallet.data.ConfigOwnNameLiveData;
+import de.schildbach.wallet.util.ChildModeHelper;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.LegacyAddress;
@@ -63,8 +64,11 @@ public class WalletAddressesViewModel extends AndroidViewModel {
 
     public static class IssuedReceiveAddressesLiveData extends AbstractWalletLiveData<List<Address>>
             implements KeyChainEventListener {
+        private final WalletApplication walletApplication;
+        
         public IssuedReceiveAddressesLiveData(final WalletApplication application) {
             super(application);
+            this.walletApplication = application;
         }
 
         @Override
@@ -86,17 +90,30 @@ public class WalletAddressesViewModel extends AndroidViewModel {
         private void loadAddresses() {
             final Wallet wallet = getWallet();
             AsyncTask.execute(() -> {
-                final List<Address> addresses = wallet.getIssuedReceiveAddresses();
-                Collections.reverse(addresses);
-                postValue(addresses);
+                // Check if child mode is active
+                Address childModeAddress = ChildModeHelper.getChildModeAddressObject(walletApplication);
+                if (childModeAddress != null) {
+                    // In child mode, only show the child's address
+                    List<Address> childAddresses = new ArrayList<>();
+                    childAddresses.add(childModeAddress);
+                    postValue(childAddresses);
+                } else {
+                    // Normal mode, show all issued receive addresses
+                    final List<Address> addresses = wallet.getIssuedReceiveAddresses();
+                    Collections.reverse(addresses);
+                    postValue(addresses);
+                }
             });
         }
     }
 
     public static class ImportedAddressesLiveData extends AbstractWalletLiveData<List<Address>>
             implements KeyChainEventListener {
+        private final WalletApplication walletApplication;
+        
         public ImportedAddressesLiveData(final WalletApplication application) {
             super(application);
+            this.walletApplication = application;
         }
 
         @Override
@@ -118,12 +135,22 @@ public class WalletAddressesViewModel extends AndroidViewModel {
         private void loadAddresses() {
             final Wallet wallet = getWallet();
             AsyncTask.execute(() -> {
-                final List<ECKey> importedKeys = wallet.getImportedKeys();
-                Collections.reverse(importedKeys);
-                final List<Address> importedAddresses = new ArrayList<>(importedKeys.size());
-                for (final ECKey key : importedKeys)
-                    importedAddresses.add(LegacyAddress.fromKey(Constants.NETWORK_PARAMETERS, key));
-                postValue(importedAddresses);
+                // Check if child mode is active
+                Address childModeAddress = ChildModeHelper.getChildModeAddressObject(walletApplication);
+                if (childModeAddress != null) {
+                    // In child mode, only show the child's address
+                    List<Address> childAddresses = new ArrayList<>();
+                    childAddresses.add(childModeAddress);
+                    postValue(childAddresses);
+                } else {
+                    // Normal mode, show all imported addresses
+                    final List<ECKey> importedKeys = wallet.getImportedKeys();
+                    Collections.reverse(importedKeys);
+                    final List<Address> importedAddresses = new ArrayList<>(importedKeys.size());
+                    for (final ECKey key : importedKeys)
+                        importedAddresses.add(LegacyAddress.fromKey(Constants.NETWORK_PARAMETERS, key));
+                    postValue(importedAddresses);
+                }
             });
         }
     }

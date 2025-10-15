@@ -33,6 +33,7 @@ import de.schildbach.wallet.data.ConfigOwnNameLiveData;
 import de.schildbach.wallet.data.SelectedExchangeRateLiveData;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.Qr;
+import de.schildbach.wallet.util.ChildModeHelper;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.params.AbstractBitcoinNetParams;
@@ -62,7 +63,7 @@ public class RequestCoinsViewModel extends AndroidViewModel {
     public RequestCoinsViewModel(final Application application) {
         super(application);
         this.application = (WalletApplication) application;
-        this.freshReceiveAddress = new FreshReceiveAddressLiveData(this.application);
+        this.freshReceiveAddress = new FreshReceiveAddressLiveData(this.application, this.application);
         this.ownName = new ConfigOwnNameLiveData(this.application);
         this.exchangeRate = new SelectedExchangeRateLiveData(this.application);
         this.qrCode.addSource(freshReceiveAddress, receiveAddress -> maybeGenerateQrCode());
@@ -114,9 +115,11 @@ public class RequestCoinsViewModel extends AndroidViewModel {
 
     public static class FreshReceiveAddressLiveData extends AbstractWalletLiveData<Address> {
         private Script.ScriptType outputScriptType = null;
+        private final WalletApplication walletApplication;
 
-        public FreshReceiveAddressLiveData(final WalletApplication application) {
+        public FreshReceiveAddressLiveData(final WalletApplication application, final WalletApplication walletApplication) {
             super(application);
+            this.walletApplication = walletApplication;
         }
 
         public void overrideOutputScriptType(final Script.ScriptType outputScriptType) {
@@ -139,8 +142,15 @@ public class RequestCoinsViewModel extends AndroidViewModel {
                 final Script.ScriptType outputScriptType = this.outputScriptType;
                 AsyncTask.execute(() -> {
                     org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
-                    postValue(outputScriptType != null ? wallet.freshReceiveAddress(outputScriptType)
-                            : wallet.freshReceiveAddress());
+                    
+                    // Check if child mode is active and use child's address
+                    Address childModeAddress = ChildModeHelper.getChildModeAddressObject(walletApplication);
+                    if (childModeAddress != null) {
+                        postValue(childModeAddress);
+                    } else {
+                        postValue(outputScriptType != null ? wallet.freshReceiveAddress(outputScriptType)
+                                : wallet.freshReceiveAddress());
+                    }
                 });
             }
         }

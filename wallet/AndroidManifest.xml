@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <!-- dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- group: CAMERA -->
@@ -208,6 +210,13 @@
             android:name="de.schildbach.wallet.ui.RecurringPaymentsActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/recurring_payments_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.FamilyModeActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/family_mode_activity_title"
             android:theme="@style/My.Theme.ChildActivity"
             android:windowSoftInputMode="adjustResize" />
 
