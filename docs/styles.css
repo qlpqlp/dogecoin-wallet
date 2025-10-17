@@ -3651,3 +3651,111 @@ section {
         max-width: 200px;
     }
 }
+
+/* Doge Meme Words Animation */
+.doge-words-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2000;
+    overflow: hidden;
+}
+
+.doge-word {
+    position: absolute;
+    font-family: 'Comic Neue', cursive;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--dogecoin-yellow);   
+    pointer-events: none;
+    user-select: none;
+    animation: dogeWordPop 2s ease-out forwards;
+    transform-origin: center;
+    z-index: 2001;
+}
+
+.doge-word.skew-left {
+    transform: rotate(-15deg) scale(1);
+}
+
+.doge-word.skew-right {
+    transform: rotate(15deg) scale(1);
+}
+
+.doge-word.no-skew {
+    transform: rotate(0deg) scale(1);
+}
+
+.doge-word.color-yellow {
+    color: var(--dogecoin-yellow);    
+}
+
+.doge-word.color-orange {
+    color: var(--dogecoin-orange);
+}
+
+.doge-word.color-amber {
+    color: var(--dogecoin-amber);    
+}
+
+.doge-word.color-white {
+    color: #ffffff;
+}
+
+.doge-word.color-green {
+    color: #4CAF50;
+}
+
+.doge-word.color-blue {
+    color: #2196F3;
+}
+
+.doge-word.color-purple {
+    color: #9C27B0;
+}
+
+.doge-word.color-pink {
+    color: #E91E63;
+}
+
+@keyframes dogeWordPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.1) rotate(0deg);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1.2) rotate(var(--rotation, 0deg));
+    }
+    40% {
+        transform: scale(0.9) rotate(var(--rotation, 0deg));
+    }
+    60% {
+        transform: scale(1.1) rotate(var(--rotation, 0deg));
+    }
+    80% {
+        transform: scale(0.95) rotate(var(--rotation, 0deg));
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.1) rotate(var(--rotation, 0deg)) translateY(-100px);
+    }
+}
+
+/* Responsive Doge Words */
+@media (max-width: 768px) {
+    .doge-word {
+        font-size: 2rem;
+        text-shadow: 2px 2px 0px var(--dogecoin-orange), 4px 4px 0px rgba(0, 0, 0, 0.3);
+    }
+}
+
+@media (max-width: 480px) {
+    .doge-word {
+        font-size: 1.5rem;
+        text-shadow: 1px 1px 0px var(--dogecoin-orange), 3px 3px 0px rgba(0, 0, 0, 0.3);
+    }
+}

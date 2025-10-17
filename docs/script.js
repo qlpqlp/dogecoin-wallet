@@ -438,12 +438,74 @@ function initRadioDogeTooltip() {
     }
 }
 
+// Doge Meme Words Animation
+function createDogeWord() {
+    const container = document.getElementById('dogeWordsContainer');
+    if (!container) return;
+    
+    // Fun Dogecoin and wallet-related words
+    const dogeWords = [
+        'Much Wow!', 'Such Wallet!', 'So OpenSource!', 'Pawsome!', 'Very Secure!',
+        'Much Fast!', 'Such Features!', 'So Amazing!', 'Very Cool!', 'Much Safe!',
+        'Such Crypto!', 'So Digital!', 'Very Modern!', 'Much Smart!', 'Such Tech!',
+        'So Innovative!', 'Very Fun!', 'Much Wow!', 'Such Coins!', 'So Blockchain!',
+        'Very Private!', 'Much Control!', 'Such Freedom!', 'So Decentralized!', 'Very Wow!',
+        'Much Family!', 'Such Kids!', 'So Safe!', 'Very Easy!', 'Much Simple!',
+        'Such Sign!', 'So Digital!', 'Very Verify!', 'Much Trust!', 'Such Secure!',
+        'So Recurring!', 'Very Schedule!', 'Much Auto!', 'Such Smart!', 'So Advanced!',
+        'Very Network!', 'Much Nodes!', 'Such Connect!', 'So Global!', 'Very Worldwide!',
+        'Much Radio!', 'Such Offline!', 'So Signal!', 'Very Transmit!', 'Much Broadcast!',
+        'Such Meme!', 'So Fun!', 'Very Happy!', 'Much Joy!', 'Such Laugh!'
+    ];
+    
+    // Random position
+    const x = Math.random() * (window.innerWidth - 200);
+    const y = Math.random() * (window.innerHeight - 100);
+    
+    // Random word
+    const word = dogeWords[Math.floor(Math.random() * dogeWords.length)];
+    
+    // Create word element
+    const wordElement = document.createElement('div');
+    wordElement.className = 'doge-word';
+    wordElement.textContent = word;
+    
+    // Random skew
+    const skews = ['skew-left', 'skew-right', 'no-skew'];
+    const skew = skews[Math.floor(Math.random() * skews.length)];
+    wordElement.classList.add(skew);
+    
+    // Random color
+    const colors = ['color-yellow', 'color-orange', 'color-amber', 'color-white', 'color-green', 'color-blue', 'color-purple', 'color-pink'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    wordElement.classList.add(color);
+    
+    // Random rotation for animation
+    const rotation = Math.random() * 30 - 15; // -15 to 15 degrees
+    wordElement.style.setProperty('--rotation', rotation + 'deg');
+    
+    // Position
+    wordElement.style.left = x + 'px';
+    wordElement.style.top = y + 'px';
+    
+    // Add to container
+    container.appendChild(wordElement);
+    
+    // Remove after animation
+    setTimeout(() => {
+        if (wordElement.parentNode) {
+            wordElement.parentNode.removeChild(wordElement);
+        }
+    }, 6900);
+}
+
 // APK Download Modal functionality
 function initApkModal() {
     const modal = document.getElementById('apkModal');
     const downloadBtn = document.getElementById('downloadApkBtn');
     const closeBtn = document.querySelector('.close');
     const cancelBtn = document.getElementById('cancelDownload');
+    const modalDownloadBtn = document.getElementById('modalDownloadBtn');
     
     if (!modal || !downloadBtn) return;
     
@@ -470,6 +532,20 @@ function initApkModal() {
         });
     }
     
+    // Close modal when Download APK button inside modal is clicked
+    if (modalDownloadBtn) {
+        modalDownloadBtn.addEventListener('click', function() {
+            // Start the fun Doge words animation!
+            startDogeWordsAnimation();
+            
+            // Close modal after a short delay to show the animation
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }, 500);
+        });
+    }
+    
     // Close modal when clicking outside of it
     window.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -485,4 +561,17 @@ function initApkModal() {
             document.body.style.overflow = 'auto'; // Restore scrolling
         }
     });
+}
+
+// Start the fun Doge words animation
+function startDogeWordsAnimation() {
+    // Create multiple words with different timings
+    const wordCount = 15; // Number of words to show
+    const duration = 3000; // Total duration in ms
+    
+    for (let i = 0; i < wordCount; i++) {
+        setTimeout(() => {
+            createDogeWord();
+        }, i * (duration / wordCount));
+    }
 }
