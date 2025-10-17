@@ -63,7 +63,7 @@ public abstract class AbstractWalletActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int statusBarHeight = getStatusBarHeight();
             // Add moderate extra padding to ensure content is fully visible
-            int extraPadding = (int) (getResources().getDisplayMetrics().density * 60); // 60dp extra
+            int extraPadding = (int) (getResources().getDisplayMetrics().density * 55); // 55dp extra
             int totalPadding = statusBarHeight + extraPadding;
             
             // Get navigation bar height and add it to bottom padding

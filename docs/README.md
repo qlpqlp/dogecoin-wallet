@@ -4,12 +4,14 @@ A modern, responsive website for the Dogecoin Wallet Android application.
 
 ## 📱 Current Version Information
 
-- **Version**: v1.0 (Version Code: 61)
+- **Version**: v1.0 (Version Code: 64)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Build Size**: ~14.3 MB (minified AAB)
 - **Status**: Available on Google Play Store
 - **Android 15 Compatible**: ✅ Fixed BOOT_COMPLETED foreground service restrictions
+- **Crash Fixes**: ✅ Fixed race condition crashes during wallet startup and synchronization
+- **New Features**: ✅ Added comprehensive Accounting Reports with CSV, JSON, and PDF export
 
 ## 📱 App Demo & RadioDoge Integration
 
@@ -34,6 +36,26 @@ Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive doc
 - **Interactive**: Smooth animations, hover effects, and scroll animations
 - **Comprehensive**: Complete documentation, legal pages, and user guides
 - **SEO Optimized**: Proper meta tags, structured content, and semantic HTML
+
+## 📊 Accounting Reports Feature
+
+The Dogecoin Wallet now includes comprehensive accounting and reporting capabilities:
+
+- **Transaction Analytics**: Generate detailed reports of all wallet transactions
+- **Multiple Export Formats**: Export data to CSV, JSON, or professionally formatted PDF
+- **Date Range Filtering**: Select specific time periods for targeted reporting
+- **Visual Timeline Charts**: Interactive charts showing transaction flow over time
+- **Complete Transaction Data**: Full transaction details including:
+  - Transaction IDs (non-truncated)
+  - Transaction types (Send, Receive, Internal)
+  - Precise timestamps with UTC formatting
+  - Source and destination addresses with labels
+  - Amounts and fees with 8 decimal precision
+  - OP_RETURN notes and metadata
+- **Professional PDF Reports**: Landscape-formatted reports with Dogecoin branding
+- **Smart Classification**: Automatic detection of internal transactions
+- **Net Amount Calculation**: Accurate reporting of sent amounts (excluding fees)
+- **Easy Sharing**: Share reports via any Android sharing method
 
 ## 📁 Structure
 

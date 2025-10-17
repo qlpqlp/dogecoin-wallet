@@ -226,6 +226,159 @@
             <li>Enable/disable as needed</li>
         </ol>
         
+        <h2><i class="fas fa-chart-line"></i> Accounting Reports & Transaction Analytics</h2>
+        <p>Generate comprehensive reports of all your wallet transactions for accounting, tax purposes, or personal financial tracking.</p>
+        
+        <h3>What are Accounting Reports?</h3>
+        <p>Accounting Reports provide detailed analysis of all your Dogecoin transactions with professional formatting and multiple export options. This feature is perfect for:</p>
+        <ul>
+            <li><strong>Tax Reporting:</strong> Generate detailed transaction reports for tax purposes</li>
+            <li><strong>Business Accounting:</strong> Track business expenses and income in Dogecoin</li>
+            <li><strong>Personal Finance:</strong> Monitor your spending and receiving patterns</li>
+            <li><strong>Audit Trail:</strong> Maintain complete records of all transactions</li>
+            <li><strong>Financial Analysis:</strong> Understand your transaction patterns over time</li>
+        </ul>
+        
+        <h3>How to Access Accounting Reports</h3>
+        <ol>
+            <li>Open the main wallet screen</li>
+            <li>Tap the menu button (three dots) in the top-right corner</li>
+            <li>Select "Accounting Reports" from the menu</li>
+        </ol>
+        
+        <h3>Using the Reports Feature</h3>
+        <h4>Step 1: Select Date Range</h4>
+        <p>Choose the time period for your report:</p>
+        <ul>
+            <li>Tap "Start Date" to select the beginning of your reporting period</li>
+            <li>Tap "End Date" to select the end of your reporting period</li>
+            <li>Use the date picker to select specific dates</li>
+        </ul>
+        
+        <h4>Step 2: Load Transaction Data</h4>
+        <p>After selecting your date range:</p>
+        <ol>
+            <li>Tap "Load Data" to process all transactions in the selected period</li>
+            <li>Wait for the data to load (this may take a moment for large date ranges)</li>
+            <li>View the transaction timeline chart showing your activity over time</li>
+        </ol>
+        
+        <h4>Step 3: Export Your Report</h4>
+        <p>Choose from three professional export formats:</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-file-csv"></i> CSV Export:</strong> Perfect for importing into Excel, Google Sheets, or accounting software. Contains all transaction data in comma-separated format with 8 decimal precision for amounts and fees.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-file-code"></i> JSON Export:</strong> Machine-readable format ideal for developers or custom analysis tools. Contains structured data with all transaction details and metadata.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-file-pdf"></i> PDF Export:</strong> Professional landscape-formatted report with Dogecoin branding, pagination, and modern styling. Perfect for official documentation or sharing with accountants.
+        </div>
+        
+        <h3>Understanding Transaction Data</h3>
+        <p>Each transaction in your report includes:</p>
+        <ul>
+            <li><strong>Transaction ID:</strong> Complete, non-truncated transaction hash for blockchain verification</li>
+            <li><strong>Type:</strong> Send, Receive, or Internal transaction classification</li>
+            <li><strong>Timestamp:</strong> Full UTC timestamp with year, month, day, and time</li>
+            <li><strong>From Address:</strong> Source address with label (if available)</li>
+            <li><strong>To Address:</strong> Destination address with label (if available)</li>
+            <li><strong>Amount:</strong> Transaction amount with 8 decimal precision (0.00000000 DOGE)</li>
+            <li><strong>Fee:</strong> Network fee paid with 8 decimal precision</li>
+            <li><strong>Notes:</strong> OP_RETURN data or transaction metadata</li>
+        </ul>
+        
+        <h3>Transaction Type Explanations</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-arrow-up" style="color: #ff6b6b;"></i> Send Transactions:</strong> 
+            <ul>
+                <li>Amount shows the net amount sent (amount - fee)</li>
+                <li>Fee shows the network fee paid</li>
+                <li>To address shows the recipient</li>
+            </ul>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-arrow-down" style="color: #51cf66;"></i> Receive Transactions:</strong>
+            <ul>
+                <li>Amount shows the full amount received</li>
+                <li>Fee shows 0.00000000 (no fee for receiving)</li>
+                <li>From address shows the sender</li>
+            </ul>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exchange-alt" style="color: #339af0;"></i> Internal Transactions:</strong>
+            <ul>
+                <li>Amount shows 0.00000000 (no net change to wallet balance)</li>
+                <li>Fee shows the network fee paid for the internal move</li>
+                <li>Both addresses show "Internal" (wallet-to-wallet transfer)</li>
+            </ul>
+        </div>
+        
+        <h3>Visual Timeline Chart</h3>
+        <p>The interactive chart shows:</p>
+        <ul>
+            <li><strong>Timeline View:</strong> Transaction activity over your selected date range</li>
+            <li><strong>Sent vs Received:</strong> Visual representation of money flow</li>
+            <li><strong>Daily Aggregation:</strong> Transactions grouped by day for easy analysis</li>
+            <li><strong>Interactive Elements:</strong> Tap and zoom for detailed views</li>
+        </ul>
+        
+        <h3>Professional PDF Reports</h3>
+        <p>The PDF export includes:</p>
+        <ul>
+            <li><strong>Dogecoin Branding:</strong> Professional header with Dogecoin logo and colors</li>
+            <li><strong>Summary Statistics:</strong> Total transactions, amounts received, sent, and fees paid</li>
+            <li><strong>Complete Transaction Table:</strong> All transactions with full details</li>
+            <li><strong>Pagination:</strong> Multiple pages for large transaction sets (10 transactions per page)</li>
+            <li><strong>Modern Formatting:</strong> Clean, professional layout with proper spacing</li>
+            <li><strong>Color-Coded Types:</strong> Visual badges for Send, Receive, and Internal transactions</li>
+        </ul>
+        
+        <h3>Sharing Your Reports</h3>
+        <p>After generating a report:</p>
+        <ol>
+            <li>Tap the export button (CSV, JSON, or PDF)</li>
+            <li>Wait for the file to be generated</li>
+            <li>Choose your sharing method from the Android share menu</li>
+            <li>Send via email, cloud storage, messaging apps, or save to device</li>
+        </ol>
+        
+        <h3>Best Practices for Accounting Reports</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-lightbulb"></i> Tips for Better Reports:</strong>
+            <ul>
+                <li>Use specific date ranges for targeted analysis</li>
+                <li>Export monthly reports for regular accounting</li>
+                <li>Keep PDF reports for official documentation</li>
+                <li>Use CSV for importing into accounting software</li>
+                <li>Regularly backup your transaction data</li>
+                <li>Review transaction labels for accurate categorization</li>
+            </ul>
+        </div>
+        
+        <h3>Troubleshooting Reports</h3>
+        <h4>No Data Loading</h4>
+        <p>If no transactions appear in your selected date range:</p>
+        <ul>
+            <li>Check if you have transactions in that time period</li>
+            <li>Try expanding your date range</li>
+            <li>Ensure your wallet is fully synchronized</li>
+        </ul>
+        
+        <h4>Export Issues</h4>
+        <p>If export fails:</p>
+        <ul>
+            <li>Ensure you have sufficient storage space</li>
+            <li>Check that you have a file manager app installed</li>
+            <li>Try a different export format</li>
+            <li>Restart the app and try again</li>
+        </ul>
+        
         <h2><i class="fas fa-cogs"></i> Advanced Features</h2>
         <h3>Network Monitor</h3>
         <p>Monitor your connection to the Dogecoin network and view discovered nodes worldwide.</p>

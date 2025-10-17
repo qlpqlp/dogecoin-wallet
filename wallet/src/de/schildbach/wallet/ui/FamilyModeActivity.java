@@ -135,30 +135,43 @@ public class FamilyModeActivity extends AbstractWalletActivity {
         
         // Update balances from actual wallet
         updateFamilyMemberBalances();
-        
-        adapter.notifyDataSetChanged();
     }
     
     private void updateFamilyMemberBalances() {
-        try {
-            Wallet wallet = getWalletApplication().getWallet();
-            
-            for (FamilyMember member : familyMembers) {
-                try {
-                    // Calculate the actual balance for this specific address
-                    Address address = Address.fromString(Constants.NETWORK_PARAMETERS, member.getAddress());
-                    Coin balance = calculateAddressBalance(wallet, address);
-                    member.setBalance(balance);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // Set zero balance if address parsing fails
-                    member.setBalance(Coin.ZERO);
+        getWalletApplication().getWalletAsync(wallet -> {
+            try {
+                if (wallet != null) {
+                    for (FamilyMember member : familyMembers) {
+                        try {
+                            // Calculate the actual balance for this specific address
+                            Address address = Address.fromString(Constants.NETWORK_PARAMETERS, member.getAddress());
+                            Coin balance = calculateAddressBalance(wallet, address);
+                            member.setBalance(balance);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            // Set zero balance if address parsing fails
+                            member.setBalance(Coin.ZERO);
+                        }
+                    }
+                } else {
+                    // If wallet is not available, set all balances to zero
+                    for (FamilyMember member : familyMembers) {
+                        member.setBalance(Coin.ZERO);
+                    }
                 }
+                
+                // Update UI on main thread
+                runOnUiThread(() -> {
+                    adapter.notifyDataSetChanged();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Keep existing balances if update fails
+                runOnUiThread(() -> {
+                    adapter.notifyDataSetChanged();
+                });
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Keep existing balances if update fails
-        }
+        });
     }
     
     /**

@@ -142,25 +142,27 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
     }
 
     private void initializeSigningKey() {
-        try {
-            // Get the first private key from the wallet
-            if (application.getWallet() != null && application.getWallet().getActiveKeyChain() != null) {
-                DeterministicKeyChain keyChain = application.getWallet().getActiveKeyChain();
-                // Get the first private key (index 0) for signing - this gives us a private key, not a watching key
-                List<ChildNumber> path = new ArrayList<>(keyChain.getAccountPath());
-                path.add(new ChildNumber(0));
-                DeterministicKey key = keyChain.getKeyByPath(path, true);
-                signingKey = key;
-                Address address = LegacyAddress.fromKey(Constants.NETWORK_PARAMETERS, key);
-                
-                log.info("Initialized signing key: {}", address.toString());
-                
-            } else {
-                log.warn("No wallet or keychain available for signing");
+        application.getWalletAsync(wallet -> {
+            try {
+                // Get the first private key from the wallet
+                if (wallet != null && wallet.getActiveKeyChain() != null) {
+                    DeterministicKeyChain keyChain = wallet.getActiveKeyChain();
+                    // Get the first private key (index 0) for signing - this gives us a private key, not a watching key
+                    List<ChildNumber> path = new ArrayList<>(keyChain.getAccountPath());
+                    path.add(new ChildNumber(0));
+                    DeterministicKey key = keyChain.getKeyByPath(path, true);
+                    signingKey = key;
+                    Address address = LegacyAddress.fromKey(Constants.NETWORK_PARAMETERS, key);
+                    
+                    log.info("Initialized signing key: {}", address.toString());
+                    
+                } else {
+                    log.warn("No wallet or keychain available for signing");
+                }
+            } catch (Exception e) {
+                log.error("Error initializing signing key", e);
             }
-        } catch (Exception e) {
-            log.error("Error initializing signing key", e);
-        }
+        });
     }
 
     private void initializeViews() {

@@ -115,7 +115,8 @@ public class EncryptKeysDialogFragment extends DialogFragment {
         this.activity = (AbstractWalletActivity) context;
         this.application = activity.getWalletApplication();
         this.config = application.getConfiguration();
-        this.wallet = application.getWallet();
+        // Wallet will be loaded asynchronously when needed
+        this.wallet = null;
     }
 
     @Override
@@ -232,60 +233,71 @@ public class EncryptKeysDialogFragment extends DialogFragment {
         state = State.CRYPTING;
         updateView();
 
-        backgroundHandler.post(() -> {
-            // For the old key, we use the key crypter that was used to derive the password in the first
-            // place.
-            final KeyParameter oldKey = oldPassword != null ? wallet.getKeyCrypter().deriveKey(oldPassword) : null;
+        // Load wallet asynchronously
+        application.getWalletAsync(wallet -> {
+            if (wallet == null) {
+                handler.post(() -> {
+                    state = State.INPUT;
+                    updateView();
+                });
+                return;
+            }
 
-            // For the new key, we create a new key crypter according to the desired parameters.
-            final KeyCrypterScrypt keyCrypter = new KeyCrypterScrypt(application.scryptIterationsTarget());
-            final KeyParameter newKey = newPassword != null ? keyCrypter.deriveKey(newPassword) : null;
+            backgroundHandler.post(() -> {
+                // For the old key, we use the key crypter that was used to derive the password in the first
+                // place.
+                final KeyParameter oldKey = oldPassword != null ? wallet.getKeyCrypter().deriveKey(oldPassword) : null;
 
-            handler.post(() -> {
-                // Decrypt from old password
-                if (wallet.isEncrypted()) {
-                    if (oldKey == null) {
-                        log.info("wallet is encrypted, but did not provide spending password");
-                        state = State.INPUT;
-                        oldPasswordView.requestFocus();
-                    } else {
-                        try {
-                            wallet.decrypt(oldKey);
+                // For the new key, we create a new key crypter according to the desired parameters.
+                final KeyCrypterScrypt keyCrypter = new KeyCrypterScrypt(application.scryptIterationsTarget());
+                final KeyParameter newKey = newPassword != null ? keyCrypter.deriveKey(newPassword) : null;
 
-                            state = State.DONE;
-                            log.info("wallet successfully decrypted");
-                        } catch (final KeyCrypterException x) {
-                            log.info("wallet decryption failed: " + x.getMessage());
-                            badPasswordView.setVisibility(View.VISIBLE);
+                handler.post(() -> {
+                    // Decrypt from old password
+                    if (wallet.isEncrypted()) {
+                        if (oldKey == null) {
+                            log.info("wallet is encrypted, but did not provide spending password");
                             state = State.INPUT;
                             oldPasswordView.requestFocus();
+                        } else {
+                            try {
+                                wallet.decrypt(oldKey);
+
+                                state = State.DONE;
+                                log.info("wallet successfully decrypted");
+                            } catch (final KeyCrypterException x) {
+                                log.info("wallet decryption failed: " + x.getMessage());
+                                badPasswordView.setVisibility(View.VISIBLE);
+                                state = State.INPUT;
+                                oldPasswordView.requestFocus();
+                            }
                         }
                     }
-                }
 
-                // Use opportunity to maybe upgrade wallet
-                if (wallet.isDeterministicUpgradeRequired(Constants.UPGRADE_OUTPUT_SCRIPT_TYPE)
-                        && !wallet.isEncrypted())
-                    wallet.upgradeToDeterministic(Constants.UPGRADE_OUTPUT_SCRIPT_TYPE, null);
+                    // Use opportunity to maybe upgrade wallet
+                    if (wallet.isDeterministicUpgradeRequired(Constants.UPGRADE_OUTPUT_SCRIPT_TYPE)
+                            && !wallet.isEncrypted())
+                        wallet.upgradeToDeterministic(Constants.UPGRADE_OUTPUT_SCRIPT_TYPE, null);
 
-                // Encrypt to new password
-                if (newKey != null && !wallet.isEncrypted()) {
-                    wallet.encrypt(keyCrypter, newKey);
-                    config.updateLastEncryptKeysTime();
-                    log.info(
-                            "wallet successfully encrypted, using key derived by new spending password ({} scrypt iterations)",
-                            keyCrypter.getScryptParameters().getN());
-                    state = State.DONE;
-                }
+                    // Encrypt to new password
+                    if (newKey != null && !wallet.isEncrypted()) {
+                        wallet.encrypt(keyCrypter, newKey);
+                        config.updateLastEncryptKeysTime();
+                        log.info(
+                                "wallet successfully encrypted, using key derived by new spending password ({} scrypt iterations)",
+                                keyCrypter.getScryptParameters().getN());
+                        state = State.DONE;
+                    }
 
-                updateView();
+                    updateView();
 
-                if (state == State.DONE) {
-                    WalletUtils.autoBackupWallet(activity, wallet);
-                    // trigger load manually because of missing callbacks for encryption state
-                    activityViewModel.walletEncrypted.load();
-                    handler.postDelayed(() -> dismiss(), 2000);
-                }
+                    if (state == State.DONE) {
+                        WalletUtils.autoBackupWallet(activity, wallet);
+                        // trigger load manually because of missing callbacks for encryption state
+                        activityViewModel.walletEncrypted.load();
+                        handler.postDelayed(() -> dismiss(), 2000);
+                    }
+                });
             });
         });
     }
@@ -302,7 +314,7 @@ public class EncryptKeysDialogFragment extends DialogFragment {
         final boolean hasOldPassword = !oldPasswordView.getText().toString().trim().isEmpty();
         final boolean hasPassword = !newPasswordView.getText().toString().trim().isEmpty();
 
-        oldPasswordGroup.setVisibility(wallet.isEncrypted() ? View.VISIBLE : View.GONE);
+        oldPasswordGroup.setVisibility(wallet != null && wallet.isEncrypted() ? View.VISIBLE : View.GONE);
         oldPasswordView.setEnabled(state == State.INPUT);
 
         newPasswordView.setEnabled(state == State.INPUT);
@@ -326,7 +338,7 @@ public class EncryptKeysDialogFragment extends DialogFragment {
         showView.setEnabled(state == State.INPUT);
 
         if (state == State.INPUT) {
-            if (wallet.isEncrypted()) {
+            if (wallet != null && wallet.isEncrypted()) {
                 positiveButton.setText(hasPassword ? R.string.button_edit : R.string.button_remove);
                 positiveButton.setEnabled(hasOldPassword);
             } else {

@@ -37,9 +37,11 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
-### 📱 Current Release (v1.0 - Version Code 61)
+### 📱 Current Release (v1.0 - Version Code 64)
 - **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
 - **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
+- **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
+- **Accounting Reports**: Added comprehensive transaction reporting with CSV, JSON, and PDF export
 - **Build Optimization**: Enabled R8 minification for smaller app size (~14.3 MB)
 - **Google Play Ready**: Fully compliant with all Google Play Console requirements
 - **Version Management**: Incremental version code system for continuous updates
@@ -116,6 +118,25 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Parental Safety**: Ensures child funds remain separate and protected from parent's regular spending
 - **Modern UI**: Clean, intuitive interface with toggle switches and status indicators
 - **Real-time Updates**: Balance calculations automatically exclude reserved funds
+
+### 📊 Accounting Reports & Transaction Analytics
+- **Comprehensive Transaction Reports**: Generate detailed reports of all wallet transactions with full data export
+- **Multiple Export Formats**: Export to CSV, JSON, or PDF with professional formatting
+- **Date Range Selection**: Filter transactions by custom date ranges for specific reporting periods
+- **Visual Timeline Charts**: Modern interactive charts showing transaction flow over time
+- **Detailed Transaction Data**: Complete transaction information including:
+  - Transaction ID (full, non-truncated)
+  - Transaction type (Send, Receive, Internal)
+  - Timestamps with full UTC formatting
+  - Source and destination addresses with labels
+  - Amounts and fees with 8 decimal precision
+  - OP_RETURN notes and transaction metadata
+- **Professional PDF Reports**: Landscape-formatted reports with Dogecoin branding, pagination, and modern styling
+- **Smart Transaction Classification**: Automatic detection of internal transactions and proper fee handling
+- **Net Amount Calculation**: Send transactions show net amount (amount - fee) for accurate reporting
+- **Share Integration**: Easy sharing of reports via any Android sharing method
+- **Real-time Data**: Live transaction data with automatic updates
+- **Export Summary**: Total amounts received, sent, and fees paid for comprehensive financial overview
 
 ### Core Network Changes
 - **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`

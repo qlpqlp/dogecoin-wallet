@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.9'
     implementation 'com.squareup.moshi:moshi:1.9.3'
     implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'com.github.tony19:logback-android:2.0.0'
     testImplementation 'junit:junit:4.13.2'
@@ -59,7 +60,7 @@ android {
         applicationId 'org.dogecoin.wallet'
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 61
+        versionCode 64
         versionName '1.0'
         vectorDrawables.useSupportLibrary = true
 
@@ -87,8 +88,8 @@ android {
 
         buildTypes {
             all {
-                minifyEnabled true
-                shrinkResources true
+                minifyEnabled false
+                shrinkResources false
                 crunchPngs true
                 proguardFile 'proguard.cfg'
             }
@@ -97,7 +98,7 @@ android {
         }
         release {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
             crunchPngs true
             signingConfig signingConfigs.release
             // Enable native debug symbols

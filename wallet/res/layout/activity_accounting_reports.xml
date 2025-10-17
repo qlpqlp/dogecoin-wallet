@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_level1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/accounting_reports_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Date Range Selection -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_list_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/accounting_reports_date_range"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accounting_reports_start_date"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="4dp" />
+
+                    <Button
+                        android:id="@+id/btn_start_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/accounting_reports_select_date"
+                        android:textSize="14sp"
+                        style="@android:style/Widget.Material.Button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accounting_reports_end_date"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="4dp" />
+
+                    <Button
+                        android:id="@+id/btn_end_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/accounting_reports_select_date"
+                        android:textSize="14sp"
+                        style="@android:style/Widget.Material.Button" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_load_data"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/accounting_reports_load_data"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                style="@android:style/Widget.Material.Button.Colored" />
+
+        </LinearLayout>
+
+        <!-- Timeline Visualization -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_list_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/accounting_reports_timeline"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:layout_marginBottom="16dp" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/timeline_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_list_card"
+                        android:padding="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="16dp">
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@color/fg_value_negative"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accounting_reports_sent"
+                        android:textSize="12sp"
+                        android:textColor="@color/fg_less_significant" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@color/fg_value_positive"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accounting_reports_received"
+                        android:textSize="12sp"
+                        android:textColor="@color/fg_less_significant" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Export Options -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_list_card"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/accounting_reports_export"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <Button
+                    android:id="@+id/btn_export_csv"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="CSV"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="4dp"
+                    style="@android:style/Widget.Material.Button" />
+
+                <Button
+                    android:id="@+id/btn_export_json"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="JSON"
+                    android:textSize="14sp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    style="@android:style/Widget.Material.Button" />
+
+                <Button
+                    android:id="@+id/btn_export_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="PDF"
+                    android:textSize="14sp"
+                    android:layout_marginStart="4dp"
+                    style="@android:style/Widget.Material.Button" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_export_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="12sp"
+                android:textColor="@color/fg_less_significant"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

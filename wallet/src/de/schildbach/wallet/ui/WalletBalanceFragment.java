@@ -73,7 +73,14 @@ public final class WalletBalanceFragment extends Fragment {
         super.onAttach(context);
         this.activity = (WalletActivity) context;
         this.application = activity.getWalletApplication();
-        this.config = application.getConfiguration();
+        
+        // Handle race condition where application might be null if onAttach is called before onCreate
+        if (this.application != null) {
+            this.config = application.getConfiguration();
+        } else {
+            // If application is null, we'll get it later in onCreate
+            this.config = null;
+        }
 
         showLocalBalance = getResources().getBoolean(R.bool.show_local_balance);
     }
@@ -83,10 +90,21 @@ public final class WalletBalanceFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        // Ensure we have the application and config (fallback for race condition)
+        if (this.application == null) {
+            this.application = activity.getWalletApplication();
+        }
+        if (this.config == null && this.application != null) {
+            this.config = application.getConfiguration();
+        }
+
         activityViewModel = new ViewModelProvider(activity).get(WalletActivityViewModel.class);
         viewModel = new ViewModelProvider(this).get(WalletBalanceViewModel.class);
 
-        application.blockchainState.observe(this, blockchainState -> updateView());
+        // Only set up observers if application is available
+        if (application != null) {
+            application.blockchainState.observe(this, blockchainState -> updateView());
+        }
         viewModel.getBalance().observe(this, balance -> {
             activity.invalidateOptionsMenu();
             updateView();
@@ -230,19 +248,26 @@ public final class WalletBalanceFragment extends Fragment {
             }
 
             // Display reserved balance if there are excluded addresses
-            final Wallet wallet = application.getWallet();
-            if (wallet != null) {
-                final Coin reservedBalance = ExcludedAddressHelper.getExcludedAddressesBalance(wallet);
-                if (reservedBalance.signum() > 0) {
-                    viewBalanceReserved.setVisibility(View.VISIBLE);
-                    viewBalanceReserved.setText(getString(R.string.address_excluded_balance, 
-                        config.getFormat().format(reservedBalance)));
+            application.getWalletAsync(wallet -> {
+                if (wallet != null) {
+                    final Coin reservedBalance = ExcludedAddressHelper.getExcludedAddressesBalance(wallet);
+                    // Update UI on main thread
+                    activity.runOnUiThread(() -> {
+                        if (reservedBalance.signum() > 0) {
+                            viewBalanceReserved.setVisibility(View.VISIBLE);
+                            viewBalanceReserved.setText(getString(R.string.address_excluded_balance, 
+                                config.getFormat().format(reservedBalance)));
+                        } else {
+                            viewBalanceReserved.setVisibility(View.GONE);
+                        }
+                    });
                 } else {
-                    viewBalanceReserved.setVisibility(View.GONE);
+                    // Update UI on main thread
+                    activity.runOnUiThread(() -> {
+                        viewBalanceReserved.setVisibility(View.GONE);
+                    });
                 }
-            } else {
-                viewBalanceReserved.setVisibility(View.GONE);
-            }
+            });
 
             viewProgress.setVisibility(View.GONE);
         } else {

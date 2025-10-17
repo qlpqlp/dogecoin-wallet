@@ -67,6 +67,7 @@ import de.schildbach.wallet.ui.scan.ScanActivity;
 import de.schildbach.wallet.ui.send.SendCoinsActivity;
 import de.schildbach.wallet.ui.send.SweepWalletActivity;
 import de.schildbach.wallet.ui.DigitalSignatureActivity;
+import de.schildbach.wallet.ui.AccountingReportsActivity;
 import de.schildbach.wallet.ui.FamilyModeActivity;
 import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.BiometricHelper;
@@ -626,6 +627,9 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_sweep_wallet) {
             SweepWalletActivity.start(this);
+            return true;
+        } else if (itemId == R.id.wallet_options_accounting_reports) {
+            startActivity(new Intent(this, AccountingReportsActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_restore_wallet) {
             viewModel.showRestoreWalletDialog.setValue(Event.simple());

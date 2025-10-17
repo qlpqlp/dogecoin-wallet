@@ -100,7 +100,8 @@ public class MaintenanceDialogFragment extends DialogFragment {
         super.onAttach(context);
         this.activity = (AbstractWalletActivity) context;
         this.application = activity.getWalletApplication();
-        this.wallet = application.getWallet();
+        // Wallet will be loaded asynchronously when needed
+        this.wallet = null;
     }
 
     @Override

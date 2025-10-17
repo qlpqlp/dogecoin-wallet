@@ -84,7 +84,8 @@ public final class EditAddressBookEntryFragment extends DialogFragment {
         this.activity = (AbstractWalletActivity) context;
         final WalletApplication application = activity.getWalletApplication();
         this.addressBookDao = AddressBookDatabase.getDatabase(context).addressBookDao();
-        this.wallet = application.getWallet();
+        // Wallet will be loaded asynchronously when needed
+        this.wallet = null;
     }
 
     @Override

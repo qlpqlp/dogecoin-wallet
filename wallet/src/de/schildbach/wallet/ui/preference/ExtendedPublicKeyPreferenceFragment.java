@@ -39,15 +39,21 @@ public final class ExtendedPublicKeyPreferenceFragment extends PreferenceFragmen
         
         // Show the extended public key dialog
         final WalletApplication application = (WalletApplication) getActivity().getApplication();
-        final DeterministicKeyChain activeKeyChain = application.getWallet().getActiveKeyChain();
-        final DeterministicKey extendedKey = activeKeyChain.getWatchingKey();
-        final Script.ScriptType outputScriptType = activeKeyChain.getOutputScriptType();
-        final long creationTimeSeconds = extendedKey.getCreationTimeSeconds();
-        final String base58 = String.format(Locale.US, "%s?c=%d&h=bip32",
-                extendedKey.serializePubB58(Constants.NETWORK_PARAMETERS, outputScriptType), creationTimeSeconds);
-        
-        // Create a custom dialog that will finish the activity when dismissed
-        ExtendedPublicKeyFragment.show(getFragmentManager(), (CharSequence) base58);
+        application.getWalletAsync(wallet -> {
+            if (wallet != null) {
+                final DeterministicKeyChain activeKeyChain = wallet.getActiveKeyChain();
+                final DeterministicKey extendedKey = activeKeyChain.getWatchingKey();
+                final Script.ScriptType outputScriptType = activeKeyChain.getOutputScriptType();
+                final long creationTimeSeconds = extendedKey.getCreationTimeSeconds();
+                final String base58 = String.format(Locale.US, "%s?c=%d&h=bip32",
+                        extendedKey.serializePubB58(Constants.NETWORK_PARAMETERS, outputScriptType), creationTimeSeconds);
+                
+                // Create a custom dialog that will finish the activity when dismissed
+                getActivity().runOnUiThread(() -> {
+                    ExtendedPublicKeyFragment.show(getFragmentManager(), (CharSequence) base58);
+                });
+            }
+        });
         
         // Don't finish immediately - let the dialog handle it
     }

@@ -283,7 +283,6 @@
     <string name="preferences_bluetooth_address_dialog_message">Unfortunately Android is preventing the automatic detection of your device\'s Bluetooth address. You need to look it up in the Android Bluetooth settings and enter it here.\n\nPlease make sure that every character is correct. Colons can be omitted, and case is not important.</string>
     <string name="preferences_radiodoge_title">RadioDoge Support</string>
     <string name="preferences_radiodoge_summary">Use RadioDoge to broadcast transactions when no internet connection is available</string>
-    <string name="wallet_transactions_options_retry_pending">Retry Pending</string>
     <string name="radiodoge_status_message">Using RadioDoge for payments without Internet</string>
     <string name="preferences_report_issue_title">Report issue</string>
 <string name="preferences_initiate_reset_title">Reset block chain</string>
@@ -553,4 +552,21 @@
     <string name="address_include_confirm_title">Include Address in Spending</string>
     <string name="address_include_confirm_message">This will allow this address to be used in regular payments and recurring payments again. The coins in this address will be included in your available balance. Continue?</string>
     <string name="address_excluded_balance">Reserved Balance: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Accounting Reports</string>
+    <string name="accounting_reports_date_range">Date Range</string>
+    <string name="accounting_reports_start_date">Start Date</string>
+    <string name="accounting_reports_end_date">End Date</string>
+    <string name="accounting_reports_select_date">Select Date</string>
+    <string name="accounting_reports_load_data">Load Data</string>
+    <string name="accounting_reports_timeline">Transaction Timeline</string>
+    <string name="accounting_reports_sent">Sent</string>
+    <string name="accounting_reports_received">Received</string>
+    <string name="accounting_reports_export">Export Transactions</string>
+    <string name="accounting_reports_exporting">Exporting...</string>
+    <string name="accounting_reports_export_success">Export completed successfully</string>
+    <string name="accounting_reports_export_error">Export failed</string>
+    <string name="accounting_reports_no_data">No transactions found for selected date range</string>
+    <string name="accounting_reports_menu_title">Accounting Reports</string>
 </resources>

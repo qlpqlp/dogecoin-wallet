@@ -9,4 +9,7 @@
     <external-files-path
         name="signed_photos"
         path="Pictures/signed/" />
+    <external-files-path
+        name="exports"
+        path="exports/" />
 </paths>

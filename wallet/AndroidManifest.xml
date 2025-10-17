@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly"
-    android:versionCode="61"
+    android:versionCode="64"
     android:versionName="1.0">
 
     <!-- normal permissions -->
@@ -136,7 +136,8 @@
         <activity
             android:name="de.schildbach.wallet.ui.SendCoinsQrActivity"
             android:configChanges="keyboard|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true">
         </activity>
 
         <activity
@@ -144,7 +145,8 @@
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/request_coins_activity_title"
             android:theme="@style/My.Theme.ChildActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
 
         <activity
             android:name="de.schildbach.wallet.ui.AddressBookActivity"
@@ -204,6 +206,13 @@
             android:name="de.schildbach.wallet.ui.DigitalSignatureActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/digital_signature_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.AccountingReportsActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/accounting_reports_title"
             android:theme="@style/My.Theme.ChildActivity"
             android:windowSoftInputMode="adjustResize" />
 

@@ -50,7 +50,6 @@ import de.schildbach.wallet.addressbook.AddressBookDao;
 import de.schildbach.wallet.addressbook.AddressBookDatabase;
 import de.schildbach.wallet.ui.TransactionsAdapter.WarningType;
 import de.schildbach.wallet.ui.send.RaiseFeeDialogFragment;
-import de.schildbach.wallet.util.PendingTransactionRetryService;
 import de.schildbach.wallet.util.Qr;
 import de.schildbach.wallet.util.WalletUtils;
 import org.bitcoinj.core.Address;
@@ -95,15 +94,35 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
         super.onAttach(context);
         this.activity = (AbstractWalletActivity) context;
         this.application = activity.getWalletApplication();
-        this.config = application.getConfiguration();
+        
+        // Handle race condition where application might be null if onAttach is called before onCreate
+        if (this.application != null) {
+            this.config = application.getConfiguration();
+            this.devicePolicyManager = (DevicePolicyManager) application.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        } else {
+            // If application is null, we'll get it later in onCreate
+            this.config = null;
+            this.devicePolicyManager = null;
+        }
+        
         this.addressBookDao = AddressBookDatabase.getDatabase(context).addressBookDao();
-        this.devicePolicyManager = (DevicePolicyManager) application.getSystemService(Context.DEVICE_POLICY_SERVICE);
     }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.fragmentManager = getChildFragmentManager();
+
+        // Ensure we have the application and config (fallback for race condition)
+        if (this.application == null) {
+            this.application = activity.getWalletApplication();
+        }
+        if (this.config == null && this.application != null) {
+            this.config = application.getConfiguration();
+        }
+        if (this.devicePolicyManager == null && this.application != null) {
+            this.devicePolicyManager = (DevicePolicyManager) application.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        }
 
         setHasOptionsMenu(true);
 
@@ -241,18 +260,6 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int itemId = item.getItemId();
-        if (itemId == R.id.wallet_transactions_options_retry_pending) {
-            // Retry pending transactions via RadioDoge
-            PendingTransactionRetryService retryService = new PendingTransactionRetryService(activity);
-            if (retryService.hasPendingTransactions()) {
-                retryService.retryPendingTransactions();
-                android.widget.Toast.makeText(activity, "Retrying pending transactions via RadioDoge...", android.widget.Toast.LENGTH_SHORT).show();
-            } else {
-                android.widget.Toast.makeText(activity, "No pending transactions to retry", android.widget.Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-        
         final WalletTransactionsViewModel.Direction direction;
         if (itemId == R.id.wallet_transactions_options_filter_all) {
             direction = null;
