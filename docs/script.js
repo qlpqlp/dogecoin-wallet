@@ -14,6 +14,7 @@ function initWebsite() {
     initStoreButtons();
     initHeroVideo();
     initRadioDogeTooltip();
+    initApkModal();
 }
 
 // Mobile menu functionality
@@ -435,4 +436,53 @@ function initRadioDogeTooltip() {
             // The link will navigate to the RadioDoge documentation
         });
     }
+}
+
+// APK Download Modal functionality
+function initApkModal() {
+    const modal = document.getElementById('apkModal');
+    const downloadBtn = document.getElementById('downloadApkBtn');
+    const closeBtn = document.querySelector('.close');
+    const cancelBtn = document.getElementById('cancelDownload');
+    
+    if (!modal || !downloadBtn) return;
+    
+    // Open modal when APK button is clicked
+    downloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    });
+    
+    // Close modal when X is clicked
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+    }
+    
+    // Close modal when Cancel button is clicked
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+    }
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+    });
 }
