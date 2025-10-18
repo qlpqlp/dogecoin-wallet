@@ -37,6 +37,7 @@ import java.util.TimeZone;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class CrashReporter {
     private static final String BACKGROUND_TRACES_FILENAME = "background.trace";

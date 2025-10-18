@@ -21,6 +21,7 @@ import java.util.Currency;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class GenericUtils {
     public static boolean startsWithIgnoreCase(final String string, final String prefix) {

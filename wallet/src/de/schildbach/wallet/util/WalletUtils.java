@@ -49,6 +49,7 @@ import java.io.OutputStream;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WalletUtils {
     private static final Logger log = LoggerFactory.getLogger(WalletUtils.class);

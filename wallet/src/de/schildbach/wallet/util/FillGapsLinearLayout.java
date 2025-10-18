@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
  * fill the available gaps.
  *
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class FillGapsLinearLayout extends LinearLayout {
     public FillGapsLinearLayout(final Context context) {

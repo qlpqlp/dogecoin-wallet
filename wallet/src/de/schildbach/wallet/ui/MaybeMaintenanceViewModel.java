@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.app.Application;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.os.AsyncTask;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;

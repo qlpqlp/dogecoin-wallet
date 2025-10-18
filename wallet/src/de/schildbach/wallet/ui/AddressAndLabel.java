@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.os.Parcel;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.os.Parcelable;
 import androidx.annotation.Nullable;
 import com.google.common.base.Objects;

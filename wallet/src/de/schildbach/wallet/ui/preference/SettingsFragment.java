@@ -54,6 +54,7 @@ import java.util.Set;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class SettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener {
     private Activity activity;

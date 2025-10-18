@@ -23,6 +23,7 @@ import org.bitcoinj.core.Address;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class AddressBookViewModel extends ViewModel {
     public final MutableLiveData<Address> selectedAddress = new MutableLiveData<>();

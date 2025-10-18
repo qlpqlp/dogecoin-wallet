@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.graphics.Canvas;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;

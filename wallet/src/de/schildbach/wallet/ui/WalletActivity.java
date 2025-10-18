@@ -85,6 +85,7 @@ import org.bitcoinj.script.Script;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class WalletActivity extends AbstractWalletActivity {
     public static final String INTENT_EXTRA_SHOW_REPORT_ISSUE = "show_report_issue";

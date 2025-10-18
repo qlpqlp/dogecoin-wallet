@@ -44,6 +44,7 @@ import androidx.annotation.Nullable;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.util.Crypto;
+import de.schildbach.wallet.util.SecureMemory;
 import de.schildbach.wallet.Constants;
 
 import org.bitcoinj.core.ECKey;
@@ -74,6 +75,7 @@ import java.security.NoSuchAlgorithmException;
  * Activity for digital signature functionality using Dogecoin private keys
  * 
  * @author AI Assistant
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class DigitalSignatureActivity extends AbstractWalletActivity {
     private static final Logger log = LoggerFactory.getLogger(DigitalSignatureActivity.class);
@@ -1000,5 +1002,25 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         }
     }
     
-    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        
+        // Securely clear the signing key from memory
+        if (signingKey != null) {
+            // Clear the private key bytes
+            try {
+                byte[] privateKeyBytes = signingKey.getPrivKeyBytes();
+                if (privateKeyBytes != null) {
+                    SecureMemory.clear(privateKeyBytes);
+                }
+            } catch (Exception e) {
+                // Ignore if we can't access the private key bytes
+            }
+            signingKey = null;
+        }
+        
+        // Clear any other sensitive data
+        clearResults();
+    }
 }

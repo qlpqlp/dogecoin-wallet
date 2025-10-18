@@ -33,6 +33,7 @@ import static androidx.core.util.Preconditions.checkArgument;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class MonetarySpannable extends SpannableString {
     public MonetarySpannable(@Nullable final MonetaryFormat format, final boolean signed,

@@ -56,6 +56,8 @@ import de.schildbach.wallet.util.WalletUtils;
 
 /**
  * Activity for generating accounting reports with transaction visualization and export capabilities
+ * 
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class AccountingReportsActivity extends AbstractWalletActivity {
     private static final Logger log = LoggerFactory.getLogger(AccountingReportsActivity.class);

@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public abstract class AbstractWalletActivity extends FragmentActivity {
     private WalletApplication application;

@@ -25,6 +25,7 @@ import java.util.Arrays;
  * but at the same time be allowed in URIs.
  * 
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Base43 {
     private static final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$*+-./:".toCharArray();

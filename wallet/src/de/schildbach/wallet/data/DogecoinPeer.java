@@ -19,6 +19,10 @@ package de.schildbach.wallet.data;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
+
 import java.net.InetSocketAddress;
 
 /**

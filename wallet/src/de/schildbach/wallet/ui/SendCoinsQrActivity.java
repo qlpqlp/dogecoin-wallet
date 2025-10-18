@@ -36,6 +36,7 @@ import org.bitcoinj.core.VerificationException;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class SendCoinsQrActivity extends AbstractWalletActivity {
     private AbstractWalletActivityViewModel walletActivityViewModel;

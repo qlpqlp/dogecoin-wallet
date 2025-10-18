@@ -45,6 +45,7 @@ import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.util.WalletUtils;
+import de.schildbach.wallet.util.SecureMemory;
 import org.bitcoinj.crypto.KeyCrypterException;
 import org.bitcoinj.crypto.KeyCrypterScrypt;
 import org.bitcoinj.wallet.Wallet;
@@ -54,6 +55,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class EncryptKeysDialogFragment extends DialogFragment {
     private static final String FRAGMENT_TAG = EncryptKeysDialogFragment.class.getName();
@@ -303,8 +305,17 @@ public class EncryptKeysDialogFragment extends DialogFragment {
     }
 
     private void wipePasswords() {
-        oldPasswordView.setText(null);
-        newPasswordView.setText(null);
+        // Securely clear password fields
+        if (oldPasswordView != null) {
+            oldPasswordView.setText(null);
+            // Clear the internal text buffer
+            SecureMemory.clear(oldPasswordView.getText().toString());
+        }
+        if (newPasswordView != null) {
+            newPasswordView.setText(null);
+            // Clear the internal text buffer
+            SecureMemory.clear(newPasswordView.getText().toString());
+        }
     }
 
     private void updateView() {

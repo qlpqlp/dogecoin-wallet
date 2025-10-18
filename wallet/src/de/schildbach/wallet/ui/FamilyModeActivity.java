@@ -41,6 +41,7 @@ import de.schildbach.wallet.data.FamilyMember;
 import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.util.WalletUtils;
+import de.schildbach.wallet.util.SecureMemory;
 import de.schildbach.wallet.util.Qr;
 
 import org.bitcoinj.core.Coin;
@@ -67,6 +68,8 @@ import java.util.ArrayList;
 
 /**
  * Activity for managing family members in Family Mode
+ * 
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class FamilyModeActivity extends AbstractWalletActivity {
     private RecyclerView recyclerFamilyMembers;
@@ -294,17 +297,34 @@ public class FamilyModeActivity extends AbstractWalletActivity {
             
             // Find the key for this address
             ECKey key = wallet.findKeyFromAddress(newAddress);
-            if (key instanceof DeterministicKey) {
-                DeterministicKey detKey = (DeterministicKey) key;
-                // Serialize the private key in BIP32 format
-                String derivedKey = detKey.serializePrivB58(Constants.NETWORK_PARAMETERS);
-                android.util.Log.d("FamilyMode", "Generated derived key: " + derivedKey.substring(0, Math.min(20, derivedKey.length())) + "...");
+            String derivedKey = null;
+            
+            try {
+                if (key instanceof DeterministicKey) {
+                    DeterministicKey detKey = (DeterministicKey) key;
+                    // Serialize the private key in BIP32 format
+                    derivedKey = detKey.serializePrivB58(Constants.NETWORK_PARAMETERS);
+                    android.util.Log.d("FamilyMode", "Generated derived key: " + derivedKey.substring(0, Math.min(20, derivedKey.length())) + "...");
+                } else {
+                    // Fallback for non-deterministic keys
+                    derivedKey = "xprv" + key.getPrivateKeyAsHex();
+                    android.util.Log.d("FamilyMode", "Generated non-deterministic key: " + derivedKey.substring(0, Math.min(20, derivedKey.length())) + "...");
+                }
+                
+                // Securely clear the private key bytes from memory
+                try {
+                    byte[] privateKeyBytes = key.getPrivKeyBytes();
+                    if (privateKeyBytes != null) {
+                        SecureMemory.clear(privateKeyBytes);
+                    }
+                } catch (Exception e) {
+                    // Ignore if we can't access the private key bytes
+                }
+                
                 return derivedKey;
-            } else {
-                // Fallback for non-deterministic keys
-                String derivedKey = "xprv" + key.getPrivateKeyAsHex();
-                android.util.Log.d("FamilyMode", "Generated non-deterministic key: " + derivedKey.substring(0, Math.min(20, derivedKey.length())) + "...");
-                return derivedKey;
+            } finally {
+                // Clear the key reference
+                key = null;
             }
         } catch (Exception e) {
             e.printStackTrace();

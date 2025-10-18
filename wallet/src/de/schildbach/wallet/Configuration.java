@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Configuration {
     public final int lastVersionCode;

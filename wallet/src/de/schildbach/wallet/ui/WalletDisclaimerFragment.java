@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class WalletDisclaimerFragment extends Fragment {
     private WalletActivity activity;
@@ -62,7 +63,10 @@ public final class WalletDisclaimerFragment extends Fragment {
         activityViewModel = new ViewModelProvider(activity).get(WalletActivityViewModel.class);
         viewModel = new ViewModelProvider(this).get(WalletDisclaimerViewModel.class);
 
-        application.blockchainState.observe(this, blockchainState -> updateView());
+        // Only set up observers if application is available
+        if (application != null) {
+            application.blockchainState.observe(this, blockchainState -> updateView());
+        }
         viewModel.getDisclaimerEnabled().observe(this, disclaimerEnabled -> updateView());
     }
 
@@ -75,7 +79,8 @@ public final class WalletDisclaimerFragment extends Fragment {
     }
 
     private void updateView() {
-        final BlockchainState blockchainState = application.blockchainState.getValue();
+        // Check if application is available before accessing blockchainState
+        final BlockchainState blockchainState = application != null ? application.blockchainState.getValue() : null;
         final Boolean disclaimerEnabled = viewModel.getDisclaimerEnabled().getValue();
         final boolean showDisclaimer = disclaimerEnabled != null && disclaimerEnabled;
 

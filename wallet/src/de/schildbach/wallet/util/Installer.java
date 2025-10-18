@@ -24,6 +24,7 @@ import okhttp3.HttpUrl;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public enum Installer {
     F_DROID("F-Droid"), GOOGLE_PLAY("Google Play"), AMAZON_APPSTORE("Amazon Appstore"), AURORA_STORE("Aurora Store");

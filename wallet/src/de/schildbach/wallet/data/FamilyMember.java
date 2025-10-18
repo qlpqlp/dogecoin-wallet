@@ -18,6 +18,10 @@
 package de.schildbach.wallet.data;
 
 import org.bitcoinj.core.Address;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import org.bitcoinj.core.Coin;
 
 /**

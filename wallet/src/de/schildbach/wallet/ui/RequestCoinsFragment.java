@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.app.Activity;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.bluetooth.BluetoothAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;

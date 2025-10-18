@@ -2,6 +2,10 @@ package de.schildbach.wallet.data;
 
 import java.util.Date;
 
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
+
 public class RecurringPayment {
     private long id;
     private String destinationAddress;

@@ -16,6 +16,8 @@ import java.util.HashSet;
 
 /**
  * Helper class for managing excluded addresses and calculating available balance
+ * 
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class ExcludedAddressHelper {
     private static ExcludedAddressDao excludedAddressDao;

@@ -1,6 +1,10 @@
 package de.schildbach.wallet.data;
 
 import androidx.room.Dao;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;

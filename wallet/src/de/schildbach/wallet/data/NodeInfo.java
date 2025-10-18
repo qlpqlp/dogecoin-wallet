@@ -18,6 +18,10 @@
 package de.schildbach.wallet.data;
 
 import java.net.InetSocketAddress;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import java.util.Date;
 
 /**

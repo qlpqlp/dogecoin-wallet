@@ -23,6 +23,7 @@ import android.os.Looper;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Toast {
     private final Context context;

@@ -18,6 +18,10 @@
 package de.schildbach.wallet.data;
 
 import android.content.SharedPreferences;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
 import de.schildbach.wallet.Configuration;

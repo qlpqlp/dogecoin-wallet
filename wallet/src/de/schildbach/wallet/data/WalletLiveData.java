@@ -22,6 +22,7 @@ import org.bitcoinj.wallet.Wallet;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WalletLiveData extends AbstractWalletLiveData<Wallet> {
     public WalletLiveData(final WalletApplication application) {

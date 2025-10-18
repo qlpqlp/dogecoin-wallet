@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.view.View;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import androidx.annotation.Nullable;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.ui.CurrencyAmountView.Listener;

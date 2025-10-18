@@ -29,6 +29,7 @@ import de.schildbach.wallet.R;
 /**
  * Helper class for biometric authentication
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class BiometricHelper {
     private static final String PREFS_NAME = "biometric_prefs";

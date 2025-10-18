@@ -66,6 +66,7 @@ import java.util.Locale;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WalletTransactionsFragment extends Fragment implements TransactionsAdapter.OnClickListener,
         TransactionsAdapter.ContextMenuCallback {

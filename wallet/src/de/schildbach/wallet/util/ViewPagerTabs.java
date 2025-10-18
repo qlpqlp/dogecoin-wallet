@@ -35,6 +35,7 @@ import java.util.List;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class ViewPagerTabs extends View {
     public enum Mode { DYNAMIC, STATIC }

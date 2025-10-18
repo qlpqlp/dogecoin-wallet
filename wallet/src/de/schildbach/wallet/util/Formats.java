@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class Formats {
     public static final Pattern PATTERN_WHITESPACE = Pattern.compile("\\s+");

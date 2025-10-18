@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.text.method.PasswordTransformationMethod;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.text.method.TransformationMethod;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;

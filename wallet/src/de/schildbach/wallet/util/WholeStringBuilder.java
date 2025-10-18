@@ -23,6 +23,7 @@ import android.text.style.StyleSpan;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WholeStringBuilder extends SpannableStringBuilder {
     public static CharSequence bold(final CharSequence text) {

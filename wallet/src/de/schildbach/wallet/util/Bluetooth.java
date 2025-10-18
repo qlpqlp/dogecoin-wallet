@@ -31,6 +31,7 @@ import java.util.UUID;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Bluetooth {
     /** Used for local fetching of BIP70 payment requests. */

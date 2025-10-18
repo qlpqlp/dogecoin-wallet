@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.app.ActivityManager;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;

@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class RequestCoinsActivityViewModel extends ViewModel {
     public final MutableLiveData<Event<Integer>> showHelpDialog = new MutableLiveData<>();

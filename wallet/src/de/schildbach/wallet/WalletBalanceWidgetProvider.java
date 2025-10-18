@@ -34,10 +34,12 @@ import android.widget.RemoteViews;
 import androidx.annotation.Nullable;
 import de.schildbach.wallet.exchangerate.ExchangeRateEntry;
 import de.schildbach.wallet.exchangerate.ExchangeRatesRepository;
+import de.schildbach.wallet.ui.BiometricAuthActivity;
 import de.schildbach.wallet.ui.RequestCoinsActivity;
 import de.schildbach.wallet.ui.SendCoinsQrActivity;
 import de.schildbach.wallet.ui.WalletActivity;
 import de.schildbach.wallet.ui.send.SendCoinsActivity;
+import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.GenericUtils;
 import de.schildbach.wallet.util.MonetarySpannable;
 import org.bitcoinj.core.Coin;
@@ -54,6 +56,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WalletBalanceWidgetProvider extends AppWidgetProvider {
     private static final StrikethroughSpan STRIKE_THRU_SPAN = new StrikethroughSpan();
@@ -166,14 +169,15 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.widget_button_send_qr, minWidth > 200 ? View.VISIBLE : View.GONE);
         }
 
+        // Set up widget click handlers with biometric authentication
         views.setOnClickPendingIntent(R.id.widget_button_balance,
-                PendingIntent.getActivity(context, 0, new Intent(context, WalletActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                createBiometricPendingIntent(context, 0, WalletActivity.class));
         views.setOnClickPendingIntent(R.id.widget_button_request,
-                PendingIntent.getActivity(context, 0, new Intent(context, RequestCoinsActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                createBiometricPendingIntent(context, 1, RequestCoinsActivity.class));
         views.setOnClickPendingIntent(R.id.widget_button_send,
-                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                createBiometricPendingIntent(context, 2, SendCoinsActivity.class));
         views.setOnClickPendingIntent(R.id.widget_button_send_qr,
-                PendingIntent.getActivity(context, 0, new Intent(context, SendCoinsQrActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                createBiometricPendingIntent(context, 3, SendCoinsQrActivity.class));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -184,6 +188,23 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
             return (Bundle) getAppWidgetOptions.invoke(appWidgetManager, appWidgetId);
         } catch (final Exception x) {
             return null;
+        }
+    }
+    
+    /**
+     * Create a PendingIntent that will show biometric authentication before opening the target activity
+     */
+    private static PendingIntent createBiometricPendingIntent(Context context, int requestCode, Class<?> targetActivity) {
+        // Check if biometric is enabled and available
+        if (BiometricHelper.isBiometricEnabled(context) && BiometricHelper.isBiometricAvailable(context)) {
+            // Create intent for BiometricAuthActivity
+            Intent biometricIntent = new Intent(context, BiometricAuthActivity.class);
+            biometricIntent.putExtra(BiometricAuthActivity.EXTRA_TARGET_ACTIVITY, targetActivity.getName());
+            return PendingIntent.getActivity(context, requestCode, biometricIntent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            // Biometric not enabled or available, go directly to target activity
+            Intent directIntent = new Intent(context, targetActivity);
+            return PendingIntent.getActivity(context, requestCode, directIntent, PendingIntent.FLAG_IMMUTABLE);
         }
     }
 }

@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Nfc {
     public static NdefRecord createMime(final String mimeType, final byte[] payload) {

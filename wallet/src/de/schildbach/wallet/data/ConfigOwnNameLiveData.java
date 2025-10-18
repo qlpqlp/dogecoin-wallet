@@ -18,6 +18,10 @@
 package de.schildbach.wallet.data;
 
 import android.content.SharedPreferences;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import androidx.lifecycle.LiveData;
 import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.WalletApplication;

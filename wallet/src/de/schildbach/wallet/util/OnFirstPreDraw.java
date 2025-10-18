@@ -28,6 +28,7 @@ import static androidx.core.util.Preconditions.checkNotNull;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class OnFirstPreDraw implements ViewTreeObserver.OnPreDrawListener {
     public interface Callback {

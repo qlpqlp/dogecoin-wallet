@@ -10,8 +10,10 @@
         android:shortcutShortLabel="@string/button_scan">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="de.schildbach.wallet.ui.SendCoinsQrActivity"
-            android:targetPackage="org.dogecoin.wallet" />
+            android:targetClass="de.schildbach.wallet.ui.BiometricAuthActivity"
+            android:targetPackage="org.dogecoin.wallet">
+            <extra android:name="target_activity" android:value="de.schildbach.wallet.ui.SendCoinsQrActivity" />
+        </intent>
     </shortcut>
     <shortcut
         android:icon="@drawable/shortcut_send_coins"
@@ -19,8 +21,10 @@
         android:shortcutShortLabel="@string/button_send_coins">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="de.schildbach.wallet.ui.send.SendCoinsActivity"
-            android:targetPackage="org.dogecoin.wallet" />
+            android:targetClass="de.schildbach.wallet.ui.BiometricAuthActivity"
+            android:targetPackage="org.dogecoin.wallet">
+            <extra android:name="target_activity" android:value="de.schildbach.wallet.ui.send.SendCoinsActivity" />
+        </intent>
     </shortcut>
     <shortcut
         android:icon="@drawable/shortcut_request_coins"
@@ -28,7 +32,9 @@
         android:shortcutShortLabel="@string/button_request_coins">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="de.schildbach.wallet.ui.RequestCoinsActivity"
-            android:targetPackage="org.dogecoin.wallet" />
+            android:targetClass="de.schildbach.wallet.ui.BiometricAuthActivity"
+            android:targetPackage="org.dogecoin.wallet">
+            <extra android:name="target_activity" android:value="de.schildbach.wallet.ui.RequestCoinsActivity" />
+        </intent>
     </shortcut>
 </shortcuts>

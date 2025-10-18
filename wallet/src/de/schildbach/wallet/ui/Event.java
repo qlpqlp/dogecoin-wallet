@@ -21,6 +21,7 @@ import static androidx.core.util.Preconditions.checkState;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Event<T> {
     private final T content;

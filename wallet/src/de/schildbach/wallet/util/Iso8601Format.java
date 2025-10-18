@@ -28,6 +28,7 @@ import java.util.TimeZone;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 @SuppressLint("SimpleDateFormat")
 public class Iso8601Format extends SimpleDateFormat {

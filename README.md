@@ -19,6 +19,15 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
+### 🎨 Website Features & Improvements
+- **Modern Dark Theme**: Beautiful dark mode design with Dogecoin branding and colors
+- **APK Download Integration**: Direct APK download with fun Doge meme animations
+- **Interactive Elements**: Engaging user experience with modal dialogs and animations
+- **Responsive Design**: Optimized for all devices and screen sizes
+- **Fun Animations**: "Much Wow", "Such Wallet", "So OpenSource" and other Doge meme words pop up when downloading APK
+- **Professional Layout**: Clean, modern interface with proper typography and spacing
+- **Mobile Optimized**: Perfect experience on mobile devices with touch-friendly interactions
+
 
 This project contains several sub-projects:
 
@@ -46,6 +55,9 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Google Play Ready**: Fully compliant with all Google Play Console requirements
 - **Version Management**: Incremental version code system for continuous updates
 - **UI Improvements**: Fixed status bar and navigation bar handling for all devices
+- **Security Enhancements**: Implemented secure memory clearing and enhanced PBKDF2 security
+- **Biometric Protection**: Added biometric authentication for widgets and app shortcuts
+- **Memory Security**: Comprehensive secure memory clearing for all sensitive data
 
 ## ✨ NEW FEATURES & IMPROVEMENTS
 
@@ -137,6 +149,40 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Share Integration**: Easy sharing of reports via any Android sharing method
 - **Real-time Data**: Live transaction data with automatic updates
 - **Export Summary**: Total amounts received, sent, and fees paid for comprehensive financial overview
+
+## 🔐 LATEST SECURITY ENHANCEMENTS
+
+### 🛡️ Advanced Security Features
+- **Secure Memory Clearing**: Implemented comprehensive secure memory clearing for all sensitive data including passwords, private keys, and cryptographic material
+- **Enhanced PBKDF2 Security**: Increased PBKDF2 iterations from 1,024 to 50,000 for significantly stronger password-based encryption
+- **Biometric Widget Protection**: All widget functions (receive, send, QR scan) now require biometric authentication when enabled
+- **App Shortcut Security**: Long-press app shortcuts (scan, send, request) are protected with biometric authentication
+- **Memory Protection**: Automatic secure clearing of sensitive data when activities are destroyed or app is terminated
+- **Key Derivation Security**: Enhanced scrypt parameters for stronger key derivation from passwords
+- **Session Management**: Improved biometric session handling with proper timeout and authentication state tracking
+
+### 🔒 Biometric Authentication System
+- **Widget Integration**: All widget buttons require biometric verification before opening their respective functions
+- **App Shortcut Protection**: Long-press shortcuts on the app icon are secured with biometric authentication
+- **Conditional Security**: Biometric prompts only appear when biometric is enabled and hardware is available
+- **Fallback Behavior**: Widgets and shortcuts work normally when biometric is disabled for better user experience
+- **Session Persistence**: Respects existing authentication sessions to avoid duplicate prompts
+- **Secure Activity Flow**: BiometricAuthActivity acts as secure intermediary for all protected functions
+
+### 🧹 Memory Security Implementation
+- **SecureMemory Utility**: New utility class for securely clearing sensitive data from memory
+- **Password Protection**: All password fields are securely cleared after use
+- **Private Key Security**: Private keys are securely wiped from memory after operations
+- **Crypto Operations**: Enhanced encryption/decryption with secure memory clearing
+- **Activity Lifecycle**: Automatic memory clearing on activity destruction
+- **Application Termination**: Secure cleanup when app is terminated by the system
+
+### 🔐 Cryptographic Security Improvements
+- **PBKDF2 Enhancement**: 49x increase in iteration count (1,024 → 50,000) for brute force protection
+- **Time Attack Resistance**: Each password attempt now takes ~50x longer, significantly improving security
+- **Industry Standards**: Aligns with current security recommendations for password-based encryption
+- **Performance Balance**: Maintains reasonable encryption/decryption speeds while maximizing security
+- **Backward Compatibility**: Handles migration from older wallet files with lower iteration counts
 
 ### Core Network Changes
 - **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`
@@ -482,6 +528,31 @@ To publish on Google Play:
 2. Prepare store listing materials
 3. Upload signed APK or AAB
 4. Complete store listing and publish
+
+## 👥 DEVELOPMENT TEAM & CONTRIBUTIONS
+
+### Lead Developer & Security Architect
+- **Paulo Vidal** - [x.com/inevitable360](https://x.com/inevitable360) (Dogecoin Foundation)
+  - Complete Bitcoin to Dogecoin conversion
+  - Advanced security implementations (secure memory clearing, enhanced PBKDF2)
+  - Biometric authentication system for widgets and shortcuts
+  - Family Mode and child wallet management
+  - Digital signature functionality
+  - Accounting reports and transaction analytics
+  - Website development and modern UI improvements
+  - Crash fixes and stability improvements
+  - Android 15 compatibility and Google Play compliance
+
+### Original Bitcoin Wallet Authors
+- **Andreas Schildbach** - Original Bitcoin Wallet creator
+- **jim** - Core cryptographic implementations
+
+### Key Contributions
+- **Security Enhancements**: Comprehensive secure memory clearing, PBKDF2 improvements, biometric protection
+- **Feature Development**: Family Mode, digital signatures, accounting reports, recurring payments
+- **UI/UX Improvements**: Modern dark theme website, interactive animations, responsive design
+- **Platform Compatibility**: Android 15 support, Google Play compliance, modern Android features
+- **Code Quality**: Extensive author attribution, comprehensive documentation, security reviews
 
 ## 🤝 CONTRIBUTING
 

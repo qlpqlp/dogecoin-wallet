@@ -32,6 +32,10 @@ import org.slf4j.LoggerFactory;
 import de.schildbach.wallet.R;
 import de.schildbach.wallet.util.BiometricHelper;
 
+/**
+ * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 public class BiometricAuthDialogFragment extends DialogFragment {
 
     private static final Logger log = LoggerFactory.getLogger(BiometricAuthDialogFragment.class);

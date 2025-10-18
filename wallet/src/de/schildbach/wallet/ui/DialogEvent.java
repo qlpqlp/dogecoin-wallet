@@ -22,6 +22,7 @@ import androidx.annotation.StringRes;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class DialogEvent extends Event<DialogEvent.Params> {
     public static DialogEvent dialog(@StringRes final int titleResId, @StringRes final int messageResId,

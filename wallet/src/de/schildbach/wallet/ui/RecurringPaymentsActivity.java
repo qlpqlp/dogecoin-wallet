@@ -1,6 +1,10 @@
 package de.schildbach.wallet.ui;
 
 import android.app.AlertDialog;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;

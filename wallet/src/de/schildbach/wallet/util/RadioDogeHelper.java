@@ -18,6 +18,10 @@
 package de.schildbach.wallet.util;
 
 import android.content.Context;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;

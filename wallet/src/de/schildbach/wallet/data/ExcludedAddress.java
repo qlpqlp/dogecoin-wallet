@@ -1,6 +1,10 @@
 package de.schildbach.wallet.data;
 
 import androidx.annotation.NonNull;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

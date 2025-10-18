@@ -1,3 +1,7 @@
+/*
+ * Dogecoin Wallet Website JavaScript
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 // Modern Dogecoin Wallet Website JavaScript
 function initWebsite() {
     console.log('Initializing modern Dogecoin Wallet website...');

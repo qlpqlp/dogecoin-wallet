@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Assets {
     public static InputStream open(final AssetManager assets, final String filename) {

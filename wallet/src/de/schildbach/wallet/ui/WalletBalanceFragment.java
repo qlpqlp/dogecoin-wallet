@@ -48,6 +48,7 @@ import org.libdohj.params.AbstractDogecoinParams;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class WalletBalanceFragment extends Fragment {
     private WalletActivity activity;

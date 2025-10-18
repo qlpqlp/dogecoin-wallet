@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import android.view.View;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 

@@ -22,6 +22,7 @@ import de.schildbach.wallet.R;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class ExchangeRatesActivity extends AbstractWalletActivity {
     @Override

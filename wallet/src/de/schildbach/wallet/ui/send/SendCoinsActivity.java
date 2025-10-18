@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public final class SendCoinsActivity extends AbstractWalletActivity {
     public static final String INTENT_EXTRA_PAYMENT_INTENT = "payment_intent";

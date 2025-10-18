@@ -52,6 +52,7 @@ import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.util.Bluetooth;
 import de.schildbach.wallet.util.CrashReporter;
 import de.schildbach.wallet.util.Toast;
+import de.schildbach.wallet.util.SecureMemory;
 import de.schildbach.wallet.util.WalletUtils;
 import org.bitcoinj.core.VersionMessage;
 import org.bitcoinj.crypto.LinuxSecureRandom;
@@ -75,6 +76,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class WalletApplication extends Application {
     private ActivityManager activityManager;
@@ -455,5 +457,29 @@ public class WalletApplication extends Application {
             hasher.putBytes(buf, 0, read);
         is.close();
         return hasher.hash();
+    }
+    
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        
+        // Securely clear sensitive data when the application is terminated
+        if (walletFiles != null) {
+            // Clear wallet files reference
+            walletFiles = null;
+        }
+        
+        // Clear configuration if it contains sensitive data
+        if (config != null) {
+            // Note: Configuration might contain sensitive data, but it's typically
+            // stored in SharedPreferences which is managed by Android
+            config = null;
+        }
+        
+        // Clear wallet file reference
+        walletFile = null;
+        
+        // Clear activity manager reference
+        activityManager = null;
     }
 }

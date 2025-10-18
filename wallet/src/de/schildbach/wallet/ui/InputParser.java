@@ -18,6 +18,10 @@
 package de.schildbach.wallet.ui;
 
 import com.google.common.hash.Hashing;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import com.google.common.io.ByteStreams;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.UninitializedMessageException;

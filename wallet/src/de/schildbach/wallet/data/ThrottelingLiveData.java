@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public abstract class ThrottelingLiveData<T> extends LiveData<T> {
     private final long throttleMs;

@@ -38,6 +38,7 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class Qr {
     private final static QRCodeWriter QR_CODE_WRITER = new QRCodeWriter();

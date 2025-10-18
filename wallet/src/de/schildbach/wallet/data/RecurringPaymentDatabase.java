@@ -1,6 +1,10 @@
 package de.schildbach.wallet.data;
 
 import android.content.ContentValues;
+
+/**
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
+ */
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
