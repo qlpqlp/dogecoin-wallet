@@ -46,7 +46,7 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
-### 📱 Current Release (v1.0 - Version Code 64)
+### 📱 Current Release (v1.0 - Version Code 65)
 - **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
 - **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
 - **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
