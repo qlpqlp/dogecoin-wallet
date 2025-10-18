@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_level0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/bg_level3"
+            android:padding="24dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="2dp">
+
+            <!-- Dogecoin Icon -->
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@mipmap/ic_app_color_48dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Welcome Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_time_setup_welcome_title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Welcome Message -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_time_setup_welcome_message"
+                android:textSize="16sp"
+                android:textColor="@color/fg_less_significant"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
+
+        <!-- New Wallet Option -->
+        <LinearLayout
+            android:id="@+id/option_new_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Icon Container -->
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/icon_background_primary"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_new_wallet"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:tint="@android:color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_new_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_new_wallet_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/fg_significant"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/description_new_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_new_wallet_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="→"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Restore Wallet Option -->
+        <LinearLayout
+            android:id="@+id/option_restore_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Icon Container -->
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/icon_background_secondary"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_restore_wallet"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:tint="@android:color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_restore_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_restore_wallet_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/fg_significant"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/description_restore_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_restore_wallet_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="→"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Activate Child Wallet Option -->
+        <LinearLayout
+            android:id="@+id/option_activate_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Icon Container -->
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/icon_background_accent"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_activate_child"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:tint="@android:color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_activate_child"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_activate_child_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/fg_significant"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/description_activate_child"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_time_setup_activate_child_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="→"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

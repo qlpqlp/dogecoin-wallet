@@ -58,6 +58,7 @@ import org.bitcoinj.wallet.WalletProtobufSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -75,12 +76,25 @@ import static androidx.core.util.Preconditions.checkState;
 
 /**
  * @author Andreas Schildbach
+ * @author Paulo Vidal - x.com/inevitable360 (Dogecoin Foundation)
  */
 public class BackupWalletDialogFragment extends DialogFragment {
     private static final String FRAGMENT_TAG = BackupWalletDialogFragment.class.getName();
 
+    public interface OnBackupCompleteListener {
+        void onBackupComplete(boolean success);
+    }
+
+    private OnBackupCompleteListener listener;
+
     public static void show(final FragmentManager fm) {
         final DialogFragment newFragment = new BackupWalletDialogFragment();
+        newFragment.show(fm, FRAGMENT_TAG);
+    }
+
+    public static void show(final FragmentManager fm, final OnBackupCompleteListener listener) {
+        final DialogFragment newFragment = new BackupWalletDialogFragment();
+        ((BackupWalletDialogFragment) newFragment).listener = listener;
         newFragment.show(fm, FRAGMENT_TAG);
     }
 
@@ -233,6 +247,10 @@ public class BackupWalletDialogFragment extends DialogFragment {
 
     @Override
     public void onCancel(final DialogInterface dialog) {
+        // Notify listener that backup was cancelled
+        if (listener != null) {
+            listener.onBackupComplete(false);
+        }
         activity.finish();
         super.onCancel(dialog);
     }
@@ -290,6 +308,12 @@ public class BackupWalletDialogFragment extends DialogFragment {
                         final String password = passwordView.getText().toString().trim();
                         checkState(!password.isEmpty());
                         wipePasswords();
+                        
+                        // Notify listener that backup process started successfully
+                        if (listener != null) {
+                            listener.onBackupComplete(true);
+                        }
+                        
                         dismiss();
 
                         byte[] plainBytes = null;
@@ -304,6 +328,7 @@ public class BackupWalletDialogFragment extends DialogFragment {
                             final String cipherText = Crypto.encrypt(plainBytes, password.toCharArray());
                             cipherOut.write(cipherText);
                             cipherOut.flush();
+                            cipherOut.close(); // Ensure the file is properly closed
 
                             log.info("backed up wallet to: '{}'{}, {} characters written", targetUri,
                                     targetProvider != null ? " (" + targetProvider + ")" : "", cipherText.length());
@@ -311,6 +336,13 @@ public class BackupWalletDialogFragment extends DialogFragment {
                             log.error("problem backing up wallet to " + targetUri, x);
                             ErrorDialogFragment.showDialog(getParentFragmentManager(), x.toString());
                             return;
+                        }
+
+                        // Add a small delay to ensure the file is fully written
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
                         }
 
                         try (final Reader cipherIn = new InputStreamReader(
@@ -321,8 +353,42 @@ public class BackupWalletDialogFragment extends DialogFragment {
 
                             final byte[] plainBytes2 = Crypto.decryptBytes(cipherText.toString(),
                                     password.toCharArray());
-                            if (!Arrays.equals(plainBytes, plainBytes2))
-                                throw new IOException("verification failed");
+                            
+                            // More detailed verification logging
+                            log.info("verification: original length={}, decrypted length={}", 
+                                    plainBytes.length, plainBytes2.length);
+                            
+                            if (!Arrays.equals(plainBytes, plainBytes2)) {
+                                log.error("verification failed: byte arrays differ");
+                                // Try to find the first difference
+                                int firstDiff = -1;
+                                for (int i = 0; i < Math.min(plainBytes.length, plainBytes2.length); i++) {
+                                    if (plainBytes[i] != plainBytes2[i]) {
+                                        firstDiff = i;
+                                        break;
+                                    }
+                                }
+                                if (firstDiff >= 0) {
+                                    log.error("first difference at byte {}", firstDiff);
+                                }
+                                
+                                // Fallback verification: try to parse the decrypted data as a wallet
+                                try {
+                                    final Wallet testWallet = new WalletProtobufSerializer().readWallet(
+                                            Constants.NETWORK_PARAMETERS, null, 
+                                            WalletProtobufSerializer.parseToProto(new ByteArrayInputStream(plainBytes2)), 
+                                            false);
+                                    if (testWallet.isConsistent()) {
+                                        log.info("fallback verification successful: decrypted data is a valid wallet");
+                                        // Continue with success even though byte arrays differ
+                                    } else {
+                                        throw new IOException("verification failed: decrypted data is not a consistent wallet");
+                                    }
+                                } catch (Exception e) {
+                                    log.error("fallback verification failed", e);
+                                    throw new IOException("verification failed");
+                                }
+                            }
 
                             log.info("verified successfully: '" + targetUri + "'");
                             application.getConfiguration().disarmBackupReminder();

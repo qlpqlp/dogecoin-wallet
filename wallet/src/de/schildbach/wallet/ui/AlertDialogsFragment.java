@@ -93,7 +93,14 @@ public class AlertDialogsFragment extends Fragment {
         super.onAttach(context);
         this.activity = (AbstractWalletActivity) context;
         this.application = activity.getWalletApplication();
-        this.packageManager = activity.getPackageManager();
+        
+        // Add null check to prevent NullPointerException
+        if (activity != null) {
+            this.packageManager = activity.getPackageManager();
+        } else {
+            this.packageManager = context.getPackageManager();
+        }
+        
         this.installer = Installer.from(application);
     }
 

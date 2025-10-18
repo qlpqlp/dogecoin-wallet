@@ -534,6 +534,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">PIN Instellen</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Sleutel Kopiëren</string>
+    <string name="common_copy_address">Adres Kopiëren</string>
+    <string name="common_delete">Verwijderen</string>
+    <string name="family_mode_edit_name">Naam Bewerken</string>
+    <string name="address_excluded_from_spending">Uitgesloten van uitgaven</string>
+    <string name="address_exclude_confirm_title">Adres Uitsluiten van Uitgaven</string>
+    <string name="address_exclude_confirm_message">Dit voorkomt dat dit adres wordt gebruikt voor reguliere betalingen en terugkerende betalingen. De munten op dit adres worden gereserveerd en niet opgenomen in uw beschikbare saldo. Doorgaan?</string>
+    <string name="address_include_confirm_title">Adres Insluiten in Uitgaven</string>
+    <string name="address_include_confirm_message">Dit stelt dit adres in staat om opnieuw te worden gebruikt voor reguliere betalingen en terugkerende betalingen. De munten op dit adres worden opgenomen in uw beschikbare saldo. Doorgaan?</string>
+    <string name="address_excluded_balance">Gereserveerd Saldo: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Boekhoudrapporten</string>
+    <string name="accounting_reports_date_range">Datumbereik</string>
+    <string name="accounting_reports_start_date">Startdatum</string>
+    <string name="accounting_reports_end_date">Einddatum</string>
+    <string name="accounting_reports_select_date">Datum Selecteren</string>
+    <string name="accounting_reports_load_data">Gegevens Laden</string>
+    <string name="accounting_reports_timeline">Transactie Tijdlijn</string>
+    <string name="accounting_reports_sent">Verzonden</string>
+    <string name="accounting_reports_received">Ontvangen</string>
+    <string name="accounting_reports_export">Transacties Exporteren</string>
+    <string name="accounting_reports_exporting">Exporteren...</string>
+    <string name="accounting_reports_export_success">Export succesvol voltooid</string>
+    <string name="accounting_reports_export_error">Export mislukt</string>
+    <string name="accounting_reports_no_data">Geen transacties gevonden voor het geselecteerde datumbereik</string>
+    <string name="accounting_reports_menu_title">Boekhoudrapporten</string>
 </resources>

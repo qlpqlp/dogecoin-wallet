@@ -535,4 +535,133 @@
 <string name="common_services">Services:</string>
   <string name="family_mode_set_pin_button">Définir le PIN</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Copier la Clé</string>
+    <string name="common_copy_address">Copier l\'Adresse</string>
+    <string name="common_delete">Supprimer</string>
+    <string name="family_mode_edit_name">Modifier le Nom</string>
+    <string name="address_excluded_from_spending">Exclu des dépenses</string>
+    <string name="address_exclude_confirm_title">Exclure l\'Adresse des Dépenses</string>
+    <string name="address_exclude_confirm_message">Cela empêchera cette adresse d\'être utilisée dans les paiements réguliers et récurrents. Les pièces dans cette adresse seront réservées et ne seront pas incluses dans votre solde disponible. Continuer ?</string>
+    <string name="address_include_confirm_title">Inclure l\'Adresse dans les Dépenses</string>
+    <string name="address_include_confirm_message">Cela permettra à cette adresse d\'être utilisée à nouveau dans les paiements réguliers et récurrents. Les pièces dans cette adresse seront incluses dans votre solde disponible. Continuer ?</string>
+    <string name="address_excluded_balance">Solde Réservé : %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Rapports Comptables</string>
+    <string name="accounting_reports_date_range">Plage de Dates</string>
+    <string name="accounting_reports_start_date">Date de Début</string>
+    <string name="accounting_reports_end_date">Date de Fin</string>
+    <string name="accounting_reports_select_date">Sélectionner la Date</string>
+    <string name="accounting_reports_load_data">Charger les Données</string>
+    <string name="accounting_reports_timeline">Chronologie des Transactions</string>
+    <string name="accounting_reports_sent">Envoyé</string>
+    <string name="accounting_reports_received">Reçu</string>
+    <string name="accounting_reports_export">Exporter les Transactions</string>
+    <string name="accounting_reports_exporting">Exportation...</string>
+    <string name="accounting_reports_export_success">Exportation terminée avec succès</string>
+    <string name="accounting_reports_export_error">Échec de l\'exportation</string>
+    <string name="accounting_reports_no_data">Aucune transaction trouvée pour la plage de dates sélectionnée</string>
+    <string name="accounting_reports_menu_title">Rapports Comptables</string>
+
+    <!-- New Wallet Backup Required -->
+    <string name="new_wallet_backup_required_title">Sauvegarde Requise</string>
+    <string name="new_wallet_backup_required_message">Pour votre sécurité, vous devez créer une sauvegarde de votre nouveau portefeuille avant de pouvoir l\'utiliser. Cette sauvegarde vous permettra de restaurer votre portefeuille si vous perdez votre appareil.</string>
+    <string name="new_wallet_backup_required_ok">Créer Sauvegarde</string>
+    <string name="new_wallet_backup_required_cancel">Annuler</string>
+    <string name="new_wallet_backup_success">Sauvegarde du portefeuille créée avec succès ! Vous pouvez maintenant utiliser votre portefeuille.</string>
+
+    <!-- Education Section -->
+    <string name="education_title">Éducation</string>
+    <string name="education_welcome_title">Apprenez sur Dogecoin et la Blockchain</string>
+    <string name="education_welcome_subtitle">Tout ce que vous devez savoir sur Dogecoin, la technologie blockchain et ce portefeuille</string>
+
+    <!-- Wallet Advantages -->
+    <string name="education_wallet_advantages_title">Pourquoi ce Portefeuille Dogecoin ?</string>
+    <string name="education_wallet_advantages_self_custody">Auto-custodie : Vous contrôlez vos clés privées, pas un tiers</string>
+    <string name="education_wallet_advantages_privacy">Confidentialité : Aucune information personnelle requise, transactions anonymes</string>
+    <string name="education_wallet_advantages_family_mode">Mode Famille : Enseignez aux enfants l\'argent avec un accès contrôlé</string>
+    <string name="education_wallet_advantages_offline">Hors ligne : Fonctionne sans internet pour les fonctions de base en utilisant RadioDoge</string>
+    <string name="education_wallet_advantages_open_source">Open Source : Code transparent que n\'importe qui peut vérifier</string>
+
+    <!-- Dogecoin Advantages -->
+    <string name="education_dogecoin_advantages_title">Pourquoi Dogecoin vs Monnaie Traditionnelle ?</string>
+    <string name="education_dogecoin_advantages_decentralized">Décentralisé : Aucune autorité unique ne le contrôle</string>
+    <string name="education_dogecoin_advantages_fast">Rapide : Les transactions se terminent en minutes, pas en jours</string>
+    <string name="education_dogecoin_advantages_low_fees">Frais Faibles : Envoyez de l\'argent globalement pour des centimes</string>
+    <string name="education_dogecoin_advantages_global">Global : Fonctionne de la même manière partout dans le monde</string>
+    <string name="education_dogecoin_advantages_transparent">Transparent : Toutes les transactions sont publiques et vérifiables</string>
+
+    <!-- Blockchain -->
+    <string name="education_blockchain_title">Qu\'est-ce que la Blockchain ?</string>
+    <string name="education_blockchain_what_is">Une blockchain est comme un grand livre numérique qui enregistre toutes les transactions</string>
+    <string name="education_blockchain_how_works">Elle fonctionne en liant des blocs de transactions ensemble dans une chaîne</string>
+    <string name="education_blockchain_blocks">Chaque bloc contient de nombreuses transactions et est vérifié par les mineurs</string>
+    <string name="education_blockchain_consensus">Consensus : Tout le monde s\'accorde sur quelles transactions sont valides</string>
+    <string name="education_blockchain_immutable">Immuable : Une fois enregistrées, les transactions ne peuvent pas être modifiées</string>
+
+    <!-- SPV vs Full Node -->
+    <string name="education_spv_vs_full_node_title">SPV vs Nœud Complet : Pourquoi ce Portefeuille utilise SPV</string>
+    <string name="education_spv_what_is">SPV (Vérification de Paiement Simplifiée) est un moyen léger d\'utiliser Bitcoin/Dogecoin</string>
+    <string name="education_spv_vs_full_node">Nœud Complet : Télécharge toute la blockchain (100+ GB), SPV : Seulement les en-têtes (~50 MB)</string>
+    <string name="education_spv_advantages">Avantages SPV : Configuration plus rapide, moins de stockage, moins de bande passante, mobile-friendly</string>
+    <string name="education_spv_how_works">SPV fonctionne en faisant confiance aux mineurs pour vérifier les transactions, tout en maintenant la sécurité</string>
+    <string name="education_spv_security">Sécurité : SPV est sécurisé pour les utilisateurs normaux, les nœuds complets sont nécessaires pour les commerçants</string>
+
+    <!-- Mining -->
+    <string name="education_mining_title">Qu\'est-ce que le Minage ?</string>
+    <string name="education_mining_what_is">Le minage est le processus de vérification des transactions et de les ajouter à la blockchain</string>
+    <string name="education_mining_how_works">Les mineurs résolvent des problèmes mathématiques complexes pour créer de nouveaux blocs</string>
+    <string name="education_mining_rewards">Récompenses : Les mineurs gagnent de nouveaux Dogecoins et des frais de transaction pour leur travail</string>
+    <string name="education_mining_difficulty">Difficulté : Les problèmes mathématiques deviennent plus difficiles quand plus de mineurs rejoignent</string>
+    <string name="education_mining_energy">Énergie : Le minage utilise de l\'électricité, mais il sécurise le réseau</string>
+
+    <!-- Addresses -->
+    <string name="education_addresses_title">Adresses Dogecoin Expliquées</string>
+    <string name="education_addresses_what_is">Une adresse Dogecoin est comme votre numéro de compte bancaire, mais pour Dogecoin</string>
+    <string name="education_addresses_how_works">Les adresses sont générées à partir de votre clé privée en utilisant la cryptographie</string>
+    <string name="education_addresses_sub_addresses">Sous-adresses : Le Mode Famille crée des adresses séparées pour chaque enfant</string>
+    <string name="education_addresses_new_addresses">Nouvelles Adresses : Chaque paiement obtient une adresse fraîche pour une meilleure confidentialité</string>
+    <string name="education_addresses_privacy">Confidentialité : Utiliser différentes adresses rend plus difficile le suivi de vos dépenses</string>
+
+    <!-- Family Mode -->
+    <string name="education_family_mode_title">Mode Famille : Enseigner l\'Argent aux Enfants</string>
+    <string name="education_family_mode_what_is">Le Mode Famille permet aux parents de créer des portefeuilles contrôlés pour leurs enfants</string>
+    <string name="education_family_mode_how_works">Les parents peuvent fixer des limites de dépenses et surveiller les transactions de leurs enfants</string>
+    <string name="education_family_mode_benefits">Avantages : Enseigne la responsabilité financière dans un environnement sûr et contrôlé</string>
+    <string name="education_family_mode_safety">Sécurité : Les enfants ne peuvent pas accéder au portefeuille principal ou envoyer de l\'argent sans permission</string>
+    <string name="education_family_mode_teaching">Enseignement : Les enfants apprennent l\'argent numérique, l\'épargne et les dépenses responsables</string>
+
+    <!-- Security -->
+    <string name="education_security_title">Meilleures Pratiques de Sécurité</string>
+    <string name="education_security_private_keys">Clés Privées : Ne partagez jamais vos clés privées avec qui que ce soit</string>
+    <string name="education_security_backup">Sauvegarde : Sauvegardez toujours votre portefeuille et stockez-le en sécurité</string>
+    <string name="education_security_biometric">Biométrique : Utilisez la reconnaissance d\'empreinte ou faciale pour plus de sécurité</string>
+    <string name="education_security_encryption">Chiffrement : Votre portefeuille est chiffré avec un mot de passe que vous choisissez</string>
+    <string name="education_security_best_practices">Meilleures Pratiques : Utilisez des mots de passe forts, gardez le logiciel à jour, méfiez-vous des arnaques</string>
+
+    <!-- Tips -->
+    <string name="education_tips_title">Conseils pour Commencer</string>
+    <string name="education_tips_start_small">Commencez Petit : Commencez avec de petites quantités pour apprendre comment ça fonctionne</string>
+    <string name="education_tips_learn_gradually">Apprenez Graduellement : Prenez votre temps pour comprendre chaque fonctionnalité</string>
+    <string name="education_tips_community">Communauté : Rejoignez les communautés Dogecoin pour apprendre des autres</string>
+    <string name="education_tips_stay_updated">Restez à Jour : Gardez votre portefeuille à jour pour la sécurité et les nouvelles fonctionnalités</string>
+    <string name="education_tips_have_fun">Amusez-vous : Dogecoin, c\'est s\'amuser tout en apprenant l\'avenir de l\'argent !</string>
+
+    <!-- RadioDoge Section -->
+    <string name="education_radiodoge_title">Qu\'est-ce que RadioDoge ?</string>
+    <string name="education_radiodoge_what_is">RadioDoge est un moyen révolutionnaire d\'envoyer des Dogecoins sans connexion internet</string>
+    <string name="education_radiodoge_how_works">Il utilise les ondes radio pour diffuser les transactions sur de longues distances</string>
+    <string name="education_radiodoge_benefits">Avantages : Fonctionne dans les zones reculées, les zones de catastrophe et les endroits sans internet</string>
+    <string name="education_radiodoge_global">Portée Mondiale : Connectez-vous avec des personnes du monde entier, même dans les endroits les plus reculés</string>
+    <string name="education_radiodoge_future">Avenir de l\'Argent : RadioDoge représente l\'avenir de la communication décentralisée</string>
+
+    <!-- Dogecoin Philosophy Section -->
+    <string name="education_dogecoin_philosophy_title">La Philosophie Dogecoin</string>
+    <string name="education_dogecoin_philosophy_purpose">Objectif : Dogecoin ne consiste pas à s\'enrichir, mais à autonomiser les gens</string>
+    <string name="education_dogecoin_philosophy_money">Vrai Argent : Conçu pour être utilisé comme monnaie conventionnelle, pas pour la spéculation</string>
+    <string name="education_dogecoin_philosophy_unbanked">Soutien aux Non-Bancarisés : Aide les personnes sans comptes bancaires à accéder aux services financiers</string>
+    <string name="education_dogecoin_philosophy_global">Accès Mondial : Offre la liberté financière aux personnes du monde entier</string>
+    <string name="education_dogecoin_philosophy_community">Communauté d\'Abord : Construit par la communauté, pour la communauté</string>
 </resources>

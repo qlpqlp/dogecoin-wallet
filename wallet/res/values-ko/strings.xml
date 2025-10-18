@@ -534,6 +534,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">PIN 설정</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">키 복사</string>
+    <string name="common_copy_address">주소 복사</string>
+    <string name="common_delete">삭제</string>
+    <string name="family_mode_edit_name">이름 편집</string>
+    <string name="address_excluded_from_spending">지출에서 제외됨</string>
+    <string name="address_exclude_confirm_title">주소를 지출에서 제외</string>
+    <string name="address_exclude_confirm_message">이렇게 하면 이 주소가 일반 결제 및 반복 결제에 사용되는 것을 방지합니다. 이 주소의 코인은 예약되어 사용 가능한 잔액에 포함되지 않습니다. 계속하시겠습니까?</string>
+    <string name="address_include_confirm_title">주소를 지출에 포함</string>
+    <string name="address_include_confirm_message">이렇게 하면 이 주소를 일반 결제 및 반복 결제에 다시 사용할 수 있습니다. 이 주소의 코인이 사용 가능한 잔액에 포함됩니다. 계속하시겠습니까?</string>
+    <string name="address_excluded_balance">예약된 잔액: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">회계 보고서</string>
+    <string name="accounting_reports_date_range">날짜 범위</string>
+    <string name="accounting_reports_start_date">시작 날짜</string>
+    <string name="accounting_reports_end_date">종료 날짜</string>
+    <string name="accounting_reports_select_date">날짜 선택</string>
+    <string name="accounting_reports_load_data">데이터 로드</string>
+    <string name="accounting_reports_timeline">거래 타임라인</string>
+    <string name="accounting_reports_sent">전송됨</string>
+    <string name="accounting_reports_received">수신됨</string>
+    <string name="accounting_reports_export">거래 내보내기</string>
+    <string name="accounting_reports_exporting">내보내는 중...</string>
+    <string name="accounting_reports_export_success">내보내기가 성공적으로 완료되었습니다</string>
+    <string name="accounting_reports_export_error">내보내기 실패</string>
+    <string name="accounting_reports_no_data">선택한 날짜 범위에 거래가 없습니다</string>
+    <string name="accounting_reports_menu_title">회계 보고서</string>
 </resources>

@@ -61,7 +61,7 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/ic_settings_24dp"
+            android:src="@drawable/ic_family_24dp"
             android:tint="@color/fg_less_significant"
             android:layout_marginBottom="16dp" />
 
@@ -97,7 +97,7 @@
             android:layout_weight="1"
             android:text="@string/family_mode_activate_child"
             android:textSize="14sp"
-            android:drawableStart="@drawable/ic_qrcode_24dp"
+            android:drawableStart="@drawable/ic_qrcode_white_24dp"
             android:drawablePadding="8dp"
             android:layout_marginEnd="8dp"
             style="@style/My.Dialog.Button" />

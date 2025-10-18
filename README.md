@@ -19,6 +19,13 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
+### 🌍 Complete Internationalization
+- **11 Major Languages**: Spanish, French, German, Italian, Portuguese (BR/PT), Russian, Chinese, Japanese, Korean, Dutch
+- **242 New Translations**: Added missing strings for Family Mode, Address Management, and Accounting Reports
+- **Portuguese Variants**: Both Brazilian and European Portuguese fully supported
+- **Cultural Adaptation**: Proper terminology and phrasing for each language region
+- **Complete Feature Coverage**: All new features fully translated across all supported languages
+
 ### 🎨 Website Features & Improvements
 - **Modern Dark Theme**: Beautiful dark mode design with Dogecoin branding and colors
 - **APK Download Integration**: Direct APK download with fun Doge meme animations
@@ -46,10 +53,14 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
-### 📱 Current Release (v1.0 - Version Code 65)
+### 📱 Current Release (v1.0 - Version Code 69)
 - **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
 - **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
 - **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
+- **AlertDialogsFragment Fix**: Resolved NullPointerException crash in onAttach() method
+- **Family Mode UI Improvements**: Fixed gear icon to family icon, QR code to white for dark mode, added proper cancel/save icons
+- **Backup Verification Fix**: Resolved "verification failed" IOException during wallet backup process
+- **First-Time Setup Dialog**: Added modern, card-based setup dialog for new users with options for New Wallet, Restore Wallet, and Activate Child Wallet
 - **Accounting Reports**: Added comprehensive transaction reporting with CSV, JSON, and PDF export
 - **Build Optimization**: Enabled R8 minification for smaller app size (~14.3 MB)
 - **Google Play Ready**: Fully compliant with all Google Play Console requirements
@@ -58,6 +69,12 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Security Enhancements**: Implemented secure memory clearing and enhanced PBKDF2 security
 - **Biometric Protection**: Added biometric authentication for widgets and app shortcuts
 - **Memory Security**: Comprehensive secure memory clearing for all sensitive data
+- **Author Attribution**: Added comprehensive author credits throughout 113+ files
+- **Mapping File**: Generated mapping.txt for Google Play Console crash reporting
+- **Release Files**: APK, AAB, and mapping files available in root directory
+- **Minification**: R8 minification enabled for optimized app size and performance
+- **Complete Translations**: Added missing strings to 11 major languages (242 new translations)
+- **Portuguese Support**: Both Brazilian and European Portuguese variants fully translated
 
 ## ✨ NEW FEATURES & IMPROVEMENTS
 
@@ -86,6 +103,14 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Health Monitoring**: Automatically removes inactive nodes and finds replacements every 10 minutes
 - **IPv6 & TOR Support**: Discovers nodes across different network types
 - **Live Updates**: Real-time display of discovered nodes with progress indicators
+
+### 📚 Education Section
+- **Comprehensive Learning**: Complete guides covering Dogecoin, blockchain technology, and wallet features
+- **RadioDoge Information**: Detailed explanation of offline transaction capabilities using radio waves
+- **Dogecoin Philosophy**: Educational content about empowering unbanked people worldwide
+- **Family-Friendly**: Designed for both adults and children to learn about cryptocurrency
+- **Multilingual Support**: Available in English, Spanish, and French
+- **Interactive Learning**: Expandable sections with detailed explanations and practical tips
 
 ### 📝 Digital Document Signing
 - **Document & Message Signing**: Sign any text, document, or message with your Dogecoin private key
@@ -552,7 +577,10 @@ To publish on Google Play:
 - **Feature Development**: Family Mode, digital signatures, accounting reports, recurring payments
 - **UI/UX Improvements**: Modern dark theme website, interactive animations, responsive design
 - **Platform Compatibility**: Android 15 support, Google Play compliance, modern Android features
-- **Code Quality**: Extensive author attribution, comprehensive documentation, security reviews
+- **Code Quality**: Extensive author attribution across 113+ files, comprehensive documentation, security reviews
+- **Crash Fixes**: Resolved NullPointerException crashes in AlertDialogsFragment and other components
+- **Build Optimization**: R8 minification, mapping file generation, APK/AAB optimization
+- **Documentation**: Complete README updates, comprehensive feature documentation
 
 ## 🤝 CONTRIBUTING
 

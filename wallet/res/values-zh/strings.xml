@@ -535,6 +535,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">设置PIN</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">复制密钥</string>
+    <string name="common_copy_address">复制地址</string>
+    <string name="common_delete">删除</string>
+    <string name="family_mode_edit_name">编辑姓名</string>
+    <string name="address_excluded_from_spending">排除支出</string>
+    <string name="address_exclude_confirm_title">从支出中排除地址</string>
+    <string name="address_exclude_confirm_message">这将防止此地址用于常规付款和定期付款。此地址中的硬币将被保留，不会包含在您的可用余额中。继续吗？</string>
+    <string name="address_include_confirm_title">将地址包含在支出中</string>
+    <string name="address_include_confirm_message">这将允许此地址再次用于常规付款和定期付款。此地址中的硬币将包含在您的可用余额中。继续吗？</string>
+    <string name="address_excluded_balance">保留余额：%s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">会计报告</string>
+    <string name="accounting_reports_date_range">日期范围</string>
+    <string name="accounting_reports_start_date">开始日期</string>
+    <string name="accounting_reports_end_date">结束日期</string>
+    <string name="accounting_reports_select_date">选择日期</string>
+    <string name="accounting_reports_load_data">加载数据</string>
+    <string name="accounting_reports_timeline">交易时间线</string>
+    <string name="accounting_reports_sent">已发送</string>
+    <string name="accounting_reports_received">已接收</string>
+    <string name="accounting_reports_export">导出交易</string>
+    <string name="accounting_reports_exporting">导出中...</string>
+    <string name="accounting_reports_export_success">导出成功完成</string>
+    <string name="accounting_reports_export_error">导出失败</string>
+    <string name="accounting_reports_no_data">在所选日期范围内未找到交易</string>
+    <string name="accounting_reports_menu_title">会计报告</string>
 </resources>

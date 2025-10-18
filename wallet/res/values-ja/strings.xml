@@ -534,6 +534,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">PINを設定</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">キーをコピー</string>
+    <string name="common_copy_address">アドレスをコピー</string>
+    <string name="common_delete">削除</string>
+    <string name="family_mode_edit_name">名前を編集</string>
+    <string name="address_excluded_from_spending">支出から除外</string>
+    <string name="address_exclude_confirm_title">アドレスを支出から除外</string>
+    <string name="address_exclude_confirm_message">これにより、このアドレスが通常の支払いや定期支払いで使用されることを防ぎます。このアドレスのコインは予約され、利用可能な残高に含まれません。続行しますか？</string>
+    <string name="address_include_confirm_title">アドレスを支出に含める</string>
+    <string name="address_include_confirm_message">これにより、このアドレスを通常の支払いや定期支払いで再度使用できるようになります。このアドレスのコインは利用可能な残高に含まれます。続行しますか？</string>
+    <string name="address_excluded_balance">予約残高：%s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">会計レポート</string>
+    <string name="accounting_reports_date_range">日付範囲</string>
+    <string name="accounting_reports_start_date">開始日</string>
+    <string name="accounting_reports_end_date">終了日</string>
+    <string name="accounting_reports_select_date">日付を選択</string>
+    <string name="accounting_reports_load_data">データを読み込み</string>
+    <string name="accounting_reports_timeline">取引タイムライン</string>
+    <string name="accounting_reports_sent">送信済み</string>
+    <string name="accounting_reports_received">受信済み</string>
+    <string name="accounting_reports_export">取引をエクスポート</string>
+    <string name="accounting_reports_exporting">エクスポート中...</string>
+    <string name="accounting_reports_export_success">エクスポートが正常に完了しました</string>
+    <string name="accounting_reports_export_error">エクスポートに失敗しました</string>
+    <string name="accounting_reports_no_data">選択した日付範囲で取引が見つかりませんでした</string>
+    <string name="accounting_reports_menu_title">会計レポート</string>
 </resources>

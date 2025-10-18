@@ -536,4 +536,133 @@
 <string name="common_services">Services:</string>
   <string name="family_mode_set_pin_button">Establecer PIN</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Copiar Clave</string>
+    <string name="common_copy_address">Copiar Dirección</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="family_mode_edit_name">Editar Nombre</string>
+    <string name="address_excluded_from_spending">Excluido del gasto</string>
+    <string name="address_exclude_confirm_title">Excluir Dirección del Gasto</string>
+    <string name="address_exclude_confirm_message">Esto evitará que esta dirección se use en pagos regulares y pagos recurrentes. Las monedas en esta dirección se reservarán y no se incluirán en su saldo disponible. ¿Continuar?</string>
+    <string name="address_include_confirm_title">Incluir Dirección en el Gasto</string>
+    <string name="address_include_confirm_message">Esto permitirá que esta dirección se use nuevamente en pagos regulares y pagos recurrentes. Las monedas en esta dirección se incluirán en su saldo disponible. ¿Continuar?</string>
+    <string name="address_excluded_balance">Saldo Reservado: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Reportes Contables</string>
+    <string name="accounting_reports_date_range">Rango de Fechas</string>
+    <string name="accounting_reports_start_date">Fecha de Inicio</string>
+    <string name="accounting_reports_end_date">Fecha de Fin</string>
+    <string name="accounting_reports_select_date">Seleccionar Fecha</string>
+    <string name="accounting_reports_load_data">Cargar Datos</string>
+    <string name="accounting_reports_timeline">Línea de Tiempo de Transacciones</string>
+    <string name="accounting_reports_sent">Enviado</string>
+    <string name="accounting_reports_received">Recibido</string>
+    <string name="accounting_reports_export">Exportar Transacciones</string>
+    <string name="accounting_reports_exporting">Exportando...</string>
+    <string name="accounting_reports_export_success">Exportación completada exitosamente</string>
+    <string name="accounting_reports_export_error">Error en la exportación</string>
+    <string name="accounting_reports_no_data">No se encontraron transacciones para el rango de fechas seleccionado</string>
+    <string name="accounting_reports_menu_title">Reportes Contables</string>
+
+    <!-- New Wallet Backup Required -->
+    <string name="new_wallet_backup_required_title">Respaldo Requerido</string>
+    <string name="new_wallet_backup_required_message">Por tu seguridad, debes crear un respaldo de tu nueva billetera antes de poder usarla. Este respaldo te permitirá restaurar tu billetera si pierdes tu dispositivo.</string>
+    <string name="new_wallet_backup_required_ok">Crear Respaldo</string>
+    <string name="new_wallet_backup_required_cancel">Cancelar</string>
+    <string name="new_wallet_backup_success">¡Respaldo de billetera creado exitosamente! Ahora puedes usar tu billetera.</string>
+
+    <!-- Education Section -->
+    <string name="education_title">Educación</string>
+    <string name="education_welcome_title">Aprende sobre Dogecoin y Blockchain</string>
+    <string name="education_welcome_subtitle">Todo lo que necesitas saber sobre Dogecoin, tecnología blockchain y esta billetera</string>
+
+    <!-- Wallet Advantages -->
+    <string name="education_wallet_advantages_title">¿Por qué esta Billetera Dogecoin?</string>
+    <string name="education_wallet_advantages_self_custody">Autocustodia: Tú controlas tus claves privadas, no un tercero</string>
+    <string name="education_wallet_advantages_privacy">Privacidad: No se requiere información personal, transacciones anónimas</string>
+    <string name="education_wallet_advantages_family_mode">Modo Familiar: Enseña a los niños sobre el dinero con acceso controlado</string>
+    <string name="education_wallet_advantages_offline">Funciona sin Internet: Funciona sin conexión para funciones básicas usando RadioDoge</string>
+    <string name="education_wallet_advantages_open_source">Código Abierto: Código transparente que cualquiera puede verificar</string>
+
+    <!-- Dogecoin Advantages -->
+    <string name="education_dogecoin_advantages_title">¿Por qué Dogecoin vs Dinero Tradicional?</string>
+    <string name="education_dogecoin_advantages_decentralized">Descentralizado: Ninguna autoridad única lo controla</string>
+    <string name="education_dogecoin_advantages_fast">Rápido: Las transacciones se completan en minutos, no días</string>
+    <string name="education_dogecoin_advantages_low_fees">Tarifas Bajas: Envía dinero globalmente por centavos</string>
+    <string name="education_dogecoin_advantages_global">Global: Funciona igual en todo el mundo</string>
+    <string name="education_dogecoin_advantages_transparent">Transparente: Todas las transacciones son públicas y verificables</string>
+
+    <!-- Blockchain -->
+    <string name="education_blockchain_title">¿Qué es Blockchain?</string>
+    <string name="education_blockchain_what_is">Un blockchain es como un libro mayor digital que registra todas las transacciones</string>
+    <string name="education_blockchain_how_works">Funciona enlazando bloques de transacciones en una cadena</string>
+    <string name="education_blockchain_blocks">Cada bloque contiene muchas transacciones y es verificado por mineros</string>
+    <string name="education_blockchain_consensus">Consenso: Todos están de acuerdo en qué transacciones son válidas</string>
+    <string name="education_blockchain_immutable">Inmutable: Una vez registradas, las transacciones no se pueden cambiar</string>
+
+    <!-- SPV vs Full Node -->
+    <string name="education_spv_vs_full_node_title">SPV vs Nodo Completo: Por qué esta Billetera usa SPV</string>
+    <string name="education_spv_what_is">SPV (Verificación de Pago Simplificada) es una forma ligera de usar Bitcoin/Dogecoin</string>
+    <string name="education_spv_vs_full_node">Nodo Completo: Descarga blockchain completo (100+ GB), SPV: Solo descarga encabezados (~50 MB)</string>
+    <string name="education_spv_advantages">Ventajas SPV: Configuración más rápida, menos almacenamiento, menos ancho de banda, amigable para móviles</string>
+    <string name="education_spv_how_works">SPV funciona confiando en los mineros para verificar transacciones, manteniendo la seguridad</string>
+    <string name="education_spv_security">Seguridad: SPV es seguro para usuarios normales, los nodos completos son necesarios para comerciantes</string>
+
+    <!-- Mining -->
+    <string name="education_mining_title">¿Qué es la Minería?</string>
+    <string name="education_mining_what_is">La minería es el proceso de verificar transacciones y agregarlas al blockchain</string>
+    <string name="education_mining_how_works">Los mineros resuelven problemas matemáticos complejos para crear nuevos bloques</string>
+    <string name="education_mining_rewards">Recompensas: Los mineros ganan nuevos Dogecoins y tarifas de transacción por su trabajo</string>
+    <string name="education_mining_difficulty">Dificultad: Los problemas matemáticos se vuelven más difíciles cuando más mineros se unen</string>
+    <string name="education_mining_energy">Energía: La minería usa electricidad, pero asegura la red</string>
+
+    <!-- Addresses -->
+    <string name="education_addresses_title">Direcciones Dogecoin Explicadas</string>
+    <string name="education_addresses_what_is">Una dirección Dogecoin es como tu número de cuenta bancaria, pero para Dogecoin</string>
+    <string name="education_addresses_how_works">Las direcciones se generan desde tu clave privada usando criptografía</string>
+    <string name="education_addresses_sub_addresses">Sub-direcciones: El Modo Familiar crea direcciones separadas para cada niño</string>
+    <string name="education_addresses_new_addresses">Nuevas Direcciones: Cada pago obtiene una dirección fresca para mejor privacidad</string>
+    <string name="education_addresses_privacy">Privacidad: Usar diferentes direcciones hace más difícil rastrear tus gastos</string>
+
+    <!-- Family Mode -->
+    <string name="education_family_mode_title">Modo Familiar: Enseñando a los Niños sobre el Dinero</string>
+    <string name="education_family_mode_what_is">El Modo Familiar permite a los padres crear billeteras controladas para sus hijos</string>
+    <string name="education_family_mode_how_works">Los padres pueden establecer límites de gasto y monitorear las transacciones de sus hijos</string>
+    <string name="education_family_mode_benefits">Beneficios: Enseña responsabilidad financiera en un ambiente seguro y controlado</string>
+    <string name="education_family_mode_safety">Seguridad: Los niños no pueden acceder a la billetera principal o enviar dinero sin permiso</string>
+    <string name="education_family_mode_teaching">Enseñanza: Los niños aprenden sobre dinero digital, ahorro y gasto responsable</string>
+
+    <!-- Security -->
+    <string name="education_security_title">Mejores Prácticas de Seguridad</string>
+    <string name="education_security_private_keys">Claves Privadas: Nunca compartas tus claves privadas con nadie</string>
+    <string name="education_security_backup">Respaldo: Siempre respalda tu billetera y guárdala de forma segura</string>
+    <string name="education_security_biometric">Biométrico: Usa reconocimiento de huella dactilar o facial para mayor seguridad</string>
+    <string name="education_security_encryption">Cifrado: Tu billetera está cifrada con una contraseña que tú eliges</string>
+    <string name="education_security_best_practices">Mejores Prácticas: Usa contraseñas fuertes, mantén el software actualizado, ten cuidado con estafas</string>
+
+    <!-- Tips -->
+    <string name="education_tips_title">Consejos para Empezar</string>
+    <string name="education_tips_start_small">Empieza Pequeño: Comienza con cantidades pequeñas para aprender cómo funciona</string>
+    <string name="education_tips_learn_gradually">Aprende Gradualmente: Tómate tu tiempo para entender cada función</string>
+    <string name="education_tips_community">Comunidad: Únete a las comunidades de Dogecoin para aprender de otros</string>
+    <string name="education_tips_stay_updated">Mantente Actualizado: Mantén tu billetera actualizada para seguridad y nuevas funciones</string>
+    <string name="education_tips_have_fun">¡Diviértete: Dogecoin se trata de divertirse mientras aprendes sobre el futuro del dinero!</string>
+
+    <!-- RadioDoge Section -->
+    <string name="education_radiodoge_title">¿Qué es RadioDoge?</string>
+    <string name="education_radiodoge_what_is">RadioDoge es una forma revolucionaria de enviar Dogecoin sin conexión a internet</string>
+    <string name="education_radiodoge_how_works">Utiliza ondas de radio para transmitir transacciones a largas distancias</string>
+    <string name="education_radiodoge_benefits">Beneficios: Funciona en áreas remotas, zonas de desastre y lugares sin internet</string>
+    <string name="education_radiodoge_global">Alcance Global: Conecta con personas en todo el mundo, incluso en las ubicaciones más remotas</string>
+    <string name="education_radiodoge_future">Futuro del Dinero: RadioDoge representa el futuro de la comunicación descentralizada</string>
+
+    <!-- Dogecoin Philosophy Section -->
+    <string name="education_dogecoin_philosophy_title">La Filosofía de Dogecoin</string>
+    <string name="education_dogecoin_philosophy_purpose">Propósito: Dogecoin no se trata de enriquecerse, se trata de empoderar a las personas</string>
+    <string name="education_dogecoin_philosophy_money">Dinero Real: Diseñado para ser usado como dinero convencional, no para especulación</string>
+    <string name="education_dogecoin_philosophy_unbanked">Apoyo a los No Bancarizados: Ayuda a personas sin cuentas bancarias a acceder a servicios financieros</string>
+    <string name="education_dogecoin_philosophy_global">Acceso Global: Proporciona libertad financiera a personas en todo el mundo</string>
+    <string name="education_dogecoin_philosophy_community">Comunidad Primero: Construido por la comunidad, para la comunidad</string>
 </resources>

@@ -236,6 +236,12 @@
             android:theme="@style/My.Theme.ChildActivity"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name="de.schildbach.wallet.ui.EducationActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/education_title"
+            android:theme="@style/My.Theme.ChildActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.file_attachment"

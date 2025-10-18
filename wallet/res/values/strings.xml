@@ -569,4 +569,126 @@
     <string name="accounting_reports_export_error">Export failed</string>
     <string name="accounting_reports_no_data">No transactions found for selected date range</string>
     <string name="accounting_reports_menu_title">Accounting Reports</string>
+    
+    <!-- First Time Setup Dialog -->
+    <string name="first_time_setup_title">Welcome to Dogecoin Wallet</string>
+    <string name="first_time_setup_welcome_title">Welcome to Dogecoin Wallet!</string>
+    <string name="first_time_setup_welcome_message">Choose how you would like to set up your wallet:</string>
+    <string name="first_time_setup_new_wallet_title">New Wallet</string>
+    <string name="first_time_setup_new_wallet_description">Create a new wallet and generate a new seed phrase</string>
+    <string name="first_time_setup_restore_wallet_title">Restore Wallet</string>
+    <string name="first_time_setup_restore_wallet_description">Restore an existing wallet from backup or seed phrase</string>
+    <string name="first_time_setup_activate_child_title">Activate Child Wallet</string>
+    <string name="first_time_setup_activate_child_description">Activate a child wallet using a QR code from Family Mode</string>
+
+    <!-- New Wallet Backup Required -->
+    <string name="new_wallet_backup_required_title">Backup Required</string>
+    <string name="new_wallet_backup_required_message">For your security, you must create a backup of your new wallet before you can use it. This backup will allow you to restore your wallet if you lose your device.</string>
+    <string name="new_wallet_backup_required_ok">Create Backup</string>
+    <string name="new_wallet_backup_required_cancel">Cancel</string>
+    <string name="new_wallet_backup_success">Wallet backup created successfully! You can now use your wallet.</string>
+
+    <!-- Education Section -->
+    <string name="education_title">Education</string>
+    <string name="education_menu_title">Education</string>
+    <string name="education_welcome_title">Learn About Dogecoin &amp; Blockchain</string>
+    <string name="education_welcome_subtitle">Everything you need to know about Dogecoin, blockchain technology, and this wallet</string>
+
+    <!-- Wallet Advantages -->
+    <string name="education_wallet_advantages_title">Why This Dogecoin Wallet?</string>
+    <string name="education_wallet_advantages_self_custody">Self-Custody: You control your private keys, not a third party</string>
+    <string name="education_wallet_advantages_privacy">Privacy: No personal information required, anonymous transactions</string>
+    <string name="education_wallet_advantages_family_mode">Family Mode: Teach kids about money with controlled access</string>
+    <string name="education_wallet_advantages_offline">Offline Capable: Works without internet for basic functions using RadioDoge</string>
+    <string name="education_wallet_advantages_open_source">Open Source: Transparent code that anyone can verify</string>
+
+    <!-- Dogecoin Advantages -->
+    <string name="education_dogecoin_advantages_title">Why Dogecoin vs Traditional Money?</string>
+    <string name="education_dogecoin_advantages_decentralized">Decentralized: No single authority controls it</string>
+    <string name="education_dogecoin_advantages_fast">Fast: Transactions complete in minutes, not days</string>
+    <string name="education_dogecoin_advantages_low_fees">Low Fees: Send money globally for pennies</string>
+    <string name="education_dogecoin_advantages_global">Global: Works the same everywhere in the world</string>
+    <string name="education_dogecoin_advantages_transparent">Transparent: All transactions are public and verifiable</string>
+    <string name="education_dogecoin_advantages_cheap">Cheap: Very low fees compared to traditional banks</string>
+
+    <!-- Blockchain -->
+    <string name="education_blockchain_title">What is Blockchain?</string>
+    <string name="education_blockchain_what_is">A blockchain is like a digital ledger that records all transactions</string>
+    <string name="education_blockchain_how_works">It works by linking blocks of transactions together in a chain</string>
+    <string name="education_blockchain_blocks">Each block contains many transactions and is verified by miners</string>
+    <string name="education_blockchain_consensus">Consensus: Everyone agrees on which transactions are valid</string>
+    <string name="education_blockchain_immutable">Immutable: Once recorded, transactions cannot be changed</string>
+    <string name="education_blockchain_distributed">Distributed: Thousands of computers keep a copy of the blockchain</string>
+    <string name="education_blockchain_secure">Secure: Advanced encryption protects all transactions</string>
+
+    <!-- SPV vs Full Node -->
+    <string name="education_spv_vs_full_node_title">SPV vs Full Node: Why This Wallet Uses SPV</string>
+    <string name="education_spv_what_is">SPV (Simplified Payment Verification) is a lightweight way to use Bitcoin/Dogecoin</string>
+    <string name="education_spv_vs_full_node">Full Node: Downloads entire blockchain (100+ GB), SPV: Only downloads block headers (~50 MB)</string>
+    <string name="education_spv_vs_full_node_spv">SPV (Simplified Payment Verification): Verifies only relevant transactions</string>
+    <string name="education_spv_vs_full_node_full">Full Node: Downloads and verifies the entire blockchain</string>
+    <string name="education_spv_vs_full_node_why_spv">Why SPV: Faster, uses less space and battery on your phone</string>
+    <string name="education_spv_vs_full_node_trust">Trust: SPV trusts full nodes for verification</string>
+    <string name="education_spv_vs_full_node_balance">Balance: SPV is perfect for mobile wallets</string>
+    <string name="education_spv_advantages">SPV Advantages: Faster setup, less storage, less bandwidth, mobile-friendly</string>
+    <string name="education_spv_how_works">SPV works by trusting miners to verify transactions, while still maintaining security</string>
+    <string name="education_spv_security">Security: SPV is secure for normal users, full nodes are needed for merchants</string>
+
+    <!-- Mining -->
+    <string name="education_mining_title">What is Mining?</string>
+    <string name="education_mining_what_is">Mining is the process of verifying transactions and adding them to the blockchain</string>
+    <string name="education_mining_how_works">Miners solve complex math problems to create new blocks</string>
+    <string name="education_mining_rewards">Rewards: Miners earn new Dogecoins and transaction fees for their work</string>
+    <string name="education_mining_difficulty">Difficulty: The math problems get harder as more miners join</string>
+    <string name="education_mining_energy">Energy: Mining uses electricity, but it secures the network</string>
+    <string name="education_mining_reward">Reward: Miners receive Dogecoin for each block mined</string>
+    <string name="education_mining_network">Network: Miners keep the Dogecoin network secure and running</string>
+
+    <!-- Addresses -->
+    <string name="education_addresses_title">Dogecoin Addresses Explained</string>
+    <string name="education_addresses_what_is">A Dogecoin address is like your bank account number, but for Dogecoin</string>
+    <string name="education_addresses_how_works">Addresses are generated from your private key using cryptography</string>
+    <string name="education_addresses_sub_addresses">Sub-addresses: Family Mode creates separate addresses for each child</string>
+    <string name="education_addresses_new_addresses">New Addresses: Each payment gets a fresh address for better privacy</string>
+    <string name="education_addresses_privacy">Privacy: Using different addresses makes it harder to track your spending</string>
+
+    <!-- Family Mode -->
+    <string name="education_family_mode_title">Family Mode: Teaching Kids About Money</string>
+    <string name="education_family_mode_what_is">Family Mode lets parents create controlled wallets for their children</string>
+    <string name="education_family_mode_how_works">Parents can set spending limits and monitor their children\'s transactions</string>
+    <string name="education_family_mode_benefits">Benefits: Teaches financial responsibility in a safe, controlled environment</string>
+    <string name="education_family_mode_safety">Safety: Children can\'t access the main wallet or send money without permission</string>
+    <string name="education_family_mode_teaching">Teaching: Kids learn about digital money, saving, and spending responsibly</string>
+
+    <!-- Security -->
+    <string name="education_security_title">Security Best Practices</string>
+    <string name="education_security_private_keys">Private Keys: Never share your private keys with anyone</string>
+    <string name="education_security_backup">Backup: Always backup your wallet and store it safely</string>
+    <string name="education_security_biometric">Biometric: Use fingerprint or face recognition for extra security</string>
+    <string name="education_security_encryption">Encryption: Your wallet is encrypted with a password you choose</string>
+    <string name="education_security_best_practices">Best Practices: Use strong passwords, keep software updated, be cautious of scams</string>
+
+    <!-- Tips -->
+    <string name="education_tips_title">Getting Started Tips</string>
+    <string name="education_tips_start_small">Start Small: Begin with small amounts to learn how it works</string>
+    <string name="education_tips_learn_gradually">Learn Gradually: Take your time to understand each feature</string>
+    <string name="education_tips_community">Community: Join Dogecoin communities to learn from others</string>
+    <string name="education_tips_stay_updated">Stay Updated: Keep your wallet updated for security and new features</string>
+    <string name="education_tips_have_fun">Have Fun: Dogecoin is about having fun while learning about the future of money!</string>
+
+    <!-- RadioDoge Section -->
+    <string name="education_radiodoge_title">What is RadioDoge?</string>
+    <string name="education_radiodoge_what_is">RadioDoge is a revolutionary way to send Dogecoin without internet connection</string>
+    <string name="education_radiodoge_how_works">It uses radio waves to broadcast transactions across long distances</string>
+    <string name="education_radiodoge_benefits">Benefits: Works in remote areas, disaster zones, and places without internet</string>
+    <string name="education_radiodoge_global">Global Reach: Connect with people worldwide, even in the most remote locations</string>
+    <string name="education_radiodoge_future">Future of Money: RadioDoge represents the future of decentralized communication</string>
+
+    <!-- Dogecoin Philosophy Section -->
+    <string name="education_dogecoin_philosophy_title">The Dogecoin Philosophy</string>
+    <string name="education_dogecoin_philosophy_purpose">Purpose: Dogecoin is not about getting rich, it\'s about empowering people</string>
+    <string name="education_dogecoin_philosophy_money">Real Money: Designed to be used as conventional money, not speculation</string>
+    <string name="education_dogecoin_philosophy_unbanked">Unbanked Support: Helps people without bank accounts access financial services</string>
+    <string name="education_dogecoin_philosophy_global">Global Access: Provides financial freedom to people worldwide</string>
+    <string name="education_dogecoin_philosophy_community">Community First: Built by the community, for the community</string>
 </resources>

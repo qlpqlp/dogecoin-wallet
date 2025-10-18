@@ -173,6 +173,8 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:layout_marginEnd="8dp"
+                android:drawableStart="@drawable/ic_cancel_24dp"
+                android:drawablePadding="8dp"
                 style="@style/My.Dialog.Button" />
 
             <Button
@@ -183,7 +185,7 @@
                 android:textSize="14sp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:drawableStart="@drawable/ic_settings_24dp"
+                android:drawableStart="@drawable/ic_save_24dp"
                 android:drawablePadding="8dp"
                 style="@style/My.Dialog.Button" />
 

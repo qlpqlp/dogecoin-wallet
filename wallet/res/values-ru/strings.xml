@@ -534,6 +534,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">Установить PIN</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Копировать Ключ</string>
+    <string name="common_copy_address">Копировать Адрес</string>
+    <string name="common_delete">Удалить</string>
+    <string name="family_mode_edit_name">Изменить Имя</string>
+    <string name="address_excluded_from_spending">Исключено из трат</string>
+    <string name="address_exclude_confirm_title">Исключить Адрес из Трат</string>
+    <string name="address_exclude_confirm_message">Это предотвратит использование этого адреса для обычных и повторяющихся платежей. Монеты на этом адресе будут зарезервированы и не будут включены в ваш доступный баланс. Продолжить?</string>
+    <string name="address_include_confirm_title">Включить Адрес в Траты</string>
+    <string name="address_include_confirm_message">Это позволит использовать этот адрес снова для обычных и повторяющихся платежей. Монеты на этом адресе будут включены в ваш доступный баланс. Продолжить?</string>
+    <string name="address_excluded_balance">Зарезервированный Баланс: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Бухгалтерские Отчеты</string>
+    <string name="accounting_reports_date_range">Диапазон Дат</string>
+    <string name="accounting_reports_start_date">Дата Начала</string>
+    <string name="accounting_reports_end_date">Дата Окончания</string>
+    <string name="accounting_reports_select_date">Выбрать Дату</string>
+    <string name="accounting_reports_load_data">Загрузить Данные</string>
+    <string name="accounting_reports_timeline">Временная Линия Транзакций</string>
+    <string name="accounting_reports_sent">Отправлено</string>
+    <string name="accounting_reports_received">Получено</string>
+    <string name="accounting_reports_export">Экспорт Транзакций</string>
+    <string name="accounting_reports_exporting">Экспорт...</string>
+    <string name="accounting_reports_export_success">Экспорт успешно завершен</string>
+    <string name="accounting_reports_export_error">Ошибка экспорта</string>
+    <string name="accounting_reports_no_data">Транзакции не найдены для выбранного диапазона дат</string>
+    <string name="accounting_reports_menu_title">Бухгалтерские Отчеты</string>
 </resources>

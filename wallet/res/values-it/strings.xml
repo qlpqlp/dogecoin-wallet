@@ -534,6 +534,35 @@
 <string name="family_mode_deactivate_dialog_message">Are you sure you want to deactivate child mode? This will revert the wallet to normal mode and remove the derived key.</string>
 <string name="common_transactions_count">%s</string>
 <string name="common_services">Services:</string>
-<string name="family_mode_set_pin_button">Set PIN</string>
+<string name="family_mode_set_pin_button">Imposta PIN</string>
 <string name="common_sub_version">Sub Version:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Copia Chiave</string>
+    <string name="common_copy_address">Copia Indirizzo</string>
+    <string name="common_delete">Elimina</string>
+    <string name="family_mode_edit_name">Modifica Nome</string>
+    <string name="address_excluded_from_spending">Escluso dalle spese</string>
+    <string name="address_exclude_confirm_title">Escludi Indirizzo dalle Spese</string>
+    <string name="address_exclude_confirm_message">Questo impedirà a questo indirizzo di essere utilizzato per pagamenti regolari e ricorrenti. Le monete in questo indirizzo saranno riservate e non incluse nel tuo saldo disponibile. Continuare?</string>
+    <string name="address_include_confirm_title">Includi Indirizzo nelle Spese</string>
+    <string name="address_include_confirm_message">Questo permetterà a questo indirizzo di essere utilizzato nuovamente per pagamenti regolari e ricorrenti. Le monete in questo indirizzo saranno incluse nel tuo saldo disponibile. Continuare?</string>
+    <string name="address_excluded_balance">Saldo Riservato: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Report Contabili</string>
+    <string name="accounting_reports_date_range">Intervallo Date</string>
+    <string name="accounting_reports_start_date">Data Inizio</string>
+    <string name="accounting_reports_end_date">Data Fine</string>
+    <string name="accounting_reports_select_date">Seleziona Data</string>
+    <string name="accounting_reports_load_data">Carica Dati</string>
+    <string name="accounting_reports_timeline">Timeline Transazioni</string>
+    <string name="accounting_reports_sent">Inviato</string>
+    <string name="accounting_reports_received">Ricevuto</string>
+    <string name="accounting_reports_export">Esporta Transazioni</string>
+    <string name="accounting_reports_exporting">Esportazione...</string>
+    <string name="accounting_reports_export_success">Esportazione completata con successo</string>
+    <string name="accounting_reports_export_error">Esportazione fallita</string>
+    <string name="accounting_reports_no_data">Nessuna transazione trovata per l\'intervallo di date selezionato</string>
+    <string name="accounting_reports_menu_title">Report Contabili</string>
 </resources>

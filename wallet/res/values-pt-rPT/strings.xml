@@ -536,4 +536,145 @@
   <string name="common_services">Serviços:</string>
   <string name="family_mode_set_pin_button">Definir PIN</string>
   <string name="common_sub_version">Sub Versão:</string>
+
+    <!-- Additional missing strings -->
+    <string name="family_mode_copy_key">Copiar Chave</string>
+    <string name="common_copy_address">Copiar Endereço</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="family_mode_edit_name">Editar Nome</string>
+    <string name="address_excluded_from_spending">Excluído dos gastos</string>
+    <string name="address_exclude_confirm_title">Excluir Endereço dos Gastos</string>
+    <string name="address_exclude_confirm_message">Isto impedirá que este endereço seja usado em pagamentos regulares e recorrentes. As moedas neste endereço serão reservadas e não incluídas no seu saldo disponível. Continuar?</string>
+    <string name="address_include_confirm_title">Incluir Endereço nos Gastos</string>
+    <string name="address_include_confirm_message">Isto permitirá que este endereço seja usado novamente em pagamentos regulares e recorrentes. As moedas neste endereço serão incluídas no seu saldo disponível. Continuar?</string>
+    <string name="address_excluded_balance">Saldo Reservado: %s</string>
+    
+    <!-- Accounting Reports -->
+    <string name="accounting_reports_title">Relatórios Contabilísticos</string>
+    <string name="accounting_reports_date_range">Intervalo de Datas</string>
+    <string name="accounting_reports_start_date">Data de Início</string>
+    <string name="accounting_reports_end_date">Data de Fim</string>
+    <string name="accounting_reports_select_date">Selecionar Data</string>
+    <string name="accounting_reports_load_data">Carregar Dados</string>
+    <string name="accounting_reports_timeline">Linha Temporal das Transações</string>
+    <string name="accounting_reports_sent">Enviado</string>
+    <string name="accounting_reports_received">Recebido</string>
+    <string name="accounting_reports_export">Exportar Transações</string>
+    <string name="accounting_reports_exporting">A exportar...</string>
+    <string name="accounting_reports_export_success">Exportação concluída com sucesso</string>
+    <string name="accounting_reports_export_error">Falha na exportação</string>
+    <string name="accounting_reports_no_data">Nenhuma transação encontrada para o intervalo de datas selecionado</string>
+    <string name="accounting_reports_menu_title">Relatórios Contabilísticos</string>
+
+    <!-- First Time Setup Dialog -->
+    <string name="first_time_setup_title">Bem-vindo à Carteira Dogecoin</string>
+    <string name="first_time_setup_welcome_title">Bem-vindo à Carteira Dogecoin!</string>
+    <string name="first_time_setup_welcome_message">Escolha como deseja configurar a sua carteira:</string>
+    <string name="first_time_setup_new_wallet_title">Nova Carteira</string>
+    <string name="first_time_setup_new_wallet_description">Criar uma nova carteira e gerar uma nova frase-semente</string>
+    <string name="first_time_setup_restore_wallet_title">Restaurar Carteira</string>
+    <string name="first_time_setup_restore_wallet_description">Restaurar uma carteira existente a partir de backup ou frase-semente</string>
+    <string name="first_time_setup_activate_child_title">Ativar Carteira Infantil</string>
+    <string name="first_time_setup_activate_child_description">Ativar uma carteira infantil para ensinar crianças sobre dinheiro</string>
+
+    <!-- New Wallet Backup Required -->
+    <string name="new_wallet_backup_required_title">Backup Obrigatório</string>
+    <string name="new_wallet_backup_required_message">Para sua segurança, deve criar um backup da sua nova carteira antes de continuar.</string>
+    <string name="new_wallet_backup_required_ok">Criar Backup</string>
+    <string name="new_wallet_backup_required_cancel">Cancelar</string>
+    <string name="new_wallet_backup_success">Backup criado com sucesso!</string>
+
+    <!-- Education Section -->
+    <string name="education_title">Educação</string>
+    <string name="education_menu_title">Educação</string>
+    <string name="education_welcome_title">Aprenda sobre Dogecoin e Blockchain</string>
+    <string name="education_welcome_subtitle">Tudo o que precisa de saber sobre Dogecoin, tecnologia blockchain e esta carteira</string>
+
+    <!-- Wallet Advantages -->
+    <string name="education_wallet_advantages_title">Por que esta Carteira Dogecoin?</string>
+    <string name="education_wallet_advantages_self_custody">Auto-custódia: Controla as suas chaves privadas, não um terceiro</string>
+    <string name="education_wallet_advantages_privacy">Privacidade: Nenhuma informação pessoal necessária, transações anónimas</string>
+    <string name="education_wallet_advantages_family_mode">Modo Família: Ensine crianças sobre dinheiro com acesso controlado</string>
+    <string name="education_wallet_advantages_offline">Capacidade Offline: Funciona sem internet para funções básicas usando RadioDoge</string>
+    <string name="education_wallet_advantages_open_source">Código Aberto: Código transparente que qualquer um pode verificar</string>
+
+    <!-- Dogecoin Advantages -->
+    <string name="education_dogecoin_advantages_title">Por que Dogecoin vs Dinheiro Tradicional?</string>
+    <string name="education_dogecoin_advantages_decentralized">Descentralizado: Nenhuma autoridade única o controla</string>
+    <string name="education_dogecoin_advantages_fast">Rápido: Transações confirmadas em minutos, não dias</string>
+    <string name="education_dogecoin_advantages_cheap">Barato: Taxas muito baixas comparadas aos bancos tradicionais</string>
+    <string name="education_dogecoin_advantages_global">Global: Funciona em qualquer lugar do mundo, 24/7</string>
+    <string name="education_dogecoin_advantages_transparent">Transparente: Todas as transações são públicas e verificáveis</string>
+
+    <!-- Blockchain Section -->
+    <string name="education_blockchain_title">O que é Blockchain?</string>
+    <string name="education_blockchain_what_is">Blockchain é um livro-razão digital distribuído que regista todas as transações</string>
+    <string name="education_blockchain_how_works">Cada bloco contém transações e é ligado ao bloco anterior, criando uma cadeia</string>
+    <string name="education_blockchain_immutable">Imutável: Uma vez registado, não pode ser alterado ou apagado</string>
+    <string name="education_blockchain_distributed">Distribuído: Milhares de computadores mantêm uma cópia da blockchain</string>
+    <string name="education_blockchain_secure">Seguro: Criptografia avançada protege todas as transações</string>
+
+    <!-- SPV vs Full Node -->
+    <string name="education_spv_vs_full_node_title">SPV vs Nó Completo</string>
+    <string name="education_spv_vs_full_node_spv">SPV (Simplified Payment Verification): Verifica apenas transações relevantes</string>
+    <string name="education_spv_vs_full_node_full">Nó Completo: Baixa e verifica toda a blockchain</string>
+    <string name="education_spv_vs_full_node_why_spv">Porquê SPV: Mais rápido, usa menos espaço e bateria no seu telefone</string>
+    <string name="education_spv_vs_full_node_trust">Confiança: SPV confia nos nós completos para verificação</string>
+    <string name="education_spv_vs_full_node_balance">Equilíbrio: SPV é perfeito para carteiras móveis</string>
+
+    <!-- Mining Section -->
+    <string name="education_mining_title">O que é Mineração?</string>
+    <string name="education_mining_what_is">Mineração é o processo de verificar transações e adicionar blocos à blockchain</string>
+    <string name="education_mining_how_works">Mineiros competem para resolver problemas matemáticos complexos</string>
+    <string name="education_mining_reward">Recompensa: Mineiros recebem Dogecoin por cada bloco minerado</string>
+    <string name="education_mining_energy">Energia: Mineração requer muita energia elétrica</string>
+    <string name="education_mining_network">Rede: Mineiros mantêm a rede Dogecoin segura e funcionando</string>
+
+    <!-- Addresses Section -->
+    <string name="education_addresses_title">O que são Endereços Dogecoin?</string>
+    <string name="education_addresses_what_is">Endereços são como números de conta bancária para receber Dogecoin</string>
+    <string name="education_addresses_how_works">Cada endereço é único e gerado a partir da sua chave privada</string>
+    <string name="education_addresses_sub_addresses">Sub-endereços: Carteiras infantis usam endereços derivados para privacidade</string>
+    <string name="education_addresses_new_addresses">Novos Endereços: Cada pagamento recebido usa um novo endereço</string>
+    <string name="education_addresses_privacy">Privacidade: Usar endereços diferentes melhora a privacidade</string>
+
+    <!-- Family Mode Section -->
+    <string name="education_family_mode_title">Modo Família</string>
+    <string name="education_family_mode_what_is">Modo Família permite que os pais controlem o acesso das crianças ao Dogecoin</string>
+    <string name="education_family_mode_how_works">Carteiras infantis são derivadas da carteira principal dos pais</string>
+    <string name="education_family_mode_benefits">Benefícios: Ensina crianças sobre dinheiro de forma segura</string>
+    <string name="education_family_mode_safety">Segurança: Os pais podem definir limites e monitorizar gastos</string>
+    <string name="education_family_mode_teaching">Ensino: Ferramenta educativa para aprender sobre criptomoedas</string>
+
+    <!-- RadioDoge Section -->
+    <string name="education_radiodoge_title">O que é RadioDoge?</string>
+    <string name="education_radiodoge_what_is">RadioDoge é uma forma revolucionária de enviar Dogecoin sem ligação à internet</string>
+    <string name="education_radiodoge_how_works">Utiliza ondas de rádio para transmitir transações a longas distâncias</string>
+    <string name="education_radiodoge_benefits">Benefícios: Funciona em áreas remotas, zonas de desastre e locais sem internet</string>
+    <string name="education_radiodoge_global">Alcance Global: Conecta com pessoas em todo o mundo, mesmo nas localizações mais remotas</string>
+    <string name="education_radiodoge_future">Futuro do Dinheiro: RadioDoge representa o futuro da comunicação descentralizada</string>
+
+    <!-- Dogecoin Philosophy Section -->
+    <string name="education_dogecoin_philosophy_title">A Filosofia Dogecoin</string>
+    <string name="education_dogecoin_philosophy_purpose">Propósito: Dogecoin não é sobre enriquecer, é sobre capacitar pessoas</string>
+    <string name="education_dogecoin_philosophy_money">Dinheiro Real: Projetado para ser usado como dinheiro convencional, não para especulação</string>
+    <string name="education_dogecoin_philosophy_unbanked">Apoio aos Não Bancarizados: Ajuda pessoas sem contas bancárias a aceder a serviços financeiros</string>
+    <string name="education_dogecoin_philosophy_global">Acesso Global: Proporciona liberdade financeira a pessoas em todo o mundo</string>
+    <string name="education_dogecoin_philosophy_community">Comunidade Primeiro: Construído pela comunidade, para a comunidade</string>
+
+    <!-- Security Section -->
+    <string name="education_security_title">Segurança</string>
+    <string name="education_security_private_keys">Chaves Privadas: Nunca partilhe as suas chaves privadas com ninguém</string>
+    <string name="education_security_backup">Backup: Sempre faça backup da sua carteira em local seguro</string>
+    <string name="education_security_biometric">Biometria: Use impressão digital ou reconhecimento facial quando disponível</string>
+    <string name="education_security_encryption">Criptografia: A sua carteira é criptografada com senha forte</string>
+    <string name="education_security_best_practices">Melhores Práticas: Mantenha o software atualizado e use senhas fortes</string>
+
+    <!-- Tips Section -->
+    <string name="education_tips_title">Dicas para Começar</string>
+    <string name="education_tips_start_small">Comece Pequeno: Comece com quantias pequenas para aprender como funciona</string>
+    <string name="education_tips_learn_gradually">Aprenda Gradualmente: Leve o seu tempo para entender cada funcionalidade</string>
+    <string name="education_tips_community">Comunidade: Junte-se às comunidades Dogecoin para aprender com outros</string>
+    <string name="education_tips_stay_updated">Mantenha-se Atualizado: Mantenha a sua carteira atualizada para segurança e novas funcionalidades</string>
+    <string name="education_tips_have_fun">Divirtam-se: Dogecoin é sobre divertir-se enquanto aprendem sobre o futuro do dinheiro!</string>
 </resources>

@@ -60,6 +60,7 @@ import de.schildbach.wallet.service.BlockchainService;
 import de.schildbach.wallet.ui.InputParser.BinaryInputParser;
 import de.schildbach.wallet.ui.InputParser.StringInputParser;
 import de.schildbach.wallet.ui.backup.BackupWalletActivity;
+import de.schildbach.wallet.ui.backup.BackupWalletDialogFragment;
 import de.schildbach.wallet.ui.backup.RestoreWalletDialogFragment;
 import de.schildbach.wallet.ui.monitor.NetworkMonitorActivity;
 import de.schildbach.wallet.ui.preference.PreferenceActivity;
@@ -69,6 +70,7 @@ import de.schildbach.wallet.ui.send.SweepWalletActivity;
 import de.schildbach.wallet.ui.DigitalSignatureActivity;
 import de.schildbach.wallet.ui.AccountingReportsActivity;
 import de.schildbach.wallet.ui.FamilyModeActivity;
+import de.schildbach.wallet.ui.FirstTimeSetupDialogFragment;
 import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.util.CrashReporter;
@@ -82,6 +84,8 @@ import org.bitcoinj.core.PrefixedChecksummedBytes;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.VerificationException;
 import org.bitcoinj.script.Script;
+
+import java.io.File;
 
 /**
  * @author Andreas Schildbach
@@ -157,6 +161,9 @@ public final class WalletActivity extends AbstractWalletActivity {
 
         OnFirstPreDraw.listen(contentView, viewModel);
         enterAnimation = buildEnterAnimation(contentView);
+        
+        // Check if this is first time setup
+        checkFirstTimeSetup();
 
         viewModel.walletEncrypted.observe(this, isEncrypted -> invalidateOptionsMenu());
         viewModel.walletLegacyFallback.observe(this, isLegacyFallback -> invalidateOptionsMenu());
@@ -650,6 +657,10 @@ public final class WalletActivity extends AbstractWalletActivity {
         } else if (itemId == R.id.wallet_options_technical_notes) {
             viewModel.showHelpDialog.setValue(new Event<>(R.string.help_technical_notes));
             return true;
+        } else if (itemId == R.id.wallet_options_education) {
+            Intent intent = new Intent(this, EducationActivity.class);
+            startActivity(intent);
+            return true;
         } else if (itemId == R.id.wallet_options_help) {
             // Open the website documentation instead of showing help dialog
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://dogecoinwallet.org/#documentation"));
@@ -743,6 +754,75 @@ public final class WalletActivity extends AbstractWalletActivity {
                 final int type) {
             child.setTranslationY(Floats.constrainToRange(child.getTranslationY() - dyConsumed, -child.getHeight(), 0));
         }
+    }
+    
+    /**
+     * Check if this is the first time the app is launched and show setup dialog
+     */
+    private void checkFirstTimeSetup() {
+        // Check if wallet file exists - if not, this is first time setup
+        final File walletFile = getFileStreamPath(Constants.Files.WALLET_FILENAME_PROTOBUF);
+        if (!walletFile.exists()) {
+            FirstTimeSetupDialogFragment.show(getSupportFragmentManager(), new FirstTimeSetupDialogFragment.OnSetupChoiceListener() {
+                @Override
+                public void onNewWallet() {
+                    // Create a new wallet and force backup
+                    // The wallet will be created automatically when first accessed
+                    // After creation, we'll force the user to create a backup
+                    showNewWalletBackupDialog();
+                }
+                
+                @Override
+                public void onRestoreWallet() {
+                    // Show restore wallet dialog
+                    RestoreWalletDialogFragment.showPick(getSupportFragmentManager());
+                }
+                
+                @Override
+                public void onActivateChildWallet() {
+                    // Navigate to Family Mode to activate child wallet
+                    final Intent intent = new Intent(WalletActivity.this, FamilyModeActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    private void showNewWalletBackupDialog() {
+        // Show a dialog explaining that backup is required for new wallets
+        final DialogBuilder builder = new DialogBuilder(this);
+        builder.setTitle(R.string.new_wallet_backup_required_title);
+        builder.setMessage(R.string.new_wallet_backup_required_message);
+        builder.setPositiveButton(R.string.new_wallet_backup_required_ok, (dialog, which) -> {
+            // Start the backup process
+            startBackupProcess();
+        });
+        builder.setNegativeButton(R.string.new_wallet_backup_required_cancel, (dialog, which) -> {
+            // User cancelled - show the first time setup dialog again
+            checkFirstTimeSetup();
+        });
+        builder.setCancelable(false); // Force user to make a choice
+        builder.show();
+    }
+
+    private void startBackupProcess() {
+        // Wait for wallet to be created, then show backup dialog
+        // We'll use a delayed approach to ensure the wallet is ready
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+            // Show the backup dialog
+            BackupWalletDialogFragment.show(getSupportFragmentManager(), new BackupWalletDialogFragment.OnBackupCompleteListener() {
+                @Override
+                public void onBackupComplete(boolean success) {
+                    if (success) {
+                        // Backup completed successfully
+                        Toast.makeText(WalletActivity.this, R.string.new_wallet_backup_success, Toast.LENGTH_LONG).show();
+                    } else {
+                        // Backup failed or was cancelled - show the backup dialog again
+                        showNewWalletBackupDialog();
+                    }
+                }
+            });
+        }, 1000); // Wait 1 second for wallet to be created
     }
 
 }
