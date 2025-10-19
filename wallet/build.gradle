@@ -60,7 +60,7 @@ android {
         applicationId 'org.dogecoin.wallet'
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 64
+        versionCode 71
         versionName '1.0'
         vectorDrawables.useSupportLibrary = true
 
@@ -98,7 +98,7 @@ android {
         }
         release {
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             crunchPngs true
             signingConfig signingConfigs.release
             // Enable native debug symbols

@@ -106,6 +106,9 @@ public final class WalletActivity extends AbstractWalletActivity {
 
     private AbstractWalletActivityViewModel walletActivityViewModel;
     private WalletActivityViewModel viewModel;
+    
+    // Flag to track if app was minimized and needs biometric auth on resume
+    private boolean wasMinimized = false;
 
     private static final int REQUEST_CODE_SCAN = 0;
     private static final int REQUEST_CODE_SCAN_CHILD_ACTIVATION = 1001;
@@ -248,8 +251,9 @@ public final class WalletActivity extends AbstractWalletActivity {
     protected void onResume() {
         super.onResume();
 
-        // Check biometric authentication if required
-        if (BiometricHelper.isBiometricRequired(this)) {
+        // Check biometric authentication if required or if app was minimized
+        if (BiometricHelper.isBiometricRequired(this) || (wasMinimized && BiometricHelper.isBiometricEnabled(this) && BiometricHelper.isBiometricAvailable(this))) {
+            wasMinimized = false; // Reset the flag
             showBiometricAuthentication();
         } else {
             // User is already authenticated, biometric is disabled, or internal navigation
@@ -277,7 +281,10 @@ public final class WalletActivity extends AbstractWalletActivity {
         if (radiodogeStatusChecker != null) {
             radiodogeStatusChecker.stopChecking();
         }
-
+        
+        // Mark that the app was minimized
+        wasMinimized = true;
+        
         super.onPause();
     }
 

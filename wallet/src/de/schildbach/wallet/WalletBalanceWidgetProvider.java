@@ -195,16 +195,22 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
      * Create a PendingIntent that will show biometric authentication before opening the target activity
      */
     private static PendingIntent createBiometricPendingIntent(Context context, int requestCode, Class<?> targetActivity) {
-        // Check if biometric is enabled and available
+        // Always go through biometric authentication if enabled and available
+        // This ensures widget always requires fresh authentication
         if (BiometricHelper.isBiometricEnabled(context) && BiometricHelper.isBiometricAvailable(context)) {
             // Create intent for BiometricAuthActivity
             Intent biometricIntent = new Intent(context, BiometricAuthActivity.class);
             biometricIntent.putExtra(BiometricAuthActivity.EXTRA_TARGET_ACTIVITY, targetActivity.getName());
-            return PendingIntent.getActivity(context, requestCode, biometricIntent, PendingIntent.FLAG_IMMUTABLE);
+            // Add flags to ensure fresh intent and clear task to force biometric auth
+            biometricIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            return PendingIntent.getActivity(context, requestCode, biometricIntent, 
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         } else {
             // Biometric not enabled or available, go directly to target activity
             Intent directIntent = new Intent(context, targetActivity);
-            return PendingIntent.getActivity(context, requestCode, directIntent, PendingIntent.FLAG_IMMUTABLE);
+            directIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            return PendingIntent.getActivity(context, requestCode, directIntent, 
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         }
     }
 }

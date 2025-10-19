@@ -46,6 +46,7 @@
     <!-- Additional SEO Meta Tags -->
     <meta name="application-name" content="Dogecoin Wallet">
     <meta name="apple-mobile-web-app-title" content="Dogecoin Wallet">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
@@ -66,6 +67,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="images/dogecoin.svg">
     <link rel="apple-touch-icon" href="images/dogecoin.svg">
+    
+    <!-- Simple Language Selector -->
+    <script type="text/javascript">
+        // Simple language detection and fallback
+        function detectBrowserLanguage() {
+            const lang = navigator.language || navigator.userLanguage;
+            return lang.split('-')[0]; // Get language code (e.g., 'en' from 'en-US')
+        }
+        
+        function showBrowserTranslationInstructions() {
+            const userLang = detectBrowserLanguage();
+            const instructions = {
+                'en': 'Right-click → "Translate to English"',
+                'es': 'Right-click → "Traducir al español"',
+                'fr': 'Right-click → "Traduire en français"',
+                'de': 'Right-click → "Auf Deutsch übersetzen"',
+                'pt': 'Right-click → "Traduzir para português"',
+                'zh': 'Right-click → "翻译成中文"',
+                'ja': 'Right-click → "日本語に翻訳"',
+                'ko': 'Right-click → "한국어로 번역"',
+                'ru': 'Right-click → "Перевести на русский"',
+                'ar': 'Right-click → "ترجمة إلى العربية"'
+            };
+            
+            return instructions[userLang] || instructions['en'];
+        }
+    </script>
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -117,6 +145,15 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#documentation" class="nav-link">Docs</a>
                 <a href="#contribute" class="nav-link">Contribute</a>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-selector-btn" id="language-selector-btn" onclick="showTranslationInstructions()">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Translate</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>

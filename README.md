@@ -19,22 +19,34 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-### 🌍 Complete Internationalization
-- **11 Major Languages**: Spanish, French, German, Italian, Portuguese (BR/PT), Russian, Chinese, Japanese, Korean, Dutch
-- **242 New Translations**: Added missing strings for Family Mode, Address Management, and Accounting Reports
-- **Portuguese Variants**: Both Brazilian and European Portuguese fully supported
-- **Cultural Adaptation**: Proper terminology and phrasing for each language region
-- **Complete Feature Coverage**: All new features fully translated across all supported languages
+## 🚀 Latest Updates - Version 71
 
-### 🎨 Website Features & Improvements
-- **Modern Dark Theme**: Beautiful dark mode design with Dogecoin branding and colors
-- **APK Download Integration**: Direct APK download with fun Doge meme animations
-- **Interactive Elements**: Engaging user experience with modal dialogs and animations
-- **Responsive Design**: Optimized for all devices and screen sizes
-- **Fun Animations**: "Much Wow", "Such Wallet", "So OpenSource" and other Doge meme words pop up when downloading APK
-- **Professional Layout**: Clean, modern interface with proper typography and spacing
-- **Mobile Optimized**: Perfect experience on mobile devices with touch-friendly interactions
+### 🔧 Technical Improvements
+- **Minification Enabled**: Full code and resource minification for smaller APK size
+- **Resource Shrinking**: Unused resources automatically removed from final build
+- **ProGuard Optimization**: Enhanced code obfuscation and optimization
+- **Build Optimization**: Improved build process with better error handling
+- **Performance Enhancements**: Faster app startup and better memory usage
 
+### 🐛 Bug Fixes
+- **Biometric Authentication**: Fixed widget launch requiring fresh authentication
+- **Crash Prevention**: Enhanced error handling in AlertDialogsFragment
+- **Memory Management**: Improved secure memory clearing for sensitive data
+- **Widget Stability**: Better handling of widget state changes
+- **Navigation Issues**: Fixed various navigation and state management bugs
+
+### 🔒 Security Enhancements
+- **Enhanced Biometric Security**: More robust authentication flow
+- **Secure Memory Handling**: Better cleanup of sensitive data
+- **Improved Key Management**: Enhanced security for wallet operations
+- **Authentication Flow**: More reliable biometric authentication across all entry points
+
+### 📱 App Features
+- **Family Mode**: Complete implementation with child wallet management
+- **Address Management**: Enhanced address generation and management
+- **Accounting Reports**: Comprehensive transaction reporting
+- **RadioDoge Integration**: Offline transaction capabilities
+- **Digital Signing**: Advanced document signing features
 
 This project contains several sub-projects:
 

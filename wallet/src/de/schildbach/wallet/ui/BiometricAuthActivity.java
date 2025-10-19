@@ -52,21 +52,31 @@ public class BiometricAuthActivity extends FragmentActivity {
         
         mainHandler = new Handler(Looper.getMainLooper());
         
+        // Always clear authentication state when launched from widget
+        // This ensures fresh authentication is required
+        BiometricHelper.setAuthenticated(this, false);
+        log.info("BiometricAuthActivity: Cleared authentication state for fresh auth");
+        
         // Check if biometric is enabled and required
         if (!BiometricHelper.isBiometricEnabled(this)) {
+            log.info("BiometricAuthActivity: Biometric not enabled, proceeding directly");
             // Biometric not enabled, proceed directly to target
             proceedToTarget();
             return;
         }
         
         if (!BiometricHelper.isBiometricAvailable(this)) {
+            log.info("BiometricAuthActivity: Biometric not available, proceeding directly");
             // Biometric not available, proceed directly to target
             proceedToTarget();
             return;
         }
         
-        // Show biometric authentication
-        showBiometricAuthentication();
+        log.info("BiometricAuthActivity: Showing biometric authentication");
+        // Add a small delay to ensure authentication state is properly cleared
+        mainHandler.postDelayed(() -> {
+            showBiometricAuthentication();
+        }, 100);
     }
     
     private void showBiometricAuthentication() {
@@ -74,6 +84,7 @@ public class BiometricAuthActivity extends FragmentActivity {
                 .setTitle(getString(R.string.biometric_auth_title))
                 .setSubtitle(getString(R.string.biometric_auth_subtitle))
                 .setNegativeButtonText(getString(R.string.biometric_auth_cancel))
+                .setConfirmationRequired(true) // Force confirmation
                 .build();
         
         BiometricPrompt biometricPrompt = new BiometricPrompt(this, 
@@ -114,6 +125,7 @@ public class BiometricAuthActivity extends FragmentActivity {
         Intent targetIntent = getIntent().getParcelableExtra(EXTRA_TARGET_INTENT);
         if (targetIntent != null) {
             // Use the provided intent
+            targetIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(targetIntent);
         } else {
             // Use the target activity class name
@@ -128,6 +140,7 @@ public class BiometricAuthActivity extends FragmentActivity {
                 try {
                     Class<?> targetClass = Class.forName(targetActivity);
                     Intent intent = new Intent(this, targetClass);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } catch (ClassNotFoundException e) {
                     log.error("Target activity class not found: {}", targetActivity, e);
@@ -135,6 +148,7 @@ public class BiometricAuthActivity extends FragmentActivity {
             } else {
                 // No target specified, go to main wallet activity
                 Intent intent = new Intent(this, WalletActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         }

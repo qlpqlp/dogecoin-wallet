@@ -91,17 +91,29 @@ public class AlertDialogsFragment extends Fragment {
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        this.activity = (AbstractWalletActivity) context;
-        this.application = activity.getWalletApplication();
         
         // Add null check to prevent NullPointerException
-        if (activity != null) {
-            this.packageManager = activity.getPackageManager();
-        } else {
+        if (context == null) {
+            return;
+        }
+        
+        try {
+            this.activity = (AbstractWalletActivity) context;
+            if (activity != null) {
+                this.application = activity.getWalletApplication();
+                this.packageManager = activity.getPackageManager();
+            } else {
+                this.packageManager = context.getPackageManager();
+            }
+        } catch (ClassCastException e) {
+            // Context is not an AbstractWalletActivity, handle gracefully
             this.packageManager = context.getPackageManager();
         }
         
-        this.installer = Installer.from(application);
+        // Only create installer if we have a valid application
+        if (application != null) {
+            this.installer = Installer.from(application);
+        }
     }
 
     @Override

@@ -8,12 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="../images/dogecoin.svg">
-    <link rel="apple-touch-icon" href="../images/dogecoin.svg">    
+    <link rel="apple-touch-icon" href="../images/dogecoin.svg">
+    
+    <!-- Shared Components -->
+    <script src="../shared-components.js"></script>    
     <style>
         .doc-content {
             max-width: 800px;
             margin: 0 auto;
             padding: 50px;
+            padding-top: 100px; /* Space for fixed header */
             line-height: 1.8;
             background: var(--bg-color);
             color: var(--text-color);
@@ -146,8 +150,10 @@
     </style>
 </head>
 <body>
+    <!-- Shared header will be loaded here by shared-components.js -->
+    <div id="shared-header"></div>
+    
     <div class="doc-content">
-        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
         
         <h1>Disclaimer</h1>
         <p><strong>Last updated:</strong> December 2024</p>
@@ -244,5 +250,8 @@
             <strong><i class="fas fa-paw"></i> Final Reminder:</strong> Much responsibility, very important! Always verify your transactions, keep your private keys safe, and use this software at your own risk. Such disclaimer, very legal!
         </div>
     </div>
+    
+    <!-- Shared footer will be loaded here by shared-components.js -->
+    <div id="shared-footer"></div>
 </body>
 </html>

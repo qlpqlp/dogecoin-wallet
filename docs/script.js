@@ -19,6 +19,7 @@ function initWebsite() {
     initHeroVideo();
     initRadioDogeTooltip();
     initApkModal();
+    initSimpleLanguageSelector();
 }
 
 // Mobile menu functionality
@@ -579,3 +580,137 @@ function startDogeWordsAnimation() {
         }, i * (duration / wordCount));
     }
 }
+
+// Simple Language Selector functionality
+function initSimpleLanguageSelector() {
+    // Initialize the language selector
+    const languageBtn = document.getElementById('language-selector-btn');
+    if (languageBtn) {
+        // Add hover effects
+        languageBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-1px)';
+        });
+        
+        languageBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    }
+}
+
+// Show translation instructions
+function showTranslationInstructions() {
+    showTranslationNotice('browser');
+}
+
+// Show translation notice when language is changed
+function showTranslationNotice(type = 'browser') {
+    // Remove any existing notices
+    const existingNotice = document.querySelector('.translation-notice');
+    if (existingNotice) {
+        existingNotice.remove();
+    }
+    
+    // Create a temporary notification
+    const notice = document.createElement('div');
+    notice.className = 'translation-notice';
+    notice.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: var(--bg-card);
+        color: var(--text-color);
+        padding: 16px 20px;
+        border-radius: var(--border-radius-small);
+        border: 1px solid var(--primary-color);
+        box-shadow: var(--shadow);
+        z-index: 1002;
+        font-size: 14px;
+        max-width: 300px;
+        backdrop-filter: blur(20px);
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    const instructions = window.showBrowserTranslationInstructions ? window.showBrowserTranslationInstructions() : 'Right-click → "Translate to [Language]"';
+    
+    const content = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-globe-americas" style="font-size: 20px; color: var(--primary-color);"></i>
+            <div>
+                <div style="font-weight: 600; color: var(--primary-color);">Browser Translation</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">
+                    ${instructions}
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                    <i class="fas fa-check-circle" style="color: var(--accent-color); margin-right: 4px;"></i>
+                    Works in Chrome, Firefox, Safari, Edge!
+                </div>
+            </div>
+        </div>
+    `;
+    
+    notice.innerHTML = content;
+    document.body.appendChild(notice);
+    
+    // Auto remove after 6 seconds (longer for instructions)
+    setTimeout(() => {
+        notice.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (notice.parentNode) {
+                notice.parentNode.removeChild(notice);
+            }
+        }, 300);
+    }, 6000);
+}
+
+// Add CSS animations for the notice
+const translationStyle = document.createElement('style');
+translationStyle.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+    
+    /* Microsoft Translator customizations */
+    .custom-translate-widget {
+        font-family: 'Comic Neue', sans-serif !important;
+    }
+    
+    /* Style the translator widget */
+    .microsoft-translator-widget {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        color: #ffffff !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        backdrop-filter: blur(10px) !important;
+        cursor: pointer !important;
+    }
+    
+    .microsoft-translator-widget:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: #ffc107 !important;
+        color: #ffc107 !important;
+        transform: translateY(-1px) !important;
+    }
+`;
+document.head.appendChild(translationStyle);
