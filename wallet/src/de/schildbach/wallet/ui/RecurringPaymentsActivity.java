@@ -333,15 +333,12 @@ public class RecurringPaymentsActivity extends AbstractWalletActivity {
         Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
         Button btnSave = dialogView.findViewById(R.id.btn_save);
         
-        // Setup destination address spinner (from address book)
-        setupDestinationAddressSpinner(spinnerDestinationAddress);
-        
         // Pre-populate fields with existing payment data
         editReference.setText(payment.getReference() != null ? payment.getReference() : "");
         editAmount.setText(String.valueOf(payment.getAmount()));
         checkboxRecurring.setChecked(payment.isRecurringMonthly());
         
-        // Find and select the current destination address in the spinner
+        // Setup destination address spinner with current selection
         setupDestinationAddressSpinnerWithSelection(spinnerDestinationAddress, payment.getDestinationAddress());
         
         // Setup date and time pickers

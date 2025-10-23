@@ -6,6 +6,7 @@
 
 // Load shared components when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing shared components...');
     loadSharedComponents();
 });
 
@@ -40,7 +41,7 @@ function loadHeader() {
     }
     
     // Load header from index.html
-    fetch('../index.html')
+    fetch('index.html')
         .then(response => response.text())
         .then(html => {
             const parser = new DOMParser();
@@ -48,16 +49,22 @@ function loadHeader() {
             const nav = doc.querySelector('nav.navbar');
             
             if (nav) {
+                console.log('Header loaded successfully');
                 headerContainer.innerHTML = nav.outerHTML;
                 
                 // Fix relative paths in the loaded header
                 fixRelativePaths(headerContainer);
                 
-                // Initialize mobile menu for the loaded header
-                initMobileMenu();
+                // Initialize mobile menu for the loaded header with delay
+                setTimeout(() => {
+                    console.log('Initializing mobile menu after header load...');
+                    initMobileMenu();
+                }, 100);
                 
                 // Initialize language selector for the loaded header
                 initSimpleLanguageSelector();
+            } else {
+                console.log('Header not found in index.html');
             }
         })
         .catch(error => {
@@ -77,7 +84,7 @@ function loadFooter() {
     }
     
     // Load footer from index.html
-    fetch('../index.html')
+    fetch('index.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -121,13 +128,8 @@ function fixRelativePaths(container) {
         
         // Fix relative paths based on current page location
         if (href.startsWith('../')) {
-            // For docs/docs/ pages, we need to go up two levels
-            if (window.location.pathname.includes('/docs/docs/')) {
-                link.href = href.replace('../', '../../');
-            } else {
-                // For docs/ pages, go up one level
-                link.href = href.replace('../', '');
-            }
+            // For docs/ pages, go up one level
+            link.href = href.replace('../', '');
         }
         
         // Fix internal links to docs pages
@@ -138,20 +140,17 @@ function fixRelativePaths(container) {
             href.includes('disclaimer.html') || 
             href.includes('license.html')) {
             
-            // If we're in docs/docs/, add ../ prefix
-            if (window.location.pathname.includes('/docs/docs/')) {
-                if (!href.startsWith('../')) {
-                    link.href = '../' + href;
-                }
+            // All files are now in the same directory, so links should be relative
+            if (!href.startsWith('../') && !href.startsWith('/') && !href.startsWith('http')) {
+                link.href = href;
             }
         }
         
         // Fix home page link
         if (href.includes('index.html')) {
-            if (window.location.pathname.includes('/docs/docs/')) {
-                link.href = '../../index.html';
-            } else if (window.location.pathname.includes('/docs/')) {
-                link.href = '../index.html';
+            // All files are now in the same directory, so index.html is just index.html
+            if (!href.startsWith('../') && !href.startsWith('/') && !href.startsWith('http')) {
+                link.href = href;
             }
         }
     });
@@ -167,8 +166,8 @@ function createFallbackHeader() {
     return `
         <nav class="navbar">
             <div class="nav-container">
-                <a href="../index.html" class="nav-logo">
-                    <img src="../images/dogecoin.svg" alt="Dogecoin Wallet" class="logo-img">
+                <a href="index.html" class="nav-logo">
+                    <img src="images/dogecoin.svg" alt="Dogecoin Wallet" class="logo-img">
                     <span class="logo-text">Dogecoin Wallet</span>
                 </a>
                 <div class="nav-toggle" id="mobile-menu">
@@ -177,9 +176,9 @@ function createFallbackHeader() {
                     <span class="bar"></span>
                 </div>
                 <div class="nav-menu" id="nav-menu">
-                    <a href="../index.html#features" class="nav-link">Features</a>
-                    <a href="../index.html#documentation" class="nav-link">Docs</a>
-                    <a href="../index.html#contribute" class="nav-link">Contribute</a>
+                    <a href="index.html#features" class="nav-link">Features</a>
+                    <a href="index.html#documentation" class="nav-link">Docs</a>
+                    <a href="index.html#contribute" class="nav-link">Contribute</a>
                     <div class="language-selector">
                         <button class="language-selector-btn" id="language-selector-btn" onclick="showTranslationInstructions()">
                             <i class="fas fa-globe-americas"></i>
@@ -194,11 +193,6 @@ function createFallbackHeader() {
 }
 
 function createFallbackFooter() {
-    // Determine the correct path prefix based on current location
-    const isInDocsDocs = window.location.pathname.includes('/docs/docs/');
-    const pathPrefix = isInDocsDocs ? '../' : '';
-    const homePrefix = isInDocsDocs ? '../../' : '../';
-    
     return `
         <footer class="footer">
             <div class="container">
@@ -218,18 +212,18 @@ function createFallbackFooter() {
                     <div class="footer-section">
                         <h4>Quick Links</h4>
                         <ul>
-                            <li><a href="${homePrefix}index.html">Home</a></li>
-                            <li><a href="${pathPrefix}user-guide.html">User Guide</a></li>
-                            <li><a href="${pathPrefix}developer-guide.html">Developer Guide</a></li>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="user-guide.html">User Guide</a></li>
+                            <li><a href="developer-guide.html">Developer Guide</a></li>
                         </ul>
                     </div>
                     <div class="footer-section">
                         <h4>Legal</h4>
                         <ul>
-                            <li><a href="${pathPrefix}privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="${pathPrefix}terms-of-service.html">Terms of Service</a></li>
-                            <li><a href="${pathPrefix}disclaimer.html">Disclaimer</a></li>
-                            <li><a href="${pathPrefix}license.html">License</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="disclaimer.html">Disclaimer</a></li>
+                            <li><a href="license.html">License</a></li>
                         </ul>
                     </div>
                 </div>
@@ -241,36 +235,61 @@ function createFallbackFooter() {
     `;
 }
 
-function initSharedFunctionality() {
-    // Initialize mobile menu functionality
-    function initMobileMenu() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
+// Initialize mobile menu functionality
+function initMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (mobileMenu && navMenu) {
+        // Remove any existing event listeners by cloning the element
+        const newMobileMenu = mobileMenu.cloneNode(true);
+        mobileMenu.parentNode.replaceChild(newMobileMenu, mobileMenu);
         
-        if (mobileMenu && navMenu) {
-            mobileMenu.addEventListener('click', function() {
-                mobileMenu.classList.toggle('active');
-                navMenu.classList.toggle('active');
+        // Get the new reference
+        const freshMobileMenu = document.getElementById('mobile-menu');
+        const freshNavMenu = document.getElementById('nav-menu');
+        
+        if (freshMobileMenu && freshNavMenu) {
+            freshMobileMenu.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                freshMobileMenu.classList.toggle('active');
+                freshNavMenu.classList.toggle('active');
+                console.log('Mobile menu toggled');
             });
             
             // Close menu when clicking on a link
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    navMenu.classList.remove('active');
+                    freshMobileMenu.classList.remove('active');
+                    freshNavMenu.classList.remove('active');
+                    console.log('Mobile menu closed via link click');
                 });
             });
             
             // Close menu when clicking outside
             document.addEventListener('click', function(e) {
-                if (!mobileMenu.contains(e.target) && !navMenu.contains(e.target)) {
-                    mobileMenu.classList.remove('active');
-                    navMenu.classList.remove('active');
+                if (!freshMobileMenu.contains(e.target) && !freshNavMenu.contains(e.target)) {
+                    freshMobileMenu.classList.remove('active');
+                    freshNavMenu.classList.remove('active');
                 }
             });
+            
+            console.log('Mobile menu initialized successfully');
         }
+    } else {
+        console.log('Mobile menu elements not found, retrying...');
+        // Retry after a short delay
+        setTimeout(() => {
+            initMobileMenu();
+        }, 500);
     }
+}
+
+function initSharedFunctionality() {
+    // Initialize rocket to top functionality
+    initRocketToTop();
     
     // Initialize language selector functionality
     function initSimpleLanguageSelector() {
@@ -403,3 +422,209 @@ translationStyle.textContent = `
     }
 `;
 document.head.appendChild(translationStyle);
+
+// Add DOGE smoke trail animation CSS
+const dogeSmokeStyle = document.createElement('style');
+dogeSmokeStyle.textContent = `
+    .doge-words-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999;
+    }
+    
+    .doge-smoke-word {
+        position: fixed;
+        font-family: 'Comic Neue', cursive;
+        font-weight: bold;
+        pointer-events: none;
+        z-index: 1000;
+        animation: dogeSmokeTrail 2s ease-out forwards;
+    }
+    
+    @keyframes dogeSmokeTrail {
+        0% {
+            opacity: 1;
+            transform: scale(1) rotate(var(--rotation, 0deg)) translateY(0px) translateX(0px);
+            filter: blur(0px);
+        }
+        20% {
+            opacity: 0.9;
+            transform: scale(1.1) rotate(calc(var(--rotation, 0deg) + 5deg)) translateY(-10px) translateX(var(--drift, 0px));
+            filter: blur(0.5px);
+        }
+        40% {
+            opacity: 0.7;
+            transform: scale(1.2) rotate(calc(var(--rotation, 0deg) + 10deg)) translateY(-20px) translateX(calc(var(--drift, 0px) * 1.5));
+            filter: blur(1px);
+        }
+        60% {
+            opacity: 0.5;
+            transform: scale(1.3) rotate(calc(var(--rotation, 0deg) + 15deg)) translateY(-30px) translateX(calc(var(--drift, 0px) * 2));
+            filter: blur(1.5px);
+        }
+        80% {
+            opacity: 0.3;
+            transform: scale(1.4) rotate(calc(var(--rotation, 0deg) + 20deg)) translateY(-40px) translateX(calc(var(--drift, 0px) * 2.5));
+            filter: blur(2px);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(1.5) rotate(calc(var(--rotation, 0deg) + 25deg)) translateY(-50px) translateX(calc(var(--drift, 0px) * 3));
+            filter: blur(3px);
+        }
+    }
+`;
+document.head.appendChild(dogeSmokeStyle);
+
+// Add rocket to top functionality
+function initRocketToTop() {
+    // Create rocket button if it doesn't exist
+    let rocketButton = document.getElementById('rocketToTop');
+    if (!rocketButton) {
+        rocketButton = document.createElement('button');
+        rocketButton.id = 'rocketToTop';
+        rocketButton.className = 'rocket-to-top';
+        rocketButton.title = 'Back to Top';
+        rocketButton.innerHTML = `
+            <div class="rocket">
+                <div class="rocket-body">
+                    <div class="body"></div>
+                    <div class="fin fin-left"></div>
+                    <div class="fin fin-right"></div>
+                    <div class="window"></div>
+                </div>
+                <div class="exhaust-flame"></div>
+                <ul class="exhaust-fumes">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <ul class="star">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        `;
+        document.body.appendChild(rocketButton);
+    }
+    
+    // Create DOGE words container if it doesn't exist
+    let dogeWordsContainer = document.getElementById('dogeWordsContainer');
+    if (!dogeWordsContainer) {
+        dogeWordsContainer = document.createElement('div');
+        dogeWordsContainer.id = 'dogeWordsContainer';
+        dogeWordsContainer.className = 'doge-words-container';
+        document.body.appendChild(dogeWordsContainer);
+    }
+    
+    // Show/hide rocket button based on scroll position
+    function toggleRocketButton() {
+        if (window.pageYOffset > 300) {
+            rocketButton.classList.add('show');
+        } else {
+            rocketButton.classList.remove('show');
+        }
+    }
+    
+    // Smooth scroll to top when rocket is clicked
+    rocketButton.addEventListener('click', function() {
+        // Add launching class for animation
+        rocketButton.classList.add('launching');
+        
+        // Create DOGE smoke animation
+        createDogeSmokeAnimation();
+        
+        // Smooth scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Remove launching class after animation
+        setTimeout(() => {
+            rocketButton.classList.remove('launching');
+        }, 2000);
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', toggleRocketButton);
+    
+    // Initial check
+    toggleRocketButton();
+}
+
+// Create DOGE smoke animation
+function createDogeSmokeAnimation() {
+    const container = document.getElementById('dogeWordsContainer');
+    if (!container) return;
+    
+    // Clear previous animations
+    container.innerHTML = '';
+    
+    // Create multiple DOGE words
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            createDogeSmoke(container);
+        }, i * 100);
+    }
+}
+
+// Create individual DOGE smoke word
+function createDogeSmoke(container) {
+    const dogeWord = document.createElement('div');
+    dogeWord.className = 'doge-smoke-word';
+    dogeWord.textContent = 'DOGE';
+    
+    // Random positioning around rocket
+    const rocketRect = document.getElementById('rocketToTop').getBoundingClientRect();
+    const centerX = rocketRect.left + rocketRect.width / 2;
+    const centerY = rocketRect.top + rocketRect.height / 2;
+    
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 50 + Math.random() * 100;
+    const x = centerX + Math.cos(angle) * distance;
+    const y = centerY + Math.sin(angle) * distance;
+    
+    dogeWord.style.left = x + 'px';
+    dogeWord.style.top = y + 'px';
+    dogeWord.style.fontSize = (20 + Math.random() * 15) + 'px';
+    dogeWord.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    dogeWord.style.position = 'fixed';
+    dogeWord.style.pointerEvents = 'none';
+    dogeWord.style.zIndex = '1000';
+    dogeWord.style.fontWeight = 'bold';
+    dogeWord.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+    dogeWord.style.animation = 'dogeSmokeTrail 2s ease-out forwards';
+    
+    // Random drift and rotation
+    const drift = (Math.random() - 0.5) * 40;
+    const rotation = (Math.random() - 0.5) * 30;
+    dogeWord.style.setProperty('--drift', drift + 'px');
+    dogeWord.style.setProperty('--rotation', rotation + 'deg');
+    
+    container.appendChild(dogeWord);
+    
+    // Remove after animation
+    setTimeout(() => {
+        if (dogeWord.parentNode) {
+            dogeWord.parentNode.removeChild(dogeWord);
+        }
+    }, 2000);
+}

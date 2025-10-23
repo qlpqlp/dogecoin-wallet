@@ -88,7 +88,7 @@ public class BiometricHelper {
     }
 
     /**
-     * Check if user is currently authenticated (within session timeout)
+     * Check if user is currently authenticated (session persists until app is paused/minimized)
      */
     public static boolean isAuthenticated(Context context) {
         if (!isBiometricEnabled(context)) {
@@ -97,15 +97,9 @@ public class BiometricHelper {
         
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         boolean authenticated = prefs.getBoolean(KEY_BIOMETRIC_AUTHENTICATED, false);
-        long sessionTime = prefs.getLong(KEY_BIOMETRIC_SESSION_TIME, 0);
-        long currentTime = System.currentTimeMillis();
         
-        // Check if session has expired
-        if (authenticated && (currentTime - sessionTime) > SESSION_TIMEOUT) {
-            setAuthenticated(context, false);
-            return false;
-        }
-        
+        // Session persists until explicitly cleared on app pause/minimize
+        // No time-based timeout - authentication stays active until app lifecycle changes
         return authenticated;
     }
 
@@ -128,6 +122,7 @@ public class BiometricHelper {
     public static boolean isBiometricRequired(Context context) {
         return isBiometricAvailable(context) && isBiometricEnabled(context) && !isAuthenticated(context);
     }
+    
 
     /**
      * Show biometric authentication prompt

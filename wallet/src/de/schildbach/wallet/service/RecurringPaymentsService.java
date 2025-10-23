@@ -26,6 +26,8 @@ import java.util.List;
 import com.google.common.util.concurrent.ListenableFuture;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.WalletApplication;
+import de.schildbach.wallet.service.BlockchainService;
+import de.schildbach.wallet.ui.AbstractWalletActivityViewModel;
 import de.schildbach.wallet.util.ExcludedAddressHelper;
 import de.schildbach.wallet.data.PaymentIntent;
 import de.schildbach.wallet.data.PaymentIntent.Standard;
@@ -42,7 +44,7 @@ public class RecurringPaymentsService extends JobService {
     private static final Logger log = LoggerFactory.getLogger(RecurringPaymentsService.class);
     
     private static final int JOB_ID = 1001; // Unique job ID for recurring payments
-    private static final long CHECK_INTERVAL = DateUtils.MINUTE_IN_MILLIS; // Check every minute
+    private static final long CHECK_INTERVAL = 2 * DateUtils.MINUTE_IN_MILLIS; // Check every 2 minutes for better reliability
     
     private RecurringPaymentDatabase database;
     
@@ -50,18 +52,46 @@ public class RecurringPaymentsService extends JobService {
         log.info("Scheduling recurring payments service");
         
         final JobScheduler jobScheduler = (JobScheduler) application.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        
+        // Cancel any existing job first to prevent conflicts
+        jobScheduler.cancel(JOB_ID);
+        
         final JobInfo.Builder jobInfo = new JobInfo.Builder(JOB_ID, new ComponentName(application, RecurringPaymentsService.class));
         
-        // Run every minute to check for due payments
-        jobInfo.setMinimumLatency(CHECK_INTERVAL);
-        jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2); // Maximum 2 minutes delay
+        // Make the job more aggressive for better background execution
         jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         jobInfo.setRequiresDeviceIdle(false); // Run even when device is not idle
         jobInfo.setPersisted(true); // Persist across reboots
+        jobInfo.setBackoffCriteria(1000, JobInfo.BACKOFF_POLICY_LINEAR); // Retry quickly if failed
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             jobInfo.setRequiresBatteryNotLow(false); // Run even on low battery
             jobInfo.setRequiresStorageNotLow(false); // Run even on low storage
+        }
+        
+        // For Android 12+ (API 31+), use expedited jobs for better reliability
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                jobInfo.setExpedited(true); // Make it expedited for better execution
+                // Expedited jobs cannot have time delays, so we'll reschedule manually
+            } catch (Exception e) {
+                log.warn("Could not set job as expedited, falling back to periodic", e);
+                // Fallback to periodic scheduling for older versions or if expedited fails
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    jobInfo.setPeriodic(CHECK_INTERVAL);
+                } else {
+                    jobInfo.setMinimumLatency(CHECK_INTERVAL);
+                    jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2);
+                }
+            }
+        } else {
+            // For older versions, use periodic scheduling
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                jobInfo.setPeriodic(CHECK_INTERVAL);
+            } else {
+                jobInfo.setMinimumLatency(CHECK_INTERVAL);
+                jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2);
+            }
         }
         
         final int result = jobScheduler.schedule(jobInfo.build());
@@ -94,6 +124,18 @@ public class RecurringPaymentsService extends JobService {
             try {
                 processRecurringPayments();
                 jobFinished(params, false); // Job completed successfully
+                
+                // For expedited jobs, reschedule manually since they can't be periodic
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    // Use main thread handler to reschedule
+                    new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+                        try {
+                            schedule((WalletApplication) getApplication());
+                        } catch (Exception e) {
+                            log.warn("Failed to reschedule expedited job", e);
+                        }
+                    }, CHECK_INTERVAL);
+                }
             } catch (Exception e) {
                 log.error("Error processing recurring payments", e);
                 jobFinished(params, true); // Job failed, reschedule
@@ -146,8 +188,8 @@ public class RecurringPaymentsService extends JobService {
             }
         }
         
-        // Reschedule the next check
-        schedule((WalletApplication) getApplication());
+        // No need to reschedule - using periodic job
+        log.info("Recurring payments processing completed");
     }
     
     private void executePayment(RecurringPayment payment) {
@@ -239,10 +281,44 @@ public class RecurringPaymentsService extends JobService {
             log.info("Transaction created successfully: {}", transaction.getTxId());
             
             // Broadcast the transaction through blockchain service
-            // Note: This is a simplified approach - in a real implementation, 
-            // you'd want to use the proper service binding pattern
-            log.info("Transaction created and ready for broadcast: {}", transaction.getTxId());
-            // TODO: Implement proper transaction broadcasting through BlockchainService
+            try {
+                log.info("Broadcasting transaction: {}", transaction.getTxId());
+                
+                // Start the blockchain service to ensure it's running
+                BlockchainService.start(this, false);
+                
+                // Wait a moment for the service to start
+                Thread.sleep(1000);
+                
+                // Use main thread handler to broadcast transaction properly
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    try {
+                        WalletApplication walletApp = (WalletApplication) getApplication();
+                        AbstractWalletActivityViewModel viewModel = new AbstractWalletActivityViewModel(walletApp);
+                        
+                        log.info("Broadcasting transaction through ViewModel: {}", transaction.getTxId());
+                        ListenableFuture<Transaction> future = viewModel.broadcastTransaction(transaction);
+                        future.addListener(() -> {
+                            log.info("Transaction broadcast completed: {}", transaction.getTxId());
+                        }, Threading.SAME_THREAD);
+                        log.info("Transaction broadcast initiated successfully: {}", transaction.getTxId());
+                    } catch (Exception e) {
+                        log.error("Failed to broadcast transaction through ViewModel: {}", transaction.getTxId(), e);
+                        // Fallback: Add transaction to wallet's pending transactions
+                        wallet.receivePending(transaction, null);
+                        log.info("Transaction added to wallet pending transactions as fallback: {}", transaction.getTxId());
+                    }
+                });
+            } catch (Exception e) {
+                log.error("Failed to broadcast transaction: {}", transaction.getTxId(), e);
+                // Fallback: Add transaction to wallet's pending transactions
+                try {
+                    wallet.receivePending(transaction, null);
+                    log.info("Transaction added to wallet pending transactions as fallback: {}", transaction.getTxId());
+                } catch (Exception e2) {
+                    log.error("Failed to add transaction to wallet: {}", transaction.getTxId(), e2);
+                }
+            }
             
             // Update payment status
             if (payment.isRecurringMonthly()) {

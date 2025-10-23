@@ -143,6 +143,19 @@ public class BlockchainService extends LifecycleService {
     private Stopwatch serviceUpTime;
     private boolean resetBlockchainOnShutdown = false;
     private final AtomicBoolean isBound = new AtomicBoolean(false);
+    
+    // Background mempool monitoring
+    private final Runnable mempoolMonitoringTask = new Runnable() {
+        @Override
+        public void run() {
+            ensureMempoolMonitoring();
+            // Schedule next check in 30 seconds
+            handler.postDelayed(this, 30000);
+        }
+    };
+    
+    // Flag to prevent multiple restart attempts
+    private volatile boolean isRestarting = false;
 
     private static final int CONNECTIVITY_NOTIFICATION_PROGRESS_MIN_BLOCKS = 144 * 2; // approx. 2 days
     private static final long BLOCKCHAIN_STATE_BROADCAST_THROTTLE_MS = DateUtils.SECOND_IN_MILLIS;
@@ -166,6 +179,14 @@ public class BlockchainService extends LifecycleService {
         // implicitly stops blockchain service
         ContextCompat.startForegroundService(context,
                 new Intent(BlockchainService.ACTION_RESET_BLOCKCHAIN, null, context, BlockchainService.class));
+    }
+    
+    /**
+     * Ensure the blockchain service is running for background peer connections
+     * This is critical for mempool monitoring and transaction broadcasting
+     */
+    public static void ensureRunning(final Context context) {
+        ContextCompat.startForegroundService(context, new Intent(context, BlockchainService.class));
     }
 
     private static class NewTransactionLiveData extends LiveData<Transaction> {
@@ -269,6 +290,7 @@ public class BlockchainService extends LifecycleService {
     private final class PeerConnectivityListener
             implements PeerConnectedEventListener, PeerDisconnectedEventListener {
         private AtomicBoolean stopped = new AtomicBoolean(false);
+        private final int minPeersForMempool = 2;
 
         public void stop() {
             stopped.set(true);
@@ -278,11 +300,19 @@ public class BlockchainService extends LifecycleService {
         public void onPeerConnected(final Peer peer, final int peerCount) {
             postDelayedStopSelf(DateUtils.MINUTE_IN_MILLIS);
             changed(peerCount);
+            
+            // Log peer connection for mempool monitoring
+            log.info("Peer connected: {} (total: {}) - Mempool monitoring: {}", 
+                peer.getAddress(), peerCount, peerCount >= minPeersForMempool ? "ACTIVE" : "INSUFFICIENT");
         }
 
         @Override
         public void onPeerDisconnected(final Peer peer, final int peerCount) {
             changed(peerCount);
+            
+            // Log peer disconnection and mempool monitoring status
+            log.info("Peer disconnected: {} (total: {}) - Mempool monitoring: {}", 
+                peer.getAddress(), peerCount, peerCount >= minPeersForMempool ? "ACTIVE" : "INSUFFICIENT");
         }
 
         private void changed(final int numPeers) {
@@ -292,6 +322,11 @@ public class BlockchainService extends LifecycleService {
             handler.post(() -> {
                 startForeground(numPeers);
                 broadcastPeerState(numPeers);
+                
+                // Warn if insufficient peers for mempool monitoring
+                if (numPeers < minPeersForMempool && numPeers > 0) {
+                    log.warn("Low peer count ({}): Mempool monitoring may be limited", numPeers);
+                }
             });
         }
     }
@@ -493,7 +528,12 @@ public class BlockchainService extends LifecycleService {
         connectivityNotification.setWhen(System.currentTimeMillis());
         connectivityNotification.setOngoing(true);
         connectivityNotification.setPriority(NotificationCompat.PRIORITY_LOW);
-        startForeground(0);
+        connectivityNotification.setCategory(NotificationCompat.CATEGORY_SERVICE);
+        connectivityNotification.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        connectivityNotification.setShowWhen(true);
+        connectivityNotification.setAutoCancel(false);
+        // connectivityNotification.setSilent(true); // This method doesn't exist in older API levels
+        startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
 
         backgroundThread = new HandlerThread("backgroundThread", Process.THREAD_PRIORITY_BACKGROUND);
         backgroundThread.start();
@@ -646,10 +686,17 @@ public class BlockchainService extends LifecycleService {
                 final Set<HostAndPort> trustedPeers = config.getTrustedPeers();
                 final boolean trustedPeerOnly = config.isTrustedPeersOnly();
 
-                peerGroup.setMaxConnections(trustedPeerOnly ? 0 : maxConnectedPeers);
+                // Ensure minimum peer connections for mempool monitoring
+                final int minPeersForMempool = 2;
+                final int effectiveMaxPeers = Math.max(maxConnectedPeers, minPeersForMempool);
+                peerGroup.setMaxConnections(trustedPeerOnly ? 0 : effectiveMaxPeers);
                 peerGroup.setConnectTimeoutMillis(Constants.PEER_TIMEOUT_MS);
                 peerGroup.setPeerDiscoveryTimeoutMillis(Constants.PEER_DISCOVERY_TIMEOUT_MS);
                 peerGroup.setStallThreshold(20, Block.HEADER_SIZE * 10);
+                
+                // Enhanced peer connection settings for mempool monitoring
+                peerGroup.setMinBroadcastConnections(minPeersForMempool);
+                peerGroup.setBloomFilteringEnabled(true); // Enable bloom filtering for mempool monitoring
 
                 final ResolveDnsTask resolveDnsTask = new ResolveDnsTask(backgroundHandler) {
                     @Override
@@ -685,19 +732,35 @@ public class BlockchainService extends LifecycleService {
                 log.info("starting {} asynchronously", peerGroup);
                 peerGroup.startAsync();
                 peerGroup.startBlockChainDownload(blockchainDownloadListener);
+                
+                // Start continuous mempool monitoring
+                handler.postDelayed(() -> ensureMempoolMonitoring(), 3000); // Initial check after 3 seconds
+                handler.postDelayed(mempoolMonitoringTask, 10000); // Start continuous monitoring after 10 seconds
 
-                postDelayedStopSelf(DateUtils.MINUTE_IN_MILLIS);
+                // Don't auto-stop when mempool monitoring is active - keep service running for background monitoring
+                // postDelayedStopSelf(DateUtils.MINUTE_IN_MILLIS);
             }
 
             private void shutdown() {
                 final Wallet wallet = BlockchainService.this.wallet.getValue();
 
-                peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
-                peerGroup.removeConnectedEventListener(peerConnectivityListener);
-                peerGroup.removeWallet(wallet);
-                log.info("stopping {} asynchronously", peerGroup);
-                peerGroup.stopAsync();
-                peerGroup = null;
+                try {
+                    peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
+                    peerGroup.removeConnectedEventListener(peerConnectivityListener);
+                    peerGroup.removeWallet(wallet);
+                    
+                    // Only stop if the peer group is running
+                    if (peerGroup.isRunning()) {
+                        log.info("stopping {} asynchronously", peerGroup);
+                        peerGroup.stopAsync();
+                    } else {
+                        log.info("peer group already stopped or not running: {}", peerGroup);
+                    }
+                } catch (Exception e) {
+                    log.warn("Error stopping peer group in shutdown: {}", e.getMessage());
+                } finally {
+                    peerGroup = null;
+                }
             }
         });
     }
@@ -705,7 +768,8 @@ public class BlockchainService extends LifecycleService {
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
         super.onStartCommand(intent, flags, startId);
-        postDelayedStopSelf(DateUtils.MINUTE_IN_MILLIS * 2);
+        // Don't auto-stop for mempool monitoring - keep service running for background notifications
+        // postDelayedStopSelf(DateUtils.MINUTE_IN_MILLIS * 2);
 
         if (intent != null) {
             final String action = intent.getAction();
@@ -728,7 +792,7 @@ public class BlockchainService extends LifecycleService {
             log.warn("service restart, although it was started as non-sticky");
         }
 
-        return START_NOT_STICKY;
+        return START_STICKY; // Keep service running in background for peer connections
     }
 
     @Override
@@ -736,11 +800,21 @@ public class BlockchainService extends LifecycleService {
         log.debug(".onDestroy()");
 
         if (peerGroup != null) {
-            peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
-            peerGroup.removeConnectedEventListener(peerConnectivityListener);
-            peerGroup.removeWallet(wallet.getValue());
-            peerGroup.stopAsync();
-            log.info("stopping {} asynchronously", peerGroup);
+            try {
+                peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
+                peerGroup.removeConnectedEventListener(peerConnectivityListener);
+                peerGroup.removeWallet(wallet.getValue());
+                
+                // Only stop if the peer group is running
+                if (peerGroup.isRunning()) {
+                    peerGroup.stopAsync();
+                    log.info("stopping {} asynchronously", peerGroup);
+                } else {
+                    log.info("peer group already stopped or not running: {}", peerGroup);
+                }
+            } catch (Exception e) {
+                log.warn("Error stopping peer group: {}", e.getMessage());
+            }
         }
 
         peerConnectivityListener.stop();
@@ -914,5 +988,108 @@ public class BlockchainService extends LifecycleService {
     private void broadcastBlockchainState() {
         final BlockchainState blockchainState = getBlockchainState();
         application.blockchainState.setValue(blockchainState);
+    }
+    
+    /**
+     * Ensures minimum peer connections for mempool monitoring
+     * This is crucial for detecting incoming Dogecoin transactions
+     */
+    public void ensureMempoolMonitoring() {
+        if (peerGroup == null) {
+            log.warn("PeerGroup is null, cannot ensure mempool monitoring");
+            return;
+        }
+            
+        final int connectedPeers = peerGroup.getConnectedPeers().size();
+        final int minPeersForMempool = 2;
+        
+        log.info("Mempool monitoring check: {} connected peers (minimum: {})", connectedPeers, minPeersForMempool);
+        
+        if (connectedPeers < minPeersForMempool) {
+            log.warn("Insufficient peers for mempool monitoring ({} < {}), attempting to connect more", 
+                connectedPeers, minPeersForMempool);
+            
+            // Try to connect to more peers
+            if (!peerGroup.isRunning()) {
+                try {
+                    log.info("Starting peer group for mempool monitoring");
+                    peerGroup.startAsync();
+                } catch (IllegalStateException e) {
+                    log.warn("Peer group already starting or started: {}", e.getMessage());
+                    // Peer group is already starting or started, which is fine
+                } catch (Exception e) {
+                    log.error("Unexpected error starting peer group: {}", e.getMessage());
+                }
+            } else {
+                log.info("Peer group already running, ensuring it stays active for mempool monitoring");
+                // Just ensure the peer group is active
+                if (peerGroup.getMaxConnections() > connectedPeers) {
+                    log.info("Peer group has capacity for more connections, waiting for peers to connect");
+                }
+            }
+            
+            // Schedule a check to ensure we maintain connections
+            handler.postDelayed(() -> {
+                if (peerGroup == null) {
+                    log.warn("Peer group is null, skipping mempool monitoring check");
+                    return;
+                }
+                final int newPeerCount = peerGroup.getConnectedPeers().size();
+                if (newPeerCount < minPeersForMempool) {
+                    log.warn("Still insufficient peers for mempool monitoring: {} (peer group running: {})", 
+                        newPeerCount, peerGroup.isRunning());
+                    // If still insufficient and no peers at all, try restarting the peer group
+                    if (newPeerCount == 0 && !isRestarting) {
+                        log.info("No peers connected, attempting to restart peer group");
+                        isRestarting = true;
+                        try {
+                            // Only restart if the peer group is actually running
+                            if (peerGroup.isRunning()) {
+                                log.info("Stopping peer group for restart");
+                                peerGroup.stopAsync();
+                                handler.postDelayed(() -> {
+                                    try {
+                                        // Double-check the peer group state before starting
+                                        if (!peerGroup.isRunning()) {
+                                            log.info("Starting peer group after restart");
+                                            peerGroup.startAsync();
+                                        } else {
+                                            log.info("Peer group already running after stop, no need to start");
+                                        }
+                                    } catch (IllegalStateException e) {
+                                        log.warn("Peer group already starting or started during restart: {}", e.getMessage());
+                                    } catch (Exception e) {
+                                        log.error("Unexpected error starting peer group after restart: {}", e.getMessage());
+                                    } finally {
+                                        isRestarting = false;
+                                    }
+                                }, 2000);
+                            } else {
+                                // Peer group is not running, just start it
+                                try {
+                                    log.info("Starting peer group (not running)");
+                                    peerGroup.startAsync();
+                                } catch (IllegalStateException e) {
+                                    log.warn("Peer group already starting or started: {}", e.getMessage());
+                                } catch (Exception e) {
+                                    log.error("Unexpected error starting peer group: {}", e.getMessage());
+                                } finally {
+                                    isRestarting = false;
+                                }
+                            }
+                        } catch (Exception e) {
+                            log.error("Error during peer group restart: {}", e.getMessage());
+                            isRestarting = false;
+                        }
+                    } else if (isRestarting) {
+                        log.info("Peer group restart already in progress, skipping");
+                    }
+                } else {
+                    log.info("Mempool monitoring now active with {} peers", newPeerCount);
+                }
+            }, 15000); // Check after 15 seconds
+        } else {
+            log.info("Mempool monitoring active with {} peers", connectedPeers);
+        }
     }
 }

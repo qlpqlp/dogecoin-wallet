@@ -19,27 +19,39 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 71
+## 🚀 Latest Updates - Version 76
 
 ### 🔧 Technical Improvements
-- **Minification Enabled**: Full code and resource minification for smaller APK size
+- **Background Sync Enhancement**: Implemented continuous mempool monitoring for receiving payments in background
+- **Recurring Payments Background**: Enhanced background execution for scheduled payments
+- **Service Optimization**: Improved BlockchainService and RecurringPaymentsService for better background operation
+- **Battery Optimization**: Added requests to ignore battery optimizations for reliable background sync
+- **Peer Connection Management**: Enhanced peer group management with automatic restart capabilities
 - **Resource Shrinking**: Unused resources automatically removed from final build
 - **ProGuard Optimization**: Enhanced code obfuscation and optimization
-- **Build Optimization**: Improved build process with better error handling
-- **Performance Enhancements**: Faster app startup and better memory usage
 
 ### 🐛 Bug Fixes
-- **Biometric Authentication**: Fixed widget launch requiring fresh authentication
-- **Crash Prevention**: Enhanced error handling in AlertDialogsFragment
+- **Biometric Authentication**: Fixed session persistence - no longer asks for authentication during internal navigation
+- **Pay To Dropdown**: Fixed dropdown selection retention when editing recurring payments
+- **Address Icon**: Updated QR code icon to wallet icon with proper white color for dark themes
+- **Background Services**: Fixed service lifecycle management for better background operation
 - **Memory Management**: Improved secure memory clearing for sensitive data
 - **Widget Stability**: Better handling of widget state changes
 - **Navigation Issues**: Fixed various navigation and state management bugs
 
 ### 🔒 Security Enhancements
-- **Enhanced Biometric Security**: More robust authentication flow
+- **Enhanced Biometric Security**: Session-based authentication that persists until app goes to background
 - **Secure Memory Handling**: Better cleanup of sensitive data
 - **Improved Key Management**: Enhanced security for wallet operations
-- **Authentication Flow**: More reliable biometric authentication across all entry points
+- **Authentication Flow**: More reliable biometric authentication with proper lifecycle management
+- **Background Security**: Secure background transaction processing and broadcasting
+
+### 📱 New Features
+- **Background Payment Reception**: Wallet now receives payments even when minimized or paused
+- **Enhanced Recurring Payments**: Improved background execution with better reliability
+- **Mempool Monitoring**: Continuous monitoring of mempool for incoming transactions
+- **Service Persistence**: Services stay running for background operations
+- **UI Improvements**: Better icons and visual consistency across the app
 
 ### 📱 App Features
 - **Family Mode**: Complete implementation with child wallet management
@@ -65,7 +77,7 @@ This project contains several sub-projects:
 
 This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
 
-### 📱 Current Release (v1.0 - Version Code 69)
+### 📱 Current Release (v1.0 - Version Code 76)
 - **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
 - **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
 - **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
@@ -87,6 +99,45 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Minification**: R8 minification enabled for optimized app size and performance
 - **Complete Translations**: Added missing strings to 11 major languages (242 new translations)
 - **Portuguese Support**: Both Brazilian and European Portuguese variants fully translated
+
+## 📋 VERSION HISTORY
+
+### Version 76 (Latest) - Background Sync & Authentication Fixes
+- **Background Sync Enhancement**: Implemented continuous mempool monitoring for receiving payments in background
+- **Recurring Payments Background**: Enhanced background execution for scheduled payments
+- **Service Optimization**: Improved BlockchainService and RecurringPaymentsService for better background operation
+- **Battery Optimization**: Added requests to ignore battery optimizations for reliable background sync
+- **Biometric Authentication Fix**: Fixed session persistence - no longer asks for authentication during internal navigation
+- **Pay To Dropdown Fix**: Fixed dropdown selection retention when editing recurring payments
+- **Address Icon Update**: Updated QR code icon to wallet icon with proper white color for dark themes
+- **UI Improvements**: Better icons and visual consistency across the app
+
+### Version 71 - Minification & Security Enhancements
+- **Resource Shrinking**: Unused resources automatically removed from final build
+- **ProGuard Optimization**: Enhanced code obfuscation and optimization
+- **Enhanced Biometric Security**: More robust authentication flow
+- **Memory Management**: Improved secure memory clearing for sensitive data
+- **Widget Stability**: Better handling of widget state changes
+
+### Version 69 - Android 15 Compatibility & UI Improvements
+- **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
+- **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
+- **AlertDialogsFragment Fix**: Resolved NullPointerException crash in onAttach() method
+- **Family Mode UI Improvements**: Fixed gear icon to family icon, QR code to white for dark mode
+- **Backup Verification Fix**: Resolved "verification failed" IOException during wallet backup process
+- **First-Time Setup Dialog**: Added modern, card-based setup dialog for new users
+- **Accounting Reports**: Added comprehensive transaction reporting with CSV, JSON, and PDF export
+
+### Version 61 - Initial Google Play Release
+- **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
+- **Google Play Ready**: Fully compliant with all Google Play Console requirements
+- **Version Management**: Incremental version code system for continuous updates
+- **UI Improvements**: Fixed status bar and navigation bar handling for all devices
+- **Security Enhancements**: Implemented secure memory clearing and enhanced PBKDF2 security
+- **Biometric Protection**: Added biometric authentication for widgets and app shortcuts
+- **Memory Security**: Comprehensive secure memory clearing for all sensitive data
+- **Author Attribution**: Added comprehensive author credits throughout 113+ files
+- **Complete Translations**: Added missing strings to 11 major languages (242 new translations)
 
 ## ✨ NEW FEATURES & IMPROVEMENTS
 
@@ -350,11 +401,11 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: v1.0 (Version Code: 61)
+- **Current Version**: v1.0 (Version Code: 76)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Status**: Available now on Google Play Store
-- **Features**: Full feature set including RadioDoge, Family Mode, and all advanced features
+- **Features**: Full feature set including RadioDoge, Family Mode, Background Sync, and all advanced features
 - **Build Size**: ~14.3 MB (minified AAB)
 - **Android 15 Compatible**: ✅ Fixed BOOT_COMPLETED foreground service restrictions
 
@@ -506,11 +557,12 @@ After building, you'll find:
 
 #### **Current Build Configuration**:
 - **Version Name**: 1.0
-- **Version Code**: 61
+- **Version Code**: 76
 - **Target SDK**: 35
 - **Minify**: Enabled (R8)
 - **Signing**: Release keystore configured
 - **Android 15 Fix**: BOOT_COMPLETED restrictions resolved
+- **Background Services**: Enhanced for mempool monitoring and recurring payments
 
 ### 6. Troubleshooting Common Issues
 

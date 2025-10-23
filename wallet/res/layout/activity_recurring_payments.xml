@@ -29,7 +29,7 @@
             android:layout_height="48dp"
             android:text="@string/recurring_payments_add_new"
             android:textSize="14sp"
-            android:drawableStart="@drawable/ic_settings_24dp"
+            android:drawableStart="@drawable/ic_add_24dp"
             android:drawablePadding="8dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -51,7 +51,7 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/ic_settings_24dp"
+            android:src="@drawable/ic_add_24dp"
             android:alpha="0.5"
             android:layout_marginBottom="16dp" />
 

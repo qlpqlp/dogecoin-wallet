@@ -245,7 +245,7 @@
                                         <span>Secure & Private</span>
                                     </div>
                                 </div>
-                                <a href="docs/user-guide.html#radiodoge" class="tooltip-btn">
+                                <a href="user-guide.html#radiodoge" class="tooltip-btn">
                                     <i class="fas fa-book"></i>
                                     Learn More
                                 </a>
@@ -366,31 +366,31 @@
                     <i class="fas fa-book doc-icon"></i>
                     <h3>User Guide</h3>
                     <p>Complete guide on how to use all features of the Dogecoin Wallet</p>
-                    <a href="docs/user-guide.html" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                    <a href="user-guide.html" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="doc-card">
                     <i class="fas fa-tools doc-icon"></i>
                     <h3>Developer Docs</h3>
                     <p>Technical documentation for developers and contributors</p>
-                    <a href="docs/developer-guide.html" class="doc-link">View Docs <i class="fas fa-arrow-right"></i></a>
+                    <a href="developer-guide.html" class="doc-link">View Docs <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="doc-card">
                     <i class="fas fa-shield-alt doc-icon"></i>
                     <h3>Privacy Policy</h3>
                     <p>How we handle your data and protect your privacy</p>
-                    <a href="docs/privacy-policy.html" class="doc-link">Read Policy <i class="fas fa-arrow-right"></i></a>
+                    <a href="privacy-policy.html" class="doc-link">Read Policy <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="doc-card">
                     <i class="fas fa-clipboard-list doc-icon"></i>
                     <h3>Terms of Service</h3>
                     <p>Terms and conditions for using the Dogecoin Wallet</p>
-                    <a href="docs/terms-of-service.html" class="doc-link">Read Terms <i class="fas fa-arrow-right"></i></a>
+                    <a href="terms-of-service.html" class="doc-link">Read Terms <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="doc-card">
                     <i class="fas fa-balance-scale doc-icon"></i>
                     <h3>License</h3>
                     <p>GPL v3.0 License - Open source and free to use</p>
-                    <a href="docs/license.html" class="doc-link">View License <i class="fas fa-arrow-right"></i></a>
+                    <a href="license.html" class="doc-link">View License <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="doc-card">
                     <i class="fas fa-bug doc-icon"></i>
@@ -495,18 +495,18 @@
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="docs/privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="docs/terms-of-service.html">Terms of Service</a></li>
-                        <li><a href="docs/license.html">License</a></li>
-                        <li><a href="docs/disclaimer.html">Disclaimer</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="license.html">License</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>
                     <ul>
                         <li><a href="https://github.com/qlpqlp/dogecoin-wallet/issues">Report Issues</a></li>
-                        <li><a href="docs/user-guide.html">User Guide</a></li>
-                        <li><a href="docs/developer-guide.html">Developer Docs</a></li>
+                        <li><a href="user-guide.html">User Guide</a></li>
+                        <li><a href="developer-guide.html">Developer Docs</a></li>
                     </ul>
                 </div>
             </div>
@@ -521,13 +521,13 @@
     <div id="apkModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fab fa-android"></i> Download APK (v1.0 - Build 71)</h3>
+                <h3><i class="fab fa-android"></i> Download APK (v1.0 - Build 76)</h3>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
                 <p>The Dogecoin Wallet can already be installed and tested on any Android device version 14 or more and is pending review on Google Play Store.</p>
                 <div class="modal-buttons">
-                    <a href="https://github.com/qlpqlp/dogecoin-wallet/releases/download/v1.0/DogecoinWallet-v1.0-v71-Release.apk" class="btn btn-primary" download id="modalDownloadBtn">
+                    <a href="https://github.com/qlpqlp/dogecoin-wallet/releases/download/v1.0/DogecoinWallet-v1.0-v76-Release.apk" class="btn btn-primary" download id="modalDownloadBtn">
                         <i class="fas fa-download"></i>
                         Download APK
                     </a>
@@ -539,6 +539,39 @@
 
     <!-- Doge Meme Words Animation Container -->
     <div id="dogeWordsContainer" class="doge-words-container"></div>
+
+    <!-- Floating Rocket to Top Button -->
+    <button id="rocketToTop" class="rocket-to-top" title="Back to Top">
+        <div class="rocket">
+            <div class="rocket-body">
+                <div class="body"></div>
+                <div class="fin fin-left"></div>
+                <div class="fin fin-right"></div>
+                <div class="window"></div>
+            </div>
+            <div class="exhaust-flame"></div>
+            <ul class="exhaust-fumes">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <ul class="star">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </button>
 
     <script src="script.js"></script>
 </body>

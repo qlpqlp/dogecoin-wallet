@@ -20,6 +20,7 @@ function initWebsite() {
     initRadioDogeTooltip();
     initApkModal();
     initSimpleLanguageSelector();
+    initRocketToTop();
 }
 
 // Mobile menu functionality
@@ -714,3 +715,238 @@ translationStyle.textContent = `
     }
 `;
 document.head.appendChild(translationStyle);
+
+// Rocket to Top functionality
+function initRocketToTop() {
+    const rocketButton = document.getElementById('rocketToTop');
+    
+    if (!rocketButton) return;
+    
+    // Show/hide rocket button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            rocketButton.classList.add('show');
+        } else {
+            rocketButton.classList.remove('show');
+        }
+    });
+    
+    // Smooth scroll to top when clicked
+    rocketButton.addEventListener('click', function() {
+        // Add launching animation to rocket
+        this.classList.add('launching');
+        
+        // Create DOGE smoke trail animation that follows the rocket
+        createDogeSmokeAnimationFollowing();
+        
+        // Smooth scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Remove launching class after animation
+        setTimeout(() => {
+            this.classList.remove('launching');
+        }, 2000);
+    });
+    
+    // Add hover effect for better UX
+    rocketButton.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px) scale(1.1)';
+    });
+    
+    rocketButton.addEventListener('mouseleave', function() {
+        if (this.classList.contains('show')) {
+            this.style.transform = 'translateY(0) scale(1)';
+        } else {
+            this.style.transform = 'translateY(20px) scale(1)';
+        }
+    });
+}
+
+// DOGE Smoke Trail Animation when rocket is clicked
+function createDogeSingingAnimation() {
+    const rocketButton = document.getElementById('rocketToTop');
+    const container = document.body;
+    const words = ['DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE'];
+    const colors = ['#ffc107', '#ff8f00', '#ffeb3b', '#ff9800', '#ff5722', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39'];
+    
+    // Get rocket position
+    const rocketRect = rocketButton.getBoundingClientRect();
+    const rocketX = rocketRect.left + rocketRect.width / 2;
+    const rocketY = rocketRect.top + rocketRect.height / 2;
+    
+        // Create smoke trail effect - words appear behind the rocket
+        for (let i = 0; i < words.length; i++) {
+            setTimeout(() => {
+                createDogeSmoke(words[i], colors, container, rocketX, rocketY);
+            }, i * 100); // Faster stagger for better smoke effect
+        }
+}
+
+// DOGE Smoke Trail Animation that follows the rocket's movement
+function createDogeSmokeAnimationFollowing() {
+    const rocketButton = document.getElementById('rocketToTop');
+    const container = document.body;
+    const words = ['DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE', 'DOGE'];
+    const colors = ['#ffc107', '#ff8f00', '#ffeb3b', '#ff9800', '#ff5722', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39'];
+
+    // Create smoke trail effect that follows the rocket's movement
+    for (let i = 0; i < words.length; i++) {
+        setTimeout(() => {
+            // Get current rocket position for each word
+            const rocketRect = rocketButton.getBoundingClientRect();
+            const rocketX = rocketRect.left + rocketRect.width / 2;
+            const rocketY = rocketRect.top + rocketRect.height / 2;
+            
+            createDogeSmokeFollowing(words[i], colors, container, rocketX, rocketY, i);
+        }, i * 100); // Stagger the creation for smoke effect
+    }
+}
+
+function createDogeSmoke(word, colors, container, rocketX, rocketY) {
+    // Create DOGE text element
+    const dogeElement = document.createElement('div');
+    dogeElement.className = 'doge-singing-word';
+    dogeElement.textContent = word;
+
+    // Position randomly around the entire rocket area with more left bias and wider spread
+    const offsetX = (Math.random() - 0.7) * 300; // Much wider horizontal spread, biased to the left
+    const offsetY = (Math.random() - 0.5) * 200; // Much wider vertical spread around rocket
+    const x = rocketX + offsetX - 30; // Center the text
+    const y = rocketY + offsetY - 15; // Center the text
+
+    // Random color
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    // Random rotation for smoke effect
+    const rotation = (Math.random() - 0.5) * 30; // -15 to +15 degrees
+
+    // Random drift for smoke effect
+    const drift = (Math.random() - 0.5) * 50; // -25 to +25 pixels
+
+    // Apply styles
+    dogeElement.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: ${2.5 + Math.random() * 1.5}rem;
+        font-weight: 900;
+        color: ${color};
+        transform: rotate(${rotation}deg);
+        z-index: 100000;
+        pointer-events: none;
+        font-family: 'Comic Neue', cursive;
+        animation: dogeSmokeTrail 2s ease-out forwards;
+        user-select: none;
+        --rotation: ${rotation}deg;
+        --drift: ${drift}px;
+    `;
+
+    container.appendChild(dogeElement);
+
+    // Remove element after animation
+    setTimeout(() => {
+        if (dogeElement.parentNode) {
+            dogeElement.parentNode.removeChild(dogeElement);
+        }
+    }, 2000);
+}
+
+function createDogeSmokeFollowing(word, colors, container, rocketX, rocketY, index) {
+    // Create DOGE text element
+    const dogeElement = document.createElement('div');
+    dogeElement.className = 'doge-singing-word';
+    dogeElement.textContent = word;
+
+    // Position randomly around the entire rocket area with more left bias and wider spread
+    const offsetX = (Math.random() - 0.7) * 300; // Much wider horizontal spread, biased to the left
+    const offsetY = (Math.random() - 0.5) * 200; // Much wider vertical spread around rocket
+    const x = rocketX + offsetX - 30; // Center the text
+    const y = rocketY + offsetY - 15; // Center the text
+
+    // Random color
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    // Random rotation for smoke effect
+    const rotation = (Math.random() - 0.5) * 30; // -15 to +15 degrees
+
+    // Random drift for smoke effect
+    const drift = (Math.random() - 0.5) * 50; // -25 to +25 pixels
+
+    // Apply styles
+    dogeElement.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: ${2.5 + Math.random() * 1.5}rem;
+        font-weight: 900;
+        color: ${color};
+        transform: rotate(${rotation}deg);
+        z-index: 100000;
+        pointer-events: none;
+        font-family: 'Comic Neue', cursive;
+        user-select: none;
+        --rotation: ${rotation}deg;
+        --drift: ${drift}px;
+        --index: ${index};
+    `;
+
+    container.appendChild(dogeElement);
+
+    // Animate the word to follow the rocket's movement with realistic smoke effects
+    let animationId;
+    let startTime = Date.now();
+    const duration = 2500; // 2.5 seconds for longer smoke trail
+    const startY = y;
+    const endY = -100; // Go off screen at the top
+
+    // Add realistic exhaust smoke drift - letters spread around entire rocket area with left bias
+    const smokeDriftX = (Math.random() - 0.7) * 300; // Much wider horizontal drift, biased to the left
+    const smokeDriftY = (Math.random() - 0.5) * 250; // Much wider vertical drift around rocket
+    const smokeRotation = (Math.random() - 0.5) * 120; // More random rotation for exhaust effect
+
+    function animate() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Get current rocket position
+        const rocketButton = document.getElementById('rocketToTop');
+        const rocketRect = rocketButton.getBoundingClientRect();
+        const currentRocketY = rocketRect.top + rocketRect.height / 2;
+        
+        // Calculate word position relative to rocket with widespread exhaust drift and left bias
+        const driftProgress = Math.sin(progress * Math.PI * 2) * 1.0; // Maximum oscillating drift for exhaust
+        const wordX = rocketX + offsetX + (smokeDriftX * progress) + (driftProgress * 80);
+        const wordY = currentRocketY + offsetY + (smokeDriftY * progress) - 15;
+        
+        // Apply realistic smoke effects
+        const easeOut = 1 - Math.pow(1 - progress, 2);
+        const smokeOpacity = Math.max(0, 1 - progress * 1.2); // Fade faster for smoke effect
+        const smokeScale = 1 + (progress * 0.5); // Grow slightly as smoke expands
+        const smokeRotationFinal = rotation + (smokeRotation * progress) + (driftProgress * 15);
+        
+        // Update position and effects
+        dogeElement.style.left = `${wordX}px`;
+        dogeElement.style.top = `${wordY}px`;
+        dogeElement.style.opacity = `${smokeOpacity}`;
+        dogeElement.style.transform = `rotate(${smokeRotationFinal}deg) scale(${smokeScale})`;
+        
+        // Add blur effect for realistic smoke
+        const blurAmount = progress * 3;
+        dogeElement.style.filter = `blur(${blurAmount}px)`;
+        
+        if (progress < 1) {
+            animationId = requestAnimationFrame(animate);
+        } else {
+            // Remove element after animation
+            if (dogeElement.parentNode) {
+                dogeElement.parentNode.removeChild(dogeElement);
+            }
+        }
+    }
+    
+    // Start animation
+    animationId = requestAnimationFrame(animate);
+}
