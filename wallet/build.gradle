@@ -87,27 +87,25 @@ android {
     }
 
         buildTypes {
-            all {
+            debug {
+                debuggable true
                 minifyEnabled false
                 shrinkResources false
                 crunchPngs true
                 proguardFile 'proguard.cfg'
             }
-        debug {
-            debuggable true
-        }
-        release {
-            minifyEnabled true
-            shrinkResources true
-            crunchPngs true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            // Enable native debug symbols
-            ndk {
-                debugSymbolLevel 'SYMBOL_TABLE'
+            release {
+                minifyEnabled true
+                shrinkResources true
+                crunchPngs true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+                signingConfig signingConfigs.release
+                // Enable native debug symbols
+                ndk {
+                    debugSymbolLevel 'SYMBOL_TABLE'
+                }
             }
         }
-    }
 
     // Temporarily disable product flavors to test build
     // flavorDimensions 'flavor'

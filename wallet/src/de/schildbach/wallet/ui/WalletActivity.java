@@ -57,6 +57,7 @@ import de.schildbach.wallet.R;
 import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.data.PaymentIntent;
 import de.schildbach.wallet.service.BlockchainService;
+import de.schildbach.wallet.service.RecurringPaymentsService;
 import de.schildbach.wallet.ui.InputParser.BinaryInputParser;
 import de.schildbach.wallet.ui.InputParser.StringInputParser;
 import de.schildbach.wallet.ui.backup.BackupWalletActivity;
@@ -287,6 +288,9 @@ public final class WalletActivity extends AbstractWalletActivity {
         handler.postDelayed(() -> {
             // delayed start so that UI has enough time to initialize
             BlockchainService.start(WalletActivity.this, true);
+            
+            // Also schedule recurring payments service
+            RecurringPaymentsService.schedule(application);
         }, 200); // Reduced delay from 1000ms to 200ms
     }
 
