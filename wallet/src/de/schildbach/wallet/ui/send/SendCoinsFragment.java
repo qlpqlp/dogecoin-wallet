@@ -1063,6 +1063,11 @@ public final class SendCoinsFragment extends Fragment {
     private void setState(final SendCoinsViewModel.State state) {
         viewModel.state = state;
 
+        // Check if fragment is still attached before updating UI
+        if (!isAdded() || getActivity() == null) {
+            return; // Fragment is not attached, skip UI update
+        }
+
         activity.invalidateOptionsMenu();
         updateView();
     }
@@ -1076,7 +1081,18 @@ public final class SendCoinsFragment extends Fragment {
         if (viewModel.paymentIntent != null) {
             final MonetaryFormat btcFormat = config.getFormat();
 
-            getView().setVisibility(View.VISIBLE);
+            // Check if view is attached before accessing it
+            final View view = getView();
+            if (view == null) {
+                return; // Fragment view is not attached, skip update
+            }
+            view.setVisibility(View.VISIBLE);
+
+            // Check if critical views are initialized
+            if (payeeNameView == null || payeeVerifiedByView == null || payeeGroup == null || 
+                receivingAddressView == null || receivingStaticView == null) {
+                return; // Views not initialized yet, skip update
+            }
 
             if (viewModel.paymentIntent.hasPayee()) {
                 payeeNameView.setVisibility(View.VISIBLE);

@@ -136,42 +136,118 @@ public class ExchangeRatesRepository {
         if (lastUpdated != 0 && now - lastUpdated <= UPDATE_FREQ_MS)
             return;
 
-        requestDogeBtcConversion(conv -> {
-            final CoinGecko coinGecko = new CoinGecko(new Moshi.Builder().build());
-            final Request.Builder request = new Request.Builder();
-            request.url(coinGecko.url());
-            final Headers.Builder headers = new Headers.Builder();
-            headers.add("User-Agent", userAgent);
-            headers.add("Accept", coinGecko.mediaType().toString());
-            request.headers(headers.build());
+        // Get the user's selected currency
+        final String selectedCurrency = config.getExchangeCurrencyCode();
+        if (selectedCurrency == null) {
+            log.warn("No exchange currency selected, skipping exchange rate update");
+            return;
+        }
 
-            final OkHttpClient.Builder httpClientBuilder = Constants.HTTP_CLIENT.newBuilder();
-            httpClientBuilder.connectionSpecs(Collections.singletonList(ConnectionSpec.RESTRICTED_TLS));
-            final Call call = httpClientBuilder.build().newCall(request.build());
-            call.enqueue(new Callback() {
-                @Override
-                public void onResponse(final Call call, final Response response) throws IOException {
+        // Use direct DOGE-to-fiat API for multiple currencies
+        requestDirectDogeRatesMultiple(selectedCurrency, watch, now);
+    }
+
+    private void requestDirectDogeRates(final String currencyCode, final Stopwatch watch, final long now) {
+        final CoinGecko coinGecko = new CoinGecko(new Moshi.Builder().build());
+        final Request.Builder request = new Request.Builder();
+        request.url(coinGecko.directUrl(currencyCode));
+        final Headers.Builder headers = new Headers.Builder();
+        headers.add("User-Agent", userAgent);
+        headers.add("Accept", coinGecko.mediaType().toString());
+        request.headers(headers.build());
+
+        final OkHttpClient.Builder httpClientBuilder = Constants.HTTP_CLIENT.newBuilder();
+        httpClientBuilder.connectionSpecs(Collections.singletonList(ConnectionSpec.RESTRICTED_TLS));
+        final Call call = httpClientBuilder.build().newCall(request.build());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                try {
+                    if (response.isSuccessful() && response.body() != null) {
+                        for (final ExchangeRateEntry exchangeRate : coinGecko.parseDirect(response.body().source(), currencyCode))
+                            dao.insertOrUpdate(exchangeRate);
+                        ExchangeRatesRepository.this.lastUpdated.set(now);
+                        watch.stop();
+                        log.info("fetched direct DOGE exchange rates for {}, took {}", currencyCode, watch);
+                    } else {
+                        log.warn("http status {} {} when fetching direct DOGE exchange rates for {}", response.code(),
+                                response.message(), currencyCode);
+                    }
+                } catch (final Exception x) {
+                    log.warn("problem fetching direct DOGE exchange rates for " + currencyCode, x);
+                    // Ensure we don't leave the UI in a broken state
                     try {
-                        if (response.isSuccessful()) {
-                            for (final ExchangeRateEntry exchangeRate : coinGecko.parse(response.body().source(), conv))
-                                dao.insertOrUpdate(exchangeRate);
-                            ExchangeRatesRepository.this.lastUpdated.set(now);
-                            watch.stop();
-                            log.info("fetched exchange rates from {}, took {}", coinGecko.url(), watch);
-                        } else {
-                            log.warn("http status {} {} when fetching exchange rates from {}", response.code(),
-                                    response.message(), coinGecko.url());
-                        }
-                    } catch (final Exception x) {
-                        log.warn("problem fetching exchange rates from " + coinGecko.url(), x);
+                        response.close();
+                    } catch (Exception e) {
+                        // Ignore close errors
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(final Call call, final IOException x) {
-                    log.warn("problem fetching exchange rates from " + coinGecko.url(), x);
+            @Override
+            public void onFailure(final Call call, final IOException x) {
+                log.warn("problem fetching direct DOGE exchange rates for " + currencyCode, x);
+            }
+        });
+    }
+
+    private void requestDirectDogeRatesMultiple(final String selectedCurrency, final Stopwatch watch, final long now) {
+        // Define comprehensive list of currencies for global support
+        final String[] commonCurrencies = {
+            // Major currencies
+            "USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "SEK", "NOK", "DKK", "PLN", "CZK", "HUF", "RUB", "BRL", "MXN", "INR", "KRW", "SGD", "HKD", "NZD", "ZAR", "TRY", "ILS",
+            // Middle East & Africa
+            "AED", "SAR", "QAR", "KWD", "BHD", "OMR", "JOD", "LBP", "EGP", "MAD", "TND", "DZD", "LYD", "SDG", "ETB", "KES", "UGX", "TZS", "ZMW", "BWP", "SZL", "LSL", "NAD", "AOA", "MZN", "MGA", "KMF", "SCR", "MUR", "MVR",
+            // South Asia
+            "LKR", "BDT", "NPR", "PKR", "AFN", "TJS", "UZS", "KGS", "KZT", "TMT", "AZN", "AMD", "GEL", "MDL", "UAH", "BYN",
+            // Eastern Europe
+            "RON", "BGN", "HRK", "RSD", "MKD", "ALL", "BAM",
+            // Southeast Asia
+            "MNT", "KHR", "LAK", "VND", "THB", "MYR", "IDR", "PHP", "MMK", "BTN",
+            // Latin America
+            "ARS", "CLP", "COP", "PEN", "UYU", "BOB", "PYG", "VES", "GYD", "SRD", "TTD", "BBD", "JMD", "BZD", "GTQ", "HNL", "NIO", "CRC", "PAB", "DOP", "HTG", "CUP", "XCD", "AWG", "BMD", "KYD"
+        };
+
+        final CoinGecko coinGecko = new CoinGecko(new Moshi.Builder().build());
+        final Request.Builder request = new Request.Builder();
+        request.url(coinGecko.directUrlMultiple(commonCurrencies));
+        final Headers.Builder headers = new Headers.Builder();
+        headers.add("User-Agent", userAgent);
+        headers.add("Accept", coinGecko.mediaType().toString());
+        request.headers(headers.build());
+
+        final OkHttpClient.Builder httpClientBuilder = Constants.HTTP_CLIENT.newBuilder();
+        httpClientBuilder.connectionSpecs(Collections.singletonList(ConnectionSpec.RESTRICTED_TLS));
+        final Call call = httpClientBuilder.build().newCall(request.build());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                try {
+                    if (response.isSuccessful() && response.body() != null) {
+                        for (final ExchangeRateEntry exchangeRate : coinGecko.parseDirectMultiple(response.body().source()))
+                            dao.insertOrUpdate(exchangeRate);
+                        ExchangeRatesRepository.this.lastUpdated.set(now);
+                        watch.stop();
+                        log.info("fetched direct DOGE exchange rates for multiple currencies, took {}", watch);
+                    } else {
+                        log.warn("http status {} {} when fetching direct DOGE exchange rates for multiple currencies", response.code(),
+                                response.message());
+                    }
+                } catch (final Exception x) {
+                    log.warn("problem fetching direct DOGE exchange rates for multiple currencies", x);
+                    // Ensure we don't leave the UI in a broken state
+                    try {
+                        response.close();
+                    } catch (Exception e) {
+                        // Ignore close errors
+                    }
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(final Call call, final IOException x) {
+                log.warn("problem fetching direct DOGE exchange rates for multiple currencies", x);
+            }
         });
     }
 }

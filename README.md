@@ -27,6 +27,10 @@ Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive doc
 - **Service Optimization**: Improved BlockchainService and RecurringPaymentsService for better background operation
 - **Battery Optimization**: Added requests to ignore battery optimizations for reliable background sync
 - **Peer Connection Management**: Enhanced peer group management with automatic restart capabilities
+- **Exchange Rate API**: Upgraded to direct DOGE-to-fiat exchange rates for improved accuracy and performance
+  - **Direct API Calls**: Eliminates BTC conversion step for more accurate rates
+  - **Global Currency Support**: Supports 100+ currencies worldwide
+  - **Faster Updates**: Single API call fetches multiple currency rates simultaneously
 - **Resource Shrinking**: Unused resources automatically removed from final build
 - **ProGuard Optimization**: Enhanced code obfuscation and optimization
 

@@ -43,6 +43,7 @@ import java.util.Map;
  */
 public final class CoinGecko {
     private static final HttpUrl URL = HttpUrl.parse("https://api.coingecko.com/api/v3/exchange_rates");
+    private static final String DIRECT_URL_BASE = "https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=";
     private static final MediaType MEDIA_TYPE = MediaType.get("application/json");
     private static final String SOURCE = "CoinGecko.com";
 
@@ -60,6 +61,19 @@ public final class CoinGecko {
 
     public HttpUrl url() {
         return URL;
+    }
+
+    public HttpUrl directUrl(final String currencyCode) {
+        return HttpUrl.parse(DIRECT_URL_BASE + currencyCode.toLowerCase());
+    }
+
+    public HttpUrl directUrlMultiple(final String[] currencyCodes) {
+        final StringBuilder urlBuilder = new StringBuilder(DIRECT_URL_BASE);
+        for (int i = 0; i < currencyCodes.length; i++) {
+            if (i > 0) urlBuilder.append(",");
+            urlBuilder.append(currencyCodes[i].toLowerCase());
+        }
+        return HttpUrl.parse(urlBuilder.toString());
     }
 
     public List<ExchangeRateEntry> parse(final BufferedSource jsonSource, double conv) throws IOException {
@@ -91,6 +105,62 @@ public final class CoinGecko {
         return result;
     }
 
+    public List<ExchangeRateEntry> parseDirect(final BufferedSource jsonSource, final String currencyCode) throws IOException {
+        final JsonAdapter<DirectResponse> jsonAdapter = moshi.adapter(DirectResponse.class);
+        final DirectResponse jsonResponse = jsonAdapter.fromJson(jsonSource);
+        final List<ExchangeRateEntry> result = new ArrayList<>();
+        
+        if (jsonResponse.dogecoin != null) {
+            for (Map.Entry<String, Double> entry : jsonResponse.dogecoin.entrySet()) {
+                final String symbol = entry.getKey().toUpperCase(Locale.US);
+                final Double rate = entry.getValue();
+                
+                if (rate != null && rate > 0) {
+                    try {
+                        // Create a Fiat object with 1 DOGE = rate amount of currency
+                        final Fiat dogeRate = Fiat.parseFiatInexact(symbol, rate.toString());
+                        if (dogeRate.signum() > 0) {
+                            // Create exchange rate: 1 DOGE = dogeRate amount of currency
+                            result.add(new ExchangeRateEntry(SOURCE, new ExchangeRate(dogeRate)));
+                        }
+                    } catch (final ArithmeticException x) {
+                        log.warn("problem parsing {} exchange rate from direct API: {}", symbol, x.getMessage());
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    public List<ExchangeRateEntry> parseDirectMultiple(final BufferedSource jsonSource) throws IOException {
+        final JsonAdapter<DirectResponse> jsonAdapter = moshi.adapter(DirectResponse.class);
+        final DirectResponse jsonResponse = jsonAdapter.fromJson(jsonSource);
+        final List<ExchangeRateEntry> result = new ArrayList<>();
+        
+        if (jsonResponse.dogecoin != null) {
+            for (Map.Entry<String, Double> entry : jsonResponse.dogecoin.entrySet()) {
+                final String symbol = entry.getKey().toUpperCase(Locale.US);
+                final Double rate = entry.getValue();
+                
+                if (rate != null && rate > 0) {
+                    try {
+                        // Create a Fiat object with 1 DOGE = rate amount of currency
+                        final Fiat dogeRate = Fiat.parseFiatInexact(symbol, rate.toString());
+                        if (dogeRate.signum() > 0) {
+                            // Create exchange rate: 1 DOGE = dogeRate amount of currency
+                            result.add(new ExchangeRateEntry(SOURCE, new ExchangeRate(dogeRate)));
+                        }
+                    } catch (final ArithmeticException x) {
+                        log.warn("problem parsing {} exchange rate from direct API: {}", symbol, x.getMessage());
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+
     private enum Type {
         @Json(name = "crypto")
         CRYPTO,
@@ -109,5 +179,9 @@ public final class CoinGecko {
         public String unit;
         public String value;
         public Type type;
+    }
+
+    private static class DirectResponse {
+        public Map<String, Double> dogecoin;
     }
 }
