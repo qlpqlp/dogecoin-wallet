@@ -3,8 +3,8 @@
 # min_api: 21
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: 6ceda5b9c428df52676b312dc8b105ddb1caf882072aac905b67083aa1478c1c
-# pg_map_hash: SHA-256 6ceda5b9c428df52676b312dc8b105ddb1caf882072aac905b67083aa1478c1c
+# pg_map_id: 42e80b29446b0f97ba5c6c4913720d7ff992c584aaa532baf8b205f92a880287
+# pg_map_hash: SHA-256 42e80b29446b0f97ba5c6c4913720d7ff992c584aaa532baf8b205f92a880287
 android.support.v4.app.RemoteActionCompatParcelizer -> android.support.v4.app.RemoteActionCompatParcelizer:
 # {"id":"sourceFile","fileName":"RemoteActionCompatParcelizer.java"}
     11:11:void <init>() -> <init>
@@ -131084,10 +131084,11 @@ de.schildbach.wallet.ui.WalletTransactionsFragment -> de.schildbach.wallet.ui.Wa
     367:367:void onWarningClick(android.view.View,de.schildbach.wallet.ui.TransactionsAdapter$WarningType) -> onWarningClick
     368:368:void onWarningClick(android.view.View,de.schildbach.wallet.ui.TransactionsAdapter$WarningType) -> onWarningClick
     369:369:void onWarningClick(android.view.View,de.schildbach.wallet.ui.TransactionsAdapter$WarningType) -> onWarningClick
-    373:373:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
     374:374:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
-    376:376:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
+    378:378:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
     379:379:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
+    381:381:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
+    384:384:de.schildbach.wallet.ui.TransactionsAdapter$WarningType warning() -> warning
 de.schildbach.wallet.ui.WalletTransactionsFragment$$ExternalSyntheticLambda0 -> de.schildbach.wallet.ui.WalletTransactionsFragment$$ExternalSyntheticLambda0:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}

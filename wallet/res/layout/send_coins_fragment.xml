@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/radiodoge_status_message"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

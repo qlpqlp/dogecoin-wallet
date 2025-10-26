@@ -370,6 +370,11 @@ public class WalletTransactionsFragment extends Fragment implements Transactions
     }
 
     private TransactionsAdapter.WarningType warning() {
+        // Guard against null config or devicePolicyManager
+        if (config == null || devicePolicyManager == null) {
+            return null;
+        }
+        
         if (config.remindBackup())
             return TransactionsAdapter.WarningType.BACKUP;
 

@@ -32,6 +32,15 @@
 # Keep wallet classes
 -keep class de.schildbach.wallet.** { *; }
 
+# Keep Configuration class (referenced by WalletTransactionsFragment)
+-keep class de.schildbach.wallet.Configuration { *; }
+-keepclassmembers class de.schildbach.wallet.Configuration {
+    *;
+}
+
+# Keep fragments
+-keep class de.schildbach.wallet.ui.**Fragment { *; }
+
 # Keep serialization classes
 -keep class * implements java.io.Serializable { *; }
 -keepclassmembers class * implements java.io.Serializable {
