@@ -3,8 +3,8 @@
 # min_api: 21
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: 42e80b29446b0f97ba5c6c4913720d7ff992c584aaa532baf8b205f92a880287
-# pg_map_hash: SHA-256 42e80b29446b0f97ba5c6c4913720d7ff992c584aaa532baf8b205f92a880287
+# pg_map_id: fcd04852cfb2a7e233f364bea86617132ec84f1bf462a9b9987c9f5c629ab6f5
+# pg_map_hash: SHA-256 fcd04852cfb2a7e233f364bea86617132ec84f1bf462a9b9987c9f5c629ab6f5
 android.support.v4.app.RemoteActionCompatParcelizer -> android.support.v4.app.RemoteActionCompatParcelizer:
 # {"id":"sourceFile","fileName":"RemoteActionCompatParcelizer.java"}
     11:11:void <init>() -> <init>
@@ -130674,14 +130674,14 @@ de.schildbach.wallet.ui.WalletBalanceFragment -> de.schildbach.wallet.ui.WalletB
 # {"id":"sourceFile","fileName":"WalletBalanceFragment.java"}
     134:134:void lambda$onViewCreated$3(android.view.View) -> $r8$lambda$D1Gx7myvQObooQ_i2vSJp0jXpXk
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;Landroid/view/View;)V"}
-    254:254:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
+    259:259:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;Lorg/bitcoinj/wallet/Wallet;)V"}
-    256:256:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
-    267:267:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
-    267:267:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
-    268:268:void lambda$updateView$5() -> $r8$lambda$MSuBQabp-2wHWWw5AMtc3fIhpmo
+    261:261:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
+    272:272:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
+    272:272:void lambda$updateView$6(org.bitcoinj.wallet.Wallet) -> $r8$lambda$M8UpDOAOmqZqhcagN-bsCieFtO0
+    273:273:void lambda$updateView$5() -> $r8$lambda$MSuBQabp-2wHWWw5AMtc3fIhpmo
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;)V"}
-    268:268:void lambda$updateView$5() -> $r8$lambda$MSuBQabp-2wHWWw5AMtc3fIhpmo
+    273:273:void lambda$updateView$5() -> $r8$lambda$MSuBQabp-2wHWWw5AMtc3fIhpmo
     115:115:void lambda$onCreate$2(de.schildbach.wallet.exchangerate.ExchangeRateEntry) -> $r8$lambda$fABuOQ1YHxtklklXR0rgibZtQlw
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;Lde/schildbach/wallet/exchangerate/ExchangeRateEntry;)V"}
     107:107:void lambda$onCreate$0(de.schildbach.wallet.service.BlockchainState) -> $r8$lambda$iNUar_go1nRZxxDuaUY0z5TNoPE
@@ -130691,12 +130691,12 @@ de.schildbach.wallet.ui.WalletBalanceFragment -> de.schildbach.wallet.ui.WalletB
     110:110:void lambda$onCreate$1(org.bitcoinj.core.Coin) -> $r8$lambda$sBHc7DHau_YxZt6ye0QW5AzlrKQ
     111:111:void lambda$onCreate$1(org.bitcoinj.core.Coin) -> $r8$lambda$sBHc7DHau_YxZt6ye0QW5AzlrKQ
     112:112:void lambda$onCreate$1(org.bitcoinj.core.Coin) -> $r8$lambda$sBHc7DHau_YxZt6ye0QW5AzlrKQ
-    257:257:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
-      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;Lorg/bitcoinj/core/Coin;)V"}
-    258:258:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
-    259:259:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
-    260:260:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
     262:262:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletBalanceFragment;Lorg/bitcoinj/core/Coin;)V"}
+    263:263:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
+    264:264:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
+    265:265:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
+    267:267:void lambda$updateView$4(org.bitcoinj.core.Coin) -> $r8$lambda$uXDkUatPrYrd1seFuYSd6lIAQqQ
     53:53:void <init>() -> <init>
     177:177:void handleDonate() -> handleDonate
     74:74:void onAttach(android.content.Context) -> onAttach
@@ -130741,48 +130741,49 @@ de.schildbach.wallet.ui.WalletBalanceFragment -> de.schildbach.wallet.ui.WalletB
     146:146:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
     147:147:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
     149:149:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    181:181:void updateView() -> updateView
     182:182:void updateView() -> updateView
-    183:183:void updateView() -> updateView
+    186:186:void updateView() -> updateView
     187:187:void updateView() -> updateView
     188:188:void updateView() -> updateView
-    190:190:void updateView() -> updateView
     192:192:void updateView() -> updateView
-    194:194:void updateView() -> updateView
-    198:198:void updateView() -> updateView
+    193:193:void updateView() -> updateView
+    195:195:void updateView() -> updateView
+    197:197:void updateView() -> updateView
     199:199:void updateView() -> updateView
-    201:201:void updateView() -> updateView
-    202:202:void updateView() -> updateView
+    203:203:void updateView() -> updateView
     204:204:void updateView() -> updateView
-    205:205:void updateView() -> updateView
+    206:206:void updateView() -> updateView
     207:207:void updateView() -> updateView
-    208:208:void updateView() -> updateView
-    215:215:void updateView() -> updateView
-    217:217:void updateView() -> updateView
-    218:218:void updateView() -> updateView
-    221:221:void updateView() -> updateView
+    209:209:void updateView() -> updateView
+    210:210:void updateView() -> updateView
+    212:212:void updateView() -> updateView
+    213:213:void updateView() -> updateView
+    220:220:void updateView() -> updateView
     222:222:void updateView() -> updateView
     223:223:void updateView() -> updateView
-    225:225:void updateView() -> updateView
+    226:226:void updateView() -> updateView
     227:227:void updateView() -> updateView
     228:228:void updateView() -> updateView
-    229:229:void updateView() -> updateView
     230:230:void updateView() -> updateView
-    231:231:void updateView() -> updateView
     232:232:void updateView() -> updateView
+    233:233:void updateView() -> updateView
     234:234:void updateView() -> updateView
-    238:238:void updateView() -> updateView
-    241:241:void updateView() -> updateView
-    242:242:void updateView() -> updateView
+    235:235:void updateView() -> updateView
+    236:236:void updateView() -> updateView
+    237:237:void updateView() -> updateView
+    239:239:void updateView() -> updateView
     243:243:void updateView() -> updateView
-    244:244:void updateView() -> updateView
-    245:245:void updateView() -> updateView
     246:246:void updateView() -> updateView
+    247:247:void updateView() -> updateView
     248:248:void updateView() -> updateView
-    252:252:void updateView() -> updateView
-    273:273:void updateView() -> updateView
-    275:275:void updateView() -> updateView
-    276:276:void updateView() -> updateView
+    249:249:void updateView() -> updateView
+    250:250:void updateView() -> updateView
+    251:251:void updateView() -> updateView
+    253:253:void updateView() -> updateView
+    257:257:void updateView() -> updateView
+    278:278:void updateView() -> updateView
+    280:280:void updateView() -> updateView
+    281:281:void updateView() -> updateView
 de.schildbach.wallet.ui.WalletBalanceFragment$$ExternalSyntheticApiModelOutline0 -> de.schildbach.wallet.ui.WalletBalanceFragment$$ExternalSyntheticApiModelOutline0:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}

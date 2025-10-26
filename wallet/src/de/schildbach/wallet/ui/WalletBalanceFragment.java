@@ -178,6 +178,11 @@ public final class WalletBalanceFragment extends Fragment {
     }
 
     private void updateView() {
+        // Guard against null application
+        if (application == null) {
+            return;
+        }
+        
         final BlockchainState blockchainState = application.blockchainState.getValue();
         final Coin balance = viewModel.getBalance().getValue();
         final ExchangeRateEntry exchangeRate = viewModel.getExchangeRate().getValue();
