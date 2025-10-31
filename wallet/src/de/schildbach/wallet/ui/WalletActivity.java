@@ -48,6 +48,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.common.primitives.Floats;
@@ -117,6 +118,48 @@ public final class WalletActivity extends AbstractWalletActivity {
         super.onCreate(savedInstanceState);
         application = getWalletApplication();
         final Configuration config = application.getConfiguration();
+        
+        // Check if terminal mode is enabled and redirect
+        if (config.getPaymentTerminalEnabled() && !getClass().equals(PaymentTerminalActivity.class)) {
+            final Intent intent = new Intent(this, PaymentTerminalActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        
+        // Make app icon launches behave exactly like widget launches
+        // If biometric is enabled, route through BiometricAuthActivity first (no sensitive data shown)
+        // Otherwise, restart with CLEAR_TASK to force fresh instance for animation
+        final Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_MAIN.equals(intent.getAction()) 
+                && intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+            // This is an app icon launch - match widget behavior
+            // Only do this if savedInstanceState is null (fresh creation, not activity recreation from config change)
+            // Skip if this intent already has the restart flag to prevent infinite loop
+            if (savedInstanceState == null && !intent.getBooleanExtra("already_restarted", false)) {
+                // Check if biometric is enabled and available (like widget does)
+                if (BiometricHelper.isBiometricEnabled(this) && BiometricHelper.isBiometricAvailable(this)) {
+                    // Route through BiometricAuthActivity first - no sensitive data shown before auth
+                    final Intent biometricIntent = new Intent(this, BiometricAuthActivity.class);
+                    biometricIntent.putExtra(BiometricAuthActivity.EXTRA_TARGET_ACTIVITY, WalletActivity.class.getName());
+                    biometricIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(biometricIntent);
+                    finish();
+                    return;
+                } else {
+                    // Biometric not enabled - restart with CLEAR_TASK to force fresh instance (like widget does)
+                    final Intent freshIntent = new Intent(this, WalletActivity.class);
+                    freshIntent.setAction(Intent.ACTION_MAIN);
+                    freshIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    freshIntent.putExtra("already_restarted", true); // Prevent infinite loop
+                    freshIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(freshIntent);
+                    finish();
+                    return;
+                }
+            }
+        }
         
         // Initialize pending transaction retry service
         pendingTransactionRetryService = new PendingTransactionRetryService(this);
@@ -241,20 +284,41 @@ public final class WalletActivity extends AbstractWalletActivity {
 
         handleIntent(getIntent());
 
+        // Only add fragments if they don't already exist
+        // This prevents duplication when app returns from background or activity is recreated
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        MaybeMaintenanceFragment.add(fragmentManager);
-        AlertDialogsFragment.add(fragmentManager);
+        
+        // Check if fragments already exist before adding to prevent duplicates
+        Fragment maybeMaintenanceFragment = fragmentManager.findFragmentByTag(MaybeMaintenanceFragment.class.getName());
+        Fragment alertDialogsFragment = fragmentManager.findFragmentByTag(AlertDialogsFragment.class.getName());
+        
+        if (maybeMaintenanceFragment == null) {
+            MaybeMaintenanceFragment.add(fragmentManager);
+        }
+        if (alertDialogsFragment == null) {
+            AlertDialogsFragment.add(fragmentManager);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Check biometric authentication if required or if app was in background
-        if (BiometricHelper.isBiometricRequired(this) || (application.isAppInBackground() && BiometricHelper.isBiometricEnabled(this) && BiometricHelper.isBiometricAvailable(this))) {
+        // Check if terminal mode is enabled and redirect
+        final Configuration config = application.getConfiguration();
+        if (config.getPaymentTerminalEnabled() && !getClass().equals(PaymentTerminalActivity.class)) {
+            final Intent intent = new Intent(this, PaymentTerminalActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        // Simplified biometric check - only check if biometric is required
+        if (BiometricHelper.isBiometricRequired(this)) {
             showBiometricAuthentication();
         } else {
-            // User is already authenticated, biometric is disabled, or internal navigation
+            // User is already authenticated or biometric is disabled
             startBlockchainService();
             
             // Check for pending transactions that can be retried via RadioDoge
@@ -267,7 +331,7 @@ public final class WalletActivity extends AbstractWalletActivity {
                 if (radiodogeStatusChecker != null) {
                     radiodogeStatusChecker.startChecking();
                 }
-            }, 100); // Reduced delay from 500ms to 100ms
+            }, 100);
         }
     }
 
@@ -280,6 +344,8 @@ public final class WalletActivity extends AbstractWalletActivity {
             radiodogeStatusChecker.stopChecking();
         }
         
+        // Clear biometric authentication when app goes to background
+        BiometricHelper.setAuthenticated(this, false);
         
         super.onPause();
     }
@@ -295,6 +361,12 @@ public final class WalletActivity extends AbstractWalletActivity {
     }
 
     private void showBiometricAuthentication() {
+        // Ensure no existing biometric dialog is shown
+        Fragment existingFragment = getSupportFragmentManager().findFragmentByTag(BiometricAuthDialogFragment.class.getName());
+        if (existingFragment != null) {
+            return; // Dialog already exists, don't show another
+        }
+        
         BiometricAuthDialogFragment.show(getSupportFragmentManager(), new BiometricAuthDialogFragment.BiometricAuthCallback() {
             @Override
             public void onBiometricAuthSuccess() {
@@ -450,6 +522,38 @@ public final class WalletActivity extends AbstractWalletActivity {
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
+        
+        // Make app icon launches behave exactly like widget launches
+        // If biometric is enabled, route through BiometricAuthActivity first (no sensitive data shown)
+        // Otherwise, restart with CLEAR_TASK to force fresh instance for animation
+        if (intent != null && Intent.ACTION_MAIN.equals(intent.getAction()) 
+                && intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+            // This is an app icon launch while activity is already running - match widget behavior
+            // Skip if this intent already has the restart flag to prevent infinite loop
+            if (!intent.getBooleanExtra("already_restarted", false)) {
+                // Check if biometric is enabled and available (like widget does)
+                if (BiometricHelper.isBiometricEnabled(this) && BiometricHelper.isBiometricAvailable(this)) {
+                    // Route through BiometricAuthActivity first - no sensitive data shown before auth
+                    final Intent biometricIntent = new Intent(this, BiometricAuthActivity.class);
+                    biometricIntent.putExtra(BiometricAuthActivity.EXTRA_TARGET_ACTIVITY, WalletActivity.class.getName());
+                    biometricIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(biometricIntent);
+                    finish();
+                    return;
+                } else {
+                    // Biometric not enabled - restart with CLEAR_TASK
+                    final Intent freshIntent = new Intent(this, WalletActivity.class);
+                    freshIntent.setAction(Intent.ACTION_MAIN);
+                    freshIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    freshIntent.putExtra("already_restarted", true); // Prevent infinite loop
+                    freshIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(freshIntent);
+                    finish();
+                    return;
+                }
+            }
+        }
+        
         handleIntent(intent);
     }
 

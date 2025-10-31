@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/colorBackground">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/preferences_payment_terminal_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Input Section -->
+    <TextView
+        android:id="@+id/terminal_input_section_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_terminal_enter_amount"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Amount Inputs - Side by side -->
+    <LinearLayout
+        android:id="@+id/terminal_amount_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <de.schildbach.wallet.ui.CurrencyAmountView
+            android:id="@+id/terminal_amount_btc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:minHeight="56dp">
+
+            <EditText
+                android:id="@android:id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi"
+                android:textSize="@dimen/font_size_large" />
+        </de.schildbach.wallet.ui.CurrencyAmountView>
+
+        <de.schildbach.wallet.ui.CurrencyAmountView
+            android:id="@+id/terminal_amount_local"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:minHeight="56dp">
+
+            <EditText
+                android:id="@android:id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi"
+                android:textSize="@dimen/font_size_large" />
+        </de.schildbach.wallet.ui.CurrencyAmountView>
+    </LinearLayout>
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/terminal_generate_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/payment_terminal_generate_qr"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="8dp" />
+
+    <!-- QR Code Section - Hidden by default -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/terminal_qr_card"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
+
+        <ImageView
+            android:id="@+id/terminal_qr_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:contentDescription="Payment QR Code" />
+
+    </androidx.cardview.widget.CardView>
+    
+    <!-- Address and Amount Display -->
+    <TextView
+        android:id="@+id/terminal_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:fontFamily="monospace"
+        android:visibility="gone"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="12dp"
+        android:textColor="?android:attr/textColorSecondary" />
+    
+    <TextView
+        android:id="@+id/terminal_amount_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="?android:attr/textColorPrimary" />
+    
+    <!-- Waiting indicator -->
+    <TextView
+        android:id="@+id/terminal_waiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:text="@string/payment_terminal_waiting_for_payment"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <Button
+        android:id="@+id/terminal_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/send_coins_fragment_button_back"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/terminal_new_request_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/payment_terminal_new_request"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:visibility="gone" />
+
+    <!-- Exit Terminal Mode Button -->
+    <TextView
+        android:id="@+id/terminal_exit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:text="@string/payment_terminal_exit_mode"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textColorLink="?android:attr/textColorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:contentDescription="@string/payment_terminal_enter_pin_title" />
+
+</LinearLayout>
+

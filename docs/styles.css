@@ -45,6 +45,7 @@
 html {
     width: 100%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -1265,6 +1266,21 @@ section {
     background: var(--bg-card-hover);
 }
 
+.feature-link {
+    color: var(--dogecoin-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.feature-link:hover {
+    color: var(--dogecoin-orange);
+}
+
+.feature-link:hover i {
+    transform: translateX(4px);
+}
+
 /* Coming Soon Feature Styling */
 .coming-soon-feature {
     position: relative;
@@ -1536,6 +1552,10 @@ section {
 
 .doc-link:hover {
     color: var(--dogecoin-orange);
+}
+
+.doc-link:hover i {
+    transform: translateX(4px);
 }
 
 /* Contribute Section */

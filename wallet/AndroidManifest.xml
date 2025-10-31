@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly"
-    android:versionCode="76"
+    android:versionCode="86"
     android:versionName="1.0">
 
     <!-- normal permissions -->
@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+    <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
 
     <!-- dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- group: CAMERA -->
@@ -155,6 +157,14 @@
             android:label="@string/request_coins_activity_title"
             android:theme="@style/My.Theme.ChildActivity"
             android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.PaymentTerminalActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/preferences_payment_terminal_title"
+            android:theme="@style/My.Theme.WithSplash"
+            android:launchMode="singleTask"
             android:exported="true" />
 
         <activity
@@ -296,7 +306,8 @@
             android:exported="false"
             android:directBootAware="true"
             android:stopWithTask="false"
-            android:enabled="true" />
+            android:enabled="true"
+            android:foregroundServiceType="dataSync" />
 
         <service
             android:name="de.schildbach.wallet.offline.AcceptBluetoothService"

@@ -61,6 +61,8 @@ public class Configuration {
     public static final String PREFS_KEY_DISCLAIMER = "disclaimer";
     public static final String PREFS_KEY_BLUETOOTH_ADDRESS = "bluetooth_address";
     public static final String PREFS_KEY_RADIODOGE_ENABLED = "radiodoge_enabled";
+    public static final String PREFS_KEY_PAYMENT_TERMINAL_ENABLED = "payment_terminal_enabled";
+    public static final String PREFS_KEY_PAYMENT_TERMINAL_PIN = "payment_terminal_pin";
 
     private static final String PREFS_KEY_LAST_VERSION = "last_version";
     private static final String PREFS_KEY_LAST_USED = "last_used";
@@ -341,6 +343,22 @@ public class Configuration {
 
     public void setRadioDogeEnabled(final boolean enabled) {
         prefs.edit().putBoolean(PREFS_KEY_RADIODOGE_ENABLED, enabled).apply();
+    }
+
+    public boolean getPaymentTerminalEnabled() {
+        return prefs.getBoolean(PREFS_KEY_PAYMENT_TERMINAL_ENABLED, false);
+    }
+
+    public void setPaymentTerminalEnabled(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_PAYMENT_TERMINAL_ENABLED, enabled).apply();
+    }
+
+    public String getPaymentTerminalPin() {
+        return prefs.getString(PREFS_KEY_PAYMENT_TERMINAL_PIN, null);
+    }
+
+    public void setPaymentTerminalPin(final String pin) {
+        prefs.edit().putString(PREFS_KEY_PAYMENT_TERMINAL_PIN, pin).apply();
     }
 
     public void registerOnSharedPreferenceChangeListener(final OnSharedPreferenceChangeListener listener) {

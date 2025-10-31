@@ -527,6 +527,9 @@ public class RecurringPaymentsActivity extends AbstractWalletActivity {
                 } else {
                     layoutReference.setVisibility(View.GONE);
                 }
+                
+                // Clear any existing listener first to prevent multiple listeners
+                switchEnabled.setOnCheckedChangeListener(null);
                 switchEnabled.setChecked(payment.isEnabled());
                 
                 // Setup switch listener

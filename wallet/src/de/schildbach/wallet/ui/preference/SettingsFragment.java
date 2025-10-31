@@ -170,6 +170,16 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             radiodogePreference.setOnPreferenceChangeListener(this);
         }
 
+        // Initialize Payment Terminal Mode preference
+        final Preference paymentTerminalPreference = findPreference("payment_terminal_mode");
+        if (paymentTerminalPreference != null) {
+            updatePaymentTerminalSummary(paymentTerminalPreference);
+            paymentTerminalPreference.setOnPreferenceClickListener(preference -> {
+                handlePaymentTerminalPreferenceClick();
+                return true;
+            });
+        }
+
         updateTrustedPeer();
         updateOwnName();
         updateBluetoothAddress();
@@ -306,6 +316,82 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         } else {
             android.widget.Toast.makeText(activity, "RadioDoge support disabled", android.widget.Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void updatePaymentTerminalSummary(final Preference preference) {
+        if (config.getPaymentTerminalEnabled()) {
+            preference.setSummary(R.string.payment_terminal_active);
+        } else {
+            preference.setSummary(R.string.payment_terminal_inactive);
+        }
+    }
+
+    private void handlePaymentTerminalPreferenceClick() {
+        if (config.getPaymentTerminalEnabled()) {
+            // Terminal mode is enabled, prompt for PIN to disable
+            showPinDialogToDisable();
+        } else {
+            // Terminal mode is disabled, always prompt for a new PIN when activating
+            showSetPinDialog();
+        }
+    }
+
+    private void showPinDialogToDisable() {
+        final android.widget.EditText editText = new android.widget.EditText(activity);
+        editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        editText.setMaxLines(1);
+
+        new android.app.AlertDialog.Builder(activity)
+                .setTitle(R.string.payment_terminal_enter_pin_title)
+                .setMessage(R.string.payment_terminal_enter_pin_message)
+                .setView(editText)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    String enteredPin = editText.getText().toString();
+                    String savedPin = config.getPaymentTerminalPin();
+                    if (savedPin != null && savedPin.equals(enteredPin)) {
+                        config.setPaymentTerminalEnabled(false);
+                        // Clear the PIN when disabling
+                        config.setPaymentTerminalPin(null);
+                        android.widget.Toast.makeText(activity, "Terminal mode disabled", android.widget.Toast.LENGTH_SHORT).show();
+                        updatePaymentTerminalSummary(findPreference("payment_terminal_mode"));
+                    } else {
+                        android.widget.Toast.makeText(activity, R.string.payment_terminal_wrong_pin, android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void showSetPinDialog() {
+        final android.widget.EditText editText = new android.widget.EditText(activity);
+        editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        editText.setMaxLines(1);
+
+        new android.app.AlertDialog.Builder(activity)
+                .setTitle(R.string.payment_terminal_set_pin_title)
+                .setMessage(R.string.payment_terminal_set_pin_message)
+                .setView(editText)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    String pin = editText.getText().toString();
+                    if (pin != null && !pin.isEmpty() && pin.length() >= 4) {
+                        config.setPaymentTerminalPin(pin);
+                        activateTerminalMode();
+                    } else {
+                        android.widget.Toast.makeText(activity, "PIN must be at least 4 digits", android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void activateTerminalMode() {
+        config.setPaymentTerminalEnabled(true);
+        android.widget.Toast.makeText(activity, "Terminal mode activated", android.widget.Toast.LENGTH_SHORT).show();
+        updatePaymentTerminalSummary(findPreference("payment_terminal_mode"));
+        
+        // Start the PaymentTerminalActivity
+        final Intent intent = new Intent(activity, de.schildbach.wallet.ui.PaymentTerminalActivity.class);
+        startActivity(intent);
     }
 
     private void removeOrDisablePreference(final Preference preference) {

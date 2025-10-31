@@ -19,7 +19,7 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 76
+## 🚀 Latest Updates - Version 86
 
 ### 🔧 Technical Improvements
 - **Background Sync Enhancement**: Implemented continuous mempool monitoring for receiving payments in background
@@ -57,13 +57,6 @@ Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive doc
 - **Service Persistence**: Services stay running for background operations
 - **UI Improvements**: Better icons and visual consistency across the app
 
-### 📱 App Features
-- **Family Mode**: Complete implementation with child wallet management
-- **Address Management**: Enhanced address generation and management
-- **Accounting Reports**: Comprehensive transaction reporting
-- **RadioDoge Integration**: Offline transaction capabilities
-- **Digital Signing**: Advanced document signing features
-
 This project contains several sub-projects:
 
  * __wallet__:
@@ -77,71 +70,30 @@ This project contains several sub-projects:
      A minimal example app to demonstrate integration of Dogecoin payments into
      your Android app.
 
-## 🚀 RECENT CHANGES - BITCOIN TO DOGECOIN CONVERSION
-
-This wallet has been completely converted from Bitcoin to Dogecoin. Here are the major changes made:
-
-### 📱 Current Release (v1.0 - Version Code 76)
-- **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
-- **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
-- **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
-- **AlertDialogsFragment Fix**: Resolved NullPointerException crash in onAttach() method
-- **Family Mode UI Improvements**: Fixed gear icon to family icon, QR code to white for dark mode, added proper cancel/save icons
-- **Backup Verification Fix**: Resolved "verification failed" IOException during wallet backup process
-- **First-Time Setup Dialog**: Added modern, card-based setup dialog for new users with options for New Wallet, Restore Wallet, and Activate Child Wallet
-- **Accounting Reports**: Added comprehensive transaction reporting with CSV, JSON, and PDF export
-- **Build Optimization**: Enabled R8 minification for smaller app size (~14.3 MB)
-- **Google Play Ready**: Fully compliant with all Google Play Console requirements
-- **Version Management**: Incremental version code system for continuous updates
-- **UI Improvements**: Fixed status bar and navigation bar handling for all devices
-- **Security Enhancements**: Implemented secure memory clearing and enhanced PBKDF2 security
-- **Biometric Protection**: Added biometric authentication for widgets and app shortcuts
-- **Memory Security**: Comprehensive secure memory clearing for all sensitive data
-- **Author Attribution**: Added comprehensive author credits throughout 113+ files
-- **Mapping File**: Generated mapping.txt for Google Play Console crash reporting
-- **Release Files**: APK, AAB, and mapping files available in root directory
-- **Minification**: R8 minification enabled for optimized app size and performance
-- **Complete Translations**: Added missing strings to 11 major languages (242 new translations)
-- **Portuguese Support**: Both Brazilian and European Portuguese variants fully translated
-
 ## 📋 VERSION HISTORY
 
-### Version 76 (Latest) - Background Sync & Authentication Fixes
-- **Background Sync Enhancement**: Implemented continuous mempool monitoring for receiving payments in background
-- **Recurring Payments Background**: Enhanced background execution for scheduled payments
-- **Service Optimization**: Improved BlockchainService and RecurringPaymentsService for better background operation
-- **Battery Optimization**: Added requests to ignore battery optimizations for reliable background sync
-- **Biometric Authentication Fix**: Fixed session persistence - no longer asks for authentication during internal navigation
-- **Pay To Dropdown Fix**: Fixed dropdown selection retention when editing recurring payments
-- **Address Icon Update**: Updated QR code icon to wallet icon with proper white color for dark themes
-- **UI Improvements**: Better icons and visual consistency across the app
+### Version 86 - Widget Behavior Fix & Build Optimization
+- **Widget Click Behavior**: Fixed widget click to match app icon behavior exactly - widget now opens wallet identically to app icon
+- **Build Optimization**: Enabled minification and resource shrinking for optimized app size
+- **Version Update**: Incremented version code to 86
 
-### Version 71 - Minification & Security Enhancements
-- **Resource Shrinking**: Unused resources automatically removed from final build
-- **ProGuard Optimization**: Enhanced code obfuscation and optimization
-- **Enhanced Biometric Security**: More robust authentication flow
-- **Memory Management**: Improved secure memory clearing for sensitive data
-- **Widget Stability**: Better handling of widget state changes
+### Version 85 - UI Duplication Fix & Minification
+- **Fragment Duplicate Prevention**: Enhanced fragment management to prevent UI layer duplication
+- **Activity Lifecycle**: Improved activity state management to prevent double UI elements
+- **ProGuard Minification**: Enabled minification and resource shrinking for optimized app size
+- **Background State**: Simplified background tracking to prevent UI conflicts
 
-### Version 69 - Android 15 Compatibility & UI Improvements
-- **Android 15 Fix**: Resolved BOOT_COMPLETED foreground service restrictions
-- **Crash Fixes**: Fixed race condition crashes during wallet startup and synchronization
-- **AlertDialogsFragment Fix**: Resolved NullPointerException crash in onAttach() method
-- **Family Mode UI Improvements**: Fixed gear icon to family icon, QR code to white for dark mode
-- **Backup Verification Fix**: Resolved "verification failed" IOException during wallet backup process
-- **First-Time Setup Dialog**: Added modern, card-based setup dialog for new users
-- **Accounting Reports**: Added comprehensive transaction reporting with CSV, JSON, and PDF export
+### Version 83 - DogeConnect & Payment Terminal Mode
+- **DogeConnect Integration**: Fully integrated Dogecoin Foundation connect.dogecoin.org connect protocol for secure wallet connections
+- **Payment Terminal Mode**: PIN-protected secure payment terminal for POS systems with kiosk mode
+- **Background Execution**: Enhanced recurring payments with foreground service support for Android 15+ compatibility
+- **Permissions**: Added Android 15+ permissions for better background execution
+- **Terminal Mode Exit**: Secure PIN-based exit with automatic mode disabling when exiting
 
-### Version 61 - Initial Google Play Release
-- **Target SDK**: Updated to API 35 (Android 15) for Google Play Console compliance
-- **Google Play Ready**: Fully compliant with all Google Play Console requirements
-- **Version Management**: Incremental version code system for continuous updates
-- **UI Improvements**: Fixed status bar and navigation bar handling for all devices
-- **Security Enhancements**: Implemented secure memory clearing and enhanced PBKDF2 security
-- **Biometric Protection**: Added biometric authentication for widgets and app shortcuts
-- **Memory Security**: Comprehensive secure memory clearing for all sensitive data
-- **Author Attribution**: Added comprehensive author credits throughout 113+ files
-- **Complete Translations**: Added missing strings to 11 major languages (242 new translations)
+### Version 79-82 - Terminal Mode Development
+- **Payment Terminal**: Initial implementation of secure payment terminal for POS systems with kiosk mode
+- **PIN Protection**: PIN-based exit from terminal mode with automatic mode disabling
+- **Lifecycle Management**: Enhanced activity lifecycle to prevent bypassing terminal mode
 
 ## ✨ NEW FEATURES & IMPROVEMENTS
 
@@ -150,18 +102,6 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Modern QR Code Support**: Can read aesthetic QR codes with bullet points, custom shapes, and non-standard designs
 - **Better Accuracy**: Machine learning-based detection provides higher success rates
 - **Compatibility**: Maintains support for traditional square QR codes
-
-### 🔋 Battery Optimization Fix
-- **Fixed Background Sync Issues**: Resolved problems with header synchronization being interrupted by Android's battery optimization
-- **New Permission**: Added `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` permission
-- **Settings Integration**: Added battery optimization preference in app settings
-- **Reliable Sync**: Headers now sync consistently without being put to sleep
-
-### 🤖 Android 15 Compatibility Fix
-- **BOOT_COMPLETED Restrictions**: Fixed Android 15+ foreground service restrictions from boot receivers
-- **Smart Service Scheduling**: Blockchain service now schedules with delay on Android 15+ to avoid crashes
-- **Backward Compatibility**: Maintains full functionality on older Android versions
-- **Google Play Compliance**: Resolves all Android 15 compatibility warnings
 
 ### 🌐 Worldwide Node Discovery
 - **New Total Nodes Tab**: Added comprehensive network monitoring in the Network Monitor
@@ -242,111 +182,6 @@ This wallet has been completely converted from Bitcoin to Dogecoin. Here are the
 - **Real-time Data**: Live transaction data with automatic updates
 - **Export Summary**: Total amounts received, sent, and fees paid for comprehensive financial overview
 
-## 🔐 LATEST SECURITY ENHANCEMENTS
-
-### 🛡️ Advanced Security Features
-- **Secure Memory Clearing**: Implemented comprehensive secure memory clearing for all sensitive data including passwords, private keys, and cryptographic material
-- **Enhanced PBKDF2 Security**: Increased PBKDF2 iterations from 1,024 to 50,000 for significantly stronger password-based encryption
-- **Biometric Widget Protection**: All widget functions (receive, send, QR scan) now require biometric authentication when enabled
-- **App Shortcut Security**: Long-press app shortcuts (scan, send, request) are protected with biometric authentication
-- **Memory Protection**: Automatic secure clearing of sensitive data when activities are destroyed or app is terminated
-- **Key Derivation Security**: Enhanced scrypt parameters for stronger key derivation from passwords
-- **Session Management**: Improved biometric session handling with proper timeout and authentication state tracking
-
-### 🔒 Biometric Authentication System
-- **Widget Integration**: All widget buttons require biometric verification before opening their respective functions
-- **App Shortcut Protection**: Long-press shortcuts on the app icon are secured with biometric authentication
-- **Conditional Security**: Biometric prompts only appear when biometric is enabled and hardware is available
-- **Fallback Behavior**: Widgets and shortcuts work normally when biometric is disabled for better user experience
-- **Session Persistence**: Respects existing authentication sessions to avoid duplicate prompts
-- **Secure Activity Flow**: BiometricAuthActivity acts as secure intermediary for all protected functions
-
-### 🧹 Memory Security Implementation
-- **SecureMemory Utility**: New utility class for securely clearing sensitive data from memory
-- **Password Protection**: All password fields are securely cleared after use
-- **Private Key Security**: Private keys are securely wiped from memory after operations
-- **Crypto Operations**: Enhanced encryption/decryption with secure memory clearing
-- **Activity Lifecycle**: Automatic memory clearing on activity destruction
-- **Application Termination**: Secure cleanup when app is terminated by the system
-
-### 🔐 Cryptographic Security Improvements
-- **PBKDF2 Enhancement**: 49x increase in iteration count (1,024 → 50,000) for brute force protection
-- **Time Attack Resistance**: Each password attempt now takes ~50x longer, significantly improving security
-- **Industry Standards**: Aligns with current security recommendations for password-based encryption
-- **Performance Balance**: Maintains reasonable encryption/decryption speeds while maximizing security
-- **Backward Compatibility**: Handles migration from older wallet files with lower iteration counts
-
-### Core Network Changes
-- **Network Parameters**: Switched from Bitcoin mainnet/testnet to Dogecoin mainnet using `DogecoinMainNetParams`
-- **Library Migration**: Replaced `bitcoinj` with `libdohj` (DogecoinJ library) version 0.15
-- **Application ID**: Changed from `de.schildbach.wallet` to `org.dogecoin.wallet`
-- **Network Constants**: Updated all network-specific constants for Dogecoin
-
-### UI and Branding Updates
-- **App Name**: Changed from "Bitcoin Wallet" to "Dogecoin Wallet"
-- **Currency Symbol**: Updated from BTC to DOGE throughout the interface
-- **Color Scheme**: Implemented Dogecoin-themed amber/yellow color scheme:
-  - Primary color: `#ffc107` (amber)
-  - Primary dark: `#ff8f00` (darker amber)
-  - Accent color: `#ffc107` (amber)
-- **App Icon**: Updated to Dogecoin-themed iconography
-- **String Resources**: All user-facing text converted from Bitcoin to Dogecoin terminology
-
-### Technical Implementation
-- **MIME Types**: Updated to Dogecoin-specific MIME types:
-  - `application/x-dogetx` for transactions
-  - `application/x-dogecoin-wallet-backup` for wallet backups
-- **URL Schemes**: Added support for `dogecoin:` and `DOGECOIN:` URL schemes
-- **BIP-21 Support**: Implemented BIP-21 URI scheme support for QR code payments
-- **Block Explorer**: Configured to use SoChain for Dogecoin blockchain exploration
-- **API Integration**: Updated to use Dogecoin-specific APIs and endpoints
-
-### Build Configuration Updates
-- **Gradle**: Updated to Android Gradle Plugin 8.12.2
-- **Target SDK**: Updated to Android API 34
-- **Dependencies**: Updated all AndroidX libraries to latest compatible versions
-- **NDK**: Temporarily disabled for testing (can be re-enabled if needed)
-- **Product Flavors**: Simplified build configuration
-
-### Asset Updates
-- **Checkpoints**: Updated with Dogecoin blockchain checkpoints
-- **Electrum Servers**: Configured Dogecoin Electrum servers
-- **Fee Structure**: Updated to follow official Dogecoin fee recommendations (0.01 DOGE per KB)
-- **Word Lists**: Updated BIP39 wordlist for Dogecoin compatibility
-
-### Security and Privacy
-- **Report Email**: Updated to `dogecoinandroid@gmail.com`
-- **Source URLs**: Updated to point to Dogecoin wallet repository
-- **User Agent**: Changed to "Dogecoin Wallet"
-- **Network Security**: Maintained all original security features
-
-### Digital Signing Implementation
-- **Cryptographic Signing**: Uses ECDSA with secp256k1 curve for document authentication
-- **SHA256 Hashing**: Secure file hash generation for integrity verification
-- **Private Key Security**: Signing uses wallet's private keys without exposing them
-- **File Provider**: Secure file sharing for camera-captured photos
-- **Signature Format**: Base64-encoded signatures for easy sharing and verification
-
-### Recurring Payments Implementation
-- **SQLite Database**: Local storage for payment schedules and configuration
-- **JobScheduler**: Android JobScheduler for reliable background execution
-- **OP_RETURN Support**: Custom reference data stored on Dogecoin blockchain
-- **Address Book Integration**: Room database for managing payment destinations
-- **Context Management**: Proper BitcoinJ context initialization for transaction execution
-- **Error Handling**: Comprehensive error handling and logging for payment failures
-
-### Family Mode Implementation
-- **HD Key Derivation**: Uses BitcoinJ's DeterministicKeyChain for secure child key generation
-- **SQLite Database**: Local storage for family member data and derived keys
-- **QR Code Generation**: ZXing library for sharing derived keys between devices
-- **PIN Authentication**: SharedPreferences-based PIN storage and validation
-- **Address Monitoring**: Real-time blockchain monitoring for child wallet addresses
-- **Key Import/Export**: Secure import and removal of derived keys from wallet
-- **Transaction Tracking**: Individual balance calculation and transaction monitoring per child
-- **UI State Management**: Dynamic UI updates based on child mode activation status
-- **Automatic Address Exclusion**: Child addresses are automatically excluded from spending to protect their funds
-- **Reserved Balance Management**: Main wallet balance excludes child funds to prevent accidental spending
-
 ## 📱 FEATURES
 
 • **Decentralized**: No registration, web service or cloud needed! This wallet is peer-to-peer.
@@ -405,7 +240,7 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: v1.0 (Version Code: 76)
+- **Current Version**: v1.0 (Version Code: 86)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Status**: Available now on Google Play Store
@@ -561,7 +396,7 @@ After building, you'll find:
 
 #### **Current Build Configuration**:
 - **Version Name**: 1.0
-- **Version Code**: 76
+- **Version Code**: 86
 - **Target SDK**: 35
 - **Minify**: Enabled (R8)
 - **Signing**: Release keystore configured

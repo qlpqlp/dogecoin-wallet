@@ -52,7 +52,7 @@ import static androidx.core.util.Preconditions.checkArgument;
  */
 public final class PaymentIntent implements Parcelable {
     public enum Standard {
-        BIP21, BIP70
+        BIP21, BIP70, DOGEORG_CONNECT
     }
 
     public final static class Output implements Parcelable {

@@ -119,6 +119,11 @@ public class RecurringPaymentsService extends JobService {
     public boolean onStartJob(JobParameters params) {
         log.info("RecurringPaymentsService job started");
         
+        // Start foreground service for better reliability on Android 8+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService();
+        }
+        
         // Run on background thread
         new Thread(() -> {
             try {
@@ -143,6 +148,26 @@ public class RecurringPaymentsService extends JobService {
         }).start();
         
         return true; // Job is running asynchronously
+    }
+    
+    private void startForegroundService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            final android.app.NotificationChannel channel = new android.app.NotificationChannel(
+                "recurring_payments", "Recurring Payments", android.app.NotificationManager.IMPORTANCE_LOW);
+            channel.setDescription("Background processing of recurring payments");
+            
+            final android.app.NotificationManager notificationManager = getSystemService(android.app.NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+            
+            final android.app.Notification notification = new android.app.Notification.Builder(this, "recurring_payments")
+                .setContentTitle("Processing Recurring Payments")
+                .setContentText("Checking for due payments...")
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setOngoing(true)
+                .build();
+            
+            startForeground(1, notification);
+        }
     }
     
     @Override

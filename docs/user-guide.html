@@ -174,7 +174,7 @@
         <h1>User Guide - Dogecoin Wallet</h1>
         <p>Welcome to the most advanced Dogecoin wallet for Android! This guide will help you get started and make the most of all features.</p>
         
-        <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+        <h2 id="getting-started"><i class="fas fa-rocket"></i> Getting Started</h2>
         <h3>First Launch</h3>
         <p>When you first open the app, you'll be guided through:</p>
         <ul>
@@ -188,7 +188,7 @@
             <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Always backup your wallet! Write down your recovery phrase and store it safely. Without a backup, you cannot recover your funds if you lose your device.
         </div>
         
-        <h2><i class="fas fa-coins"></i> Basic Operations</h2>
+        <h2 id="basic-operations"><i class="fas fa-coins"></i> Basic Operations</h2>
         <h3>Sending Dogecoin</h3>
         <ol>
             <li>Tap "Send" on the main screen</li>
@@ -204,7 +204,7 @@
             <li>Wait for the transaction to be confirmed</li>
         </ol>
         
-        <h2><i class="fas fa-users"></i> Family Mode</h2>
+        <h2 id="family-mode"><i class="fas fa-users"></i> Family Mode</h2>
         <p>Create child wallets for family members:</p>
         <ol>
             <li>Go to Settings → Family Mode</li>
@@ -213,16 +213,134 @@
             <li>Monitor their transactions and balance</li>
         </ol>
         
-        <h2><i class="fas fa-signature"></i> Digital Signing</h2>
-        <p>Sign documents with your Dogecoin private key:</p>
+        <h2 id="digital-signing"><i class="fas fa-signature"></i> Digital Signing</h2>
+        <p>Prove authenticity and verify integrity of any document, photo, or text using cryptographic signatures tied to your Dogecoin address.</p>
+        
+        <h3>What is Digital Signing?</h3>
+        <p>Digital Signing uses your Dogecoin private key to create a cryptographic signature that proves:</p>
+        <ul>
+            <li><strong>Authenticity:</strong> You created or approved the content</li>
+            <li><strong>Integrity:</strong> The content hasn't been modified or tampered with</li>
+            <li><strong>Non-repudiation:</strong> You cannot deny having signed the content</li>
+            <li><strong>Timestamp:</strong> The content existed at the time of signing</li>
+        </ul>
+        
+        <h3>How It Works</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Technical Process:</strong>
+            <ol>
+                <li>Content is hashed using SHA-256 to create a unique fingerprint</li>
+                <li>Your private key signs the hash using ECDSA cryptography (secp256k1 curve)</li>
+                <li>The signature is encoded in Base64 format</li>
+                <li>Your Dogecoin address is included for verification</li>
+                <li>Anyone can verify the signature without exposing your private key</li>
+            </ol>
+        </div>
+        
+        <h3>What Can You Sign?</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-file-text"></i> Text Documents:</strong> Sign emails, contracts, agreements, or any text content
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-file"></i> Files:</strong> Sign PDFs, images, videos, or any file type by generating its SHA-256 hash
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-camera"></i> Photos:</strong> Take a photo with the camera and sign it instantly to prove authenticity and timestamp
+        </div>
+        
+        <h3>Use Cases</h3>
+        <ul>
+            <li><strong>Legal Documents:</strong> Sign contracts, agreements, or legal notices with cryptographically provable authorship</li>
+            <li><strong>Proof of Authenticity:</strong> Prove you took a specific photo or created content at a certain time</li>
+            <li><strong>Business Records:</strong> Sign invoices, receipts, or transaction records</li>
+            <li><strong>Content Verification:</strong> Prove content hasn't been altered since signing</li>
+            <li><strong>Identity Verification:</strong> Digitally sign documents to prove your identity</li>
+            <li><strong>Licensing:</strong> Sign software, artwork, or creative work with your cryptographic signature</li>
+        </ul>
+        
+        <h3>Digital Signatures vs NFTs / DRC-20 / Doginals / Ordinals</h3>
+        <p>Comparing digital signatures with blockchain-based attestations:</p>
+        <div class="feature-box">
+            <strong><i class="fas fa-check-circle" style="color: #51cf66;"></i> Digital Signatures - Advantages:</strong>
+            <ul>
+                <li><strong>No On-Chain Storage:</strong> Documents/photos aren't stored on blockchain, saving space and fees</li>
+                <li><strong>Instant Verification:</strong> Verify signatures offline or online without waiting for blockchain confirmations</li>
+                <li><strong>Low Cost:</strong> Free to sign, no transaction fees required</li>
+                <li><strong>Privacy:</strong> Content remains private, only the hash and signature are shared</li>
+                <li><strong>Offline Capable:</strong> Sign and verify without internet connection</li>
+                <li><strong>Lightweight:</strong> Signatures are small (64-70 bytes), easy to share</li>
+                <li><strong>Proven Technology:</strong> Based on established cryptographic standards (ECDSA, SHA-256)</li>
+                <li><strong>No Network Congestion:</strong> No dependency on network state or gas fees</li>
+                <li><strong>Reversible:</strong> Signatures don't permanently consume blockchain resources</li>
+                <li><strong>Unlimited:</strong> Sign unlimited documents without blockchain constraints</li>
+            </ul>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-circle" style="color: #ffc107;"></i> NFTs / DRC-20 / Doginals / Ordinals - Limitations:</strong>
+            <ul>
+                <li><strong>On-Chain Storage Required:</strong> Data must be stored on blockchain, consuming network resources</li>
+                <li><strong>High Fees:</strong> Pay transaction fees for every attestation</li>
+                <li><strong>Network Dependency:</strong> Requires blockchain consensus and confirmations</li>
+                <li><strong>Storage Limits:</strong> Block size limitations restrict content size</li>
+                <li><strong>Privacy Concerns:</strong> Content is permanently on public blockchain</li>
+                <li><strong>Scalability Issues:</strong> Every signature permanently adds data to blockchain</li>
+                <li><strong>Environmental Impact:</strong> Requires blockchain consensus validation</li>
+                <li><strong>Network Congestion:</strong> Can fail during high network usage</li>
+                <li><strong>Permanent:</strong> Cannot be removed once added to blockchain</li>
+                <li><strong>Limited Quantity:</strong> Blockchain space is finite resource</li>
+            </ul>
+        </div>
+        
+        <h3>How Digital Signatures Help the Blockchain</h3>
+        <p>Digital signatures provide a better approach to content verification:</p>
+        <ul>
+            <li><strong>Reduced Blockchain Bloat:</strong> No data stored on-chain, keeping blockchain lean and fast</li>
+            <li><strong>Lower Fees:</strong> No transaction fees, making verification accessible to everyone</li>
+            <li><strong>Better Scalability:</strong> Unlimited signatures without impacting network</li>
+            <li><strong>Privacy First:</strong> Sensitive content stays off public blockchain</li>
+            <li><strong>Environmental Efficiency:</strong> Cryptographic verification without blockchain mining</li>
+            <li><strong>Instant Verification:</strong> No waiting for blockchain confirmations</li>
+            <li><strong>Proven Security:</strong> Same cryptographic security as Dogecoin transactions</li>
+            <li><strong>Flexible Storage:</strong> Store signatures anywhere (email, cloud, local)</li>
+        </ul>
+        
+        <h3>How to Use Digital Signing</h3>
         <ol>
-            <li>Go to Tools → Digital Signing</li>
-            <li>Enter text or select a file</li>
-            <li>Generate your signature</li>
-            <li>Share the signed document</li>
+            <li><strong>Open Tools:</strong> Navigate to the Tools menu in your wallet</li>
+            <li><strong>Select Digital Signing:</strong> Choose the digital signing option</li>
+            <li><strong>Choose Content:</strong> Enter text, select a file, or take a photo</li>
+            <li><strong>Generate Signature:</strong> Create your unique cryptographic signature</li>
+            <li><strong>Share:</strong> Share the signed content with anyone for verification</li>
+            <li><strong>Verify:</strong> Recipients can verify the signature using your Dogecoin address</li>
         </ol>
         
-        <h2><i class="fas fa-credit-card"></i> Recurring Payments</h2>
+        <h3>Verification Process</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> How to Verify a Signature:</strong>
+            <ol>
+                <li>Hash the original content using SHA-256</li>
+                <li>Decode the Base64 signature</li>
+                <li>Recover the public key from the signature</li>
+                <li>Derive the Dogecoin address from the public key</li>
+                <li>Verify it matches the claimed signer's address</li>
+            </ol>
+        </div>
+        
+        <h3>Best Practices</h3>
+        <ul>
+            <li>Always verify signatures before trusting content</li>
+            <li>Store original content separately from signatures</li>
+            <li>Use secure channels to share signed content</li>
+            <li>Keep your private key secure - losing it means losing signing capability</li>
+            <li>Document the signing timestamp for legal purposes</li>
+        </ul>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Digital signatures are perfect for proving authorship, authenticity, and integrity without bloating the blockchain with data. Think of it as cryptographic proof that your Dogecoin address "approved" the content at a specific moment in time.
+        </div>
+        
+        <h2 id="recurring-payments"><i class="fas fa-credit-card"></i> Recurring Payments</h2>
         <p>Schedule automatic payments:</p>
         <ol>
             <li>Go to Tools → Recurring Payments</li>
@@ -231,7 +349,7 @@
             <li>Enable/disable as needed</li>
         </ol>
         
-        <h2><i class="fas fa-chart-line"></i> Accounting Reports & Transaction Analytics</h2>
+        <h2 id="accounting-reports"><i class="fas fa-chart-line"></i> Accounting Reports & Transaction Analytics</h2>
         <p>Generate comprehensive reports of all your wallet transactions for accounting, tax purposes, or personal financial tracking.</p>
         
         <h3>What are Accounting Reports?</h3>
@@ -384,8 +502,8 @@
             <li>Restart the app and try again</li>
         </ul>
         
-        <h2><i class="fas fa-cogs"></i> Advanced Features</h2>
-        <h3>Network Monitor</h3>
+        <h2 id="advanced-features"><i class="fas fa-cogs"></i> Advanced Features</h2>
+        <h3 id="network-monitor">Network Monitor</h3>
         <p>Monitor your connection to the Dogecoin network and view discovered nodes worldwide.</p>
         
         <h3>Address Book</h3>
@@ -393,6 +511,226 @@
         
         <h3>Exchange Rates</h3>
         <p>View real-time Dogecoin prices in various fiat currencies.</p>
+        
+        <h2 id="dogeconnect"><i class="fas fa-plug"></i> DogeConnect - Wallet Integration</h2>
+        <p>DogeConnect is a protocol developed by the <a href="https://github.com/dogeorg/connect" target="_blank">Dogecoin Foundation</a> that enables secure payment envelopes for transactions. Your wallet can parse and process DogeConnect payment envelopes from merchants and services, enabling seamless integration with compatible platforms. Learn more at <a href="https://connect.dogecoin.org" target="_blank">connect.dogecoin.org</a>.</p>
+        
+        <h3>What is DogeConnect?</h3>
+        <p>DogeConnect is a secure wallet integration protocol that enables the Dogecoin Wallet to communicate with external services and dApps through encrypted envelopes, providing a seamless and safe user experience.</p>
+        
+        <h3>How DogeConnect Works</h3>
+        <ol>
+            <li><strong>Service Connection:</strong> Services connect to your wallet using the DogeConnect protocol</li>
+            <li><strong>Secure Envelope:</strong> Data is packaged in encrypted envelopes for secure transmission</li>
+            <li><strong>Wallet Processing:</strong> Your wallet processes the request and generates appropriate responses</li>
+            <li><strong>Response Delivery:</strong> Results are sent back to the requesting service</li>
+        </ol>
+        
+        <h3>Features</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Secure Communication:</strong> All data is transmitted in encrypted envelopes for maximum security.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-unlock"></i> Easy Integration:</strong> Connect with dogecoin.org and other compatible platforms seamlessly.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-bolt"></i> Fast Transactions:</strong> Quick and efficient transaction processing through direct wallet connection.
+        </div>
+        
+        <h3>Using DogeConnect</h3>
+        <p>When a service wants to initiate a Dogecoin payment or transaction through DogeConnect:</p>
+        <ol>
+            <li>The service creates a DogeConnect envelope with transaction details</li>
+            <li>Your wallet receives the envelope and prompts you to review</li>
+            <li>You confirm or reject the transaction</li>
+            <li>The wallet processes the transaction and sends the response back to the service</li>
+        </ol>
+        
+        <p>All communication is encrypted and secure, ensuring your private keys never leave your device.</p>
+        
+        <h2 id="payment-terminal"><i class="fas fa-cash-register"></i> Payment Terminal Mode</h2>
+        <p>Payment Terminal Mode is a secure, PIN-protected full-screen mode perfect for Point of Sale (POS) systems and merchant environments. It provides a kiosk-like experience for displaying payment QR codes and monitoring incoming payments.</p>
+        
+        <h3>What is Payment Terminal Mode?</h3>
+        <p>Payment Terminal Mode locks the wallet into a secure payment interface with full-screen display, QR code generation for payment requests, and PIN-protected exit. This makes it ideal for merchants, businesses, and any scenario where you need a dedicated payment terminal.</p>
+        
+        <h3>How to Enable Payment Terminal Mode</h3>
+        <ol>
+            <li>Open Settings in the Dogecoin Wallet</li>
+            <li>Navigate to General preferences</li>
+            <li>Find "Payment Terminal Mode" option</li>
+            <li>Tap to enable terminal mode</li>
+            <li>Set a secure PIN when prompted</li>
+            <li>The wallet will automatically switch to terminal mode</li>
+        </ol>
+        
+        <h3>Using Payment Terminal Mode</h3>
+        <h4>Generating Payment Requests</h4>
+        <ol>
+            <li>Enter the amount you want to receive</li>
+            <li>Tap "Generate QR Code"</li>
+            <li>Display the QR code to customers</li>
+            <li>Monitor for incoming payments</li>
+        </ol>
+        
+        <h4>Features</h4>
+        <div class="feature-box">
+            <strong><i class="fas fa-lock"></i> PIN Protection:</strong> Terminal mode cannot be exited without entering the correct PIN. This ensures unauthorized users cannot access your wallet.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-desktop"></i> Full Screen Kiosk Mode:</strong> Terminal mode displays in full-screen, preventing users from switching apps or accessing other features.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-qrcode"></i> QR Code Display:</strong> Large, clear QR codes perfect for scanning with mobile devices.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-bell"></i> Payment Monitoring:</strong> Real-time monitoring for incoming payments with instant notifications.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-wifi"></i> HTTP API:</strong> Integration with POS systems via HTTP API for automated payment processing.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Secure Exit:</strong> Exit requires PIN authentication and automatically disables terminal mode to prevent unauthorized access.
+        </div>
+        
+        <h3>Exiting Payment Terminal Mode</h3>
+        <ol>
+            <li>Tap "Exit Terminal Mode" at the bottom of the screen</li>
+            <li>Enter your PIN when prompted</li>
+            <li>Confirm exit</li>
+            <li>The wallet will return to normal mode and terminal mode will be disabled</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Security Note:</strong> When you exit terminal mode with the correct PIN, the mode is automatically disabled and the PIN is cleared. You will need to set a new PIN when activating terminal mode again.
+        </div>
+        
+        <h3>Best Practices for Payment Terminal Mode</h3>
+        <ul>
+            <li>Use a secure PIN that's different from your main wallet password</li>
+            <li>Keep the device in a secure location while in terminal mode</li>
+            <li>Monitor incoming payments regularly</li>
+            <li>Disable terminal mode when not in use</li>
+            <li>Test the exit process to ensure you remember your PIN</li>
+        </ul>
+        
+        <h3>Payment Terminal HTTP API</h3>
+        <p>Payment Terminal Mode includes a built-in HTTP API server for POS integration. The API runs on <code>localhost:9333</code> and provides endpoints for generating payment requests programmatically.</p>
+        
+        <h4>Endpoints</h4>
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> GET /payment-request</strong>
+            <p>Generate a new payment request without a specific amount.</p>
+            <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
+GET http://localhost:9333/payment-request
+
+Response:
+{
+  "success": true,
+  "address": "DBxx...",
+  "message": "Payment request generated"
+}</pre>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> POST /payment-request</strong>
+            <p>Create a payment request for a specific amount in DOGE.</p>
+            <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
+POST http://localhost:9333/payment-request
+Content-Type: application/json
+
+Request Body:
+{
+  "amount": 1.5
+}
+
+Response:
+{
+  "success": true,
+  "address": "DBxx...",
+  "amount": 1.5,
+  "message": "Payment request generated"
+}</pre>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> GET /status</strong>
+            <p>Check the status of the payment terminal service.</p>
+            <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
+GET http://localhost:9333/status
+
+Response:
+{
+  "success": true,
+  "running": true,
+  "port": 9333,
+  "message": "Payment Terminal API is running"
+}</pre>
+        </div>
+        
+        <h4>API Usage Examples</h4>
+        <p>Integrate with your POS system using these commands:</p>
+        
+        <h5>JavaScript Example</h5>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">// Generate payment request for 10 DOGE
+fetch('http://localhost:9333/payment-request', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ amount: 10 })
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Payment address:', data.address);
+  console.log('Amount:', data.amount);
+});</pre>
+        
+        <h5>cURL Example</h5>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"># Generate payment request
+curl -X POST http://localhost:9333/payment-request \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 5.0}'
+
+# Check status
+curl http://localhost:9333/status</pre>
+        
+        <h5>Python Example</h5>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">import requests
+
+# Create payment request
+response = requests.post(
+    'http://localhost:9333/payment-request',
+    json={'amount': 2.5}
+)
+
+data = response.json()
+print(f"Address: {data['address']}")
+print(f"Amount: {data['amount']} DOGE")</pre>
+        
+        <h3>Troubleshooting Payment Terminal Mode</h3>
+        <h4>Can't Exit Terminal Mode</h4>
+        <p>If you forgot your PIN:</p>
+        <ul>
+            <li>Wait for the timeout and try again</li>
+            <li>Force stop the app from device settings (this will disable terminal mode)</li>
+            <li>Contact support if you're locked out of your wallet</li>
+        </ul>
+        
+        <h4>QR Code Not Displaying</h4>
+        <p>If the QR code doesn't appear:</p>
+        <ul>
+            <li>Check that you entered a valid amount</li>
+            <li>Ensure your wallet has generated a receive address</li>
+            <li>Try canceling and generating a new payment request</li>
+        </ul>
+        
+        <h4>API Not Responding</h4>
+        <p>If the API is not accessible:</p>
+        <ul>
+            <li>Ensure Payment Terminal Mode is enabled and active</li>
+            <li>Verify the wallet is running on the device</li>
+            <li>Check that port 9333 is not being used by another application</li>
+            <li>Restart the terminal mode to restart the API server</li>
+        </ul>
         
         <h2 id="radiodoge"><i class="fas fa-broadcast-tower"></i> RadioDoge - Offline Transactions</h2>
         <p>Send Dogecoin transactions without internet using LoRa technology powered by <a href="https://github.com/dogecoinfoundation/radiodoge" target="_blank">RadioDoge V3 from Dogecoin Foundation</a>.</p>
@@ -447,7 +785,7 @@
             </ul>
         </div>
         
-        <h2><i class="fas fa-shield-alt"></i> Security Tips</h2>
+        <h2 id="security-tips"><i class="fas fa-shield-alt"></i> Security Tips</h2>
         <ul>
             <li>Always verify addresses before sending</li>
             <li>Keep your device secure and updated</li>
@@ -456,7 +794,7 @@
             <li>Regularly backup your wallet</li>
         </ul>
         
-        <h2><i class="fas fa-question-circle"></i> Troubleshooting</h2>
+        <h2 id="troubleshooting"><i class="fas fa-question-circle"></i> Troubleshooting</h2>
         <h3>Transaction Not Confirming</h3>
         <p>Check your internet connection and wait for network confirmation. Large transactions may take longer.</p>
         
@@ -466,7 +804,7 @@
         <h3>Lost Device</h3>
         <p>If you have a backup, you can restore your wallet on a new device using the recovery phrase.</p>
         
-        <h2><i class="fa-solid fa-info"></i> Support</h2>
+        <h2 id="support"><i class="fa-solid fa-info"></i> Support</h2>
         <p>Need help? Contact us:</p>
         <ul>
             <li>GitHub Issues: <a href="https://github.com/qlpqlp/dogecoin-wallet/issues">Report a bug</a></li>

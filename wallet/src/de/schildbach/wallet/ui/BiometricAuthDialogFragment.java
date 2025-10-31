@@ -24,6 +24,7 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import org.slf4j.Logger;
@@ -50,6 +51,16 @@ public class BiometricAuthDialogFragment extends DialogFragment {
     private BiometricAuthCallback callback;
 
     public static void show(final FragmentManager fm, final BiometricAuthCallback callback) {
+        // Check if fragment already exists to prevent duplicates
+        Fragment existingFragment = fm.findFragmentByTag(FRAGMENT_TAG);
+        if (existingFragment != null) {
+            // Fragment already exists, just update callback
+            if (existingFragment instanceof BiometricAuthDialogFragment) {
+                ((BiometricAuthDialogFragment) existingFragment).setCallback(callback);
+            }
+            return;
+        }
+        
         final BiometricAuthDialogFragment newFragment = new BiometricAuthDialogFragment();
         newFragment.setCallback(callback);
         newFragment.show(fm, FRAGMENT_TAG);

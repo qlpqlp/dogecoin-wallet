@@ -237,6 +237,7 @@
 <string name="input_parser_invalid_address">Got invalid dogecoin address!\n(Mixing up mainnet/testnet?)</string>
 <string name="input_parser_unverifyable_paymentrequest">Cannot verify payment request:\n%s</string>
 <string name="input_parser_invalid_paymentrequest">Invalid payment request:\n%s</string>
+<string name="input_parser_invalid_signature">Invalid payment signature</string>
 <string name="input_parser_invalid_transaction">Invalid transaction:\n%s</string>
 <string name="preferences_activity_title">Settings</string>
 <string name="preferences_category_general">General</string>
@@ -284,6 +285,28 @@
     <string name="preferences_radiodoge_title">RadioDoge Support</string>
     <string name="preferences_radiodoge_summary">Use RadioDoge to broadcast transactions when no internet connection is available</string>
     <string name="radiodoge_status_message">Using RadioDoge for payments without Internet</string>
+    
+    <!-- Payment Terminal Mode -->
+    <string name="preferences_payment_terminal_title">Payment Terminal Mode</string>
+    <string name="preferences_payment_terminal_summary">Secure payment terminal for POS systems</string>
+    <string name="payment_terminal_set_pin_title">Set Terminal PIN</string>
+    <string name="payment_terminal_set_pin_message">Enter a PIN code to protect terminal mode. You will need this PIN to exit terminal mode.</string>
+    <string name="payment_terminal_enter_pin_title">Enter Terminal PIN</string>
+    <string name="payment_terminal_enter_pin_message">Enter your PIN to exit terminal mode</string>
+    <string name="payment_terminal_wrong_pin">Wrong PIN. Please try again.</string>
+    <string name="payment_terminal_pin_required">PIN is required to activate terminal mode</string>
+    <string name="payment_terminal_activate_title">Payment Terminal Mode</string>
+    <string name="payment_terminal_activate_message">Do you want to activate Payment Terminal Mode? You will need to set a PIN if not already set.</string>
+    <string name="payment_terminal_active">Terminal mode is active</string>
+    <string name="payment_terminal_inactive">Terminal mode is inactive</string>
+    <string name="payment_terminal_enter_amount">Enter amount in DOGE</string>
+    <string name="payment_terminal_generate_qr">Generate Payment Request</string>
+    <string name="payment_terminal_waiting_for_payment">Waiting for payment…</string>
+    <string name="payment_terminal_payment_received">Payment received!</string>
+    <string name="payment_terminal_payment_confirmed">Payment confirmed!</string>
+    <string name="payment_terminal_new_request">New Request</string>
+    <string name="payment_terminal_exit_mode">Exit Terminal Mode</string>
+    
     <string name="preferences_report_issue_title">Report issue</string>
 <string name="preferences_initiate_reset_title">Reset block chain</string>
 <string name="preferences_initiate_reset_summary">Reset block chain, transactions and wallet balance. Replay will take a while, so only do this if you know why.</string>

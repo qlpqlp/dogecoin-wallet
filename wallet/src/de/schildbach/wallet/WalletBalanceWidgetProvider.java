@@ -169,9 +169,10 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.widget_button_send_qr, minWidth > 200 ? View.VISIBLE : View.GONE);
         }
 
-        // Set up widget click handlers with biometric authentication
+        // Set up widget click handlers
+        // Balance button uses launcher intent (same as app icon) to ensure identical behavior
         views.setOnClickPendingIntent(R.id.widget_button_balance,
-                createBiometricPendingIntent(context, 0, WalletActivity.class));
+                createLauncherPendingIntent(context, 0));
         views.setOnClickPendingIntent(R.id.widget_button_request,
                 createBiometricPendingIntent(context, 1, RequestCoinsActivity.class));
         views.setOnClickPendingIntent(R.id.widget_button_send,
@@ -189,6 +190,21 @@ public class WalletBalanceWidgetProvider extends AppWidgetProvider {
         } catch (final Exception x) {
             return null;
         }
+    }
+    
+    /**
+     * Create a PendingIntent that uses the same launcher intent format as the app icon
+     * This ensures widget clicks behave exactly like app icon clicks
+     */
+    private static PendingIntent createLauncherPendingIntent(Context context, int requestCode) {
+        // Use the same intent format as app icon launch (ACTION_MAIN + CATEGORY_LAUNCHER)
+        // This will be handled by WalletActivity.onCreate() exactly like app icon clicks
+        Intent launcherIntent = new Intent(context, WalletActivity.class);
+        launcherIntent.setAction(Intent.ACTION_MAIN);
+        launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return PendingIntent.getActivity(context, requestCode, launcherIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
     
     /**

@@ -111,6 +111,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -484,6 +485,11 @@ public final class SendCoinsFragment extends Fragment {
             radiodogeStatusChecker.startChecking();
         }
 
+        // Fetch and validate DogeConnect envelope if this is a DogeConnect payment
+        if (viewModel.paymentIntent != null && viewModel.paymentIntent.standard == PaymentIntent.Standard.DOGEORG_CONNECT) {
+            fetchAndValidateDogeConnectEnvelope();
+        }
+
         updateView();
         handler.post(dryrunRunnable);
     }
@@ -757,31 +763,137 @@ public final class SendCoinsFragment extends Fragment {
                 viewModel.sentTransaction.setValue(transaction);
                 setState(SendCoinsViewModel.State.SENDING);
 
-                final Address refundAddress = viewModel.paymentIntent.standard == Standard.BIP70
-                        ? wallet.freshAddress(KeyPurpose.REFUND) : null;
-                final Payment payment = PaymentProtocol.createPaymentMessage(Collections.singletonList(transaction),
-                        finalAmount, refundAddress, null, viewModel.paymentIntent.payeeData);
+                // Check if this is a DogeConnect payment
+                if (viewModel.paymentIntent.standard == PaymentIntent.Standard.DOGEORG_CONNECT) {
+                    // Handle DogeConnect payment submission
+                    handleDogeConnectPayment(transaction, finalAmount, wallet);
+                } else {
+                    // Normal BIP70 or BIP21 payment flow
+                    final Address refundAddress = viewModel.paymentIntent.standard == Standard.BIP70
+                            ? wallet.freshAddress(KeyPurpose.REFUND) : null;
+                    final Payment payment = PaymentProtocol.createPaymentMessage(Collections.singletonList(transaction),
+                            finalAmount, refundAddress, null, viewModel.paymentIntent.payeeData);
 
-                if (directPaymentEnableView.isChecked())
-                    directPay(payment);
+                    if (directPaymentEnableView.isChecked())
+                        directPay(payment);
 
-                final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
-                future.addListener(() -> {
-                    // Auto-close the dialog after a short delay
-                    if (config.getSendCoinsAutoclose())
-                        handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
-                }, Threading.THREAD_POOL);
+                    final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                    future.addListener(() -> {
+                        // Auto-close the dialog after a short delay
+                        if (config.getSendCoinsAutoclose())
+                            handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                    }, Threading.THREAD_POOL);
 
-                final ComponentName callingActivity = activity.getCallingActivity();
-                if (callingActivity != null) {
-                    log.info("returning result to calling activity: {}", callingActivity.flattenToString());
+                    final ComponentName callingActivity = activity.getCallingActivity();
+                    if (callingActivity != null) {
+                        log.info("returning result to calling activity: {}", callingActivity.flattenToString());
 
-                    final Intent result = new Intent();
-                    BitcoinIntegration.transactionHashToResult(result, transaction.getTxId().toString());
-                    if (viewModel.paymentIntent.standard == Standard.BIP70)
-                        BitcoinIntegration.paymentToResult(result, payment.toByteArray());
-                    activity.setResult(Activity.RESULT_OK, result);
+                        final Intent result = new Intent();
+                        BitcoinIntegration.transactionHashToResult(result, transaction.getTxId().toString());
+                        if (viewModel.paymentIntent.standard == Standard.BIP70)
+                            BitcoinIntegration.paymentToResult(result, payment.toByteArray());
+                        activity.setResult(Activity.RESULT_OK, result);
+                    }
                 }
+            }
+            
+            private void handleDogeConnectPayment(final Transaction transaction, final Coin finalAmount, final Wallet wallet) {
+                new Thread(() -> {
+                    try {
+                        // Extract DC URL and payment ID from merchantData
+                        if (viewModel.paymentIntent.payeeData != null) {
+                            String merchantData = new String(viewModel.paymentIntent.payeeData, StandardCharsets.UTF_8);
+                            String dcUrl = extractParameter(merchantData, "dc");
+                            String paymentId = extractParameter(merchantData, "id");
+                            
+                            // Convert transaction to hex
+                            String txHex = org.bitcoinj.core.Utils.HEX.encode(transaction.bitcoinSerialize());
+                            
+                            // Get refund address
+                            String refundAddress = wallet.freshAddress(KeyPurpose.REFUND).toString();
+                            
+                            // Submit payment to DogeConnect relay
+                            log.info("Submitting DogeConnect payment to relay");
+                            String relayUrl = dcUrl.replace("/envelope.php", "/relay.php/pay");
+                            
+                            boolean submitted = de.schildbach.wallet.util.DogeConnectClient.submitPayment(
+                                relayUrl, paymentId, txHex, refundAddress);
+                            
+                            if (submitted) {
+                                // Poll for confirmation
+                                log.info("Payment submitted, polling for confirmation");
+                                String statusUrl = dcUrl.replace("/envelope.php", "/relay.php/status");
+                                
+                                // Poll status until confirmed
+                                String status = null;
+                                int attempts = 0;
+                                while (attempts < 10) {
+                                    Thread.sleep(2000); // Wait 2 seconds between polls
+                                    status = de.schildbach.wallet.util.DogeConnectClient.pollPaymentStatus(statusUrl, paymentId);
+                                    
+                                    if (status != null && (status.contains("accepted") || status.contains("confirmed"))) {
+                                        log.info("Payment confirmed by DogeConnect relay");
+                                        handler.post(() -> setState(SendCoinsViewModel.State.SENT));
+                                        
+                                        // Also broadcast to blockchain
+                                        final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                                        future.addListener(() -> {
+                                            if (config.getSendCoinsAutoclose())
+                                                handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                                        }, Threading.THREAD_POOL);
+                                        return;
+                                    }
+                                    attempts++;
+                                }
+                                
+                                log.warn("Payment submission timeout, broadcasting to blockchain directly");
+                            } else {
+                                log.error("Failed to submit payment to DogeConnect relay");
+                            }
+                            
+                            // Fallback: broadcast to blockchain directly
+                            handler.post(() -> {
+                                final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                                future.addListener(() -> {
+                                    if (config.getSendCoinsAutoclose())
+                                        handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                                }, Threading.THREAD_POOL);
+                            });
+                            
+                        } else {
+                            // No merchantData, broadcast directly
+                            log.warn("No merchantData for DogeConnect payment, broadcasting directly");
+                            handler.post(() -> {
+                                final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                                future.addListener(() -> {
+                                    if (config.getSendCoinsAutoclose())
+                                        handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                                }, Threading.THREAD_POOL);
+                            });
+                        }
+                        
+                    } catch (Exception e) {
+                        log.error("Error handling DogeConnect payment: {}", e.getMessage(), e);
+                        // Fallback to normal broadcast
+                        handler.post(() -> {
+                            final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                            future.addListener(() -> {
+                                if (config.getSendCoinsAutoclose())
+                                    handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                            }, Threading.THREAD_POOL);
+                        });
+                    }
+                }).start();
+            }
+            
+            private String extractParameter(String data, String key) {
+                String pattern = key + "=";
+                int start = data.indexOf(pattern);
+                if (start == -1) return null;
+                start += pattern.length();
+                int end = data.indexOf("&", start);
+                if (end == -1) end = data.length();
+                return data.substring(start, end);
             }
 
             private void directPay(final Payment payment) {
@@ -1112,11 +1224,20 @@ public final class SendCoinsFragment extends Fragment {
             if (viewModel.paymentIntent.hasOutputs()) {
                 payeeGroup.setVisibility(View.VISIBLE);
                 receivingAddressView.setVisibility(View.GONE);
-                receivingStaticView.setVisibility(
-                        !viewModel.paymentIntent.hasPayee() || viewModel.paymentIntent.payeeVerifiedBy == null
-                                ? View.VISIBLE : View.GONE);
-
-                receivingStaticLabelView.setText(viewModel.paymentIntent.memo);
+                
+                // For DogeConnect payments, hide the memo in the label (keep it empty)
+                // but still show the address
+                if (viewModel.paymentIntent.standard == PaymentIntent.Standard.DOGEORG_CONNECT) {
+                    receivingStaticView.setVisibility(
+                            !viewModel.paymentIntent.hasPayee() || viewModel.paymentIntent.payeeVerifiedBy == null
+                                    ? View.VISIBLE : View.GONE);
+                    receivingStaticLabelView.setText(""); // Empty label for DogeConnect
+                } else {
+                    receivingStaticView.setVisibility(
+                            !viewModel.paymentIntent.hasPayee() || viewModel.paymentIntent.payeeVerifiedBy == null
+                                    ? View.VISIBLE : View.GONE);
+                    receivingStaticLabelView.setText(viewModel.paymentIntent.memo);
+                }
 
                 if (viewModel.paymentIntent.hasAddress())
                     receivingStaticAddressView.setText(WalletUtils.formatAddress(viewModel.paymentIntent.getAddress(),
@@ -1142,10 +1263,12 @@ public final class SendCoinsFragment extends Fragment {
                 receivingStaticLabelView.setText(staticLabel);
                 receivingStaticLabelView.setTextColor(activity.getColor(
                         viewModel.validatedAddress.label != null ? R.color.fg_significant : R.color.fg_insignificant));
-            } else if (viewModel.paymentIntent.standard == null) {
+            } else if (viewModel.paymentIntent.standard == null || viewModel.paymentIntent.standard == PaymentIntent.Standard.DOGEORG_CONNECT) {
+                // Show payee for DOGEORG_CONNECT as well
                 payeeGroup.setVisibility(View.VISIBLE);
                 receivingStaticView.setVisibility(View.GONE);
                 receivingAddressView.setVisibility(View.VISIBLE);
+                log.info("Showing payee for DOGEORG_CONNECT payment");
             } else {
                 payeeGroup.setVisibility(View.GONE);
             }
@@ -1171,6 +1294,21 @@ public final class SendCoinsFragment extends Fragment {
             directPaymentEnableView.setEnabled(viewModel.state == SendCoinsViewModel.State.INPUT);
 
             hintView.setVisibility(View.GONE);
+            
+            // Show DogeConnect details in footer for DogeConnect payments
+            if (viewModel.state == SendCoinsViewModel.State.INPUT) {
+                if (viewModel.paymentIntent != null && 
+                    viewModel.paymentIntent.standard == PaymentIntent.Standard.DOGEORG_CONNECT &&
+                    viewModel.paymentIntent.memo != null) {
+                    hintView.setTextColor(activity.getColor(R.color.fg_less_significant));
+                    hintView.setVisibility(View.VISIBLE);
+                    hintView.setText(viewModel.paymentIntent.memo);
+                    log.info("Displaying DogeConnect payment details in footer: {}", viewModel.paymentIntent.memo);
+                    return; // Skip normal hint logic for DogeConnect
+                }
+            }
+            
+            // Continue with normal hint logic
             if (viewModel.state == SendCoinsViewModel.State.INPUT) {
                 if (blockchainState != null && blockchainState.replaying) {
                     hintView.setTextColor(activity.getColor(R.color.fg_error));
@@ -1469,5 +1607,88 @@ public final class SendCoinsFragment extends Fragment {
         else
             new RequestPaymentRequestTask.BluetoothRequestTask(backgroundHandler, callback, bluetoothAdapter)
                     .requestPaymentRequest(viewModel.paymentIntent.paymentRequestUrl);
+    }
+
+    private void fetchAndValidateDogeConnectEnvelope() {
+        if (viewModel.paymentIntent == null || viewModel.paymentIntent.standard != PaymentIntent.Standard.DOGEORG_CONNECT) {
+            return;
+        }
+
+        // Extract DC URL and hash from merchantData
+        if (viewModel.paymentIntent.payeeData == null) {
+            log.error("No merchantData for DogeConnect payment");
+            return;
+        }
+
+        String merchantData = new String(viewModel.paymentIntent.payeeData, java.nio.charset.StandardCharsets.UTF_8);
+        String dcUrl = extractDogeConnectParameter(merchantData, "dc");
+        String hash = extractDogeConnectParameter(merchantData, "h");
+
+        if (dcUrl == null || hash == null) {
+            log.error("Missing dc or h parameters in DogeConnect payment");
+            return;
+        }
+
+        log.info("Fetching DogeConnect envelope from: {}", dcUrl);
+
+        // Fetch and validate the envelope
+        new Thread(() -> {
+            try {
+                final de.schildbach.wallet.util.DogeConnectClient.PaymentEnvelope envelope = 
+                    de.schildbach.wallet.util.DogeConnectClient.fetchEnvelope(dcUrl);
+                
+                if (envelope == null) {
+                    log.error("Failed to fetch DogeConnect envelope");
+                    return;
+                }
+
+                // Verify signature
+                if (!de.schildbach.wallet.util.DogeConnectClient.verifySignature(envelope, hash)) {
+                    log.error("DogeConnect envelope signature verification failed");
+                    handler.post(() -> {
+                        DialogBuilder.warn(activity, R.string.send_coins_fragment_request_payment_request_failed_title,
+                            "Invalid payment signature").show();
+                    });
+                    return;
+                }
+
+                // Update memo with vendor information from the envelope
+                if (envelope.getParsedPayload() != null) {
+                    final de.schildbach.wallet.util.DogeConnectClient.ParsedPayload payload = envelope.getParsedPayload();
+                    StringBuilder memoBuilder = new StringBuilder("DogeConnect\n");
+                    
+                    if (payload.getVendorName() != null) {
+                        memoBuilder.append("Vendor: ").append(payload.getVendorName()).append("\n");
+                    }
+                    if (payload.getTotal() > 0) {
+                        memoBuilder.append("Total: ").append(payload.getTotal()).append(" DOGE\n");
+                    }
+                    memoBuilder.append("\ndc=").append(dcUrl);
+                    memoBuilder.append("\nh=").append(hash);
+
+                    // Store updated memo to display later
+                    log.info("DogeConnect envelope content: {}", memoBuilder.toString());
+                    handler.post(() -> updateView());
+                }
+
+                log.info("DogeConnect envelope validated successfully");
+            } catch (Exception e) {
+                log.error("Error fetching DogeConnect envelope: {}", e.getMessage(), e);
+                handler.post(() -> {
+                    DialogBuilder.warn(activity, R.string.send_coins_fragment_request_payment_request_failed_title,
+                        "Failed to validate payment: " + e.getMessage()).show();
+                });
+            }
+        }).start();
+    }
+
+    private String extractDogeConnectParameter(String data, String key) {
+        String pattern = key + "=";
+        int start = data.indexOf(pattern);
+        if (start == -1) return null;
+        start += pattern.length();
+        int end = data.indexOf("&", start);
+        if (end == -1) end = data.length();
+        return data.substring(start, end);
     }
 }

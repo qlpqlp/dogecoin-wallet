@@ -38,6 +38,11 @@
             android:defaultValue="false" />
 
         <Preference
+            android:key="payment_terminal_mode"
+            android:title="@string/preferences_payment_terminal_title"
+            android:summary="@string/preferences_payment_terminal_summary" />
+
+        <Preference
             android:key="data_usage"
             android:title="@string/preferences_data_usage_title"
             android:summary="@string/preferences_data_usage_summary">

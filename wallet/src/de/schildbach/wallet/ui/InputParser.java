@@ -27,7 +27,9 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.UninitializedMessageException;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.R;
+import de.schildbach.wallet.data.DogeOrgConnectEnvelope;
 import de.schildbach.wallet.data.PaymentIntent;
+import de.schildbach.wallet.util.DogeOrgConnectParser;
 import de.schildbach.wallet.util.Qr;
 import org.bitcoin.protocols.payments.Protos;
 import org.bitcoinj.core.Address;
@@ -74,7 +76,26 @@ public abstract class InputParser {
 
         @Override
         public void parse() {
-            if (input.startsWith("DOGECOIN:-")) {
+            // Try DogeOrg Connect format first
+            if (DogeOrgConnectParser.isDogeOrgConnectFormat(input)) {
+                try {
+                    log.info("Detected DogeOrg Connect format");
+                    final DogeOrgConnectEnvelope envelope = DogeOrgConnectParser.parse(input);
+                    
+                    // Verify signature
+                    if (!DogeOrgConnectParser.verifySignature(envelope)) {
+                        error(R.string.input_parser_invalid_signature);
+                        return;
+                    }
+                    
+                    // Convert to PaymentIntent
+                    final PaymentIntent paymentIntent = DogeOrgConnectParser.toPaymentIntent(envelope);
+                    handlePaymentIntent(paymentIntent);
+                } catch (Exception x) {
+                    log.info("could not parse dogeorg connect envelope: " + input, x);
+                    error(R.string.input_parser_invalid_paymentrequest, x.getMessage());
+                }
+            } else if (input.startsWith("DOGECOIN:-")) {
                 try {
                     final byte[] serializedPaymentRequest = Qr.decodeBinary(input.substring(9));
 
@@ -94,13 +115,56 @@ public abstract class InputParser {
                 }
             } else if (input.startsWith("dogecoin:") || input.startsWith("DOGECOIN:")) {
                 try {
-                    // Try to parse the dogecoin URI directly with Dogecoin network parameters
-                    final BitcoinURI bitcoinUri = new BitcoinURI(Constants.NETWORK_PARAMETERS, input);
+                    // Decode HTML entities in the URI (e.g., &amp; becomes &)
+                    String decodedInput = input.replace("&amp;", "&").replace("&quot;", "\"").replace("&apos;", "'").replace("&lt;", "<").replace("&gt;", ">");
+                    
+                    // Check if this is a DogeConnect payment (has dc= parameter)
+                    final BitcoinURI bitcoinUri = new BitcoinURI(Constants.NETWORK_PARAMETERS, decodedInput);
                     final Address address = bitcoinUri.getAddress();
                     if (address != null && !Constants.NETWORK_PARAMETERS.equals(address.getParameters()))
                         throw new BitcoinURIParseException("mismatched network");
-
-                    handlePaymentIntent(PaymentIntent.fromBitcoinUri(bitcoinUri));
+                    
+                    // Check for DogeConnect parameters
+                    final String dcUrl = (String) bitcoinUri.getParameterByName("dc");
+                    final String hash = (String) bitcoinUri.getParameterByName("h");
+                    
+                    log.info("Parsing dogecoin URI, dcUrl={}, hash={}", dcUrl, hash);
+                    
+                    if (dcUrl != null && hash != null) {
+                        log.info("DogeConnect payment detected!");
+                        // This is a DogeConnect payment
+                        log.info("Detected DogeConnect payment with dc={}, h={}", dcUrl, hash);
+                        
+                        // Create payment intent immediately with DC URL and hash
+                        // The full envelope will be fetched later in SendCoinsFragment
+                        final org.bitcoinj.core.Coin amount = bitcoinUri.getAmount();
+                        final PaymentIntent.Output[] outputs = address != null 
+                            ? new PaymentIntent.Output[] { new PaymentIntent.Output(amount, org.bitcoinj.script.ScriptBuilder.createOutputScript(address)) }
+                            : null;
+                        
+                        // Build memo with DC URL and hash for display
+                        final String memo = "DogeConnect\ndc=" + dcUrl + "\nh=" + hash;
+                        
+                        // Store DC URL and hash as merchantData
+                        final byte[] merchantData = ("dc=" + dcUrl + "&h=" + hash).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                        
+                        final PaymentIntent paymentIntent = new PaymentIntent(
+                            PaymentIntent.Standard.DOGEORG_CONNECT,
+                            null, // pkiName
+                            null, // pkiCaName
+                            outputs,
+                            memo,
+                            null, // paymentUrl
+                            merchantData, // Store DC URL and hash in merchantData
+                            null, // paymentRequestUrl
+                            null // paymentRequestHash
+                        );
+                        
+                        handlePaymentIntent(paymentIntent);
+                    } else {
+                        // Regular BIP21 payment
+                        handlePaymentIntent(PaymentIntent.fromBitcoinUri(bitcoinUri));
+                    }
                 } catch (final BitcoinURIParseException x) {
                     log.info("got invalid dogecoin uri: '" + input + "'", x);
 
