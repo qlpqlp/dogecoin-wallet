@@ -4,8 +4,12 @@
    
     <header
         android:fragment="de.schildbach.wallet.ui.preference.SettingsFragment"
-        android:title="@string/preferences_activity_title"
+        android:title="@string/preferences_configuration_title"
         android:summary="@string/preferences_activity_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.EncryptKeysPreferenceFragment"
+        android:title="@string/encrypt_keys_dialog_title"
+        android:summary="@string/encrypt_keys_dialog_message" />
     <header
         android:fragment="de.schildbach.wallet.ui.preference.ExchangeRatesPreferenceFragment"
         android:title="@string/exchange_rates_activity_title"
@@ -22,6 +26,26 @@
         android:fragment="de.schildbach.wallet.ui.preference.ResetBlockchainPreferenceFragment"
         android:title="@string/preferences_initiate_reset_title"
         android:summary="@string/preferences_initiate_reset_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.SweepWalletPreferenceFragment"
+        android:title="@string/sweep_wallet_activity_title"
+        android:summary="@string/sweep_wallet_fragment_intro" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.BackupWalletPreferenceFragment"
+        android:title="@string/export_keys_dialog_title"
+        android:summary="@string/preferences_backup_wallet_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.RestoreWalletPreferenceFragment"
+        android:title="@string/import_keys_dialog_title"
+        android:summary="@string/preferences_restore_wallet_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.SafetyNotesPreferenceFragment"
+        android:title="@string/wallet_options_safety"
+        android:summary="@string/preferences_safety_notes_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.TechnicalNotesPreferenceFragment"
+        android:title="@string/wallet_options_technical_notes_title"
+        android:summary="@string/preferences_technical_notes_summary" />
     <header
         android:fragment="de.schildbach.wallet.ui.preference.ReportIssuePreferenceFragment"
         android:title="@string/preferences_report_issue_title"

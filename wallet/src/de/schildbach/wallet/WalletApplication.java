@@ -103,7 +103,7 @@ public class WalletApplication extends Application {
     public void onCreate() {
         new LinuxSecureRandom(); // init proper random number generator
 
-        Logging.init(getFilesDir());
+        Logging.init(getFilesDir(), this);
 
         initStrictMode();
 

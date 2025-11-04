@@ -143,6 +143,7 @@ public class BlockchainService extends LifecycleService {
     private Stopwatch serviceUpTime;
     private boolean resetBlockchainOnShutdown = false;
     private final AtomicBoolean isBound = new AtomicBoolean(false);
+    private volatile boolean isDestroying = false;
     
     // Background mempool monitoring
     private final Runnable mempoolMonitoringTask = new Runnable() {
@@ -642,10 +643,19 @@ public class BlockchainService extends LifecycleService {
             if (amount.isPositive()) {
                 final Address address = WalletUtils.getWalletAddressOfReceived(tx, wallet);
                 final ConfidenceType confidenceType = tx.getConfidence().getConfidenceType();
-                final boolean replaying = blockChain.getBestChainHeight() < config.getBestChainHeightEver();
-                final boolean isReplayedTx = confidenceType == ConfidenceType.BUILDING && replaying;
-                if (!isReplayedTx)
-                    notifyCoinsReceived(address, amount, tx.getTxId());
+                // Check if service is being destroyed before accessing blockChain
+                if (isDestroying || blockChain == null) {
+                    return;
+                }
+                
+                try {
+                    final boolean replaying = blockChain.getBestChainHeight() < config.getBestChainHeightEver();
+                    final boolean isReplayedTx = confidenceType == ConfidenceType.BUILDING && replaying;
+                    if (!isReplayedTx)
+                        notifyCoinsReceived(address, amount, tx.getTxId());
+                } catch (Exception e) {
+                    log.warn("Exception while processing transaction notification (service may be shutting down): {}", e.getMessage());
+                }
             }
         });
         impediments = new ImpedimentsLiveData(application);
@@ -662,14 +672,25 @@ public class BlockchainService extends LifecycleService {
             private void startup() {
                 final Wallet wallet = BlockchainService.this.wallet.getValue();
 
+                // Check if service is being destroyed
+                if (isDestroying || blockChain == null || blockStore == null) {
+                    log.warn("Service is being destroyed, skipping startup");
+                    return;
+                }
+                
                 // consistency check
-                final int walletLastBlockSeenHeight = wallet.getLastBlockSeenHeight();
-                final int bestChainHeight = blockChain.getBestChainHeight();
-                if (walletLastBlockSeenHeight != -1 && walletLastBlockSeenHeight != bestChainHeight) {
-                    final String message = "wallet/blockchain out of sync: " + walletLastBlockSeenHeight + "/"
-                            + bestChainHeight;
-                    log.error(message);
-                    CrashReporter.saveBackgroundTrace(new RuntimeException(message), application.packageInfo());
+                try {
+                    final int walletLastBlockSeenHeight = wallet.getLastBlockSeenHeight();
+                    final int bestChainHeight = blockChain.getBestChainHeight();
+                    if (walletLastBlockSeenHeight != -1 && walletLastBlockSeenHeight != bestChainHeight) {
+                        final String message = "wallet/blockchain out of sync: " + walletLastBlockSeenHeight + "/"
+                                + bestChainHeight;
+                        log.error(message);
+                        CrashReporter.saveBackgroundTrace(new RuntimeException(message), application.packageInfo());
+                    }
+                } catch (Exception e) {
+                    log.warn("Exception during consistency check (service may be shutting down): {}", e.getMessage());
+                    return;
                 }
 
                 final Configuration.SyncMode syncMode = config.getSyncMode();
@@ -799,6 +820,9 @@ public class BlockchainService extends LifecycleService {
     public void onDestroy() {
         log.debug(".onDestroy()");
 
+        // Set flag to prevent new operations on BlockStore
+        isDestroying = true;
+
         if (peerGroup != null) {
             try {
                 peerGroup.removeDisconnectedEventListener(peerConnectivityListener);
@@ -809,6 +833,24 @@ public class BlockchainService extends LifecycleService {
                 if (peerGroup.isRunning()) {
                     peerGroup.stopAsync();
                     log.info("stopping {} asynchronously", peerGroup);
+                    
+                    // Wait for peer group to stop (with timeout to prevent blocking)
+                    try {
+                        // Wait up to 5 seconds for peer group to stop
+                        int attempts = 0;
+                        while (peerGroup.isRunning() && attempts < 50) {
+                            Thread.sleep(100);
+                            attempts++;
+                        }
+                        if (peerGroup.isRunning()) {
+                            log.warn("Peer group did not stop within timeout, proceeding with shutdown");
+                        } else {
+                            log.info("Peer group stopped successfully");
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.warn("Interrupted while waiting for peer group to stop", e);
+                    }
                 } else {
                     log.info("peer group already stopped or not running: {}", peerGroup);
                 }
@@ -827,8 +869,10 @@ public class BlockchainService extends LifecycleService {
         if (blockStore != null) {
             try {
                 blockStore.close();
+                log.info("BlockStore closed successfully");
             } catch (final BlockStoreException x) {
-                throw new RuntimeException(x);
+                log.error("Error closing BlockStore", x);
+                // Don't throw RuntimeException - just log the error to prevent crash
             }
         }
 
@@ -866,6 +910,24 @@ public class BlockchainService extends LifecycleService {
         log.info("onTrimMemory({}) called", level);
         if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) {
             log.warn("low memory detected, trying to stop");
+            
+            // Set destroying flag to prevent new operations
+            isDestroying = true;
+            
+            // Cancel all scheduled tasks immediately
+            delayHandler.removeCallbacksAndMessages(null);
+            backgroundHandler.removeCallbacksAndMessages(null);
+            handler.removeCallbacksAndMessages(null);
+            
+            // Stop peer group if running
+            if (peerGroup != null && peerGroup.isRunning()) {
+                try {
+                    peerGroup.stopAsync();
+                } catch (Exception e) {
+                    log.warn("Error stopping peer group during memory trim: {}", e.getMessage());
+                }
+            }
+            
             stopSelf();
             if (isBound.get())
                 log.info("stop is deferred because service still bound");
@@ -885,15 +947,20 @@ public class BlockchainService extends LifecycleService {
 
     @Nullable
     public BlockchainState getBlockchainState() {
-        if (blockChain == null)
+        if (isDestroying || blockChain == null || blockStore == null)
             return null;
 
-        final StoredBlock chainHead = blockChain.getChainHead();
-        final Date bestChainDate = chainHead.getHeader().getTime();
-        final int bestChainHeight = chainHead.getHeight();
-        final boolean replaying = chainHead.getHeight() < config.getBestChainHeightEver();
+        try {
+            final StoredBlock chainHead = blockChain.getChainHead();
+            final Date bestChainDate = chainHead.getHeader().getTime();
+            final int bestChainHeight = chainHead.getHeight();
+            final boolean replaying = chainHead.getHeight() < config.getBestChainHeightEver();
 
-        return new BlockchainState(bestChainDate, bestChainHeight, replaying, impediments.getValue());
+            return new BlockchainState(bestChainDate, bestChainHeight, replaying, impediments.getValue());
+        } catch (Exception e) {
+            log.warn("Exception while getting blockchain state (service may be shutting down): {}", e.getMessage());
+            return null;
+        }
     }
 
     @Nullable

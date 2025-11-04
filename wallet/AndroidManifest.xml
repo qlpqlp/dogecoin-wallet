@@ -229,6 +229,20 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name="de.schildbach.wallet.ui.DigitalSignaturesListActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="Digital Signatures"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.ProductManagementActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/point_of_sale_mode_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name="de.schildbach.wallet.ui.AccountingReportsActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/accounting_reports_title"

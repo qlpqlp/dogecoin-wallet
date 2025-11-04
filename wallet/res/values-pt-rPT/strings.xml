@@ -372,7 +372,11 @@
 <string name="biometric_error_lockout">Too many failed attempts. Try again later</string>
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_category_diagnostics_summary">Ferramentas de diagnóstico avançadas e informações</string>
+<string name="preferences_backup_wallet_summary">Crie um backup encriptado da sua carteira para se proteger contra perda ou falha do dispositivo. Essencial para recuperação da carteira.</string>
+<string name="preferences_restore_wallet_summary">Restaure a sua carteira a partir de um ficheiro de backup criado anteriormente. Útil ao configurar num novo dispositivo ou ao recuperar de problemas.</string>
+<string name="preferences_safety_notes_summary">Diretrizes de segurança importantes e melhores práticas para usar a sua carteira Dogecoin em segurança. Leia antes de armazenar quantias significativas.</string>
+<string name="preferences_technical_notes_summary">Documentação técnica sobre a arquitetura da carteira, funcionalidades e detalhes de implementação para utilizadores avançados.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Assinatura Digital</string>
@@ -421,12 +425,12 @@
 <string name="digital_signature_error_invalid_input">Entrada inválida para assinar</string>
 <string name="digital_signature_error_verification_failed">Verificação da assinatura falhou</string>
 <string name="error_bluetooth">Erro de Bluetooth: %1$s</string>
-<string name="preferences_category_privacy">Privacy control</string>
+<string name="preferences_category_privacy">Controlo de privacidade</string>
 <string name="notification_peer_not_connected">not connected</string>
 <string name="toast_start_external_document_failed">There is no web browser installed to open the external document.</string>
 <string name="notification_peer_connected">connected</string>
 <string name="preferences_trusted_peer_dialog_message">Please enter a valid IP address or hostname. If you have Tor set up, you can use an onion address here, too.</string>
-<string name="preferences_category_merchants">Merchants</string>
+<string name="preferences_category_merchants">Comerciantes</string>
 <string name="about_privacy_title">Privacy Policy</string>
 <string name="exchange_rates_fragment_summary">View current exchange rates for Dogecoin</string>
 <string name="preferences_sync_mode_title">Data Usage vs. Privacy</string>
@@ -444,17 +448,13 @@
 <string name="notification_bluetooth_service_listening">Ready to receive payments via Bluetooth</string>
 <string name="address_book_row_current_address">This is your current address for receiving.</string>
 <string name="preferences_bluetooth_address_summary">Manually configure your own Bluetooth address so you can receive payments from payers without connectivity.</string>
-<string name="preferences_category_general">General</string>
+<string name="preferences_category_general">Geral</string>
 <string name="family_mode_enter_child_name">Insira o nome do filho</string>
 <string name="recurring_payments_payment_date_time">Data e Hora do Pagamento</string>
 <string name="family_mode_add_child_to_start">Adicione um filho para começar</string>
-<string name="digital_signature_generate_signature">Gerar Assinatura</string>
-<string name="digital_signature_verify">Verificar</string>
-<string name="digital_signature_sign_selected_file">Assinar Ficheiro Selecionado</string>
 <string name="family_mode_qr_code_for_child">Código QR para Dispositivo do Filho</string>
 <string name="recurring_payments_reference_hint">Insira referência para OP_RETURN (opcional)</string>
 <string name="family_mode_no_members_yet">Ainda não há membros da família</string>
-<string name="digital_signature_take_photo">Tirar Foto</string>
 <string name="common_node_network">NODE_NETWORK</string>
   <string name="common_last_seen">Última vez visto:</string>
   <string name="common_loading">A carregar...</string>
@@ -476,11 +476,9 @@
 <string name="family_mode_derived_key_copied">Chave derivada copiada para a área de transferência</string>
 <string name="common_size_mb">%s MB</string>
 <string name="common_blocks_count">%s</string>
-    <string name="digital_signature_select_file_button">Selecionar Ficheiro</string>
 <string name="recurring_payments_sample_destination">To: D7Y55...X9K2</string>
   <string name="common_good">Bom</string>
   <string name="common_online">Conectado</string>
-<string name="digital_signature_no_file_selected">No file selected</string>
     <string name="digital_signature_share_button">Partilhar</string>
 <string name="common_mb">MB</string>
   <string name="family_mode_deactivated_toast">Modo filho desativado</string>
@@ -490,7 +488,6 @@
   <string name="common_ago">atrás</string>
   <string name="common_never">Nunca</string>
   <string name="common_discovered_nodes">Nós Descobertos</string>
-    <string name="digital_signature_verify_signature_button">Verificar Assinatura</string>
     <string name="digital_signature_copy_button">Copiar</string>
 <string name="common_last_updated">Last updated:</string>
     <string name="recurring_payments_select_date">Selecionar Data</string>
@@ -501,14 +498,11 @@
 <string name="recurring_payments_payment_date_time_label">Payment Date &amp; Time</string>
 <string name="common_ip">%s</string>
   <string name="common_size">Tamanho:</string>
-    <string name="digital_signature_sign_file_button">Assinar Ficheiro</string>
 <string name="common_block_number">Block #%s</string>
 <string name="common_port">:%s</string>
 <string name="common_latency">Latency:</string>
-    <string name="digital_signature_generate_signature_button">Gerar Assinatura</string>
     <string name="digital_signature_results">Resultados:</string>
   <string name="common_discovered">Descoberto</string>
-    <string name="digital_signature_take_photo_button">Tirar Foto</string>
   <string name="common_client">Cliente:</string>
 <string formatted="false" name="common_latency_ms">%sms (%s)</string>
 <string name="common_ms">ms</string>
@@ -521,13 +515,10 @@
 <string name="common_network_bloom">NETWORK &amp; BLOOM</string>
   <string name="common_synced_blocks">Blocos Sincronizados:</string>
   <string name="family_mode_set_pin_title">Definir PIN para Modo Filho</string>
-    <string name="digital_signature_verify_button">Verificar</string>
   <string name="common_blocks">Blocos:</string>
-    <string name="digital_signature_sign_text_button">Assinar Texto</string>
 <string name="common_dns">DNS</string>
 <string name="recurring_payments_sample_reference">Ref: Payment for services</string>
   <string name="family_mode_set_pin_message">Insira um código PIN para proteger o acesso a Segurança e Configurações quando o modo filho estiver ativo.</string>
-    <string name="digital_signature_sign_selected_file_button">Assinar Ficheiro Selecionado</string>
   <string name="common_transactions">Transações:</string>
     <string name="digital_signature_file_hash">Hash do Ficheiro (SHA256):</string>
 <string name="recurring_payments_sample_amount">100 DOGE</string>
@@ -677,4 +668,40 @@
     <string name="education_tips_community">Comunidade: Junte-se às comunidades Dogecoin para aprender com outros</string>
     <string name="education_tips_stay_updated">Mantenha-se Atualizado: Mantenha a sua carteira atualizada para segurança e novas funcionalidades</string>
     <string name="education_tips_have_fun">Divirtam-se: Dogecoin é sobre divertir-se enquanto aprendem sobre o futuro do dinheiro!</string>
+
+    <!-- Point of Sale -->
+    <string name="preferences_point_of_sale_mode_title">Modo Ponto de Venda</string>
+    <string name="preferences_point_of_sale_mode_summary">Ativar catálogo de produtos e sistema POS baseado na web para comerciantes</string>
+    <string name="point_of_sale_mode_title">Modo Ponto de Venda</string>
+
+    <!-- Configuration -->
+    <string name="preferences_configuration_title">Configuração</string>
+
+    <!-- RadioDoge -->
+    <string name="preferences_radiodoge_title">Suporte RadioDoge</string>
+    <string name="preferences_radiodoge_summary">Usar RadioDoge para transmitir transações quando não há conexão à Internet disponível</string>
+
+    <!-- Enable Logging -->
+    <string name="preferences_enable_logging_title">Ativar Registro</string>
+    <string name="preferences_enable_logging_summary">Ativar registro detalhado para depuração. Os registros são armazenados em arquivos do aplicativo e podem crescer muito se ativados.</string>
+
+    <!-- Menu Visibility -->
+    <string name="preferences_show_family_mode_menu_title">Mostrar Menu Modo Família</string>
+    <string name="preferences_show_family_mode_menu_summary">Mostrar ou ocultar a opção do menu Modo Família</string>
+    <string name="preferences_show_recurring_payments_menu_title">Mostrar Menu Pagamentos Recorrentes</string>
+    <string name="preferences_show_recurring_payments_menu_summary">Mostrar ou ocultar a opção do menu Pagamentos Recorrentes</string>
+    <string name="preferences_show_digital_signature_menu_title">Mostrar Menu Assinatura Digital</string>
+    <string name="preferences_show_digital_signature_menu_summary">Mostrar ou ocultar a opção do menu Assinatura Digital</string>
+
+    <!-- Missing Digital Signature strings -->
+    <string name="digital_signature_generate_signature">Gerar Assinatura</string>
+    <string name="digital_signature_verify">Verificar</string>
+    <string name="digital_signature_sign_selected_file">Assinar Ficheiro Selecionado</string>
+    <string name="digital_signature_take_photo">Tirar Foto</string>
+    <string name="digital_signature_no_file_selected">Nenhum ficheiro selecionado</string>
+    <string name="digital_signature_select_file_button">Selecionar</string>
+    <string name="digital_signature_take_photo_button">Foto</string>
+    <string name="digital_signature_view">Ver</string>
+    <string name="digital_signature_edit_tag">Editar Etiqueta</string>
+    <string name="digital_signature_delete">Eliminar</string>
 </resources>

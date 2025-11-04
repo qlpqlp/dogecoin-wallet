@@ -308,6 +308,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Utwórz zaszyfrowaną kopię zapasową portfela, aby chronić się przed utratą lub awarią urządzenia. Niezbędne do odzyskania portfela.</string>
+<string name="preferences_restore_wallet_summary">Przywróć portfel z wcześniej utworzonego pliku kopii zapasowej. Przydatne podczas konfiguracji na nowym urządzeniu lub odzyskiwania z problemów.</string>
+<string name="preferences_safety_notes_summary">Ważne wytyczne bezpieczeństwa i najlepsze praktyki bezpiecznego korzystania z portfela Dogecoin. Przeczytaj przed przechowywaniem znacznych kwot.</string>
+<string name="preferences_technical_notes_summary">Dokumentacja techniczna dotycząca architektury portfela, funkcji i szczegółów implementacji dla zaawansowanych użytkowników.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>

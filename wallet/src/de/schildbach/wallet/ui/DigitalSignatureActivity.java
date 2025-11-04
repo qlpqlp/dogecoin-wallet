@@ -34,6 +34,7 @@ import java.util.Date;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.util.Crypto;
 import de.schildbach.wallet.util.SecureMemory;
 import de.schildbach.wallet.Constants;
+import de.schildbach.wallet.addressbook.AddressBookDatabase;
+import de.schildbach.wallet.data.DigitalSignature;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
@@ -101,6 +104,7 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
     private EditText editOriginalText;
     private EditText editSignature;
     private EditText editVerificationAddress;
+    private EditText editTag;
     private TextView textSelectedFile;
     private TextView textSignatureResult;
     private TextView textAddressResult;
@@ -119,7 +123,12 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
     private Button btnVerifySignature;
     private Button btnCopySignature;
     private Button btnShareSignature;
+    private Button btnSaveSignature;
     private Button btnClearResults;
+    private ImageButton btnViewSaved;
+    
+    // Database
+    private AddressBookDatabase database;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,8 +147,15 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         // Ensure signed folder exists
         ensureSignedFolderExists();
         
-        // Show sign text panel by default
-        showPanel(panelSignText);
+        // Check if we should show verify or sign panel based on intent
+        String action = getIntent().getStringExtra("action");
+        if ("verify".equals(action)) {
+            // Show verify panel if action is verify
+            showPanel(panelVerify);
+        } else {
+            // Show sign text panel by default
+            showPanel(panelSignText);
+        }
         
     }
 
@@ -179,6 +195,7 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         editOriginalText = findViewById(R.id.edit_original_text);
         editSignature = findViewById(R.id.edit_signature);
         editVerificationAddress = findViewById(R.id.edit_verification_address);
+        editTag = findViewById(R.id.edit_tag);
         
     // TextViews
     textSelectedFile = findViewById(R.id.text_selected_file);
@@ -200,7 +217,12 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         btnVerifySignature = findViewById(R.id.btn_verify_signature);
         btnCopySignature = findViewById(R.id.btn_copy_signature);
         btnShareSignature = findViewById(R.id.btn_share_signature);
+        btnSaveSignature = findViewById(R.id.btn_save_signature);
         btnClearResults = findViewById(R.id.btn_clear_results);
+        btnViewSaved = findViewById(R.id.btn_view_saved);
+        
+        // Initialize database
+        database = AddressBookDatabase.getDatabase(this);
     }
 
     private void setupClickListeners() {
@@ -223,7 +245,14 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         // Results
         btnCopySignature.setOnClickListener(v -> copySignature());
         btnShareSignature.setOnClickListener(v -> shareSignature());
+        btnSaveSignature.setOnClickListener(v -> saveSignatureToDatabase());
         btnClearResults.setOnClickListener(v -> clearResults());
+        
+        // View saved signatures
+        btnViewSaved.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DigitalSignaturesListActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void showPanel(LinearLayout panel) {
@@ -231,6 +260,20 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         panelSignText.setVisibility(View.GONE);
         panelSignFile.setVisibility(View.GONE);
         panelVerify.setVisibility(View.GONE);
+        
+        // Reset all button backgrounds (remove highlight)
+        btnSignText.setBackgroundTintList(null);
+        btnSignFile.setBackgroundTintList(null);
+        btnVerify.setBackgroundTintList(null);
+        
+        // Highlight the selected button
+        if (panel == panelSignText) {
+            btnSignText.setBackgroundTintList(getColorStateList(R.color.bg_level2));
+        } else if (panel == panelSignFile) {
+            btnSignFile.setBackgroundTintList(getColorStateList(R.color.bg_level2));
+        } else if (panel == panelVerify) {
+            btnVerify.setBackgroundTintList(getColorStateList(R.color.bg_level2));
+        }
         
         // Show selected panel
         panel.setVisibility(View.VISIBLE);
@@ -954,6 +997,55 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         }
     }
 
+    private void saveSignatureToDatabase() {
+        String signature = textSignatureResult.getText().toString();
+        String address = textAddressResult.getText().toString();
+        String tag = editTag.getText().toString().trim();
+        
+        if (TextUtils.isEmpty(signature) || TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "No signature to save", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        try {
+            DigitalSignature sigRecord = new DigitalSignature();
+            sigRecord.setSignature(signature);
+            sigRecord.setAddress(address);
+            sigRecord.setTag(TextUtils.isEmpty(tag) ? null : tag);
+            
+            if (isFileSignature) {
+                // File or photo signature
+                if (selectedFilePath != null && selectedFilePath.contains("SIGNED_")) {
+                    sigRecord.setType("photo");
+                    sigRecord.setContent(selectedFilePath);
+                } else {
+                    sigRecord.setType("file");
+                    sigRecord.setContent(selectedFilePath);
+                }
+                sigRecord.setFileHash(currentFileHash);
+            } else {
+                // Text signature
+                sigRecord.setType("text");
+                sigRecord.setContent(currentSignedContent);
+                sigRecord.setFileHash(null);
+            }
+            
+            sigRecord.setTimestamp(System.currentTimeMillis());
+            
+            long id = database.digitalSignatureDao().insertSignature(sigRecord);
+            if (id > 0) {
+                Toast.makeText(this, "Signature saved successfully", Toast.LENGTH_SHORT).show();
+                // Clear tag field after saving
+                editTag.setText("");
+            } else {
+                Toast.makeText(this, "Error saving signature", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            log.error("Error saving signature to database", e);
+            Toast.makeText(this, "Error saving signature: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
     private void clearResults() {
         textSignatureResult.setText("");
         textAddressResult.setText("");
@@ -970,6 +1062,7 @@ public class DigitalSignatureActivity extends AbstractWalletActivity {
         editOriginalText.setText("");
         editSignature.setText("");
         editVerificationAddress.setText("");
+        editTag.setText("");
         textSelectedFile.setText("No file selected");
         btnSignSelectedFile.setEnabled(false);
         selectedFileUri = null;

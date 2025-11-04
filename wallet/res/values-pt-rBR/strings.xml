@@ -218,7 +218,7 @@
 <string name="input_parser_invalid_transaction">Transação inválida:\n%s</string>
 <string name="preferences_activity_title">Configurações</string>
 <string name="preferences_category_diagnostics">Diagnósticos</string>
-<string name="preferences_category_labs">Labs</string>
+<string name="preferences_category_labs">Laboratório</string>
 <string name="preferences_precision_title">Denominação e precisão</string>
 <string name="preferences_precision_summary">Unidade para mostrar valores. Isso não afeta os cálculos.</string>
 <string name="preferences_precision_labels_8">DOGE, 8 casas decimais</string>
@@ -320,7 +320,7 @@
 <string name="send_coins_fragment_request_payment_request_failed_message">The payee (%1$s) is using an incompatible payment protocol (reason: %2$s).</string>
 <string name="family_mode_activity_title">Family Management</string>
 <string name="family_mode_balance">Balance</string>
-<string name="preferences_category_privacy">Privacy control</string>
+<string name="preferences_category_privacy">Controle de privacidade</string>
 <string name="about_credits_slf4j_title">SLF4J, a logging framework</string>
 <string name="notification_peer_not_connected">not connected</string>
 <string name="toast_start_external_document_failed">There is no web browser installed to open the external document.</string>
@@ -329,7 +329,7 @@
 <string name="family_mode_pin_dialog_title">Enter Parent PIN</string>
 <string name="recurring_payments_payment_sent">Payment sent successfully</string>
 <string name="preferences_trusted_peer_dialog_message">Please enter a valid IP address or hostname. If you have Tor set up, you can use an onion address here, too.</string>
-<string name="preferences_category_merchants">Merchants</string>
+<string name="preferences_category_merchants">Comerciantes</string>
 <string name="about_credits_guava_title">Guava, a collection of useful helpers</string>
 <string name="digital_signature_error_no_private_key">No private key available for signing</string>
 <string name="send_coins_fragment_significant_fee_title">Significant network fee</string>
@@ -339,6 +339,11 @@
 <string name="about_credits_moshi_title">Moshi, a JSON library</string>
 <string name="wallet_transactions_fragment_empty_text_warning">Tip: This wallet works best if you don’t use it for lots of tiny transactions. Too many small inputs can slow things down and make your coins take longer to show up.</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
+<string name="preferences_category_diagnostics_summary">Ferramentas de diagnóstico avançadas e informações</string>
+<string name="preferences_backup_wallet_summary">Crie um backup criptografado da sua carteira para se proteger contra perda ou falha do dispositivo. Essencial para recuperação da carteira.</string>
+<string name="preferences_restore_wallet_summary">Restaure sua carteira a partir de um arquivo de backup criado anteriormente. Útil ao configurar em um novo dispositivo ou ao recuperar de problemas.</string>
+<string name="preferences_safety_notes_summary">Diretrizes de segurança importantes e melhores práticas para usar sua carteira Dogecoin com segurança. Leia antes de armazenar quantias significativas.</string>
+<string name="preferences_technical_notes_summary">Documentação técnica sobre a arquitetura da carteira, recursos e detalhes de implementação para usuários avançados.</string>
 <string name="family_mode_send_coins">Send Coins</string>
 <string name="notification_connectivity_syncing_message">Synchronizing with the network…</string>
 <string name="recurring_payments_add_address">Add New Address</string>
@@ -408,7 +413,6 @@
 <string name="toast_start_storage_provider_selector_failed">No suitable cloud storage provider is installed.\nYou need something like \"Nextcloud\" or \"Google Drive\".</string>
 <string name="family_mode_child_name">Child Name</string>
 <string name="recurring_payments_no_payments">No recurring payments scheduled</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
 <string name="biometric_error_hw_unavailable">Biometric hardware is currently unavailable</string>
 <string name="network_monitor_fragment_summary">Monitor network status and peer connections</string>
 <string name="biometric_error_no_hardware">No biometric hardware available</string>
@@ -444,17 +448,13 @@
 <string name="family_mode_derived_key">Derived Key</string>
 <string name="digital_signature_enter_original_text">Enter original text or file hash:</string>
 <string name="alert_dialogs_fragment_insecure_bluetooth_title">Security alert</string>
-<string name="preferences_category_general">General</string>
+<string name="preferences_category_general">Geral</string>
   <string name="family_mode_enter_child_name">Insira o nome do filho</string>
 <string name="recurring_payments_payment_date_time">Payment Date &amp; Time</string>
   <string name="family_mode_add_child_to_start">Adicione um filho para começar</string>
-<string name="digital_signature_generate_signature">Generate Signature</string>
-<string name="digital_signature_verify">Verify</string>
-<string name="digital_signature_sign_selected_file">Sign Selected File</string>
   <string name="family_mode_qr_code_for_child">Código QR para Dispositivo do Filho</string>
 <string name="recurring_payments_reference_hint">Enter reference for OP_RETURN (optional)</string>
   <string name="family_mode_no_members_yet">Ainda não há membros da família</string>
-<string name="digital_signature_take_photo">Take Photo</string>
 <string name="common_node_network">NODE_NETWORK</string>
   <string name="common_last_seen">Última vez visto:</string>
   <string name="common_loading">Carregando...</string>
@@ -476,11 +476,9 @@
 <string name="family_mode_derived_key_copied">Derived key copied to clipboard</string>
 <string name="common_size_mb">%s MB</string>
 <string name="common_blocks_count">%s</string>
-<string name="digital_signature_select_file_button">Select File</string>
 <string name="recurring_payments_sample_destination">To: D7Y55...X9K2</string>
   <string name="common_good">Bom</string>
   <string name="common_online">Conectado</string>
-<string name="digital_signature_no_file_selected">No file selected</string>
 <string name="digital_signature_share_button">Share</string>
 <string name="common_mb">MB</string>
   <string name="family_mode_deactivated_toast">Modo filho desativado</string>
@@ -490,7 +488,6 @@
   <string name="common_ago">atrás</string>
   <string name="common_never">Nunca</string>
   <string name="common_discovered_nodes">Nós Descobertos</string>
-<string name="digital_signature_verify_signature_button">Verify Signature</string>
 <string name="digital_signature_copy_button">Copy</string>
 <string name="common_last_updated">Last updated:</string>
 <string name="recurring_payments_select_date">Select Date</string>
@@ -501,14 +498,11 @@
 <string name="recurring_payments_payment_date_time_label">Payment Date &amp; Time</string>
 <string name="common_ip">%s</string>
   <string name="common_size">Tamanho:</string>
-<string name="digital_signature_sign_file_button">Sign File</string>
 <string name="common_block_number">Block #%s</string>
 <string name="common_port">:%s</string>
 <string name="common_latency">Latency:</string>
-<string name="digital_signature_generate_signature_button">Generate Signature</string>
 <string name="digital_signature_results">Results:</string>
   <string name="common_discovered">Descoberto</string>
-<string name="digital_signature_take_photo_button">Take Photo</string>
   <string name="common_client">Cliente:</string>
 <string formatted="false" name="common_latency_ms">%sms (%s)</string>
 <string name="common_ms">ms</string>
@@ -521,13 +515,10 @@
 <string name="common_network_bloom">NETWORK &amp; BLOOM</string>
   <string name="common_synced_blocks">Blocos Sincronizados:</string>
 <string name="family_mode_set_pin_title">Set PIN for Child Mode</string>
-<string name="digital_signature_verify_button">Verify</string>
   <string name="common_blocks">Blocos:</string>
-<string name="digital_signature_sign_text_button">Sign Text</string>
 <string name="common_dns">DNS</string>
 <string name="recurring_payments_sample_reference">Ref: Payment for services</string>
 <string name="family_mode_set_pin_message">Enter a PIN code to protect access to Safety and Settings when child mode is active.</string>
-<string name="digital_signature_sign_selected_file_button">Sign Selected File</string>
   <string name="common_transactions">Transações:</string>
 <string name="digital_signature_file_hash">File Hash (SHA256):</string>
 <string name="recurring_payments_sample_amount">100 DOGE</string>
@@ -565,4 +556,46 @@
     <string name="accounting_reports_export_error">Falha na exportação</string>
     <string name="accounting_reports_no_data">Nenhuma transação encontrada para o intervalo de datas selecionado</string>
     <string name="accounting_reports_menu_title">Relatórios Contábeis</string>
+
+    <!-- Point of Sale -->
+    <string name="preferences_point_of_sale_mode_title">Modo Ponto de Venda</string>
+    <string name="preferences_point_of_sale_mode_summary">Ativar catálogo de produtos e sistema POS baseado na web para comerciantes</string>
+    <string name="point_of_sale_mode_title">Modo Ponto de Venda</string>
+
+    <!-- Configuration -->
+    <string name="preferences_configuration_title">Configuração</string>
+
+    <!-- RadioDoge -->
+    <string name="preferences_radiodoge_title">Suporte RadioDoge</string>
+    <string name="preferences_radiodoge_summary">Usar RadioDoge para transmitir transações quando não há conexão à Internet disponível</string>
+
+    <!-- Enable Logging -->
+    <string name="preferences_enable_logging_title">Ativar Registro</string>
+    <string name="preferences_enable_logging_summary">Ativar registro detalhado para depuração. Os registros são armazenados em arquivos do aplicativo e podem crescer muito se ativados.</string>
+
+    <!-- Menu Visibility -->
+    <string name="preferences_show_family_mode_menu_title">Mostrar Menu Modo Família</string>
+    <string name="preferences_show_family_mode_menu_summary">Mostrar ou ocultar a opção do menu Modo Família</string>
+    <string name="preferences_show_recurring_payments_menu_title">Mostrar Menu Pagamentos Recorrentes</string>
+    <string name="preferences_show_recurring_payments_menu_summary">Mostrar ou ocultar a opção do menu Pagamentos Recorrentes</string>
+    <string name="preferences_show_digital_signature_menu_title">Mostrar Menu Assinatura Digital</string>
+    <string name="preferences_show_digital_signature_menu_summary">Mostrar ou ocultar a opção do menu Assinatura Digital</string>
+
+    <!-- Missing Digital Signature strings -->
+    <string name="digital_signature_generate_signature">Gerar Assinatura</string>
+    <string name="digital_signature_verify">Verificar</string>
+    <string name="digital_signature_sign_selected_file">Assinar Arquivo Selecionado</string>
+    <string name="digital_signature_take_photo">Tirar Foto</string>
+    <string name="digital_signature_no_file_selected">Nenhum arquivo selecionado</string>
+    <string name="digital_signature_select_file_button">Selecionar</string>
+    <string name="digital_signature_take_photo_button">Foto</string>
+    <string name="digital_signature_sign_text_button">Assinar Texto</string>
+    <string name="digital_signature_sign_file_button">Assinar Arquivo</string>
+    <string name="digital_signature_verify_button">Verificar</string>
+    <string name="digital_signature_generate_signature_button">Gerar Assinatura</string>
+    <string name="digital_signature_sign_selected_file_button">Assinar Arquivo Selecionado</string>
+    <string name="digital_signature_verify_signature_button">Verificar Assinatura</string>
+    <string name="digital_signature_view">Ver</string>
+    <string name="digital_signature_edit_tag">Editar Etiqueta</string>
+    <string name="digital_signature_delete">Excluir</string>
 </resources>

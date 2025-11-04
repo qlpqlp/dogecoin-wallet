@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Select File -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/digital_signature_select_file"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btn_select_file"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Select"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_file_24dp"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:padding="16dp"
+                android:layout_marginEnd="8dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_take_photo"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Photo"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_camera_24dp"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:padding="16dp"
+                android:layout_marginStart="8dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_selected_file"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/digital_signature_no_file_selected"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/common_cancel"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginEnd="8dp"
+                android:drawableStart="@drawable/ic_cancel_24dp"
+                android:drawablePadding="8dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_sign_selected_file"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/digital_signature_sign_selected_file_button"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:enabled="false"
+                android:drawableStart="@drawable/ic_signature_24dp"
+                android:drawablePadding="8dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

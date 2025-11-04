@@ -108,7 +108,6 @@ public final class WalletActivity extends AbstractWalletActivity {
 
     private AbstractWalletActivityViewModel walletActivityViewModel;
     private WalletActivityViewModel viewModel;
-    
 
     private static final int REQUEST_CODE_SCAN = 0;
     private static final int REQUEST_CODE_SCAN_CHILD_ACTIVATION = 1001;
@@ -283,6 +282,17 @@ public final class WalletActivity extends AbstractWalletActivity {
         config.touchLastUsed();
 
         handleIntent(getIntent());
+        
+        // Handle intent extras from preference fragments early (in onCreate)
+        // Store them temporarily if FragmentManager isn't ready yet
+        final Intent onCreateIntent = getIntent();
+        if (onCreateIntent != null && (
+            onCreateIntent.hasExtra("show_help") || 
+            onCreateIntent.getBooleanExtra("show_restore_wallet", false) || 
+            onCreateIntent.getBooleanExtra("show_encrypt_keys", false)
+        )) {
+            // Will be handled in onResume after everything is initialized
+        }
 
         // Only add fragments if they don't already exist
         // This prevents duplication when app returns from background or activity is recreated
@@ -314,11 +324,36 @@ public final class WalletActivity extends AbstractWalletActivity {
             return;
         }
 
-        // Simplified biometric check - only check if biometric is required
-        if (BiometricHelper.isBiometricRequired(this)) {
+        // Check if this is a preference navigation (has intent extras from preference fragments)
+        final Intent currentIntent = getIntent();
+        boolean isPreferenceNavigation = currentIntent != null && (
+            currentIntent.hasExtra("show_help") || 
+            currentIntent.getBooleanExtra("show_restore_wallet", false) || 
+            currentIntent.getBooleanExtra("show_encrypt_keys", false)
+        );
+        
+        // Only require biometric if app was in background (paused/minimized)
+        // Don't require biometric when navigating within the app (e.g., from Settings back to WalletActivity)
+        boolean appWasInBackground = application.isAppInBackground();
+        boolean isAuthenticated = BiometricHelper.isAuthenticated(this);
+        boolean biometricEnabled = BiometricHelper.isBiometricEnabled(this) && BiometricHelper.isBiometricAvailable(this);
+        
+        // If this is a preference navigation, preserve authentication and don't require biometric
+        // This allows smooth navigation from Settings to WalletActivity for showing dialogs
+        if (isPreferenceNavigation && biometricEnabled && !isAuthenticated) {
+            BiometricHelper.setAuthenticated(this, true);
+            isAuthenticated = true;
+        }
+        
+        // Only show biometric if app was in background (meaning it was paused/minimized)
+        // AND this is NOT a preference navigation
+        // This allows navigation within the app without requiring biometric again
+        if (biometricEnabled && appWasInBackground && !isAuthenticated && !isPreferenceNavigation) {
             showBiometricAuthentication();
         } else {
-            // User is already authenticated or biometric is disabled
+            // App was not in background (navigating within app) OR already authenticated OR biometric disabled
+            // OR this is a preference navigation
+            
             startBlockchainService();
             
             // Check for pending transactions that can be retried via RadioDoge
@@ -332,6 +367,56 @@ public final class WalletActivity extends AbstractWalletActivity {
                     radiodogeStatusChecker.startChecking();
                 }
             }, 100);
+            
+            // Handle intent extras from preference fragments (after biometric check passes)
+            // Use a slightly longer delay to ensure everything is initialized
+            handler.postDelayed(() -> {
+                handlePreferenceIntentExtras();
+            }, 500);
+        }
+    }
+    
+    private void handlePreferenceIntentExtras() {
+        final Intent receivedIntent = getIntent();
+        if (receivedIntent == null) {
+            return;
+        }
+        
+        // Wait for the view to be laid out and FragmentManager to be ready
+        // Use multiple posts to ensure everything is initialized
+        if (contentView != null) {
+            contentView.post(() -> {
+                // Wait a bit more to ensure FragmentManager transactions are complete
+                handler.postDelayed(() -> {
+                    // Process each intent extra separately (not using else-if to avoid missing any)
+                    if (receivedIntent.hasExtra("show_help")) {
+                        final int helpResId = receivedIntent.getIntExtra("show_help", 0);
+                        if (helpResId != 0 && viewModel != null) {
+                            viewModel.showHelpDialog.setValue(new Event<>(helpResId));
+                            receivedIntent.removeExtra("show_help");
+                        }
+                    }
+                    
+                    if (receivedIntent.getBooleanExtra("show_restore_wallet", false)) {
+                        if (viewModel != null) {
+                            viewModel.showRestoreWalletDialog.setValue(Event.simple());
+                        }
+                        receivedIntent.removeExtra("show_restore_wallet");
+                    }
+                    
+                    if (receivedIntent.getBooleanExtra("show_encrypt_keys", false)) {
+                        if (viewModel != null) {
+                            viewModel.showEncryptKeysDialog.setValue(Event.simple());
+                        }
+                        receivedIntent.removeExtra("show_encrypt_keys");
+                    }
+                }, 300);
+            });
+        } else {
+            // Fallback: use handler delay if contentView is not ready yet
+            handler.postDelayed(() -> {
+                handlePreferenceIntentExtras();
+            }, 300);
         }
     }
 
@@ -344,8 +429,8 @@ public final class WalletActivity extends AbstractWalletActivity {
             radiodogeStatusChecker.stopChecking();
         }
         
-        // Clear biometric authentication when app goes to background
-        BiometricHelper.setAuthenticated(this, false);
+        // Note: Biometric authentication is cleared when app goes to background
+        // (handled by WalletApplication), not here, to allow navigation within the app
         
         super.onPause();
     }
@@ -373,6 +458,11 @@ public final class WalletActivity extends AbstractWalletActivity {
                 // Authentication successful, mark as authenticated and start service
                 BiometricHelper.setAuthenticated(WalletActivity.this, true);
                 startBlockchainService();
+                // Handle intent extras from preference fragments (after biometric authentication succeeds)
+                // Use a delay to ensure FragmentManager is ready
+                handler.postDelayed(() -> {
+                    handlePreferenceIntentExtras();
+                }, 500);
             }
 
             @Override
@@ -522,6 +612,18 @@ public final class WalletActivity extends AbstractWalletActivity {
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent); // Update the intent so getIntent() returns the new one
+        // Handle intent extras from preference fragments if this is a new intent
+        if (intent != null && (
+            intent.hasExtra("show_help") || 
+            intent.getBooleanExtra("show_restore_wallet", false) || 
+            intent.getBooleanExtra("show_encrypt_keys", false)
+        )) {
+            // Wait a bit to ensure FragmentManager is ready
+            handler.postDelayed(() -> {
+                handlePreferenceIntentExtras();
+            }, 500);
+        }
         
         // Make app icon launches behave exactly like widget launches
         // If biometric is enabled, route through BiometricAuthActivity first (no sensitive data shown)
@@ -652,18 +754,6 @@ public final class WalletActivity extends AbstractWalletActivity {
 
         final Resources res = getResources();
 
-        menu.findItem(R.id.wallet_options_sweep_wallet).setVisible(Constants.ENABLE_SWEEP_WALLET);
-        final String externalStorageState = Environment.getExternalStorageState();
-        final boolean enableRestoreWalletOption = Environment.MEDIA_MOUNTED.equals(externalStorageState)
-                || Environment.MEDIA_MOUNTED_READ_ONLY.equals(externalStorageState);
-        menu.findItem(R.id.wallet_options_restore_wallet).setEnabled(enableRestoreWalletOption);
-        final Boolean isEncrypted = viewModel.walletEncrypted.getValue();
-        if (isEncrypted != null) {
-            final MenuItem encryptKeysOption = menu.findItem(R.id.wallet_options_encrypt_keys);
-            encryptKeysOption.setTitle(isEncrypted ? R.string.wallet_options_encrypt_keys_change
-                    : R.string.wallet_options_encrypt_keys_set);
-            encryptKeysOption.setVisible(true);
-        }
         final Boolean isLegacyFallback = viewModel.walletLegacyFallback.getValue();
         if (isLegacyFallback != null) {
             final MenuItem requestLegacyOption = menu.findItem(R.id.wallet_options_request_legacy);
@@ -693,6 +783,42 @@ public final class WalletActivity extends AbstractWalletActivity {
             }
         }
 
+        // Show/hide menu items based on settings
+        final Configuration config = application.getConfiguration();
+
+        // Show/hide Point of Sale menu item based on setting
+        final MenuItem pointOfSaleOption = menu.findItem(R.id.wallet_options_point_of_sale);
+        if (pointOfSaleOption != null) {
+            pointOfSaleOption.setVisible(config.getPointOfSaleModeEnabled());
+        }
+
+        // Family Mode - find parent menu item by iterating (it doesn't have an ID in the menu XML)
+        for (int i = 0; i < menu.size(); i++) {
+            final MenuItem item = menu.getItem(i);
+            if (item != null && item.hasSubMenu()) {
+                final android.view.SubMenu subMenu = item.getSubMenu();
+                // Check if this submenu contains the family_mode item
+                for (int j = 0; j < subMenu.size(); j++) {
+                    if (subMenu.getItem(j).getItemId() == R.id.wallet_options_family_mode) {
+                        item.setVisible(config.getShowFamilyModeMenu());
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Recurring Payments
+        final MenuItem recurringPaymentsOption = menu.findItem(R.id.wallet_options_recurring_payments);
+        if (recurringPaymentsOption != null) {
+            recurringPaymentsOption.setVisible(config.getShowRecurringPaymentsMenu());
+        }
+
+        // Digital Signature
+        final MenuItem digitalSignatureOption = menu.findItem(R.id.wallet_options_digital_signature);
+        if (digitalSignatureOption != null) {
+            digitalSignatureOption.setVisible(config.getShowDigitalSignatureMenu());
+        }
+
         return true;
     }
 
@@ -702,13 +828,8 @@ public final class WalletActivity extends AbstractWalletActivity {
         
         // Check if child mode is active and PIN protection is needed
         boolean isChildModeActive = de.schildbach.wallet.util.ChildModeHelper.isChildModeActive(this);
-        boolean needsPinProtection = isChildModeActive && (itemId == R.id.wallet_options_safety || 
-                                                          itemId == R.id.wallet_options_family_mode || 
-                                                          itemId == R.id.wallet_options_preferences ||
-                                                          itemId == R.id.wallet_options_encrypt_keys ||
-                                                          itemId == R.id.wallet_options_backup_wallet ||
-                                                          itemId == R.id.wallet_options_restore_wallet ||
-                                                          itemId == R.id.wallet_options_sweep_wallet);
+        boolean needsPinProtection = isChildModeActive && (itemId == R.id.wallet_options_family_mode || 
+                                                          itemId == R.id.wallet_options_preferences);
         
         if (needsPinProtection) {
             showPinProtectionDialog(itemId);
@@ -733,6 +854,15 @@ public final class WalletActivity extends AbstractWalletActivity {
         } else if (itemId == R.id.wallet_options_family_mode) {
             startActivity(new Intent(this, FamilyModeActivity.class));
             return true;
+        } else if (itemId == R.id.wallet_options_point_of_sale) {
+            final Configuration config = application.getConfiguration();
+            if (config.getPointOfSaleModeEnabled()) {
+                startActivity(new Intent(this, ProductManagementActivity.class));
+            } else {
+                android.widget.Toast.makeText(this, "Please enable Point of Sale Mode in Settings", android.widget.Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, PreferenceActivity.class));
+            }
+            return true;
         } else if (itemId == R.id.wallet_options_activate_child) {
             // Start QR scanner for child activation - use the same scanner as FamilyModeActivity
             ScanActivity.startForResult(this, REQUEST_CODE_SCAN_CHILD_ACTIVATION);
@@ -741,31 +871,13 @@ public final class WalletActivity extends AbstractWalletActivity {
             startActivity(new Intent(this, RecurringPaymentsActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_digital_signature) {
-            startActivity(new Intent(this, DigitalSignatureActivity.class));
-            return true;
-        } else if (itemId == R.id.wallet_options_sweep_wallet) {
-            SweepWalletActivity.start(this);
+            startActivity(new Intent(this, DigitalSignaturesListActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_accounting_reports) {
             startActivity(new Intent(this, AccountingReportsActivity.class));
             return true;
-        } else if (itemId == R.id.wallet_options_restore_wallet) {
-            viewModel.showRestoreWalletDialog.setValue(Event.simple());
-            return true;
-        } else if (itemId == R.id.wallet_options_backup_wallet) {
-            viewModel.showBackupWalletDialog.setValue(Event.simple());
-            return true;
-        } else if (itemId == R.id.wallet_options_encrypt_keys) {
-            viewModel.showEncryptKeysDialog.setValue(Event.simple());
-            return true;
         } else if (itemId == R.id.wallet_options_preferences) {
             startActivity(new Intent(this, PreferenceActivity.class));
-            return true;
-        } else if (itemId == R.id.wallet_options_safety) {
-            viewModel.showHelpDialog.setValue(new Event<>(R.string.help_safety));
-            return true;
-        } else if (itemId == R.id.wallet_options_technical_notes) {
-            viewModel.showHelpDialog.setValue(new Event<>(R.string.help_technical_notes));
             return true;
         } else if (itemId == R.id.wallet_options_education) {
             Intent intent = new Intent(this, EducationActivity.class);
@@ -823,20 +935,10 @@ public final class WalletActivity extends AbstractWalletActivity {
     }
     
     private void handleMenuAction(int menuItemId) {
-        if (menuItemId == R.id.wallet_options_safety) {
-            viewModel.showHelpDialog.setValue(new Event<>(R.string.help_safety));
-        } else if (menuItemId == R.id.wallet_options_family_mode) {
+        if (menuItemId == R.id.wallet_options_family_mode) {
             startActivity(new Intent(this, FamilyModeActivity.class));
         } else if (menuItemId == R.id.wallet_options_preferences) {
             startActivity(new Intent(this, PreferenceActivity.class));
-        } else if (menuItemId == R.id.wallet_options_encrypt_keys) {
-            viewModel.showEncryptKeysDialog.setValue(Event.simple());
-        } else if (menuItemId == R.id.wallet_options_backup_wallet) {
-            viewModel.showBackupWalletDialog.setValue(Event.simple());
-        } else if (menuItemId == R.id.wallet_options_restore_wallet) {
-            viewModel.showRestoreWalletDialog.setValue(Event.simple());
-        } else if (menuItemId == R.id.wallet_options_sweep_wallet) {
-            SweepWalletActivity.start(this);
         }
     }
 

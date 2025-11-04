@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_level1">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/bg_level2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Point of Sale"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant" />
+
+            <Button
+                android:id="@+id/btn_add_product"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Add Product"
+                android:textSize="12sp"
+                android:drawableStart="@drawable/ic_add_24dp"
+                android:drawablePadding="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_web_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Access POS online: Starting..."
+            android:textSize="12sp"
+            android:textColor="@color/fg_significant"
+            android:paddingTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textStyle="bold" />
+
+        <!-- Category Filter -->
+        <LinearLayout
+            android:id="@+id/layout_category_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@color/bg_level1"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_filter_list_white_24dp"
+                android:contentDescription="Filter by category"
+                android:tint="@color/fg_significant"
+                android:paddingEnd="12dp" />
+
+            <Spinner
+                android:id="@+id/spinner_category_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/layout_empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No products yet"
+            android:textSize="16sp"
+            android:textColor="@color/fg_significant"
+            android:alpha="0.7"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap 'Add Product' button to create your first product"
+            android:textSize="14sp"
+            android:textColor="@color/fg_significant"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <!-- Products List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_products"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
+

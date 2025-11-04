@@ -72,6 +72,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     private EditTextPreference bluetoothAddressPreference;
     private android.preference.CheckBoxPreference biometricPreference;
     private android.preference.CheckBoxPreference radiodogePreference;
+    private android.preference.CheckBoxPreference enableLoggingPreference;
 
     private static final int BLUETOOTH_ADDRESS_LENGTH = 6 * 2 + 5; // including the colons
     private static final Logger log = LoggerFactory.getLogger(SettingsFragment.class);
@@ -170,6 +171,13 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             radiodogePreference.setOnPreferenceChangeListener(this);
         }
 
+        // Initialize Enable Logging preference
+        enableLoggingPreference = (android.preference.CheckBoxPreference) findPreference(Configuration.PREFS_KEY_ENABLE_LOGGING);
+        if (enableLoggingPreference != null) {
+            enableLoggingPreference.setChecked(config.getEnableLogging());
+            enableLoggingPreference.setOnPreferenceChangeListener(this);
+        }
+
         // Initialize Payment Terminal Mode preference
         final Preference paymentTerminalPreference = findPreference("payment_terminal_mode");
         if (paymentTerminalPreference != null) {
@@ -198,6 +206,9 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         if (radiodogePreference != null) {
             radiodogePreference.setOnPreferenceChangeListener(null);
         }
+        if (enableLoggingPreference != null) {
+            enableLoggingPreference.setOnPreferenceChangeListener(null);
+        }
 
         backgroundThread.getLooper().quit();
 
@@ -218,6 +229,8 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 updateBiometricPreference((Boolean) newValue);
             else if (preference.equals(radiodogePreference))
                 updateRadioDogePreference((Boolean) newValue);
+            else if (preference.equals(enableLoggingPreference))
+                updateEnableLoggingPreference((Boolean) newValue);
         });
         return true;
     }
@@ -315,6 +328,17 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             android.widget.Toast.makeText(activity, "RadioDoge support enabled", android.widget.Toast.LENGTH_SHORT).show();
         } else {
             android.widget.Toast.makeText(activity, "RadioDoge support disabled", android.widget.Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateEnableLoggingPreference(boolean enabled) {
+        config.setEnableLogging(enabled);
+        // Update log level immediately
+        de.schildbach.wallet.Logging.updateLogLevel(activity);
+        if (enabled) {
+            android.widget.Toast.makeText(activity, "Logging enabled", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            android.widget.Toast.makeText(activity, "Logging disabled", android.widget.Toast.LENGTH_SHORT).show();
         }
     }
 

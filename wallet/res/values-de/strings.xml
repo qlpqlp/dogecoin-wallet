@@ -373,6 +373,11 @@
 <string name="recurring_payments_menu_title">Wiederkehrende Zahlungen</string>
 <string name="biometric_error_user_cancel">Authentication was cancelled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
+<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Erstellen Sie ein verschlüsseltes Backup Ihrer Brieftasche, um sich vor Verlust oder Geräteausfall zu schützen. Unerlässlich für die Brieftaschen-Wiederherstellung.</string>
+<string name="preferences_restore_wallet_summary">Stellen Sie Ihre Brieftasche aus einer zuvor erstellten Backup-Datei wieder her. Nützlich beim Einrichten auf einem neuen Gerät oder bei der Wiederherstellung nach Problemen.</string>
+<string name="preferences_safety_notes_summary">Wichtige Sicherheitsrichtlinien und bewährte Praktiken für die sichere Verwendung Ihrer Dogecoin-Brieftasche. Lesen Sie vor dem Speichern größerer Beträge.</string>
+<string name="preferences_technical_notes_summary">Technische Dokumentation über die Architektur der Brieftasche, Funktionen und Implementierungsdetails für fortgeschrittene Benutzer.</string>
 <string name="family_mode_send_coins">Munzen Senden</string>
 <string name="recurring_payments_add_address">Neue Adresse Hinzufugen</string>
 <string name="exchange_rates_fragment_summary">View current exchange rates for Dogecoin</string>
@@ -420,7 +425,6 @@
 <string name="biometric_auth_title">Biometric Authentication</string>
 <string name="family_mode_child_name">Kindername</string>
 <string name="recurring_payments_no_payments">Keine wiederkehrenden Zahlungen geplant</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
 <string name="biometric_error_hw_unavailable">Biometric hardware is currently unavailable</string>
 <string name="network_monitor_fragment_summary">Monitor network status and peer connections</string>
 <string name="biometric_error_no_hardware">No biometric hardware available</string>

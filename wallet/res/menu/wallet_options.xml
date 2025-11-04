@@ -35,33 +35,6 @@
         android:title="@string/address_book_activity_title" />
     <item
         android:showAsAction="never"
-        android:title="@string/wallet_options_safety_menu">
-        <menu>
-            <item
-                android:id="@+id/wallet_options_safety"
-                android:showAsAction="never"
-                android:title="@string/wallet_options_safety" />
-            <item
-                android:id="@+id/wallet_options_technical_notes"
-                android:showAsAction="never"
-                android:title="@string/wallet_options_technical_notes_title" />
-            <item
-                android:id="@+id/wallet_options_backup_wallet"
-                android:showAsAction="never"
-                android:title="@string/export_keys_dialog_title" />
-            <item
-                android:id="@+id/wallet_options_restore_wallet"
-                android:showAsAction="never"
-                android:title="@string/import_keys_dialog_title" />
-            <item
-                android:id="@+id/wallet_options_encrypt_keys"
-                android:showAsAction="never"
-                android:title="@string/encrypt_keys_dialog_title"
-                android:visible="false" />
-        </menu>
-    </item>
-    <item
-        android:showAsAction="never"
         android:title="@string/family_mode_menu_title">
         <menu>
             <item
@@ -75,6 +48,10 @@
         </menu>
     </item>
     <item
+        android:id="@+id/wallet_options_point_of_sale"
+        android:showAsAction="never"
+        android:title="@string/point_of_sale_mode_title" />
+    <item
         android:id="@+id/wallet_options_recurring_payments"
         android:showAsAction="never"
         android:title="@string/recurring_payments_menu_title" />
@@ -82,10 +59,6 @@
         android:id="@+id/wallet_options_digital_signature"
         android:showAsAction="never"
         android:title="@string/digital_signature_activity_title" />
-    <item
-        android:id="@+id/wallet_options_sweep_wallet"
-        android:showAsAction="never"
-        android:title="@string/sweep_wallet_activity_title" />
     <item
         android:id="@+id/wallet_options_accounting_reports"
         android:showAsAction="never"

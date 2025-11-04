@@ -276,6 +276,11 @@
 <string name="preferences_remind_balance_title">Balance reminder</string>
 <string name="block_row_mining_difficulty_adjustment">Mining difficulty adjustment</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
+<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Unda nakala salama iliyoimbwa ya mkoba wako ili kujilinda kutokana na kupoteza au kushindwa kwa kifaa. Muhimu kwa urejesho wa mkoba.</string>
+<string name="preferences_restore_wallet_summary">Rudisha mkoba wako kutoka kwa faili ya nakala salama iliyoundwa hapo awali. Inasaidia wakati wa kuweka kwenye kifaa kipya au urejesho kutoka kwa matatizo.</string>
+<string name="preferences_safety_notes_summary">Mwongozo muhimu wa usalama na mazoea bora ya kutumia mkoba wako wa Dogecoin kwa usalama. Soma kabla ya kuhifadhi kiasi kikubwa.</string>
+<string name="preferences_technical_notes_summary">Nyaraka za kiufundi kuhusu usanifu wa mkoba, vipengele na maelezo ya utekelezaji kwa watumiaji wa hali ya juu.</string>
 <string name="family_mode_send_coins">Send Coins</string>
 <string name="transaction_row_message_received_rbf">This payment was delayed because the sender used an insecure transaction type.</string>
 <string name="notification_connectivity_syncing_message">Synchronizing with the network…</string>
@@ -392,7 +397,6 @@
 <string name="family_mode_child_name">Child Name</string>
 <string name="recurring_payments_no_payments">No recurring payments scheduled</string>
 <string name="send_coins_fragment_receiving_address_own">You\'re about to send to yourself!</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
 <string name="biometric_error_hw_unavailable">Biometric hardware is currently unavailable</string>
 <string name="network_monitor_fragment_summary">Monitor network status and peer connections</string>
 <string name="biometric_error_no_hardware">No biometric hardware available</string>

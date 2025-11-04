@@ -239,7 +239,8 @@
 <string name="input_parser_invalid_paymentrequest">Invalid payment request:\n%s</string>
 <string name="input_parser_invalid_signature">Invalid payment signature</string>
 <string name="input_parser_invalid_transaction">Invalid transaction:\n%s</string>
-<string name="preferences_activity_title">Settings</string>
+    <string name="preferences_activity_title">Settings</string>
+    <string name="preferences_configuration_title">Configuration</string>
 <string name="preferences_category_general">General</string>
 <string name="preferences_category_privacy">Privacy control</string>
 <string name="preferences_category_merchants">Merchants</string>
@@ -284,6 +285,11 @@
     <string name="preferences_bluetooth_address_dialog_message">Unfortunately Android is preventing the automatic detection of your device\'s Bluetooth address. You need to look it up in the Android Bluetooth settings and enter it here.\n\nPlease make sure that every character is correct. Colons can be omitted, and case is not important.</string>
     <string name="preferences_radiodoge_title">RadioDoge Support</string>
     <string name="preferences_radiodoge_summary">Use RadioDoge to broadcast transactions when no internet connection is available</string>
+    <string name="preferences_enable_logging_title">Enable Logging</string>
+    <string name="preferences_enable_logging_summary">Enable detailed logging for debugging. Logs are stored in app files and may grow large if enabled.</string>
+    <string name="preferences_point_of_sale_mode_title">Point of Sale Mode</string>
+    <string name="preferences_point_of_sale_mode_summary">Enable product catalog and web-based POS system for merchants</string>
+    <string name="point_of_sale_mode_title">Point of Sale Mode</string>
     <string name="radiodoge_status_message">Using RadioDoge for payments without Internet</string>
     
     <!-- Payment Terminal Mode -->
@@ -429,6 +435,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Create an encrypted backup of your wallet to protect against loss or device failure. Essential for wallet recovery.</string>
+<string name="preferences_restore_wallet_summary">Restore your wallet from a previously created backup file. Useful when setting up on a new device or recovering from issues.</string>
+<string name="preferences_safety_notes_summary">Important safety guidelines and best practices for securely using your Dogecoin wallet. Read before storing significant amounts.</string>
+<string name="preferences_technical_notes_summary">Technical documentation about the wallet\'s architecture, features, and implementation details for advanced users.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>
@@ -510,6 +520,9 @@
 <string name="digital_signature_doge_address_label">Doge Address:</string>
 <string name="digital_signature_copy_button">Copy</string>
 <string name="digital_signature_share_button">Share</string>
+<string name="digital_signature_view">View</string>
+<string name="digital_signature_edit_tag">Edit Tag</string>
+<string name="digital_signature_delete">Delete</string>
 <string name="recurring_payments_payment_date_time_label">Payment Date &amp; Time</string>
 <string name="recurring_payments_select_date">Select Date</string>
 <string name="recurring_payments_select_time">Select Time</string>
@@ -714,4 +727,20 @@
     <string name="education_dogecoin_philosophy_unbanked">Unbanked Support: Helps people without bank accounts access financial services</string>
     <string name="education_dogecoin_philosophy_global">Global Access: Provides financial freedom to people worldwide</string>
     <string name="education_dogecoin_philosophy_community">Community First: Built by the community, for the community</string>
+
+    <!-- Transaction Fees Section -->
+    <string name="education_transaction_fees_title">Transaction Fees: Why Do We Pay Fees?</string>
+    <string name="education_transaction_fees_what_are">What are fees? Small amounts of Dogecoin paid to miners who process your transaction</string>
+    <string name="education_transaction_fees_why_needed">Why needed? Miners use computers and electricity to secure the network and verify transactions</string>
+    <string name="education_transaction_fees_how_much">How much? Dogecoin fees are very low: about 0.01 DOGE per KB (typically 0.0025-0.01 DOGE per transaction)</string>
+    <string name="education_transaction_fees_examples">Examples: Small payment (~250 bytes) = ~0.0025 DOGE, Medium (~500 bytes) = ~0.005 DOGE, Large (~1000 bytes) = ~0.01 DOGE</string>
+    <string name="education_transaction_fees_cheap">Why so cheap? Dogecoin fees are much lower than banks or other cryptocurrencies, making it perfect for everyday use</string>
+
+    <!-- Menu Visibility Preferences -->
+    <string name="preferences_show_family_mode_menu_title">Show Family Mode Menu</string>
+    <string name="preferences_show_family_mode_menu_summary">Show or hide the Family Mode menu option</string>
+    <string name="preferences_show_recurring_payments_menu_title">Show Recurring Payments Menu</string>
+    <string name="preferences_show_recurring_payments_menu_summary">Show or hide the Recurring Payments menu option</string>
+    <string name="preferences_show_digital_signature_menu_title">Show Digital Signature Menu</string>
+    <string name="preferences_show_digital_signature_menu_summary">Show or hide the Digital Signature menu option</string>
 </resources>

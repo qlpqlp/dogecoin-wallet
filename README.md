@@ -19,7 +19,52 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 86
+## 🚀 Latest Updates - Version 87
+
+### 📱 New Features
+- **Point of Sale (POS) System**: Complete e-commerce solution for merchants and businesses
+  - **Product & Category Management**: Add products with categories, images, prices, descriptions, and inventory tracking
+  - **Web-Based Storefront**: Access POS from any browser on your local network via local IP address
+  - **QR Code Payments**: Generate unique payment addresses with QR codes for each product and quantity combination
+  - **Real-Time Payment Detection**: Automatic payment monitoring with instant confirmation and automatic stock deduction
+  - **Inventory Management**: Track quantities with automatic deduction on payment, unlimited stock option, and automatic hiding when quantity reaches 0
+  - **Modern Web Interface**: Responsive design with dark theme, professional styling, and touch-friendly quantity selection with + and - buttons
+  - **Category Filtering**: Filter products by category with intuitive icon-based interface
+  - **Payment Success Animation**: Celebratory Dogecoin words animation on successful payments with automatic redirect to main page
+  - **How It Works**: 
+    1. Enable "Point of Sale Mode" in Settings → Configuration
+    2. Access "Point of Sale Mode" menu from main wallet screen
+    3. Add products with categories, images, prices, and quantities
+    4. Access POS from any browser on your local network using the displayed IP address and port
+    5. Customers browse products by category, select quantity, and scan QR code to pay
+    6. Payment is automatically detected and inventory is updated in real-time
+- **Digital Signature Improvements**: Enhanced user experience with modal-based interface
+  - **Modal-Based UI**: Sign and verify signatures using modern modal dialogs instead of separate pages
+  - **Streamlined Workflow**: Sign Text and Sign File options presented in a single modal with icons
+  - **Better Organization**: View saved signatures list is now the first page when accessing Digital Signature feature
+  - **Quick Actions**: Verify button on main list page for quick signature verification
+  - **Improved UX**: More intuitive navigation with clear visual hierarchy and modern design
+- **Settings Menu Reorganization**: Simplified and more intuitive menu structure
+  - **Configuration Section**: Renamed "Settings" to "Configuration" within Settings menu for clarity
+  - **Safety & Security Moved**: Safety notes, Technical notes, Backup wallet, Restore wallet, and Set spending PIN moved to main Settings menu
+  - **Better Organization**: Settings menu now organized into logical sections:
+    - **Configuration**: Wallet settings, preferences, and customization options
+    - **Wallet Management**: Backup, restore, sweep paper wallet operations
+    - **Information & Documentation**: Safety notes, technical notes, and help resources
+    - **Advanced Tools**: Network monitoring, diagnostics, and reporting
+  - **Simplified Navigation**: More intuitive menu structure makes it easier to find what you need
+  - **Enhanced Descriptions**: Added detailed descriptions to help users understand each option
+- **Menu Visibility Customization**: Control which menu items are visible in Settings → Configuration
+  - **Family Mode Menu**: Show or hide the Family Mode menu option
+  - **Recurring Payments Menu**: Show or hide the Recurring Payments menu option
+  - **Digital Signature Menu**: Show or hide the Digital Signature menu option
+  - **Default Visibility**: All menu items are visible by default for easy access
+  - **Instant Updates**: Menu visibility changes take effect immediately
+- **Comprehensive Translations**: Full internationalization support
+  - **Point of Sale Translations**: All POS features translated to French, Spanish, Portuguese (Portugal & Brasil), and Chinese
+  - **Digital Signature Translations**: All digital signature features translated to main languages
+  - **Configuration Translations**: All settings and configuration options translated
+  - **Complete Coverage**: All buttons, labels, and descriptions now available in supported languages
 
 ### 🔧 Technical Improvements
 - **Background Sync Enhancement**: Implemented continuous mempool monitoring for receiving payments in background
@@ -50,13 +95,6 @@ Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive doc
 - **Authentication Flow**: More reliable biometric authentication with proper lifecycle management
 - **Background Security**: Secure background transaction processing and broadcasting
 
-### 📱 New Features
-- **Background Payment Reception**: Wallet now receives payments even when minimized or paused
-- **Enhanced Recurring Payments**: Improved background execution with better reliability
-- **Mempool Monitoring**: Continuous monitoring of mempool for incoming transactions
-- **Service Persistence**: Services stay running for background operations
-- **UI Improvements**: Better icons and visual consistency across the app
-
 This project contains several sub-projects:
 
  * __wallet__:
@@ -72,10 +110,41 @@ This project contains several sub-projects:
 
 ## 📋 VERSION HISTORY
 
-### Version 86 - Widget Behavior Fix & Build Optimization
-- **Widget Click Behavior**: Fixed widget click to match app icon behavior exactly - widget now opens wallet identically to app icon
-- **Build Optimization**: Enabled minification and resource shrinking for optimized app size
-- **Version Update**: Incremented version code to 86
+### Version 87 - UI Simplification, Translations & Bug Fixes
+- **Settings Menu Reorganization**: Simplified and more intuitive menu structure
+  - Renamed "Settings" to "Configuration" within Settings menu for clarity
+  - Moved Safety notes, Technical notes, Backup wallet, Restore wallet, and Set spending PIN to main Settings menu
+  - Better organization with logical sections: Configuration, Wallet Management, Information & Documentation, Advanced Tools
+  - Enhanced descriptions to help users understand each option
+- **Digital Signature UI Improvements**: Enhanced user experience with modal-based interface
+  - Sign and verify signatures using modern modal dialogs instead of separate pages
+  - Streamlined workflow with Sign Text and Sign File options in a single modal
+  - View saved signatures list is now the first page when accessing Digital Signature
+  - Quick Verify button on main list page for quick signature verification
+  - Improved UX with clear visual hierarchy and modern design
+- **Comprehensive Translations**: Full internationalization support
+  - All Point of Sale features translated to French, Spanish, Portuguese (Portugal & Brasil), and Chinese
+  - All Digital Signature features translated to main languages
+  - All Configuration and Settings options translated
+  - Complete coverage of all buttons, labels, and descriptions
+- **Crash Fixes**: Resolved critical stability issues
+  - Fixed BlockStoreException crashes during service shutdown
+  - Fixed OutOfMemoryError by improving memory management during low memory conditions
+  - Enhanced service lifecycle management with proper shutdown procedures
+  - Better resource cleanup during app destruction and memory pressure
+
+### Version 86 - Point of Sale System & Menu Customization
+- **Point of Sale (POS) System**: Complete e-commerce solution for merchants and businesses
+  - Product and category management with images, prices, and inventory tracking
+  - Web-based storefront accessible from any browser on local network
+  - QR code payment generation with unique addresses per product/quantity
+  - Real-time payment detection with automatic stock management
+  - Modern responsive web interface with dark theme
+- **Menu Visibility Settings**: Added settings to control visibility of Family Mode, Recurring Payments, and Digital Signature menu items
+- **User Control**: Users can now hide menu items they don't use to customize their wallet interface
+- **Default Visibility**: All menu items are visible by default for easy access
+- **Instant Updates**: Menu visibility changes take effect immediately when menu is displayed
+- **Settings Integration**: New preferences available in Settings → Settings for menu customization
 
 ### Version 85 - UI Duplication Fix & Minification
 - **Fragment Duplicate Prevention**: Enhanced fragment management to prevent UI layer duplication
@@ -163,6 +232,36 @@ This project contains several sub-projects:
 - **Modern UI**: Clean, intuitive interface with toggle switches and status indicators
 - **Real-time Updates**: Balance calculations automatically exclude reserved funds
 
+### 🛒 Point of Sale (POS) System
+- **Full E-Commerce Solution**: Complete point of sale system for merchants and businesses
+- **Product Management**: Add, edit, and delete products with categories, descriptions, prices, and images
+- **Category Organization**: Organize products into categories for easy browsing and management
+- **Product Images**: Add product images via camera or gallery with automatic resizing
+- **Inventory Management**: Track product quantities with automatic deduction on payment
+- **Unlimited Stock Option**: Set products to unlimited stock for services or digital goods
+- **Local Web Interface**: Access your POS from any browser on the same network via local IP address
+- **Online Storefront**: Beautiful web interface displaying products by category with product details
+- **QR Code Payments**: Generate unique payment addresses with QR codes for each product and quantity
+- **Real-Time Payment Detection**: Automatic payment monitoring with instant confirmation
+- **Payment Success Animation**: Celebratory Dogecoin words animation on successful payments
+- **Automatic Redirect**: Redirects to main page after 5 seconds on successful payment
+- **Quantity Selection**: Touch-friendly + and - buttons for quantity selection on web interface
+- **Mobile Responsive**: Fully responsive design that works on desktop, tablet, and mobile browsers
+- **Modern UI**: Dark theme matching Dogecoin Wallet design with professional styling
+- **Category Filtering**: Filter products by category with intuitive icon-based interface
+- **Stock Visibility**: Products with 0 quantity are automatically hidden from display
+- **Unlimited Display**: Products with unlimited stock show "Unlimited" on the web interface
+
+### ⚙️ Menu Customization & Visibility Control
+- **Menu Visibility Settings**: Control which menu items are visible from Settings → Settings
+- **Family Mode Menu**: Show or hide the Family Mode menu option based on your preferences
+- **Recurring Payments Menu**: Show or hide the Recurring Payments menu option
+- **Digital Signature Menu**: Show or hide the Digital Signature menu option
+- **Default Visibility**: All menu items are visible by default for easy access
+- **Instant Updates**: Menu visibility changes take effect immediately when menu is displayed
+- **Personalized Interface**: Customize your wallet menu to show only the features you use
+- **User-Friendly Settings**: Easy-to-use checkboxes in Settings for quick menu customization
+
 ### 📊 Accounting Reports & Transaction Analytics
 - **Comprehensive Transaction Reports**: Generate detailed reports of all wallet transactions with full data export
 - **Multiple Export Formats**: Export to CSV, JSON, or PDF with professional formatting
@@ -198,6 +297,7 @@ This project contains several sub-projects:
 
 ### 🆕 NEW ADVANCED FEATURES
 
+• **🛒 Point of Sale (POS) System**: Complete e-commerce solution for merchants with product management, web-based storefront, QR code payments, and real-time inventory tracking.
 • **📝 Digital Document Signing**: Sign any text, document, or photo with your Dogecoin private key for authentication and verification.
 • **💳 Recurring Payments**: Schedule one-time or monthly recurring payments with precise date/time control.
 • **👨‍👩‍👧‍👦 Family Mode**: Create and manage child wallets with individual addresses, PIN protection, and parental controls.

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_level1"
+    android:maxHeight="600dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Signature Details"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Type -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text"
+            android:textSize="14sp"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tag -->
+        <TextView
+            android:id="@+id/text_tag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tag:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/text_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
+
+        <!-- Content -->
+        <TextView
+            android:id="@+id/text_content_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Content:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="12dp"
+            android:textIsSelectable="true"
+            android:fontFamily="monospace"
+            android:scrollbars="vertical"
+            android:maxHeight="150dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- File Hash (if applicable) -->
+        <LinearLayout
+            android:id="@+id/layout_file_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="File Hash (SHA256):"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_file_hash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="12sp"
+                android:textColor="@color/fg_significant"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textIsSelectable="true"
+                android:fontFamily="monospace" />
+
+        </LinearLayout>
+
+        <!-- Address -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Doge Address:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="13sp"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Signature -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Digital Signature:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="11sp"
+            android:textColor="@color/fg_significant"
+            android:background="@color/bg_level2"
+            android:padding="12dp"
+            android:textIsSelectable="true"
+            android:fontFamily="monospace"
+            android:scrollbars="vertical"
+            android:maxHeight="120dp"
+            android:layout_marginBottom="16dp" />
+
+        </LinearLayout>
+        
+    </ScrollView>
+    
+    <!-- Action Buttons - Fixed at bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/bg_level2"
+        android:elevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btn_download_file"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_download_24dp"
+                android:contentDescription="Download"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/btn_copy_signature"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_copy_24dp"
+                android:contentDescription="Copy"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp" />
+
+            <ImageButton
+                android:id="@+id/btn_share_signature"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_share_24dp"
+                android:contentDescription="Share"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="@string/common_save"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginEnd="8dp"
+                android:drawableStart="@drawable/ic_save_24dp"
+                android:drawablePadding="8dp"
+                android:visibility="gone"
+                style="@style/My.Dialog.Button" />
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Close"
+                android:textSize="14sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                style="@style/My.Dialog.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+

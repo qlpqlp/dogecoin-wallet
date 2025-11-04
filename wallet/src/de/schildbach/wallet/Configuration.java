@@ -61,8 +61,13 @@ public class Configuration {
     public static final String PREFS_KEY_DISCLAIMER = "disclaimer";
     public static final String PREFS_KEY_BLUETOOTH_ADDRESS = "bluetooth_address";
     public static final String PREFS_KEY_RADIODOGE_ENABLED = "radiodoge_enabled";
+    public static final String PREFS_KEY_ENABLE_LOGGING = "enable_logging";
     public static final String PREFS_KEY_PAYMENT_TERMINAL_ENABLED = "payment_terminal_enabled";
     public static final String PREFS_KEY_PAYMENT_TERMINAL_PIN = "payment_terminal_pin";
+    public static final String PREFS_KEY_POINT_OF_SALE_MODE = "point_of_sale_mode";
+    public static final String PREFS_KEY_SHOW_FAMILY_MODE_MENU = "show_family_mode_menu";
+    public static final String PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU = "show_recurring_payments_menu";
+    public static final String PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU = "show_digital_signature_menu";
 
     private static final String PREFS_KEY_LAST_VERSION = "last_version";
     private static final String PREFS_KEY_LAST_USED = "last_used";
@@ -345,6 +350,22 @@ public class Configuration {
         prefs.edit().putBoolean(PREFS_KEY_RADIODOGE_ENABLED, enabled).apply();
     }
 
+    public boolean getEnableLogging() {
+        return prefs.getBoolean(PREFS_KEY_ENABLE_LOGGING, false);
+    }
+
+    public void setEnableLogging(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_ENABLE_LOGGING, enabled).apply();
+    }
+
+    public boolean getPointOfSaleModeEnabled() {
+        return prefs.getBoolean(PREFS_KEY_POINT_OF_SALE_MODE, false);
+    }
+
+    public void setPointOfSaleModeEnabled(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_POINT_OF_SALE_MODE, enabled).apply();
+    }
+
     public boolean getPaymentTerminalEnabled() {
         return prefs.getBoolean(PREFS_KEY_PAYMENT_TERMINAL_ENABLED, false);
     }
@@ -359,6 +380,30 @@ public class Configuration {
 
     public void setPaymentTerminalPin(final String pin) {
         prefs.edit().putString(PREFS_KEY_PAYMENT_TERMINAL_PIN, pin).apply();
+    }
+
+    public boolean getShowFamilyModeMenu() {
+        return prefs.getBoolean(PREFS_KEY_SHOW_FAMILY_MODE_MENU, true);
+    }
+
+    public void setShowFamilyModeMenu(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_SHOW_FAMILY_MODE_MENU, enabled).apply();
+    }
+
+    public boolean getShowRecurringPaymentsMenu() {
+        return prefs.getBoolean(PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU, true);
+    }
+
+    public void setShowRecurringPaymentsMenu(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU, enabled).apply();
+    }
+
+    public boolean getShowDigitalSignatureMenu() {
+        return prefs.getBoolean(PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU, true);
+    }
+
+    public void setShowDigitalSignatureMenu(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU, enabled).apply();
     }
 
     public void registerOnSharedPreferenceChangeListener(final OnSharedPreferenceChangeListener listener) {

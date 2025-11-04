@@ -296,6 +296,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Krijoni një kopje rezervë të enkriptuar të portofolit tuaj për t\'u mbrojtur nga humbja ose dështimi i pajisjes. Thelbësore për rikthimin e portofolit.</string>
+<string name="preferences_restore_wallet_summary">Rikthejeni portofolin tuaj nga një skedar kopje rezervë i krijuar më parë. E dobishme gjatë konfigurimit në një pajisje të re ose gjatë rikthimit nga problemet.</string>
+<string name="preferences_safety_notes_summary">Udhëzime të rëndësishme sigurie dhe praktika më të mira për përdorimin e sigurt të portofolit tuaj Dogecoin. Lexoni para ruajtjes së shumave të konsiderueshme.</string>
+<string name="preferences_technical_notes_summary">Dokumentacioni teknik për arkitekturën e portofolit, tiparet dhe detajet e zbatimit për përdoruesit e avancuar.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>

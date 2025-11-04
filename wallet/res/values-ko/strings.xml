@@ -349,6 +349,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">손실 또는 기기 오류로부터 보호하기 위해 지갑의 암호화된 백업을 만드세요. 지갑 복구에 필수적입니다.</string>
+<string name="preferences_restore_wallet_summary">이전에 만든 백업 파일에서 지갑을 복원합니다. 새 기기에서 설정하거나 문제로부터 복구할 때 유용합니다.</string>
+<string name="preferences_safety_notes_summary">Dogecoin 지갑을 안전하게 사용하기 위한 중요한 안전 지침 및 모범 사례. 상당한 금액을 저장하기 전에 읽으세요.</string>
+<string name="preferences_technical_notes_summary">고급 사용자를 위한 지갑 아키텍처, 기능 및 구현 세부 사항에 대한 기술 문서.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>

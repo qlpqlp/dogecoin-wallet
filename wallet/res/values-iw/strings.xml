@@ -224,6 +224,11 @@
 <string name="preferences_remind_balance_title">Balance reminder</string>
 <string name="block_row_mining_difficulty_adjustment">Mining difficulty adjustment</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
+<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">צור גיבוי מוצפן של הארנק שלך כדי להגן על עצמך מפני אובדן או כשל במכשיר. חיוני לשחזור הארנק.</string>
+<string name="preferences_restore_wallet_summary">שחזר את הארנק שלך מקובץ גיבוי שנוצר בעבר. שימושי בעת הגדרה במכשיר חדש או בעת התאוששות מבעיות.</string>
+<string name="preferences_safety_notes_summary">הנחיות בטיחות חשובות ומומלצות לשימוש מאובטח בארנק Dogecoin שלך. קרא לפני אחסון סכומים משמעותיים.</string>
+<string name="preferences_technical_notes_summary">תיעוד טכני על ארכיטקטורת הארנק, תכונות ופרטי יישום למשתמשים מתקדמים.</string>
 <string name="family_mode_send_coins">Send Coins</string>
 <string name="extended_public_key_fragment_share">Share extended public key…</string>
 <string name="transaction_row_message_received_rbf">This payment was delayed because the sender used an insecure transaction type.</string>
@@ -377,7 +382,6 @@
 <string name="recurring_payments_no_payments">No recurring payments scheduled</string>
 <string name="wallet_options_encrypt_keys_set">Set spending PIN</string>
 <string name="send_coins_fragment_receiving_address_own">You\'re about to send to yourself!</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
 <string name="sweep_wallet_options_reload">Reload balance</string>
 <string name="biometric_error_hw_unavailable">Biometric hardware is currently unavailable</string>
 <string name="network_monitor_fragment_summary">Monitor network status and peer connections</string>

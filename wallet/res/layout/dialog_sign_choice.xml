@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Digital Signature"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/fg_significant"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btn_sign_text"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Sign Text"
+        android:textSize="16sp"
+        android:drawableStart="@drawable/ic_text_24dp"
+        android:drawablePadding="16dp"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="12dp"
+        style="@style/My.Dialog.Button" />
+
+    <Button
+        android:id="@+id/btn_sign_file"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Sign File"
+        android:textSize="16sp"
+        android:drawableStart="@drawable/ic_file_24dp"
+        android:drawablePadding="16dp"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        style="@style/My.Dialog.Button" />
+
+</LinearLayout>
+

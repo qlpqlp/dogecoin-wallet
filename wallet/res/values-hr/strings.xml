@@ -110,6 +110,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Stvorite šifriranu sigurnosnu kopiju vašeg novčanika kako biste se zaštitili od gubitka ili greške uređaja. Neophodno za oporavak novčanika.</string>
+<string name="preferences_restore_wallet_summary">Vratite vaš novčanik iz prethodno kreirane sigurnosne kopije. Korisno pri postavljanju na novom uređaju ili oporavku od problema.</string>
+<string name="preferences_safety_notes_summary">Važne sigurnosne smjernice i najbolje prakse za sigurno korištenje vašeg Dogecoin novčanika. Pročitajte prije pohranjivanja značajnih iznosa.</string>
+<string name="preferences_technical_notes_summary">Tehnička dokumentacija o arhitekturi novčanika, značajkama i detaljima implementacije za napredne korisnike.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>

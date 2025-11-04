@@ -339,6 +339,11 @@
 <string name="about_credits_moshi_title">Moshi, a JSON library</string>
 <string name="wallet_transactions_fragment_empty_text_warning">Tip: This wallet works best if you don’t use it for lots of tiny transactions. Too many small inputs can slow things down and make your coins take longer to show up.</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
+<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">建立錢包的加密備份，以保護自己免受遺失或裝置故障的影響。錢包恢復所必需。</string>
+<string name="preferences_restore_wallet_summary">從之前建立的備份檔案恢復您的錢包。在新裝置上設定或從問題中恢復時很有用。</string>
+<string name="preferences_safety_notes_summary">安全使用Dogecoin錢包的重要安全指南和最佳實踐。在儲存大量資金之前請閱讀。</string>
+<string name="preferences_technical_notes_summary">面向進階使用者的錢包架構、功能和實作細節的技術文件。</string>
 <string name="family_mode_send_coins">Send Coins</string>
 <string name="notification_connectivity_syncing_message">Synchronizing with the network…</string>
 <string name="recurring_payments_add_address">Add New Address</string>
@@ -408,7 +413,6 @@
 <string name="toast_start_storage_provider_selector_failed">No suitable cloud storage provider is installed.\nYou need something like \"Nextcloud\" or \"Google Drive\".</string>
 <string name="family_mode_child_name">Child Name</string>
 <string name="recurring_payments_no_payments">No recurring payments scheduled</string>
-<string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
 <string name="biometric_error_hw_unavailable">Biometric hardware is currently unavailable</string>
 <string name="network_monitor_fragment_summary">Monitor network status and peer connections</string>
 <string name="biometric_error_no_hardware">No biometric hardware available</string>

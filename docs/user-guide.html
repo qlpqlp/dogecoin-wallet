@@ -207,7 +207,8 @@
         <h2 id="family-mode"><i class="fas fa-users"></i> Family Mode</h2>
         <p>Create child wallets for family members:</p>
         <ol>
-            <li>Go to Settings → Family Mode</li>
+            <li>Open the main wallet menu (tap the three-dot menu icon)</li>
+            <li>Select "Family Mode" (this menu item can be enabled/disabled in Settings → Configuration → Show Family Mode Menu)</li>
             <li>Add a new family member</li>
             <li>Share the QR code with them</li>
             <li>Monitor their transactions and balance</li>
@@ -307,13 +308,27 @@
         
         <h3>How to Use Digital Signing</h3>
         <ol>
-            <li><strong>Open Tools:</strong> Navigate to the Tools menu in your wallet</li>
+            <li><strong>Enable Digital Signature Menu (if needed):</strong> Go to Settings → Configuration → Show Digital Signature Menu to enable/disable this menu item</li>
+            <li><strong>Open Tools:</strong> Navigate to the Tools menu in your wallet (tap the three-dot menu icon)</li>
             <li><strong>Select Digital Signing:</strong> Choose the digital signing option</li>
             <li><strong>Choose Content:</strong> Enter text, select a file, or take a photo</li>
             <li><strong>Generate Signature:</strong> Create your unique cryptographic signature</li>
             <li><strong>Share:</strong> Share the signed content with anyone for verification</li>
             <li><strong>Verify:</strong> Recipients can verify the signature using your Dogecoin address</li>
         </ol>
+        
+        <h3>Managing Saved Signatures</h3>
+        <p>All your digital signatures are saved in a database for easy access and management:</p>
+        <ul>
+            <li><strong>View Signatures:</strong> Tap "View" (eye icon) to see signature details including content, address, signature, and timestamp</li>
+            <li><strong>Edit Tags:</strong> Tap "Edit Tag" (label icon) to add or modify tags for better organization</li>
+            <li><strong>Delete Signatures:</strong> Tap "Delete" (trash icon) to remove signatures you no longer need</li>
+            <li><strong>Download Files/Photos:</strong> For file and photo signatures, a "Download" button (download icon) appears in the view dialog. Tap it to share or download the original file using Android's share menu</li>
+        </ul>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-download"></i> Download Original Files:</strong> When viewing a file or photo signature, you can download the original file using the Download button. This allows you to share the original document, photo, or video that was signed, separate from the signature data.
+        </div>
         
         <h3>Verification Process</h3>
         <div class="feature-box">
@@ -343,11 +358,24 @@
         <h2 id="recurring-payments"><i class="fas fa-credit-card"></i> Recurring Payments</h2>
         <p>Schedule automatic payments:</p>
         <ol>
-            <li>Go to Tools → Recurring Payments</li>
-            <li>Create a new payment schedule</li>
-            <li>Set amount, frequency, and destination</li>
-            <li>Enable/disable as needed</li>
+            <li><strong>Enable Recurring Payments Menu (if needed):</strong> Go to Settings → Configuration → Show Recurring Payments Menu to enable/disable this menu item</li>
+            <li><strong>Open Tools:</strong> Navigate to the Tools menu in your wallet (tap the three-dot menu icon)</li>
+            <li><strong>Select Recurring Payments:</strong> Choose the recurring payments option</li>
+            <li><strong>Create a New Payment Schedule:</strong> Tap "Add Payment" button</li>
+            <li><strong>Set Payment Details:</strong> Set amount, frequency, destination address, and optional reference</li>
+            <li><strong>Enable/Disable:</strong> Use the toggle switch on each payment to enable or disable it as needed</li>
         </ol>
+        
+        <h3>Recurring Payments Features</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-calendar"></i> Flexible Scheduling:</strong> Set up monthly or one-time payments with automatic execution.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-toggle-on"></i> Easy Management:</strong> Enable or disable individual payments without deleting them.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-edit"></i> Edit & Delete:</strong> Edit payment details or delete payments you no longer need using the edit and delete icons.
+        </div>
         
         <h2 id="accounting-reports"><i class="fas fa-chart-line"></i> Accounting Reports & Transaction Analytics</h2>
         <p>Generate comprehensive reports of all your wallet transactions for accounting, tax purposes, or personal financial tracking.</p>
@@ -502,15 +530,82 @@
             <li>Restart the app and try again</li>
         </ul>
         
+        <h2 id="settings-menu"><i class="fas fa-cog"></i> Settings Menu</h2>
+        <p>The Settings menu provides access to configuration options, wallet management tools, and important information. Access Settings by tapping the menu button (three dots) in the top-right corner and selecting "Settings".</p>
+        
+        <h3>Settings Menu Structure</h3>
+        <p>The Settings menu is organized into the following sections:</p>
+        
+        <h4>Configuration</h4>
+        <p>Access general wallet settings and preferences including:</p>
+        <ul>
+            <li>Enable/disable logging</li>
+            <li>Point of Sale Mode toggle</li>
+            <li>Menu visibility settings (Family Mode, Recurring Payments, Digital Signature)</li>
+            <li>Sync mode preferences</li>
+            <li>Other wallet configuration options</li>
+        </ul>
+        
+        <h4>Wallet Management</h4>
+        <p>Manage your wallet security and backup:</p>
+        <ul>
+            <li><strong>Set Spending PIN:</strong> Protect your wallet with a PIN that's required for sending transactions</li>
+            <li><strong>Back Up Wallet:</strong> Create an encrypted backup of your wallet to protect against loss or device failure. Essential for wallet recovery.</li>
+            <li><strong>Restore Wallet:</strong> Restore your wallet from a previously created backup file. Useful when setting up on a new device or recovering from issues.</li>
+            <li><strong>Sweep Paper Wallet:</strong> Move funds from a paper wallet or private key into your main wallet</li>
+        </ul>
+        
+        <h4>Information & Documentation</h4>
+        <p>Access important guidelines and technical documentation:</p>
+        <ul>
+            <li><strong>Safety Notes:</strong> Important safety guidelines and best practices for securely using your Dogecoin wallet. Read before storing significant amounts.</li>
+            <li><strong>Technical Notes:</strong> Technical documentation about the wallet's architecture, features, and implementation details for advanced users.</li>
+        </ul>
+        
+        <h4>Advanced Tools</h4>
+        <p>Additional features and utilities:</p>
+        <ul>
+            <li><strong>Exchange Rates:</strong> View current exchange rates for Dogecoin</li>
+            <li><strong>Network Monitor:</strong> Monitor network status and peer connections</li>
+            <li><strong>Extended Public Key:</strong> Access and share your extended public key</li>
+            <li><strong>Reset Block Chain:</strong> Reset blockchain, transactions, and wallet balance (use with caution)</li>
+            <li><strong>Report Issue:</strong> Report bugs or issues with the wallet</li>
+        </ul>
+        
+        <h3>Important Settings Features</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-key"></i> Set Spending PIN:</strong> Located in Settings → Set Spending PIN. This PIN is required whenever you send Dogecoin transactions. It provides an additional layer of security beyond your device PIN or biometric authentication.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-database"></i> Back Up Wallet:</strong> Located in Settings → Back Up Wallet. Create encrypted backups of your wallet that can be restored on any device. Always keep your backup password secure and store backups in multiple safe locations.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-download"></i> Restore Wallet:</strong> Located in Settings → Restore Wallet. Restore your wallet from a backup file created previously. This is essential when setting up on a new device or recovering from wallet issues.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-file-invoice"></i> Sweep Paper Wallet:</strong> Located in Settings → Sweep Paper Wallet. Move funds from paper wallets or private keys into your main wallet. This is useful when receiving paper wallet funds or consolidating wallets.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Safety Notes:</strong> Located in Settings → Safety Notes. Read important safety guidelines and best practices for securely using your Dogecoin wallet, especially before storing significant amounts.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> Technical Notes:</strong> Located in Settings → Technical Notes. Access technical documentation about the wallet's architecture, features, and implementation details for advanced users and developers.
+        </div>
+        
         <h2 id="advanced-features"><i class="fas fa-cogs"></i> Advanced Features</h2>
         <h3 id="network-monitor">Network Monitor</h3>
-        <p>Monitor your connection to the Dogecoin network and view discovered nodes worldwide.</p>
+        <p>Monitor your connection to the Dogecoin network and view discovered nodes worldwide. Access via Settings → Network Monitor.</p>
         
         <h3>Address Book</h3>
         <p>Save frequently used addresses for quick access when sending payments.</p>
         
         <h3>Exchange Rates</h3>
-        <p>View real-time Dogecoin prices in various fiat currencies.</p>
+        <p>View real-time Dogecoin prices in various fiat currencies. Access via Settings → Exchange Rates.</p>
         
         <h2 id="dogeconnect"><i class="fas fa-plug"></i> DogeConnect - Wallet Integration</h2>
         <p>DogeConnect is a protocol developed by the <a href="https://github.com/dogeorg/connect" target="_blank">Dogecoin Foundation</a> that enables secure payment envelopes for transactions. Your wallet can parse and process DogeConnect payment envelopes from merchants and services, enabling seamless integration with compatible platforms. Learn more at <a href="https://connect.dogecoin.org" target="_blank">connect.dogecoin.org</a>.</p>
@@ -557,7 +652,7 @@
         <h3>How to Enable Payment Terminal Mode</h3>
         <ol>
             <li>Open Settings in the Dogecoin Wallet</li>
-            <li>Navigate to General preferences</li>
+            <li>Navigate to Configuration</li>
             <li>Find "Payment Terminal Mode" option</li>
             <li>Tap to enable terminal mode</li>
             <li>Set a secure PIN when prompted</li>
@@ -732,6 +827,206 @@ print(f"Amount: {data['amount']} DOGE")</pre>
             <li>Restart the terminal mode to restart the API server</li>
         </ul>
         
+        <h2 id="point-of-sale"><i class="fas fa-store"></i> Point of Sale (POS) System</h2>
+        <p>Point of Sale Mode is a complete e-commerce solution that allows merchants and businesses to manage products, categories, and inventory while providing customers with a beautiful web-based storefront accessible from any browser on the local network. Customers can browse products, select quantities, and make payments using QR codes with real-time payment detection.</p>
+        
+        <h3>What is Point of Sale Mode?</h3>
+        <p>Point of Sale Mode transforms your Dogecoin Wallet into a complete POS system for merchants. You can manage products with categories, images, prices, and inventory tracking. Customers access your storefront from any browser on your local network, browse products by category, select quantities, and make payments using unique QR codes. The system automatically detects payments and manages inventory in real-time.</p>
+        
+        <h3>How to Enable Point of Sale Mode</h3>
+        <ol>
+            <li>Open Settings in the Dogecoin Wallet</li>
+            <li>Navigate to Configuration</li>
+            <li>Find "Point of Sale Mode" option</li>
+            <li>Toggle the switch to enable Point of Sale Mode</li>
+            <li>The "Point of Sale Mode" menu option will appear in the main wallet menu</li>
+        </ol>
+        
+        <h3>Managing Products and Categories</h3>
+        <h4>Adding a Product</h4>
+        <ol>
+            <li>Open the main wallet menu (tap the three-dot menu icon)</li>
+            <li>Select "Point of Sale Mode"</li>
+            <li>Tap "Add Product" button</li>
+            <li>Fill in the product details:
+                <ul>
+                    <li><strong>Category:</strong> Select an existing category from the dropdown or add a new one by tapping the "+" button</li>
+                    <li><strong>Name:</strong> Enter the product or service name</li>
+                    <li><strong>Description:</strong> Enter a detailed description of the product or service</li>
+                    <li><strong>Weight:</strong> (Optional) Enter product weight</li>
+                    <li><strong>Image:</strong> Tap "Select Image" to choose from gallery or "Camera Options" to take a photo. The image will be automatically resized to fit the POS system</li>
+                    <li><strong>Quantity:</strong> Enter stock quantity (leave empty for unlimited stock)</li>
+                    <li><strong>Price:</strong> Enter the price in DOGE</li>
+                </ul>
+            </li>
+            <li>Tap "Save" to add the product</li>
+        </ol>
+        
+        <h4>Editing a Product</h4>
+        <ol>
+            <li>In the Point of Sale Mode screen, find the product you want to edit</li>
+            <li>Tap the "Edit" icon (pencil icon) on the product card</li>
+            <li>Modify any product details as needed</li>
+            <li>Tap "Save" to update the product</li>
+        </ol>
+        
+        <h4>Deleting a Product</h4>
+        <ol>
+            <li>In the Point of Sale Mode screen, find the product you want to delete</li>
+            <li>Tap the "Delete" icon (trash icon) on the product card</li>
+            <li>Confirm deletion when prompted</li>
+        </ol>
+        
+        <h4>Filtering Products by Category</h4>
+        <ol>
+            <li>In the Point of Sale Mode screen, you'll see a filter icon at the top</li>
+            <li>Tap the filter icon to open the category dropdown</li>
+            <li>Select a category to filter products, or select "All" to show all products</li>
+            <li>The product list will update to show only products from the selected category</li>
+        </ol>
+        
+        <h3>Accessing Your POS Storefront</h3>
+        <p>Once Point of Sale Mode is enabled and you have products added, you can access your storefront from any browser on your local network:</p>
+        <ol>
+            <li>In the Point of Sale Mode screen, you'll see a message "Access POS online: http://[IP_ADDRESS]:4200"</li>
+            <li>Make sure your device and the browser are on the same Wi-Fi network</li>
+            <li>Open a web browser (Chrome, Firefox, Safari, Edge, etc.) on any device (computer, tablet, phone)</li>
+            <li>Enter the URL shown in the app (e.g., <code>http://192.168.1.100:4200</code>)</li>
+            <li>Your storefront will load, showing all product categories</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Make sure your device is connected to the same Wi-Fi network as the device running the wallet app. The POS web server runs on port 4200 by default.
+        </div>
+        
+        <h3>Using the Web Storefront</h3>
+        <h4>Browsing Products</h4>
+        <ol>
+            <li>On the main POS webpage, you'll see all available product categories</li>
+            <li>Tap on a category to view all products in that category</li>
+            <li>Products are displayed in cards with images, names, descriptions, prices, and stock information</li>
+            <li>Products with 0 quantity are automatically hidden</li>
+            <li>Products with unlimited stock show "Unlimited" for quantity</li>
+        </ol>
+        
+        <h4>Selecting Quantity and Making Payment</h4>
+        <ol>
+            <li>Tap on a product to view its details</li>
+            <li>On the product detail page, you'll see:
+                <ul>
+                    <li>Product image (large and visible)</li>
+                    <li>Product name and description</li>
+                    <li>Price per unit</li>
+                    <li>Stock availability</li>
+                    <li>Quantity selector with + and - buttons</li>
+                    <li>Total amount to pay</li>
+                </ul>
+            </li>
+            <li>Use the + and - buttons or enter a quantity in the input field</li>
+            <li>Tap "Pay in Doge" button to generate a payment QR code</li>
+            <li>A unique Dogecoin address is generated for this specific product and quantity</li>
+            <li>A QR code is displayed that can be scanned with any Dogecoin wallet</li>
+            <li>The payment page automatically checks every 3 seconds for incoming payments</li>
+        </ol>
+        
+        <h4>Payment Confirmation</h4>
+        <ol>
+            <li>When a payment is detected, the page will display a success message</li>
+            <li>A celebratory Dogecoin words animation will play</li>
+            <li>After 5 seconds, the page will automatically redirect to the main categories page</li>
+            <li>The product quantity will be automatically deducted (if not unlimited)</li>
+            <li>If the quantity reaches 0, the product will be hidden from display</li>
+        </ol>
+        
+        <h3>Key Features</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-boxes"></i> Product Management:</strong> Complete CRUD operations for products with categories, images, prices, and inventory tracking.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-tags"></i> Category Organization:</strong> Organize products into categories for easy browsing and management. Select existing categories or create new ones.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-image"></i> Product Images:</strong> Add product images via camera or gallery. Images are automatically resized to fit the POS system.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-database"></i> Inventory Management:</strong> Track product quantities with automatic deduction on payment. Set products to unlimited stock for services or digital goods.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-globe"></i> Web-Based Storefront:</strong> Access your POS from any browser on your local network. No installation required on customer devices.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-qrcode"></i> QR Code Payments:</strong> Generate unique payment addresses with QR codes for each product and quantity combination.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-bolt"></i> Real-Time Payment Detection:</strong> Automatic payment monitoring with instant confirmation. Checks every 3 seconds for incoming payments.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-mobile-alt"></i> Mobile Responsive:</strong> Fully responsive design that works perfectly on desktop, tablet, and mobile browsers.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-palette"></i> Modern UI:</strong> Dark theme matching Dogecoin Wallet design with professional styling and smooth animations.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-filter"></i> Category Filtering:</strong> Filter products by category with an intuitive icon-based interface in the app.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-touch"></i> Touch-Friendly:</strong> Large + and - buttons for quantity selection on touch screens.
+        </div>
+        
+        <h3>Best Practices for Point of Sale Mode</h3>
+        <ul>
+            <li><strong>Organize Products:</strong> Use categories to organize your products logically (e.g., "Food", "Drinks", "Services", "Digital Goods")</li>
+            <li><strong>Product Images:</strong> Add clear, high-quality images to help customers identify products easily</li>
+            <li><strong>Stock Management:</strong> Keep track of your inventory by entering accurate quantities. Use unlimited stock for services or digital goods</li>
+            <li><strong>Network Setup:</strong> Ensure your device is on a stable Wi-Fi network for reliable POS access</li>
+            <li><strong>Testing:</strong> Test the POS system with a small transaction first to ensure everything works correctly</li>
+            <li><strong>Product Updates:</strong> Regularly update product information, prices, and stock quantities</li>
+            <li><strong>Backup:</strong> Consider backing up your wallet regularly, especially if you have many products configured</li>
+        </ul>
+        
+        <h3>Troubleshooting Point of Sale Mode</h3>
+        <h4>Cannot Access Web Storefront</h4>
+        <ul>
+            <li>Ensure both devices are on the same Wi-Fi network</li>
+            <li>Check that the wallet app is running and Point of Sale Mode is enabled</li>
+            <li>Verify the IP address and port (4200) are correct</li>
+            <li>Check your firewall settings - port 4200 should be accessible</li>
+            <li>Try restarting the Point of Sale Mode in the app</li>
+        </ul>
+        
+        <h4>Products Not Showing on Web Page</h4>
+        <ul>
+            <li>Ensure products have quantity greater than 0 (or unlimited stock)</li>
+            <li>Products with 0 quantity are automatically hidden</li>
+            <li>Check that products are assigned to a category</li>
+            <li>Try refreshing the web page</li>
+        </ul>
+        
+        <h4>Payment Not Detected</h4>
+        <ul>
+            <li>Wait a few seconds - payment detection checks every 3 seconds</li>
+            <li>Ensure the payment was sent to the correct address displayed on the page</li>
+            <li>Verify your wallet is connected to the Dogecoin network and syncing</li>
+            <li>Check that the payment amount matches or exceeds the required amount</li>
+            <li>Try refreshing the payment page if it's been open for a while</li>
+        </ul>
+        
+        <h4>Images Not Displaying</h4>
+        <ul>
+            <li>Ensure product images were added correctly in the app</li>
+            <li>Check that images are valid image files</li>
+            <li>Try adding the image again if it's not showing</li>
+            <li>Clear browser cache and refresh the page</li>
+        </ul>
+        
+        <h4>QR Code Not Showing</h4>
+        <ul>
+            <li>Ensure you've tapped "Pay in Doge" to generate the QR code</li>
+            <li>Check that you've selected a valid quantity</li>
+            <li>Try refreshing the payment page</li>
+            <li>Verify your wallet app is running and connected to the network</li>
+        </ul>
+        
         <h2 id="radiodoge"><i class="fas fa-broadcast-tower"></i> RadioDoge - Offline Transactions</h2>
         <p>Send Dogecoin transactions without internet using LoRa technology powered by <a href="https://github.com/dogecoinfoundation/radiodoge" target="_blank">RadioDoge V3 from Dogecoin Foundation</a>.</p>
         
@@ -748,7 +1043,7 @@ print(f"Amount: {data['amount']} DOGE")</pre>
         
         <h3>Setting Up RadioDoge</h3>
         <ol>
-            <li><strong>Enable RadioDoge:</strong> Go to Settings → General → Enable RadioDoge</li>
+            <li><strong>Enable RadioDoge:</strong> Go to Settings → Configuration → Enable RadioDoge</li>
             <li><strong>Connect LoRa Device:</strong> Connect a compatible LoRa device such as KeyChain LoRa</li>
             <li><strong>Configure Settings:</strong> Set up your RadioDoge node preferences and transmission parameters</li>
         </ol>
@@ -799,7 +1094,7 @@ print(f"Amount: {data['amount']} DOGE")</pre>
         <p>Check your internet connection and wait for network confirmation. Large transactions may take longer.</p>
         
         <h3>App Not Syncing</h3>
-        <p>Go to Settings → Battery Optimization and disable it for the wallet app.</p>
+        <p>Go to your device's Settings → Battery Optimization and disable it for the wallet app.</p>
         
         <h3>Lost Device</h3>
         <p>If you have a backup, you can restore your wallet on a new device using the recovery phrase.</p>

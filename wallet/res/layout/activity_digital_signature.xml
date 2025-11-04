@@ -11,16 +11,35 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Title -->
-        <TextView
+        <!-- Title Row -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/digital_signature_activity_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/fg_significant"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/digital_signature_activity_title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:gravity="center" />
+
+            <ImageButton
+                android:id="@+id/btn_view_saved"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_save_24dp"
+                android:contentDescription="Saved"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
+
+        </LinearLayout>
 
         <!-- Tab Buttons -->
         <LinearLayout
@@ -398,6 +417,27 @@
                 android:textIsSelectable="true"
                 android:layout_marginBottom="16dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tag (optional)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/fg_significant"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/edit_tag"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/bg_level2"
+                android:padding="16dp"
+                android:textColor="@color/fg_significant"
+                android:hint="Add a tag to identify this signature"
+                android:inputType="text"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -430,6 +470,17 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_save_signature"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Save to Database"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_save_24dp"
+                android:drawablePadding="8dp"
+                android:layout_marginTop="16dp"
+                style="@style/My.Dialog.Button" />
+
+            <Button
                 android:id="@+id/btn_clear_results"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -437,7 +488,7 @@
                 android:textSize="14sp"
                 android:drawableStart="@drawable/ic_clear_24dp"
                 android:drawablePadding="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 style="@style/My.Dialog.Button" />
 
         </LinearLayout>

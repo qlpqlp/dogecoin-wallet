@@ -35,12 +35,42 @@
             android:key="radiodoge_enabled"
             android:title="@string/preferences_radiodoge_title"
             android:summary="@string/preferences_radiodoge_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="enable_logging"
+            android:title="@string/preferences_enable_logging_title"
+            android:summary="@string/preferences_enable_logging_summary"
             android:defaultValue="false" />
 
         <Preference
             android:key="payment_terminal_mode"
             android:title="@string/preferences_payment_terminal_title"
             android:summary="@string/preferences_payment_terminal_summary" />
+
+        <CheckBoxPreference
+            android:key="point_of_sale_mode"
+            android:title="@string/preferences_point_of_sale_mode_title"
+            android:summary="@string/preferences_point_of_sale_mode_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="show_family_mode_menu"
+            android:title="@string/preferences_show_family_mode_menu_title"
+            android:summary="@string/preferences_show_family_mode_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_recurring_payments_menu"
+            android:title="@string/preferences_show_recurring_payments_menu_title"
+            android:summary="@string/preferences_show_recurring_payments_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_digital_signature_menu"
+            android:title="@string/preferences_show_digital_signature_menu_title"
+            android:summary="@string/preferences_show_digital_signature_menu_summary"
+            android:defaultValue="true" />
 
         <Preference
             android:key="data_usage"

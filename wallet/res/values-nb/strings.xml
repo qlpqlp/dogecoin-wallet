@@ -352,6 +352,10 @@
 <string name="biometric_error_permanent_lockout">Biometric authentication is permanently disabled</string>
 <string name="preferences_activity_summary">Configure wallet settings and preferences</string>
 <string name="preferences_category_diagnostics_summary">Advanced diagnostic tools and information</string>
+<string name="preferences_backup_wallet_summary">Opprett en kryptert sikkerhetskopi av lommeboken din for å beskytte deg mot tap eller enhetsfeil. Essensielt for lommebokgjenoppretting.</string>
+<string name="preferences_restore_wallet_summary">Gjenopprett lommeboken din fra en tidligere opprettet sikkerhetskopifil. Nyttig ved konfigurering på en ny enhet eller ved gjenoppretting fra problemer.</string>
+<string name="preferences_safety_notes_summary">Viktige sikkerhetsretningslinjer og beste praksis for trygg bruk av din Dogecoin-lommebok. Les før du lagrer betydelige beløp.</string>
+<string name="preferences_technical_notes_summary">Teknisk dokumentasjon om lommebokens arkitektur, funksjoner og implementeringsdetaljer for avanserte brukere.</string>
 <string name="preferences_report_issue_summary">Report bugs or issues with the wallet</string>
 <string name="about_summary">App version, license, and developer information</string>
 <string name="digital_signature_activity_title">Digital Signature</string>
