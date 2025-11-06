@@ -65,6 +65,7 @@ public class Configuration {
     public static final String PREFS_KEY_PAYMENT_TERMINAL_ENABLED = "payment_terminal_enabled";
     public static final String PREFS_KEY_PAYMENT_TERMINAL_PIN = "payment_terminal_pin";
     public static final String PREFS_KEY_POINT_OF_SALE_MODE = "point_of_sale_mode";
+    public static final String PREFS_KEY_POS_BACKGROUND_SERVICE = "pos_background_service";
     public static final String PREFS_KEY_SHOW_FAMILY_MODE_MENU = "show_family_mode_menu";
     public static final String PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU = "show_recurring_payments_menu";
     public static final String PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU = "show_digital_signature_menu";
@@ -364,6 +365,14 @@ public class Configuration {
 
     public void setPointOfSaleModeEnabled(final boolean enabled) {
         prefs.edit().putBoolean(PREFS_KEY_POINT_OF_SALE_MODE, enabled).apply();
+    }
+
+    public boolean getPosBackgroundServiceEnabled() {
+        return prefs.getBoolean(PREFS_KEY_POS_BACKGROUND_SERVICE, false);
+    }
+
+    public void setPosBackgroundServiceEnabled(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_POS_BACKGROUND_SERVICE, enabled).apply();
     }
 
     public boolean getPaymentTerminalEnabled() {

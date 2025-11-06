@@ -21,6 +21,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import de.schildbach.wallet.R;
 
 import java.util.List;
@@ -51,6 +55,10 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
             return;
         }
         
+        // Android 16 (API 35) specific fix: Reset unwanted left and top margins
+        // Android 16 applies additional window insets that create unwanted margins
+        boolean isAndroid16 = Build.VERSION.SDK_INT >= 35; // Android 16 (API 35)
+        
         // Find the ListView inside PreferenceActivity (it contains the preference items)
         android.widget.ListView listView = null;
         if (contentView instanceof android.view.ViewGroup) {
@@ -75,6 +83,16 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
             actionBarHeight = (int) (getResources().getDisplayMetrics().density * 56);
         }
         
+        // Get status bar height
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        
+        // Calculate proper top padding
+        int topPadding = 0;
+        
         // Check if ListView exists and check its actual position
         if (listView != null) {
             int[] location = new int[2];
@@ -83,28 +101,7 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
             
             // Get action bar bottom position
             // Action bar is part of the window decor, calculate its position
-            int actionBarBottom = 0;
-            if (getActionBar() != null) {
-                // Get action bar height
-                int abHeight = getActionBar().getHeight();
-                if (abHeight == 0) {
-                    android.util.TypedValue tv = new android.util.TypedValue();
-                    if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                        abHeight = android.util.TypedValue.complexToDimensionPixelSize(
-                            tv.data, getResources().getDisplayMetrics());
-                    }
-                }
-                
-                // Get status bar height
-                int statusBarHeight = 0;
-                int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-                if (resourceId > 0) {
-                    statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-                }
-                
-                // Action bar bottom = status bar height + action bar height
-                actionBarBottom = statusBarHeight + abHeight;
-            }
+            int actionBarBottom = statusBarHeight + actionBarHeight;
             
             // If ListView top is less than action bar bottom, content is hidden
             if (listViewTop < actionBarBottom) {
@@ -112,13 +109,12 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
                 int currentPadding = contentView.getPaddingTop();
                 // Only add the difference needed, not the full action bar height
                 if (neededPadding > currentPadding) {
-                    contentView.setPadding(
-                        contentView.getPaddingLeft(),
-                        neededPadding,
-                        contentView.getPaddingRight(),
-                        contentView.getPaddingBottom()
-                    );
+                    topPadding = neededPadding;
+                } else {
+                    topPadding = currentPadding;
                 }
+            } else {
+                topPadding = contentView.getPaddingTop();
             }
         } else {
             // Fallback: check current padding and only add if minimal
@@ -129,14 +125,37 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
                 // Add minimum needed, not full action bar height
                 int minimalPadding = actionBarHeight;
                 if (minimalPadding > currentTopPadding) {
-                    contentView.setPadding(
-                        contentView.getPaddingLeft(),
-                        minimalPadding,
-                        contentView.getPaddingRight(),
-                        contentView.getPaddingBottom()
-                    );
+                    topPadding = minimalPadding;
+                } else {
+                    topPadding = currentTopPadding;
                 }
+            } else {
+                topPadding = currentTopPadding;
             }
+        }
+        
+        // Android 16 (API 35) specific: Reset left padding to 0
+        // We opt out of edge-to-edge in styles.xml, but still need to ensure left padding is 0
+        if (isAndroid16) {
+            // Reset left padding to 0 to remove unwanted left margin
+            int leftPadding = 0;
+            int rightPadding = contentView.getPaddingRight();
+            int bottomPadding = contentView.getPaddingBottom();
+            
+            // Top padding should be handled by the ListView position calculation above
+            // Since we opt out of edge-to-edge, we don't need special handling here
+            contentView.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
+        } else {
+            // For Android 14 and 15, keep existing behavior but ensure left padding is correct
+            int leftPadding = contentView.getPaddingLeft();
+            // Only reset left padding if it seems incorrectly set (e.g., > 0 when it shouldn't be)
+            // For Android 14/15, we typically don't want left padding on preference screens
+            if (leftPadding > 0) {
+                leftPadding = 0;
+            }
+            
+            contentView.setPadding(leftPadding, topPadding, 
+                contentView.getPaddingRight(), contentView.getPaddingBottom());
         }
     }
     
@@ -158,6 +177,163 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
     @Override
     public void onBuildHeaders(final List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
+        
+        // Add section headers for better organization
+        // We'll insert category headers at appropriate positions
+        // Note: We need to insert them in reverse order to maintain correct indices
+        
+        // Support section header (before Safety Notes)
+        int supportIndex = -1;
+        for (int i = 0; i < target.size(); i++) {
+            Header h = target.get(i);
+            if (h.fragment != null && h.fragment.contains("SafetyNotesPreferenceFragment")) {
+                supportIndex = i;
+                break;
+            }
+        }
+        if (supportIndex >= 0) {
+            Header supportHeader = new Header();
+            supportHeader.title = getString(R.string.preferences_category_support);
+            supportHeader.fragment = null; // Empty header acts as section divider
+            supportHeader.id = -1; // Mark as section header
+            target.add(supportIndex, supportHeader);
+        }
+        
+        // Advanced Tools section header (before Reset Block Chain)
+        int advancedIndex = -1;
+        for (int i = 0; i < target.size(); i++) {
+            Header h = target.get(i);
+            if (h.fragment != null && h.fragment.contains("ResetBlockchainPreferenceFragment")) {
+                advancedIndex = i;
+                break;
+            }
+        }
+        if (advancedIndex >= 0) {
+            Header advancedHeader = new Header();
+            advancedHeader.title = getString(R.string.preferences_category_advanced_tools);
+            advancedHeader.fragment = null;
+            advancedHeader.id = -1; // Mark as section header
+            target.add(advancedIndex, advancedHeader);
+        }
+        
+        // Network & Information section header (before Exchange Rates)
+        int networkIndex = -1;
+        for (int i = 0; i < target.size(); i++) {
+            Header h = target.get(i);
+            if (h.fragment != null && h.fragment.contains("ExchangeRatesPreferenceFragment")) {
+                networkIndex = i;
+                break;
+            }
+        }
+        if (networkIndex >= 0) {
+            Header networkHeader = new Header();
+            networkHeader.title = getString(R.string.preferences_category_network_information);
+            networkHeader.fragment = null;
+            networkHeader.id = -1; // Mark as section header
+            target.add(networkIndex, networkHeader);
+        }
+        
+        // Wallet Management section header (before Configuration)
+        int walletIndex = -1;
+        for (int i = 0; i < target.size(); i++) {
+            Header h = target.get(i);
+            if (h.fragment != null && h.fragment.contains("SettingsFragment")) {
+                walletIndex = i;
+                break;
+            }
+        }
+        if (walletIndex >= 0) {
+            Header walletHeader = new Header();
+            walletHeader.title = getString(R.string.preferences_category_wallet_management);
+            walletHeader.fragment = null;
+            walletHeader.id = -1; // Mark as section header
+            target.add(walletIndex, walletHeader);
+        }
+    }
+    
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        // Prevent clicking on section headers (headers with fragment == null)
+        if (header.fragment == null) {
+            return; // Don't navigate, just return
+        }
+        super.onHeaderClick(header, position);
+    }
+    
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        
+        // Style section headers (headers with fragment == null) in yellow color
+        // Use a post-delay to ensure the ListView is fully initialized
+        getListView().post(new Runnable() {
+            @Override
+            public void run() {
+                styleSectionHeaders();
+            }
+        });
+    }
+    
+    private void styleSectionHeaders() {
+        android.widget.ListView listView = getListView();
+        if (listView == null) {
+            return;
+        }
+        
+        // Get the adapter
+        android.widget.ListAdapter adapter = listView.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+        
+        // Style all visible section headers
+        int firstVisible = listView.getFirstVisiblePosition();
+        int lastVisible = firstVisible + listView.getChildCount();
+        
+        for (int i = firstVisible; i < lastVisible && i < adapter.getCount(); i++) {
+            View view = listView.getChildAt(i - firstVisible);
+            if (view != null) {
+                Header header = (Header) adapter.getItem(i);
+                if (header != null && header.fragment == null) {
+                    // This is a section header - style it in yellow
+                    TextView titleView = view.findViewById(android.R.id.title);
+                    if (titleView != null) {
+                        // Use amber/yellow color to match Configuration category titles
+                        titleView.setTextColor(ContextCompat.getColor(PreferenceActivity.this, R.color.amber));
+                    }
+                }
+            }
+        }
+        
+        // Set up a listener to style headers when they become visible during scrolling
+        listView.setOnScrollListener(new android.widget.AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(android.widget.AbsListView view, int scrollState) {
+            }
+            
+            @Override
+            public void onScroll(android.widget.AbsListView view, int firstVisibleItem, 
+                    int visibleItemCount, int totalItemCount) {
+                // Style visible section headers
+                android.widget.ListAdapter adapter = view.getAdapter();
+                if (adapter != null) {
+                    for (int i = firstVisibleItem; i < firstVisibleItem + visibleItemCount && i < totalItemCount; i++) {
+                        View childView = view.getChildAt(i - firstVisibleItem);
+                        if (childView != null) {
+                            Header header = (Header) adapter.getItem(i);
+                            if (header != null && header.fragment == null) {
+                                // This is a section header - style it in yellow
+                                TextView titleView = childView.findViewById(android.R.id.title);
+                                if (titleView != null) {
+                                    // Use amber/yellow color (#ffc107) to match Configuration category titles
+                                    titleView.setTextColor(0xFFFFC107); // Yellow/amber color
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.schildbach.wallet.data;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -42,6 +43,7 @@ public class Product {
         // Default constructor required by Room
     }
 
+    @Ignore
     public Product(long categoryId, String name, String description, Double weight, 
                    String imagePath, int quantity, long priceDoge) {
         this.categoryId = categoryId;

@@ -2,6 +2,7 @@
 <preference-headers
     xmlns:android="http://schemas.android.com/apk/res/android">
    
+    <!-- Wallet Management -->
     <header
         android:fragment="de.schildbach.wallet.ui.preference.SettingsFragment"
         android:title="@string/preferences_configuration_title"
@@ -10,6 +11,20 @@
         android:fragment="de.schildbach.wallet.ui.preference.EncryptKeysPreferenceFragment"
         android:title="@string/encrypt_keys_dialog_title"
         android:summary="@string/encrypt_keys_dialog_message" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.BackupWalletPreferenceFragment"
+        android:title="@string/export_keys_dialog_title"
+        android:summary="@string/preferences_backup_wallet_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.RestoreWalletPreferenceFragment"
+        android:title="@string/import_keys_dialog_title"
+        android:summary="@string/preferences_restore_wallet_summary" />
+    <header
+        android:fragment="de.schildbach.wallet.ui.preference.SweepWalletPreferenceFragment"
+        android:title="@string/sweep_wallet_activity_title"
+        android:summary="@string/sweep_wallet_fragment_intro" />
+    
+    <!-- Network & Information -->
     <header
         android:fragment="de.schildbach.wallet.ui.preference.ExchangeRatesPreferenceFragment"
         android:title="@string/exchange_rates_activity_title"
@@ -22,22 +37,14 @@
         android:fragment="de.schildbach.wallet.ui.preference.ExtendedPublicKeyPreferenceFragment"
         android:title="@string/preferences_extended_public_key_title"
         android:summary="@string/preferences_extended_public_key_summary" />
+    
+    <!-- Advanced Tools -->
     <header
         android:fragment="de.schildbach.wallet.ui.preference.ResetBlockchainPreferenceFragment"
         android:title="@string/preferences_initiate_reset_title"
         android:summary="@string/preferences_initiate_reset_summary" />
-    <header
-        android:fragment="de.schildbach.wallet.ui.preference.SweepWalletPreferenceFragment"
-        android:title="@string/sweep_wallet_activity_title"
-        android:summary="@string/sweep_wallet_fragment_intro" />
-    <header
-        android:fragment="de.schildbach.wallet.ui.preference.BackupWalletPreferenceFragment"
-        android:title="@string/export_keys_dialog_title"
-        android:summary="@string/preferences_backup_wallet_summary" />
-    <header
-        android:fragment="de.schildbach.wallet.ui.preference.RestoreWalletPreferenceFragment"
-        android:title="@string/import_keys_dialog_title"
-        android:summary="@string/preferences_restore_wallet_summary" />
+    
+    <!-- Support -->
     <header
         android:fragment="de.schildbach.wallet.ui.preference.SafetyNotesPreferenceFragment"
         android:title="@string/wallet_options_safety"

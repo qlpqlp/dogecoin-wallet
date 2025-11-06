@@ -72,6 +72,7 @@ import de.schildbach.wallet.ui.send.SweepWalletActivity;
 import de.schildbach.wallet.ui.DigitalSignatureActivity;
 import de.schildbach.wallet.ui.AccountingReportsActivity;
 import de.schildbach.wallet.ui.FamilyModeActivity;
+import de.schildbach.wallet.ui.ProductManagementActivity;
 import de.schildbach.wallet.ui.FirstTimeSetupDialogFragment;
 import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.BiometricHelper;
@@ -101,6 +102,7 @@ public final class WalletActivity extends AbstractWalletActivity {
     private PendingTransactionRetryService pendingTransactionRetryService;
     private RadioDogeStatusChecker radiodogeStatusChecker;
     private View radiodogeStatusBanner;
+    private View posWarningBanner;
 
     private AnimatorSet enterAnimation;
     private View contentView;
@@ -184,6 +186,27 @@ public final class WalletActivity extends AbstractWalletActivity {
         // Set the banner view for the status checker
         if (radiodogeStatusChecker != null) {
             radiodogeStatusChecker.setBannerView(radiodogeStatusBanner);
+        }
+        
+        // Setup POS background service warning banner
+        posWarningBanner = findViewById(R.id.pos_background_warning_banner);
+        if (posWarningBanner != null) {
+            // Update banner visibility
+            updatePosWarningBanner();
+            
+            // Make banner clickable to open POS settings
+            posWarningBanner.setOnClickListener(v -> {
+                Intent posIntent = new Intent(this, ProductManagementActivity.class);
+                startActivity(posIntent);
+            });
+            
+            // Listen for configuration changes
+            config.registerOnSharedPreferenceChangeListener((prefs, key) -> {
+                if (Configuration.PREFS_KEY_POS_BACKGROUND_SERVICE.equals(key)) {
+                    // Update on UI thread
+                    runOnUiThread(() -> updatePosWarningBanner());
+                }
+            });
         }
 
         // Make view tagged with 'levitate' scroll away and quickly return.
@@ -314,6 +337,9 @@ public final class WalletActivity extends AbstractWalletActivity {
     protected void onResume() {
         super.onResume();
 
+        // Update POS warning banner visibility
+        updatePosWarningBanner();
+
         // Check if terminal mode is enabled and redirect
         final Configuration config = application.getConfiguration();
         if (config.getPaymentTerminalEnabled() && !getClass().equals(PaymentTerminalActivity.class)) {
@@ -443,6 +469,13 @@ public final class WalletActivity extends AbstractWalletActivity {
             // Also schedule recurring payments service
             RecurringPaymentsService.schedule(application);
         }, 200); // Reduced delay from 1000ms to 200ms
+    }
+    
+    private void updatePosWarningBanner() {
+        if (posWarningBanner != null) {
+            boolean posBackgroundEnabled = application.getConfiguration().getPosBackgroundServiceEnabled();
+            posWarningBanner.setVisibility(posBackgroundEnabled ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void showBiometricAuthentication() {
@@ -744,8 +777,199 @@ public final class WalletActivity extends AbstractWalletActivity {
         super.onCreateOptionsMenu(menu);
 
         getMenuInflater().inflate(R.menu.wallet_options, menu);
+        
+        // Force icons to show in overflow menu using MenuBuilder reflection
+        try {
+            // Use reflection to access MenuBuilder and set optional icons visible
+            // This forces Android to display icons in the overflow menu
+            java.lang.reflect.Method setOptionalIconsVisible = menu.getClass().getMethod("setOptionalIconsVisible", boolean.class);
+            setOptionalIconsVisible.setAccessible(true);
+            setOptionalIconsVisible.invoke(menu, true);
+        } catch (Exception e) {
+            // If reflection fails, try alternative approach
+            try {
+                // Alternative: Try to get MenuBuilder through getClass()
+                Class<?> menuBuilderClass = Class.forName("com.android.internal.view.menu.MenuBuilder");
+                if (menuBuilderClass.isInstance(menu)) {
+                    java.lang.reflect.Method setOptionalIconsVisible = menuBuilderClass.getMethod("setOptionalIconsVisible", boolean.class);
+                    setOptionalIconsVisible.setAccessible(true);
+                    setOptionalIconsVisible.invoke(menu, true);
+                }
+            } catch (Exception e2) {
+                // If all reflection fails, icons might still be set but may not display
+                // This is expected on some Android versions
+            }
+        }
+        
+        // Ensure icons are set immediately
+        ensureMenuIconsVisible(menu);
 
         return true;
+    }
+
+    private View menuBlurOverlay;
+    
+    private boolean isMenuOpen = false;
+    
+    @Override
+    public boolean onMenuOpened(final int featureId, final Menu menu) {
+        // Add blur overlay when menu opens
+        isMenuOpen = true;
+        showMenuBlurOverlay();
+        
+        // Ensure icons are set when menu opens (for overflow menu)
+        // Use post-delay to ensure menu is fully rendered before setting icons
+        if (menu != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ensureMenuIconsVisible(menu);
+                }
+            });
+        }
+        
+        return super.onMenuOpened(featureId, menu);
+    }
+    
+    @Override
+    public void onPanelClosed(final int featureId, final Menu menu) {
+        // Remove blur overlay when menu closes
+        isMenuOpen = false;
+        hideMenuBlurOverlay();
+        super.onPanelClosed(featureId, menu);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        // If menu is open, close it and remove blur
+        if (isMenuOpen) {
+            // Close the menu by calling invalidateOptionsMenu or closing the panel
+            closeOptionsMenu();
+            isMenuOpen = false;
+            hideMenuBlurOverlay();
+            return;
+        }
+        super.onBackPressed();
+    }
+    
+    private void showMenuBlurOverlay() {
+        if (menuBlurOverlay != null) {
+            return; // Already showing
+        }
+        
+        View decorView = getWindow().getDecorView();
+        if (decorView instanceof android.view.ViewGroup) {
+            android.view.ViewGroup rootView = (android.view.ViewGroup) decorView;
+            
+            // Find the content view to blur
+            View contentView = findViewById(android.R.id.content);
+            
+            // Create blur overlay view
+            menuBlurOverlay = new View(this);
+            menuBlurOverlay.setBackgroundColor(0x80000000); // Semi-transparent black
+            menuBlurOverlay.setAlpha(0f);
+            menuBlurOverlay.setClickable(true);
+            menuBlurOverlay.setFocusable(true);
+            
+            // Add click listener to close menu when blur overlay is clicked
+            menuBlurOverlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Close any open submenus first, then close main menu
+                    // This ensures submenus are closed when clicking the blur overlay
+                    try {
+                        // Close all menus by calling closeOptionsMenu multiple times if needed
+                        closeOptionsMenu();
+                        // Also close any open panels
+                        if (isMenuOpen) {
+                            closeOptionsMenu();
+                        }
+                    } catch (Exception e) {
+                        // Ignore
+                    }
+                    isMenuOpen = false;
+                    hideMenuBlurOverlay();
+                }
+            });
+            
+            // Also add touch listener to ensure clicks are captured
+            menuBlurOverlay.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, android.view.MotionEvent event) {
+                    if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                        // Close all menus when touching the blur overlay
+                        closeOptionsMenu();
+                        isMenuOpen = false;
+                        hideMenuBlurOverlay();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            
+            // Set layout params to fill screen
+            android.view.ViewGroup.LayoutParams params = new android.view.ViewGroup.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT
+            );
+            menuBlurOverlay.setLayoutParams(params);
+            
+            // Add to root view (above content but below menu)
+            // Use a high index to ensure it's on top but below the menu popup
+            rootView.addView(menuBlurOverlay, rootView.getChildCount());
+            
+            // Ensure the overlay is on top by bringing it to front
+            menuBlurOverlay.bringToFront();
+            
+            // Apply blur to content view if available (Android 12+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null) {
+                try {
+                    android.graphics.RenderEffect blur = android.graphics.RenderEffect.createBlurEffect(
+                        15f, 15f, android.graphics.Shader.TileMode.CLAMP);
+                    contentView.setRenderEffect(blur);
+                } catch (Exception e) {
+                    // Blur not supported, use semi-transparent overlay only
+                }
+            }
+            
+            // Animate fade in
+            menuBlurOverlay.animate()
+                .alpha(0.6f)
+                .setDuration(200)
+                .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                .start();
+        }
+    }
+    
+    private void hideMenuBlurOverlay() {
+        if (menuBlurOverlay != null) {
+            // Remove blur from content view if applied
+            View contentView = findViewById(android.R.id.content);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null) {
+                try {
+                    contentView.setRenderEffect(null);
+                } catch (Exception e) {
+                    // Ignore
+                }
+            }
+            
+            // Animate fade out
+            menuBlurOverlay.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                .setListener(new android.animation.AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(android.animation.Animator animation) {
+                        if (menuBlurOverlay != null && menuBlurOverlay.getParent() != null) {
+                            android.view.ViewGroup parent = (android.view.ViewGroup) menuBlurOverlay.getParent();
+                            parent.removeView(menuBlurOverlay);
+                        }
+                        menuBlurOverlay = null;
+                    }
+                })
+                .start();
+        }
     }
 
     @Override
@@ -819,7 +1043,97 @@ public final class WalletActivity extends AbstractWalletActivity {
             digitalSignatureOption.setVisible(config.getShowDigitalSignatureMenu());
         }
 
+        // Ensure icons are visible in overflow menu items
+        ensureMenuIconsVisible(menu);
+
         return true;
+    }
+    
+    private void ensureMenuIconsVisible(final Menu menu) {
+        // Force icons to show in overflow menu using MenuBuilder reflection
+        try {
+            // Use reflection to access MenuBuilder and set optional icons visible
+            java.lang.reflect.Method setOptionalIconsVisible = menu.getClass().getMethod("setOptionalIconsVisible", boolean.class);
+            setOptionalIconsVisible.setAccessible(true);
+            setOptionalIconsVisible.invoke(menu, true);
+        } catch (Exception e) {
+            // If reflection fails, try alternative approach
+            try {
+                // Alternative: Try to get MenuBuilder through getClass()
+                Class<?> menuBuilderClass = Class.forName("com.android.internal.view.menu.MenuBuilder");
+                if (menuBuilderClass.isInstance(menu)) {
+                    java.lang.reflect.Method setOptionalIconsVisible = menuBuilderClass.getMethod("setOptionalIconsVisible", boolean.class);
+                    setOptionalIconsVisible.setAccessible(true);
+                    setOptionalIconsVisible.invoke(menu, true);
+                }
+            } catch (Exception e2) {
+                // If all reflection fails, icons might still be set but may not display
+            }
+        }
+        
+        // Ensure icons are set for all menu items in overflow menu
+        final MenuItem pointOfSaleItem = menu.findItem(R.id.wallet_options_point_of_sale);
+        if (pointOfSaleItem != null) {
+            pointOfSaleItem.setIcon(R.drawable.ic_point_of_sale_white_24dp);
+        }
+        
+        final MenuItem recurringPaymentsItem = menu.findItem(R.id.wallet_options_recurring_payments);
+        if (recurringPaymentsItem != null) {
+            recurringPaymentsItem.setIcon(R.drawable.ic_repeat_white_24dp);
+        }
+        
+        final MenuItem digitalSignatureItem = menu.findItem(R.id.wallet_options_digital_signature);
+        if (digitalSignatureItem != null) {
+            digitalSignatureItem.setIcon(R.drawable.ic_pen_signing_white_24dp);
+        }
+        
+        final MenuItem accountingReportsItem = menu.findItem(R.id.wallet_options_accounting_reports);
+        if (accountingReportsItem != null) {
+            accountingReportsItem.setIcon(R.drawable.ic_bar_chart_white_24dp);
+        }
+        
+        final MenuItem preferencesItem = menu.findItem(R.id.wallet_options_preferences);
+        if (preferencesItem != null) {
+            preferencesItem.setIcon(R.drawable.ic_settings_white_24dp);
+        }
+        
+        final MenuItem educationItem = menu.findItem(R.id.wallet_options_education);
+        if (educationItem != null) {
+            educationItem.setIcon(R.drawable.ic_school_white_24dp);
+        }
+        
+        final MenuItem helpItem = menu.findItem(R.id.wallet_options_help);
+        if (helpItem != null) {
+            helpItem.setIcon(R.drawable.ic_help_white_24dp);
+        }
+        
+        // Handle Family Mode submenu
+        for (int i = 0; i < menu.size(); i++) {
+            final MenuItem item = menu.getItem(i);
+            if (item != null && item.hasSubMenu()) {
+                final android.view.SubMenu subMenu = item.getSubMenu();
+                
+                // Set icon for parent Family Mode item
+                for (int j = 0; j < subMenu.size(); j++) {
+                    if (subMenu.getItem(j).getItemId() == R.id.wallet_options_family_mode) {
+                        item.setIcon(R.drawable.ic_family_24dp);
+                        break;
+                    }
+                }
+                
+                // Ensure submenu items have icons
+                for (int j = 0; j < subMenu.size(); j++) {
+                    final MenuItem subItem = subMenu.getItem(j);
+                    if (subItem != null) {
+                        if (subItem.getItemId() == R.id.wallet_options_family_mode) {
+                            subItem.setIcon(R.drawable.ic_family_24dp);
+                        } else if (subItem.getItemId() == R.id.wallet_options_activate_child) {
+                            subItem.setIcon(R.drawable.ic_add_24dp);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

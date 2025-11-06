@@ -35,45 +35,55 @@
         android:title="@string/address_book_activity_title" />
     <item
         android:showAsAction="never"
+        android:icon="@drawable/ic_family_24dp"
         android:title="@string/family_mode_menu_title">
         <menu>
             <item
                 android:id="@+id/wallet_options_family_mode"
+                android:icon="@drawable/ic_family_24dp"
                 android:showAsAction="never"
                 android:title="@string/family_mode_manage" />
             <item
                 android:id="@+id/wallet_options_activate_child"
+                android:icon="@drawable/ic_add_24dp"
                 android:showAsAction="never"
                 android:title="@string/family_mode_activate_child" />
         </menu>
     </item>
     <item
         android:id="@+id/wallet_options_point_of_sale"
+        android:icon="@drawable/ic_point_of_sale_white_24dp"
         android:showAsAction="never"
         android:title="@string/point_of_sale_mode_title" />
     <item
         android:id="@+id/wallet_options_recurring_payments"
+        android:icon="@drawable/ic_repeat_white_24dp"
         android:showAsAction="never"
         android:title="@string/recurring_payments_menu_title" />
     <item
         android:id="@+id/wallet_options_digital_signature"
+        android:icon="@drawable/ic_pen_signing_white_24dp"
         android:showAsAction="never"
         android:title="@string/digital_signature_activity_title" />
     <item
         android:id="@+id/wallet_options_accounting_reports"
+        android:icon="@drawable/ic_bar_chart_white_24dp"
         android:showAsAction="never"
         android:title="@string/accounting_reports_menu_title" />
     <item
         android:id="@+id/wallet_options_preferences"
+        android:icon="@drawable/ic_settings_white_24dp"
         android:showAsAction="never"
         android:title="@string/preferences_activity_title" />
     <item
         android:id="@+id/wallet_options_education"
+        android:icon="@drawable/ic_school_white_24dp"
         android:orderInCategory="998"
         android:showAsAction="never"
         android:title="@string/education_title" />
     <item
         android:id="@+id/wallet_options_help"
+        android:icon="@drawable/ic_help_white_24dp"
         android:orderInCategory="999"
         android:showAsAction="never"
         android:title="@string/button_help" />

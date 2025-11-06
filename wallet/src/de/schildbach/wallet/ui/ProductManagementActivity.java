@@ -65,6 +65,8 @@ import de.schildbach.wallet.addressbook.AddressBookDatabase;
 import de.schildbach.wallet.data.Category;
 import de.schildbach.wallet.data.Product;
 import de.schildbach.wallet.service.PointOfSaleWebService;
+import de.schildbach.wallet.service.PointOfSaleBackgroundService;
+import de.schildbach.wallet.Configuration;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -89,12 +91,14 @@ public class ProductManagementActivity extends AbstractWalletActivity {
     private TextView textWebUrl;
     private Spinner spinnerCategoryFilter;
     private LinearLayout layoutCategoryFilter;
+    private android.widget.Switch switchBackgroundService;
     private ProductsAdapter adapter;
     private List<Product> products = new ArrayList<>();
     private List<Product> allProducts = new ArrayList<>(); // Store all products for filtering
     private List<Category> categories = new ArrayList<>();
     private PointOfSaleWebService webService;
     private WalletApplication application;
+    private Configuration config;
     private long selectedCategoryId = -1; // -1 means "All Categories"
     
     private String currentPhotoPath;
@@ -107,6 +111,7 @@ public class ProductManagementActivity extends AbstractWalletActivity {
         setContentView(R.layout.activity_product_management);
         
         application = getWalletApplication();
+        config = application.getConfiguration();
         database = AddressBookDatabase.getDatabase(this);
         
         recyclerProducts = findViewById(R.id.recycler_products);
@@ -114,6 +119,7 @@ public class ProductManagementActivity extends AbstractWalletActivity {
         textWebUrl = findViewById(R.id.text_web_url);
         spinnerCategoryFilter = findViewById(R.id.spinner_category_filter);
         layoutCategoryFilter = findViewById(R.id.layout_category_filter);
+        switchBackgroundService = findViewById(R.id.switch_background_service);
         
         recyclerProducts.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ProductsAdapter();
@@ -141,9 +147,30 @@ public class ProductManagementActivity extends AbstractWalletActivity {
             }
         });
         
-        // Start web service
+        // Setup background service toggle
+        boolean backgroundServiceEnabled = config.getPosBackgroundServiceEnabled();
+        switchBackgroundService.setChecked(backgroundServiceEnabled);
+        switchBackgroundService.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            config.setPosBackgroundServiceEnabled(isChecked);
+            if (isChecked) {
+                // Start background service
+                PointOfSaleBackgroundService.start(this);
+                Toast.makeText(this, "Background service started - monitoring payments", Toast.LENGTH_SHORT).show();
+            } else {
+                // Stop background service
+                PointOfSaleBackgroundService.stop(this);
+                Toast.makeText(this, "Background service stopped", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        // Start web service (always start for UI access)
         webService = new PointOfSaleWebService(application);
         webService.start();
+        
+        // Start background service if enabled
+        if (backgroundServiceEnabled) {
+            PointOfSaleBackgroundService.start(this);
+        }
         
         // Display web URL
         updateWebUrl();
@@ -155,7 +182,9 @@ public class ProductManagementActivity extends AbstractWalletActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (webService != null) {
+        // Only stop web service if background service is not enabled
+        // If background service is enabled, it will keep the web service running
+        if (webService != null && !config.getPosBackgroundServiceEnabled()) {
             webService.stop();
         }
     }
@@ -674,8 +703,28 @@ public class ProductManagementActivity extends AbstractWalletActivity {
                 .setTitle("Delete Product")
                 .setMessage("Are you sure you want to delete \"" + product.getName() + "\"?")
                 .setPositiveButton("Delete", (dialog, which) -> {
+                    // Get the category ID before deleting the product
+                    long categoryId = product.getCategoryId();
+                    
+                    // Delete the product
                     database.productDao().deleteProduct(product);
-                    Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show();
+                    
+                    // Check if the category has any remaining products
+                    List<Product> remainingProducts = database.productDao().getAllProductsByCategory(categoryId);
+                    
+                    // If no products remain in the category, delete the category
+                    if (remainingProducts.isEmpty()) {
+                        Category category = database.categoryDao().getCategoryById(categoryId);
+                        if (category != null) {
+                            database.categoryDao().deleteCategory(category);
+                            Toast.makeText(this, "Product and empty category deleted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show();
+                    }
+                    
                     loadProducts(); // This will reload and update filter
                     loadCategories(); // This will reload and update filter
                 })

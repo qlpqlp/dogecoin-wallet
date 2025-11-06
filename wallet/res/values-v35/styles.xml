@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Opt out of edge-to-edge enforcement for Android 15 (API 35) -->
+    <!-- This prevents unwanted margins/padding caused by edge-to-edge mode -->
+    <!-- According to: https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge -->
+    <!-- These styles inherit all attributes from base styles and add the opt-out -->
+    <style name="My.Theme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:actionBarTheme">@style/My.ThemeOverlay.ActionBar</item>
+        <item name="android:actionBarStyle">@style/My.Widget.ActionBar</item>
+        <item name="android:actionMenuTextColor">@color/fg_significant</item>
+        <item name="android:actionButtonStyle">@style/My.Widget.ActionButton</item>
+        <item name="android:actionOverflowButtonStyle">@style/My.Widget.ActionButton.Overflow</item>
+        <item name="android:actionOverflowMenuStyle">@style/My.Widget.PopupMenu.Overflow</item>
+        <item name="android:textViewStyle">@style/My.Widget.TextView</item>
+        <item name="android:editTextStyle">@style/My.Widget.EditText</item>
+        <item name="android:autoCompleteTextViewStyle">@style/My.Widget.AutoCompleteTextView</item>
+        <item name="android:checkboxStyle">@style/My.Widget.CompoundButton.CheckBox</item>
+        <item name="android:spinnerStyle">@style/My.Widget.Spinner</item>
+        <item name="android:popupMenuStyle">@style/My.Widget.PopupMenu</item>
+        <item name="android:windowBackground">@color/bg_level1</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorSecondary">@color/colorSecondary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+    <style name="My.Theme.WithSplash" parent="@style/My.Theme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+    <style name="My.Theme.ChildActivity" parent="@style/My.Theme">
+        <item name="android:actionBarStyle">@style/My.Widget.ActionBar.ChildActivity</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+    <style name="My.Theme.Fullscreen" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+    <style name="My.Theme.Dialog" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:background">@drawable/dialog_background_rounded</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:buttonBarButtonStyle">@style/My.Dialog.Button</item>
+        <item name="android:buttonBarStyle">@style/My.Dialog.ButtonBar</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+</resources>

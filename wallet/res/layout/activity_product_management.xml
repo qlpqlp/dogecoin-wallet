@@ -54,6 +54,30 @@
             android:focusable="true"
             android:textStyle="bold" />
 
+        <!-- Background Service Toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Run in background (monitor payments when phone is off)"
+                android:textSize="14sp"
+                android:textColor="@color/fg_significant" />
+
+            <Switch
+                android:id="@+id/switch_background_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
         <!-- Category Filter -->
         <LinearLayout
             android:id="@+id/layout_category_filter"

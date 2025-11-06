@@ -19,9 +19,33 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 87
+## 🚀 Latest Updates - Version 88
 
 ### 📱 New Features
+- **Settings Menu Categorization**: Improved organization with categorized sections
+  - **Wallet Management**: Configuration, Encrypt Keys, Backup Wallet, Restore Wallet, Sweep Wallet
+  - **Network & Information**: Exchange Rates, Network Monitor, Extended Public Key
+  - **Advanced Tools**: Reset Block Chain
+  - **Support**: Safety Notes, Technical Notes, Report Issue, About
+  - **Visual Organization**: Category titles displayed in yellow color matching Configuration screen style
+  - **Better Navigation**: Logical grouping makes it easier to find settings and features
+- **Menu UI Enhancements**: Modern menu interface improvements
+  - **Menu Icons**: All menu items now display icons (Family Mode, Point of Sale, Recurring Payments, Digital Signature, Accounting Reports, Settings, Education, Help)
+  - **Blur Background Effect**: Modern blur effect on background when menu is open (Android 12+)
+  - **Semi-Transparent Overlay**: Enhanced visual feedback with semi-transparent overlay
+  - **Better UX**: More intuitive and visually appealing menu experience
+- **POS Background Service**: Run Point of Sale web server in background
+  - **Always-On Server**: POS web server runs continuously even when app is closed or phone is off
+  - **Background Payment Monitoring**: Continuously monitors mempool for incoming payments
+  - **Foreground Service**: Runs as foreground service with persistent notification
+  - **Automatic Inventory Management**: Automatically deducts product quantities and removes empty categories
+  - **Warning Banner**: Visual indicator on main wallet screen when background service is active
+  - **Easy Toggle**: Enable/disable background mode from POS settings
+  - **Battery Efficient**: Smart service management for optimal battery usage
+- **About Page Updates**: Enhanced credits and information
+  - **Doge Connect Integration**: Added Doge Connect - Dogecoin Foundation to credits section
+  - **Typo Fixes**: Fixed "Deweloper" to "Developer" in Authors section
+  - **Complete Credits**: All libraries and dependencies properly credited
 - **Point of Sale (POS) System**: Complete e-commerce solution for merchants and businesses
   - **Product & Category Management**: Add products with categories, images, prices, descriptions, and inventory tracking
   - **Web-Based Storefront**: Access POS from any browser on your local network via local IP address
@@ -109,6 +133,33 @@ This project contains several sub-projects:
      your Android app.
 
 ## 📋 VERSION HISTORY
+
+### Version 88 - Settings Menu Organization, Menu UI Enhancements & POS Background Service
+- **Settings Menu Categorization**: Improved organization with categorized sections
+  - **Wallet Management**: Configuration, Encrypt Keys, Backup Wallet, Restore Wallet, Sweep Wallet
+  - **Network & Information**: Exchange Rates, Network Monitor, Extended Public Key
+  - **Advanced Tools**: Reset Block Chain
+  - **Support**: Safety Notes, Technical Notes, Report Issue, About
+  - **Visual Organization**: Category titles displayed in yellow color matching Configuration screen style
+  - **Better Navigation**: Logical grouping makes it easier to find settings and features
+- **Menu UI Enhancements**: Modern menu interface improvements
+  - **Menu Icons**: All menu items now display icons (Family Mode, Point of Sale, Recurring Payments, Digital Signature, Accounting Reports, Settings, Education, Help)
+  - **Blur Background Effect**: Modern blur effect on background when menu is open (Android 12+)
+  - **Semi-Transparent Overlay**: Enhanced visual feedback with semi-transparent overlay
+  - **Better UX**: More intuitive and visually appealing menu experience
+- **POS Background Service**: Run Point of Sale web server in background
+  - **Always-On Server**: POS web server runs continuously even when app is closed or phone is off
+  - **Background Payment Monitoring**: Continuously monitors mempool for incoming payments
+  - **Foreground Service**: Runs as foreground service with persistent notification
+  - **Automatic Inventory Management**: Automatically deducts product quantities and removes empty categories
+  - **Warning Banner**: Visual indicator on main wallet screen when background service is active
+  - **Easy Toggle**: Enable/disable background mode from POS settings
+  - **Battery Efficient**: Smart service management for optimal battery usage
+- **About Page Updates**: Enhanced credits and information
+  - **Doge Connect Integration**: Added Doge Connect - Dogecoin Foundation to credits section with GitHub link
+  - **Typo Fixes**: Fixed "Deweloper" to "Developer" in Authors section
+  - **Complete Credits**: All libraries and dependencies properly credited
+- **Build Optimization**: Re-enabled minification and resource shrinking for optimized app size
 
 ### Version 87 - UI Simplification, Translations & Bug Fixes
 - **Settings Menu Reorganization**: Simplified and more intuitive menu structure
@@ -251,6 +302,13 @@ This project contains several sub-projects:
 - **Category Filtering**: Filter products by category with intuitive icon-based interface
 - **Stock Visibility**: Products with 0 quantity are automatically hidden from display
 - **Unlimited Display**: Products with unlimited stock show "Unlimited" on the web interface
+- **Background Service**: Run POS web server in background even when app is closed
+  - **Always-On Server**: Web server continues running when phone is off or app is closed
+  - **Background Payment Monitoring**: Continuously monitors mempool for incoming payments
+  - **Foreground Service**: Runs as foreground service with persistent notification
+  - **Warning Banner**: Visual indicator on main wallet screen when background service is active
+  - **Easy Toggle**: Enable/disable background mode from POS settings
+  - **Automatic Inventory**: Automatically deducts quantities and removes empty categories
 
 ### ⚙️ Menu Customization & Visibility Control
 - **Menu Visibility Settings**: Control which menu items are visible from Settings → Settings
@@ -261,6 +319,9 @@ This project contains several sub-projects:
 - **Instant Updates**: Menu visibility changes take effect immediately when menu is displayed
 - **Personalized Interface**: Customize your wallet menu to show only the features you use
 - **User-Friendly Settings**: Easy-to-use checkboxes in Settings for quick menu customization
+- **Menu Icons**: All menu items display descriptive icons for better visual recognition
+- **Blur Background Effect**: Modern blur effect on background when menu is open (Android 12+)
+- **Enhanced UX**: More intuitive and visually appealing menu experience with semi-transparent overlay
 
 ### 📊 Accounting Reports & Transaction Analytics
 - **Comprehensive Transaction Reports**: Generate detailed reports of all wallet transactions with full data export
@@ -340,7 +401,7 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: v1.0 (Version Code: 86)
+- **Current Version**: v1.0 (Version Code: 88)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Status**: Available now on Google Play Store

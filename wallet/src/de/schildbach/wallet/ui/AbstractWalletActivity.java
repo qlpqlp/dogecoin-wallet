@@ -62,6 +62,22 @@ public abstract class AbstractWalletActivity extends FragmentActivity {
     
     private void addStatusBarPadding() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // On Android 16 (API 35), we opt out of edge-to-edge
+            // With opt-out, the system handles padding automatically - don't modify it
+            boolean isAndroid16 = Build.VERSION.SDK_INT >= 35; // Android 16 (API 35)
+            
+            if (isAndroid16) {
+                // With edge-to-edge opt-out, don't modify padding - let the system handle it
+                // Only reset left padding to 0 if needed
+                View contentView = findViewById(android.R.id.content);
+                if (contentView != null && contentView.getPaddingLeft() > 0) {
+                    contentView.setPadding(0, contentView.getPaddingTop(), 
+                        contentView.getPaddingRight(), contentView.getPaddingBottom());
+                }
+                return; // Don't add any padding on Android 16
+            }
+            
+            // For Android 14 and 15, use original padding logic
             int statusBarHeight = getStatusBarHeight();
             // Add moderate extra padding to ensure content is fully visible
             int extraPadding = (int) (getResources().getDisplayMetrics().density * 55); // 55dp extra

@@ -710,14 +710,14 @@
         </ul>
         
         <h3>Payment Terminal HTTP API</h3>
-        <p>Payment Terminal Mode includes a built-in HTTP API server for POS integration. The API runs on <code>localhost:9333</code> and provides endpoints for generating payment requests programmatically.</p>
+        <p>Payment Terminal Mode includes a built-in HTTP API server for POS integration. The API runs on <code>localhost:6900</code> and provides endpoints for generating payment requests programmatically.</p>
         
         <h4>Endpoints</h4>
         <div class="feature-box">
             <strong><i class="fas fa-code"></i> GET /payment-request</strong>
             <p>Generate a new payment request without a specific amount.</p>
             <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
-GET http://localhost:9333/payment-request
+GET http://localhost:6900/payment-request
 
 Response:
 {
@@ -731,7 +731,7 @@ Response:
             <strong><i class="fas fa-code"></i> POST /payment-request</strong>
             <p>Create a payment request for a specific amount in DOGE.</p>
             <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
-POST http://localhost:9333/payment-request
+POST http://localhost:6900/payment-request
 Content-Type: application/json
 
 Request Body:
@@ -752,13 +752,13 @@ Response:
             <strong><i class="fas fa-code"></i> GET /status</strong>
             <p>Check the status of the payment terminal service.</p>
             <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">
-GET http://localhost:9333/status
+GET http://localhost:6900/status
 
 Response:
 {
   "success": true,
   "running": true,
-  "port": 9333,
+  "port": 6900,
   "message": "Payment Terminal API is running"
 }</pre>
         </div>
@@ -768,7 +768,7 @@ Response:
         
         <h5>JavaScript Example</h5>
         <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">// Generate payment request for 10 DOGE
-fetch('http://localhost:9333/payment-request', {
+fetch('http://localhost:6900/payment-request', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ amount: 10 })
@@ -781,19 +781,19 @@ fetch('http://localhost:9333/payment-request', {
         
         <h5>cURL Example</h5>
         <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"># Generate payment request
-curl -X POST http://localhost:9333/payment-request \
+curl -X POST http://localhost:6900/payment-request \
   -H "Content-Type: application/json" \
   -d '{"amount": 5.0}'
 
 # Check status
-curl http://localhost:9333/status</pre>
+curl http://localhost:6900/status</pre>
         
         <h5>Python Example</h5>
         <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">import requests
 
 # Create payment request
 response = requests.post(
-    'http://localhost:9333/payment-request',
+    'http://localhost:6900/payment-request',
     json={'amount': 2.5}
 )
 
@@ -823,7 +823,7 @@ print(f"Amount: {data['amount']} DOGE")</pre>
         <ul>
             <li>Ensure Payment Terminal Mode is enabled and active</li>
             <li>Verify the wallet is running on the device</li>
-            <li>Check that port 9333 is not being used by another application</li>
+            <li>Check that port 6900 is not being used by another application</li>
             <li>Restart the terminal mode to restart the API server</li>
         </ul>
         
@@ -898,6 +898,61 @@ print(f"Amount: {data['amount']} DOGE")</pre>
         <div class="feature-box">
             <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Make sure your device is connected to the same Wi-Fi network as the device running the wallet app. The POS web server runs on port 4200 by default.
         </div>
+        
+        <h3>POS Server Background Mode</h3>
+        <p>Point of Sale Mode includes a background service feature that allows the web server to run continuously even when the app is closed or the phone is turned off. This ensures your POS storefront remains accessible and payments are monitored at all times.</p>
+        
+        <h4>How to Enable Background Mode</h4>
+        <ol>
+            <li>Open the Point of Sale Mode screen (Menu → Point of Sale Mode)</li>
+            <li>You'll see a toggle switch labeled "Run in background (monitor payments when phone is off)"</li>
+            <li>Toggle the switch to enable background mode</li>
+            <li>A notification will appear confirming that the background service has started</li>
+        </ol>
+        
+        <h4>What Background Mode Does</h4>
+        <div class="feature-box">
+            <strong><i class="fas fa-server"></i> Continuous Web Server:</strong> The POS web server continues running in the background, allowing customers to access your storefront even when the app is closed or the phone screen is off.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-bell"></i> Payment Monitoring:</strong> The background service continuously monitors the mempool for incoming payments, automatically detecting when customers pay for products.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-battery-full"></i> Always On:</strong> The service runs as a foreground service with a persistent notification, ensuring it continues operating even when the device is in sleep mode or the app is closed.
+        </div>
+        <div class="feature-box">
+            <strong><i class="fas fa-boxes"></i> Automatic Inventory Management:</strong> When payments are detected, product quantities are automatically deducted, and empty categories are automatically removed.
+        </div>
+        
+        <h4>Background Mode Warning Banner</h4>
+        <p>When background mode is enabled, a warning banner appears at the bottom of the main wallet screen:</p>
+        <ul>
+            <li>The banner displays: "Point of Sale web server is running in background"</li>
+            <li>It includes a warning icon to indicate the service is active</li>
+            <li>Tapping the banner opens the Point of Sale Mode screen where you can disable background mode</li>
+            <li>The banner automatically shows or hides based on the background mode toggle state</li>
+        </ul>
+        
+        <h4>Disabling Background Mode</h4>
+        <ol>
+            <li>Open the Point of Sale Mode screen</li>
+            <li>Toggle the "Run in background" switch to the off position</li>
+            <li>The background service will stop, and the web server will only run when the app is open</li>
+            <li>The warning banner will disappear from the main wallet screen</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Note:</strong> When background mode is enabled, the web server and payment monitoring continue running even if you close the app or turn off the phone screen. The service will only stop when you explicitly disable the toggle or uninstall the app.
+        </div>
+        
+        <h4>Best Practices for Background Mode</h4>
+        <ul>
+            <li><strong>Battery Management:</strong> Background mode uses battery power. Consider your device's battery life when enabling this feature</li>
+            <li><strong>Network Stability:</strong> Ensure your device has a stable Wi-Fi connection for reliable POS access</li>
+            <li><strong>Security:</strong> Keep your device secure when background mode is enabled, as the POS server remains accessible</li>
+            <li><strong>Monitoring:</strong> Regularly check the warning banner to confirm background mode status</li>
+            <li><strong>Disable When Not Needed:</strong> Turn off background mode when you're not actively using the POS system to save battery</li>
+        </ul>
         
         <h3>Using the Web Storefront</h3>
         <h4>Browsing Products</h4>

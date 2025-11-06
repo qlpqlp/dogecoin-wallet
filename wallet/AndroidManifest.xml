@@ -64,7 +64,7 @@
 
     <uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="34" />
+        android:targetSdkVersion="35" />
 
     <supports-screens
         android:anyDensity="true"
@@ -321,6 +321,12 @@
             android:directBootAware="true"
             android:stopWithTask="false"
             android:enabled="true"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name="de.schildbach.wallet.service.PointOfSaleBackgroundService"
+            android:enabled="true"
+            android:exported="false"
             android:foregroundServiceType="dataSync" />
 
         <service

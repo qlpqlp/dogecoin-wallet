@@ -2,6 +2,7 @@ package de.schildbach.wallet.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -35,6 +36,7 @@ public class DigitalSignature {
         this.timestamp = System.currentTimeMillis();
     }
     
+    @Ignore
     public DigitalSignature(@NonNull String signature, @NonNull String address, @NonNull String type) {
         this.signature = signature;
         this.address = address;

@@ -2,6 +2,7 @@ package de.schildbach.wallet.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "pos_categories")
@@ -18,6 +19,7 @@ public class Category {
         // Default constructor required by Room
     }
 
+    @Ignore
     public Category(String name) {
         this.name = name;
         this.timestamp = System.currentTimeMillis();

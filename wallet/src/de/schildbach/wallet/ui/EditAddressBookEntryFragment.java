@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -78,7 +79,6 @@ public final class EditAddressBookEntryFragment extends DialogFragment {
 
     private AbstractWalletActivity activity;
     private AddressBookDao addressBookDao;
-    private Wallet wallet;
 
     private static final Logger log = LoggerFactory.getLogger(EditAddressBookEntryFragment.class);
 
@@ -88,8 +88,6 @@ public final class EditAddressBookEntryFragment extends DialogFragment {
         this.activity = (AbstractWalletActivity) context;
         final WalletApplication application = activity.getWalletApplication();
         this.addressBookDao = AddressBookDatabase.getDatabase(context).addressBookDao();
-        // Wallet will be loaded asynchronously when needed
-        this.wallet = null;
     }
 
     @Override
@@ -109,7 +107,10 @@ public final class EditAddressBookEntryFragment extends DialogFragment {
         final String label = addressBookDao.resolveLabel(address.toString());
 
         final boolean isAdd = label == null;
-        final boolean isOwn = wallet.isAddressMine(address);
+        // Get wallet from ViewModel
+        final AbstractWalletActivityViewModel walletActivityViewModel = new ViewModelProvider(activity).get(AbstractWalletActivityViewModel.class);
+        final Wallet wallet = walletActivityViewModel.wallet.getValue();
+        final boolean isOwn = wallet != null && wallet.isAddressMine(address);
         final int titleResId;
         if (isOwn)
             titleResId = isAdd ? R.string.edit_address_book_entry_dialog_title_add_receive
@@ -124,7 +125,7 @@ public final class EditAddressBookEntryFragment extends DialogFragment {
         viewAddress.setText(WalletUtils.formatAddress(address, Constants.ADDRESS_FORMAT_GROUP_SIZE,
                 Constants.ADDRESS_FORMAT_LINE_SIZE));
 
-        final TextView viewLabel = view.findViewById(R.id.edit_address_book_entry_label);
+        final EditText viewLabel = view.findViewById(R.id.edit_address_book_entry_label);
         viewLabel.setText(label != null ? label : suggestedAddressLabel);
 
         final DialogBuilder dialog = DialogBuilder.custom(activity, titleResId, view);

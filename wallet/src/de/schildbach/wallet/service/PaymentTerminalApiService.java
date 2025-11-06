@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class PaymentTerminalApiService {
     private static final Logger log = LoggerFactory.getLogger(PaymentTerminalApiService.class);
-    private static final int PORT = 9333;
+    private static final int PORT = 6900;
     
     private ServerSocket serverSocket;
     private HandlerThread serverThread;

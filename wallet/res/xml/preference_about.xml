@@ -11,7 +11,7 @@
         android:title="@string/about_copyright_title" />
     <Preference
         android:key="about_author"
-        android:summary="Paulo Vidal (Dogecoin Foundation)\nLanger Hans (Dogecoin Deweloper)"
+        android:summary="Paulo Vidal (Dogecoin Foundation)\nLanger Hans (Dogecoin Developer)"
         android:title="Authors" />
     <Preference
         android:key="about_license"
@@ -69,6 +69,14 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/dogecoin/libdohj" />
+        </Preference>
+        <Preference
+            android:key="about_credits_dogeconnect"
+            android:summary="https://github.com/dogeorg/connect"
+            android:title="Doge Connect - Dogecoin Foundation">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/dogeorg/connect" />
         </Preference>
         <Preference
             android:key="about_credits_radiodoge"

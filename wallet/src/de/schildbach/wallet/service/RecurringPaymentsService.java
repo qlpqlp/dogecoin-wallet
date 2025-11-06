@@ -69,29 +69,17 @@ public class RecurringPaymentsService extends JobService {
             jobInfo.setRequiresStorageNotLow(false); // Run even on low storage
         }
         
-        // For Android 12+ (API 31+), use expedited jobs for better reliability
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            try {
-                jobInfo.setExpedited(true); // Make it expedited for better execution
-                // Expedited jobs cannot have time delays, so we'll reschedule manually
-            } catch (Exception e) {
-                log.warn("Could not set job as expedited, falling back to periodic", e);
-                // Fallback to periodic scheduling for older versions or if expedited fails
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    jobInfo.setPeriodic(CHECK_INTERVAL);
-                } else {
-                    jobInfo.setMinimumLatency(CHECK_INTERVAL);
-                    jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2);
-                }
-            }
+        // Use periodic jobs for all supported versions (API 24+)
+        // Periodic jobs automatically reschedule themselves, which is more reliable
+        // than manually rescheduling with Handler.postDelayed() (which requires app process to be alive)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            jobInfo.setPeriodic(CHECK_INTERVAL);
+            log.info("Using periodic job for recurring payments (auto-reschedules)");
         } else {
-            // For older versions, use periodic scheduling
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                jobInfo.setPeriodic(CHECK_INTERVAL);
-            } else {
-                jobInfo.setMinimumLatency(CHECK_INTERVAL);
-                jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2);
-            }
+            // For very old versions (< API 24), fall back to minimum latency
+            jobInfo.setMinimumLatency(CHECK_INTERVAL);
+            jobInfo.setOverrideDeadline(CHECK_INTERVAL * 2);
+            log.info("Using minimum latency job for very old Android versions");
         }
         
         final int result = jobScheduler.schedule(jobInfo.build());
@@ -129,21 +117,11 @@ public class RecurringPaymentsService extends JobService {
             try {
                 processRecurringPayments();
                 jobFinished(params, false); // Job completed successfully
-                
-                // For expedited jobs, reschedule manually since they can't be periodic
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    // Use main thread handler to reschedule
-                    new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
-                        try {
-                            schedule((WalletApplication) getApplication());
-                        } catch (Exception e) {
-                            log.warn("Failed to reschedule expedited job", e);
-                        }
-                    }, CHECK_INTERVAL);
-                }
+                // Note: Periodic jobs automatically reschedule themselves, so no manual rescheduling needed
             } catch (Exception e) {
                 log.error("Error processing recurring payments", e);
                 jobFinished(params, true); // Job failed, reschedule
+                // Note: Periodic jobs will automatically reschedule even on failure
             }
         }).start();
         

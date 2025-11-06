@@ -194,6 +194,8 @@ public class DigitalSignaturesListActivity extends AbstractWalletActivity {
         TextView textType = dialogView.findViewById(R.id.text_type);
         TextView textTagLabel = dialogView.findViewById(R.id.text_tag_label);
         TextView textTag = dialogView.findViewById(R.id.text_tag);
+        TextView textTagInputLabel = dialogView.findViewById(R.id.text_tag_input_label);
+        EditText editTagInput = dialogView.findViewById(R.id.edit_tag_input);
         TextView textContentLabel = dialogView.findViewById(R.id.text_content_label);
         TextView textContent = dialogView.findViewById(R.id.text_content);
         LinearLayout layoutFileHash = dialogView.findViewById(R.id.layout_file_hash);
@@ -204,6 +206,12 @@ public class DigitalSignaturesListActivity extends AbstractWalletActivity {
         ImageButton btnCopySignature = dialogView.findViewById(R.id.btn_copy_signature);
         ImageButton btnShareSignature = dialogView.findViewById(R.id.btn_share_signature);
         Button btnClose = dialogView.findViewById(R.id.btn_close);
+        Button btnSave = dialogView.findViewById(R.id.btn_save);
+        
+        // Hide tag input fields (only for viewing existing signatures)
+        textTagInputLabel.setVisibility(View.GONE);
+        editTagInput.setVisibility(View.GONE);
+        btnSave.setVisibility(View.GONE);
         
         // Set type
         String typeText = signature.getType().substring(0, 1).toUpperCase() + signature.getType().substring(1);
@@ -549,13 +557,20 @@ public class DigitalSignaturesListActivity extends AbstractWalletActivity {
         TextView textContentLabel = dialogView.findViewById(R.id.text_content_label);
         LinearLayout layoutFileHash = dialogView.findViewById(R.id.layout_file_hash);
         TextView textFileHash = dialogView.findViewById(R.id.text_file_hash);
+        EditText editTagInput = dialogView.findViewById(R.id.edit_tag_input);
+        TextView textTagLabel = dialogView.findViewById(R.id.text_tag_label);
+        TextView textTag = dialogView.findViewById(R.id.text_tag);
         ImageButton btnCopySignature = dialogView.findViewById(R.id.btn_copy_signature);
         ImageButton btnShareSignature = dialogView.findViewById(R.id.btn_share_signature);
         Button btnClose = dialogView.findViewById(R.id.btn_close);
         Button btnSave = dialogView.findViewById(R.id.btn_save);
         
-        // Show save button for new signatures
+        // Show save button and tag input for new signatures
         btnSave.setVisibility(View.VISIBLE);
+        editTagInput.setVisibility(View.VISIBLE);
+        // Hide tag display (for existing signatures)
+        textTagLabel.setVisibility(View.GONE);
+        textTag.setVisibility(View.GONE);
         
         textSignature.setText(signature);
         textAddress.setText(address);
@@ -601,10 +616,13 @@ public class DigitalSignaturesListActivity extends AbstractWalletActivity {
         
         btnSave.setOnClickListener(v -> {
             try {
+                // Get tag from input field
+                String tag = editTagInput.getText().toString().trim();
+                
                 DigitalSignature sigRecord = new DigitalSignature();
                 sigRecord.setSignature(signature);
                 sigRecord.setAddress(address);
-                sigRecord.setTag(null);
+                sigRecord.setTag(TextUtils.isEmpty(tag) ? null : tag);
                 
                 if (isFile) {
                     if (selectedFilePath != null && selectedFilePath.contains("SIGNED_")) {

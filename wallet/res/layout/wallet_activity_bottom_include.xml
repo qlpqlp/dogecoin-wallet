@@ -15,6 +15,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- POS Background Service Warning Banner -->
+    <LinearLayout
+        android:id="@+id/pos_background_warning_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_action_bar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_warning_grey600_24dp"
+            android:contentDescription="Warning"
+            android:tint="@color/fg_significant" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Point of Sale web server is running in background"
+            android:textColor="@color/fg_significant"
+            android:textSize="@dimen/font_size_tiny" />
+    </LinearLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/wallet_disclaimer_fragment"
         android:name="de.schildbach.wallet.ui.WalletDisclaimerFragment"

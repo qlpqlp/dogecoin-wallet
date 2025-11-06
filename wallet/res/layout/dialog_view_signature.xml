@@ -48,7 +48,30 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- Tag -->
+        <!-- Tag Input (for new signatures) -->
+        <TextView
+            android:id="@+id/text_tag_input_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tag:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edit_tag_input"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/bg_level2"
+            android:padding="16dp"
+            android:textColor="@color/fg_significant"
+            android:hint="Add a tag to identify this signature"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tag Display (for existing signatures) -->
         <TextView
             android:id="@+id/text_tag_label"
             android:layout_width="match_parent"

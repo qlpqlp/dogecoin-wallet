@@ -426,7 +426,7 @@ public class PointOfSaleWebService {
             // Payment address below QR (without label)
             html.append("<div class=\"payment-address-simple\">");
             html.append("<code id=\"payment-address-code\">").append(paymentAddress).append("</code>");
-            html.append("<button onclick=\"copyAddress()\" class=\"btn-copy\">Copy Address</button>");
+            html.append("<button id=\"btn-copy-address\" onclick=\"copyAddress()\" class=\"btn-copy\">Copy Address</button>");
             html.append("</div>");
             html.append("</div>"); // payment-section-simple
             
@@ -446,11 +446,46 @@ public class PointOfSaleWebService {
             html.append("<script>");
             html.append("var paymentAddress = '").append(paymentAddress).append("';");
             html.append("function copyAddress() {");
-            html.append("  navigator.clipboard.writeText(paymentAddress).then(() => {");
-            html.append("    alert('Address copied to clipboard!');");
-            html.append("  }).catch(() => {");
-            html.append("    alert('Failed to copy address');");
-            html.append("  });");
+            html.append("  var btn = document.getElementById('btn-copy-address');");
+            html.append("  var originalText = btn.textContent;");
+            html.append("  if (navigator.clipboard && navigator.clipboard.writeText) {");
+            html.append("    navigator.clipboard.writeText(paymentAddress).then(() => {");
+            html.append("      showCopiedState(btn, originalText);");
+            html.append("    }).catch(() => {");
+            html.append("      fallbackCopyAddress(btn, originalText);");
+            html.append("    });");
+            html.append("  } else {");
+            html.append("    fallbackCopyAddress(btn, originalText);");
+            html.append("  }");
+            html.append("}");
+            html.append("function showCopiedState(btn, originalText) {");
+            html.append("  btn.textContent = 'Copied!';");
+            html.append("  btn.classList.add('copied');");
+            html.append("  setTimeout(() => {");
+            html.append("    btn.textContent = originalText;");
+            html.append("    btn.classList.remove('copied');");
+            html.append("  }, 2000);");
+            html.append("}");
+            html.append("function fallbackCopyAddress(btn, originalText) {");
+            html.append("  var textarea = document.createElement('textarea');");
+            html.append("  textarea.value = paymentAddress;");
+            html.append("  textarea.style.position = 'fixed';");
+            html.append("  textarea.style.left = '-999999px';");
+            html.append("  textarea.style.top = '-999999px';");
+            html.append("  document.body.appendChild(textarea);");
+            html.append("  textarea.focus();");
+            html.append("  textarea.select();");
+            html.append("  try {");
+            html.append("    var successful = document.execCommand('copy');");
+            html.append("    if (successful) {");
+            html.append("      showCopiedState(btn, originalText);");
+            html.append("    } else {");
+            html.append("      alert('Failed to copy address. Please copy manually: ' + paymentAddress);");
+            html.append("    }");
+            html.append("  } catch (err) {");
+            html.append("    alert('Failed to copy address. Please copy manually: ' + paymentAddress);");
+            html.append("  }");
+            html.append("  document.body.removeChild(textarea);");
             html.append("}");
             html.append("var paymentCheckInterval;");
             html.append("function checkPayment() {");
@@ -615,7 +650,7 @@ public class PointOfSaleWebService {
             html.append("<div class=\"payment-address\">");
             html.append("<label>Payment Address:</label>");
             html.append("<code>").append(paymentAddress).append("</code>");
-            html.append("<button onclick=\"copyAddress()\">Copy</button>");
+            html.append("<button id=\"btn-copy-address\" onclick=\"copyAddress()\">Copy</button>");
             html.append("</div>");
             
             html.append("<div class=\"payment-amount\">Amount: <strong>").append(totalPrice).append(" DOGE</strong></div>");
@@ -642,9 +677,46 @@ public class PointOfSaleWebService {
             html.append("  window.location.href = '/product/").append(productId).append("?quantity=' + qty;");
             html.append("}");
             html.append("function copyAddress() {");
-            html.append("  navigator.clipboard.writeText(paymentAddress).then(() => {");
-            html.append("    alert('Address copied to clipboard!');");
-            html.append("  });");
+            html.append("  var btn = document.getElementById('btn-copy-address');");
+            html.append("  var originalText = btn.textContent;");
+            html.append("  if (navigator.clipboard && navigator.clipboard.writeText) {");
+            html.append("    navigator.clipboard.writeText(paymentAddress).then(() => {");
+            html.append("      showCopiedState(btn, originalText);");
+            html.append("    }).catch(() => {");
+            html.append("      fallbackCopyAddress(btn, originalText);");
+            html.append("    });");
+            html.append("  } else {");
+            html.append("    fallbackCopyAddress(btn, originalText);");
+            html.append("  }");
+            html.append("}");
+            html.append("function showCopiedState(btn, originalText) {");
+            html.append("  btn.textContent = 'Copied!';");
+            html.append("  btn.classList.add('copied');");
+            html.append("  setTimeout(() => {");
+            html.append("    btn.textContent = originalText;");
+            html.append("    btn.classList.remove('copied');");
+            html.append("  }, 2000);");
+            html.append("}");
+            html.append("function fallbackCopyAddress(btn, originalText) {");
+            html.append("  var textarea = document.createElement('textarea');");
+            html.append("  textarea.value = paymentAddress;");
+            html.append("  textarea.style.position = 'fixed';");
+            html.append("  textarea.style.left = '-999999px';");
+            html.append("  textarea.style.top = '-999999px';");
+            html.append("  document.body.appendChild(textarea);");
+            html.append("  textarea.focus();");
+            html.append("  textarea.select();");
+            html.append("  try {");
+            html.append("    var successful = document.execCommand('copy');");
+            html.append("    if (successful) {");
+            html.append("      showCopiedState(btn, originalText);");
+            html.append("    } else {");
+            html.append("      alert('Failed to copy address. Please copy manually: ' + paymentAddress);");
+            html.append("    }");
+            html.append("  } catch (err) {");
+            html.append("    alert('Failed to copy address. Please copy manually: ' + paymentAddress);");
+            html.append("  }");
+            html.append("  document.body.removeChild(textarea);");
             html.append("}");
             html.append("var paymentCheckInterval;");
             html.append("function checkPayment() {");
@@ -999,6 +1071,7 @@ public class PointOfSaleWebService {
                 ".payment-address-simple code { display: block; color: #ffffff; background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; word-break: break-all; font-family: 'Courier New', monospace; font-size: clamp(0.8em, 1.8vw, 0.95em); margin-bottom: 15px; } " +
                 ".btn-copy { padding: 12px 30px; background: linear-gradient(135deg, #ffc107, #ff8f00); color: #000000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: clamp(0.9em, 2vw, 1em); transition: all 0.3s; box-shadow: 0 4px 16px rgba(255, 193, 7, 0.3); } " +
                 ".btn-copy:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4); } " +
+                ".btn-copy.copied { background: linear-gradient(135deg, #4CAF50, #45a049); color: #ffffff; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3); } " +
                 ".payment-success { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #4CAF50, #45a049); border-radius: 16px; box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3); position: relative; z-index: 1; } " +
                 ".success-icon { font-size: clamp(4em, 10vw, 6em); color: white; margin-bottom: 20px; } " +
                 ".success-title { color: white; font-size: clamp(2em, 5vw, 3em); margin-bottom: 20px; font-weight: bold; } " +
@@ -1034,6 +1107,7 @@ public class PointOfSaleWebService {
                 ".payment-address code { display: block; color: #ffffff; background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px; word-break: break-all; font-family: 'Courier New', monospace; font-size: clamp(0.75em, 1.5vw, 0.9em); margin-bottom: 10px; overflow-x: auto; } " +
                 ".payment-address button, .quantity-selector button { padding: 10px 20px; background: linear-gradient(135deg, #ffc107, #ff8f00); color: #000000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: clamp(0.85em, 2vw, 1em); transition: all 0.3s; box-shadow: 0 4px 16px rgba(255, 193, 7, 0.3); } " +
                 ".payment-address button:hover, .quantity-selector button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4); } " +
+                ".payment-address button.copied, #btn-copy-address.copied { background: linear-gradient(135deg, #4CAF50, #45a049); color: #ffffff; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3); } " +
                 ".payment-amount { font-size: clamp(1.3em, 3vw, 1.8em); margin: 10px 0; color: #ffc107; text-align: center; flex-shrink: 0; } " +
                 ".payment-amount strong { font-size: 1.2em; } " +
                 ".payment-info { color: #b0b0b0; text-align: center; margin-top: 10px; font-size: clamp(0.8em, 1.5vw, 0.95em); flex-shrink: 0; } " +
