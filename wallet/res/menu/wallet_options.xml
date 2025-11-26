@@ -66,6 +66,11 @@
         android:showAsAction="never"
         android:title="@string/digital_signature_activity_title" />
     <item
+        android:id="@+id/wallet_options_write_check"
+        android:icon="@drawable/ic_checkbook_white_24dp"
+        android:showAsAction="never"
+        android:title="@string/write_check_menu_title" />
+    <item
         android:id="@+id/wallet_options_accounting_reports"
         android:icon="@drawable/ic_bar_chart_white_24dp"
         android:showAsAction="never"

@@ -52,6 +52,9 @@ import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.WalletBalanceWidgetProvider;
 import de.schildbach.wallet.addressbook.AddressBookDao;
 import de.schildbach.wallet.addressbook.AddressBookDatabase;
+import de.schildbach.wallet.ui.BiometricAuthActivity;
+import de.schildbach.wallet.ui.WalletActivity;
+import de.schildbach.wallet.util.BiometricHelper;
 import de.schildbach.wallet.data.SelectedExchangeRateLiveData;
 import de.schildbach.wallet.data.WalletBalanceLiveData;
 import de.schildbach.wallet.data.WalletLiveData;
@@ -142,6 +145,15 @@ public class BlockchainService extends LifecycleService {
     private final List<Address> notificationAddresses = new LinkedList<>();
     private Stopwatch serviceUpTime;
     private boolean resetBlockchainOnShutdown = false;
+    private volatile long selectedCheckpointTimestamp = -1; // -1 means use wallet's earliest key creation time
+    private volatile int selectedCheckpointBlockHeight = -1; // -1 means use standard checkpoint loading
+    private volatile String selectedCheckpointBlockHash = null; // Block hash for custom checkpoint
+    private volatile int selectedCheckpointVersion = 0;
+    private volatile String selectedCheckpointPrevBlockHash = null;
+    private volatile String selectedCheckpointMerkleRoot = null;
+    private volatile long selectedCheckpointTime = 0;
+    private volatile String selectedCheckpointBits = null;
+    private volatile long selectedCheckpointNonce = 0;
     private final AtomicBoolean isBound = new AtomicBoolean(false);
     private volatile boolean isDestroying = false;
     
@@ -169,17 +181,59 @@ public class BlockchainService extends LifecycleService {
     private static final Logger log = LoggerFactory.getLogger(BlockchainService.class);
 
     public static void start(final Context context, final boolean cancelCoinsReceived) {
-        if (cancelCoinsReceived)
-            ContextCompat.startForegroundService(context,
-                    new Intent(BlockchainService.ACTION_CANCEL_COINS_RECEIVED, null, context, BlockchainService.class));
-        else
-            ContextCompat.startForegroundService(context, new Intent(context, BlockchainService.class));
+        try {
+            if (cancelCoinsReceived)
+                ContextCompat.startForegroundService(context,
+                        new Intent(BlockchainService.ACTION_CANCEL_COINS_RECEIVED, null, context, BlockchainService.class));
+            else
+                ContextCompat.startForegroundService(context, new Intent(context, BlockchainService.class));
+        } catch (android.app.ForegroundServiceStartNotAllowedException e) {
+            // Cannot start foreground service from JobService on Android 12+
+            // Service will be started when app comes to foreground
+            log.warn("Cannot start foreground service from background: {}. Service will be started when app comes to foreground.", e.getMessage());
+        } catch (IllegalStateException e) {
+            // Handle other cases where foreground service cannot be started
+            log.warn("Cannot start service from background: {}. Service will be started when app comes to foreground.", e.getMessage());
+        }
     }
 
     public static void resetBlockchain(final Context context) {
+        resetBlockchain(context, -1); // Default: use wallet's earliest key creation time
+    }
+    
+    public static void resetBlockchain(final Context context, final long checkpointTimestamp) {
+        resetBlockchain(context, checkpointTimestamp, -1, null, 0, null, null, 0, null, 0);
+    }
+    
+    public static void resetBlockchain(final Context context, final long checkpointTimestamp, 
+            final int checkpointBlockHeight, final String checkpointBlockHash,
+            final int checkpointVersion, final String checkpointPrevBlockHash,
+            final String checkpointMerkleRoot, final long checkpointTime,
+            final String checkpointBits, final long checkpointNonce) {
         // implicitly stops blockchain service
-        ContextCompat.startForegroundService(context,
-                new Intent(BlockchainService.ACTION_RESET_BLOCKCHAIN, null, context, BlockchainService.class));
+        try {
+            Intent intent = new Intent(BlockchainService.ACTION_RESET_BLOCKCHAIN, null, context, BlockchainService.class);
+            if (checkpointTimestamp >= 0) {
+                intent.putExtra("checkpoint_timestamp", checkpointTimestamp);
+            }
+            if (checkpointBlockHeight >= 0) {
+                intent.putExtra("checkpoint_block_height", checkpointBlockHeight);
+            }
+            if (checkpointBlockHash != null && !checkpointBlockHash.isEmpty()) {
+                intent.putExtra("checkpoint_block_hash", checkpointBlockHash);
+                intent.putExtra("checkpoint_version", checkpointVersion);
+                intent.putExtra("checkpoint_prev_block_hash", checkpointPrevBlockHash);
+                intent.putExtra("checkpoint_merkle_root", checkpointMerkleRoot);
+                intent.putExtra("checkpoint_time", checkpointTime);
+                intent.putExtra("checkpoint_bits", checkpointBits);
+                intent.putExtra("checkpoint_nonce", checkpointNonce);
+            }
+            ContextCompat.startForegroundService(context, intent);
+        } catch (android.app.ForegroundServiceStartNotAllowedException e) {
+            log.warn("Cannot start foreground service for reset from background: {}. Service will be started when app comes to foreground.", e.getMessage());
+        } catch (IllegalStateException e) {
+            log.warn("Cannot start service from background for reset: {}. Service will be started when app comes to foreground.", e.getMessage());
+        }
     }
     
     /**
@@ -260,7 +314,7 @@ public class BlockchainService extends LifecycleService {
             summaryNotification.setContentText(text);
         }
         summaryNotification
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, WalletActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                .setContentIntent(createLauncherPendingIntent(this, Constants.NOTIFICATION_ID_COINS_RECEIVED));
         nm.notify(Constants.NOTIFICATION_ID_COINS_RECEIVED, summaryNotification.build());
 
         // child notification
@@ -283,7 +337,7 @@ public class BlockchainService extends LifecycleService {
                 childNotification.setContentText(addressStr);
         }
         childNotification
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, WalletActivity.class), PendingIntent.FLAG_IMMUTABLE));
+                .setContentIntent(createLauncherPendingIntent(this, transactionHash.hashCode()));
         childNotification.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.coins_received));
         nm.notify(transactionHash.toString(), Constants.NOTIFICATION_ID_COINS_RECEIVED, childNotification.build());
     }
@@ -524,8 +578,8 @@ public class BlockchainService extends LifecycleService {
         connectivityNotification.setContentTitle(getString(config.isTrustedPeersOnly() ?
                 R.string.notification_connectivity_syncing_trusted_peer :
                 R.string.notification_connectivity_syncing_message));
-        connectivityNotification.setContentIntent(PendingIntent.getActivity(BlockchainService.this, 0,
-                new Intent(BlockchainService.this, WalletActivity.class), PendingIntent.FLAG_IMMUTABLE));
+        connectivityNotification.setContentIntent(createLauncherPendingIntent(BlockchainService.this, 
+                Constants.NOTIFICATION_ID_CONNECTIVITY));
         connectivityNotification.setWhen(System.currentTimeMillis());
         connectivityNotification.setOngoing(true);
         connectivityNotification.setPriority(NotificationCompat.PRIORITY_LOW);
@@ -534,7 +588,16 @@ public class BlockchainService extends LifecycleService {
         connectivityNotification.setShowWhen(true);
         connectivityNotification.setAutoCancel(false);
         // connectivityNotification.setSilent(true); // This method doesn't exist in older API levels
-        startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        try {
+            startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        } catch (android.app.ForegroundServiceStartNotAllowedException e) {
+            // Cannot start foreground service from background context on Android 12+
+            // Service will continue running but without foreground notification
+            log.warn("Cannot start foreground service from background: {}. Service will continue without foreground notification.", e.getMessage());
+        } catch (IllegalStateException e) {
+            // Handle other cases where foreground service cannot be started
+            log.warn("Cannot start foreground service: {}. Service will continue without foreground notification.", e.getMessage());
+        }
 
         backgroundThread = new HandlerThread("backgroundThread", Process.THREAD_PRIORITY_BACKGROUND);
         backgroundThread.start();
@@ -586,6 +649,24 @@ public class BlockchainService extends LifecycleService {
             @Override
             public void onChanged(final Wallet wallet) {
                 BlockchainService.this.wallet.removeObserver(this);
+                // Restore checkpoint values from SharedPreferences if not already set (fallback for service restart)
+                if (selectedCheckpointBlockHeight < 0 || selectedCheckpointBlockHash == null) {
+                    final android.content.SharedPreferences prefs = getSharedPreferences("blockchain_service", android.content.Context.MODE_PRIVATE);
+                    if (prefs.contains("checkpoint_block_height")) {
+                        selectedCheckpointBlockHeight = prefs.getInt("checkpoint_block_height", -1);
+                        selectedCheckpointBlockHash = prefs.getString("checkpoint_block_hash", null);
+                        selectedCheckpointVersion = prefs.getInt("checkpoint_version", 0);
+                        selectedCheckpointPrevBlockHash = prefs.getString("checkpoint_prev_block_hash", null);
+                        selectedCheckpointMerkleRoot = prefs.getString("checkpoint_merkle_root", null);
+                        selectedCheckpointTime = prefs.getLong("checkpoint_time", 0);
+                        selectedCheckpointBits = prefs.getString("checkpoint_bits", null);
+                        selectedCheckpointNonce = prefs.getLong("checkpoint_nonce", 0);
+                        selectedCheckpointTimestamp = prefs.getLong("checkpoint_timestamp", -1);
+                        log.info("Restored checkpoint values from SharedPreferences: height={}, hash={}", 
+                                selectedCheckpointBlockHeight, selectedCheckpointBlockHash);
+                    }
+                }
+                
                 final boolean blockChainFileExists = blockChainFile.exists();
                 if (!blockChainFileExists) {
                     log.info("blockchain does not exist, resetting wallet");
@@ -597,9 +678,17 @@ public class BlockchainService extends LifecycleService {
                             Constants.Files.BLOCKCHAIN_STORE_CAPACITY, true);
                     blockStore.getChainHead(); // detect corruptions as early as possible
 
-                    final long earliestKeyCreationTimeSecs = wallet.getEarliestKeyCreationTime();
+                    // Use selected checkpoint timestamp if available, otherwise use wallet's earliest key creation time
+                    long checkpointTimestamp = selectedCheckpointTimestamp >= 0 ? selectedCheckpointTimestamp : wallet.getEarliestKeyCreationTime();
+                    final long earliestKeyCreationTimeSecs = checkpointTimestamp;
+                    
+                    // Debug: Log checkpoint state
+                    log.info("initializeBlockchain: blockChainFileExists={}, earliestKeyCreationTimeSecs={}, selectedCheckpointBlockHeight={}, selectedCheckpointBlockHash={}", 
+                            blockChainFileExists, earliestKeyCreationTimeSecs, selectedCheckpointBlockHeight, 
+                            selectedCheckpointBlockHash != null ? selectedCheckpointBlockHash : "null");
 
-                    if (!blockChainFileExists && earliestKeyCreationTimeSecs > 0) {
+                    // Load standard checkpoints if no custom checkpoint is selected
+                    if (!blockChainFileExists && earliestKeyCreationTimeSecs > 0 && selectedCheckpointBlockHeight < 0) {
                         try {
                             log.info("loading checkpoints for birthdate {} from '{}'",
                                     Utils.dateTimeFormat(earliestKeyCreationTimeSecs * 1000),
@@ -613,6 +702,61 @@ public class BlockchainService extends LifecycleService {
                             log.info("checkpoints loaded, took {}", watch);
                         } catch (final IOException x) {
                             log.error("problem reading checkpoints, continuing without", x);
+                        }
+                    } else if (selectedCheckpointBlockHeight >= 0 && selectedCheckpointBlockHash != null && !selectedCheckpointBlockHash.isEmpty()) {
+                        // Custom checkpoint selected - reconstruct Block header and set as chain head immediately
+                        try {
+                            log.info("Setting custom checkpoint as chain head: block height {}, block hash {}", 
+                                    selectedCheckpointBlockHeight, selectedCheckpointBlockHash);
+                            
+                            // Reconstruct Block header from checkpoint data
+                            org.bitcoinj.core.Sha256Hash prevBlockHash = org.bitcoinj.core.Sha256Hash.wrap(selectedCheckpointPrevBlockHash);
+                            org.bitcoinj.core.Sha256Hash merkleRoot = org.bitcoinj.core.Sha256Hash.wrap(selectedCheckpointMerkleRoot);
+                            // Bits is stored as hex string (e.g., "1a009b86"), convert to long (compact difficulty)
+                            long bitsValue = Long.parseLong(selectedCheckpointBits, 16);
+                            
+                            // Create Block header (header only, no transactions)
+                            org.bitcoinj.core.Block block = new org.bitcoinj.core.Block(
+                                    Constants.NETWORK_PARAMETERS, (long)selectedCheckpointVersion, prevBlockHash, merkleRoot,
+                                    selectedCheckpointTime, bitsValue, selectedCheckpointNonce, java.util.Collections.emptyList());
+                            
+                            // Verify hash matches
+                            org.bitcoinj.core.Sha256Hash expectedHash = org.bitcoinj.core.Sha256Hash.wrap(selectedCheckpointBlockHash);
+                            if (!block.getHash().equals(expectedHash)) {
+                                log.error("Checkpoint block hash mismatch! Expected {}, got {}", 
+                                        selectedCheckpointBlockHash, block.getHash());
+                                throw new RuntimeException("Checkpoint block hash verification failed");
+                            }
+                            
+                            // Create StoredBlock and set as chain head
+                            org.bitcoinj.core.StoredBlock storedBlock = new org.bitcoinj.core.StoredBlock(
+                                    block, block.getWork(), selectedCheckpointBlockHeight);
+                            blockStore.put(storedBlock);
+                            blockStore.setChainHead(storedBlock);
+                            
+                            log.info("Successfully set chain head to checkpoint: height={}, hash={}", 
+                                    selectedCheckpointBlockHeight, selectedCheckpointBlockHash);
+                            
+                            // Reset checkpoint values after use
+                            selectedCheckpointTimestamp = -1;
+                            selectedCheckpointBlockHeight = -1;
+                            selectedCheckpointBlockHash = null;
+                            selectedCheckpointVersion = 0;
+                            selectedCheckpointPrevBlockHash = null;
+                            selectedCheckpointMerkleRoot = null;
+                            selectedCheckpointTime = 0;
+                            selectedCheckpointBits = null;
+                            selectedCheckpointNonce = 0;
+                            
+                            // Clear persisted checkpoint values
+                            final android.content.SharedPreferences prefs = getSharedPreferences("blockchain_service", android.content.Context.MODE_PRIVATE);
+                            prefs.edit().clear().apply();
+                            log.info("Cleared persisted checkpoint values after successful initialization");
+                        } catch (Exception e) {
+                            log.error("Error setting custom checkpoint as chain head: {}", e.getMessage(), e);
+                            // Reset on error
+                            selectedCheckpointBlockHeight = -1;
+                            selectedCheckpointBlockHash = null;
                         }
                     }
                 } catch (final BlockStoreException x) {
@@ -805,6 +949,40 @@ public class BlockchainService extends LifecycleService {
             } else if (BlockchainService.ACTION_RESET_BLOCKCHAIN.equals(action)) {
                 log.info("will remove blockchain on service shutdown");
                 resetBlockchainOnShutdown = true;
+                
+                // Extract checkpoint parameters from intent
+                if (intent.hasExtra("checkpoint_timestamp")) {
+                    selectedCheckpointTimestamp = intent.getLongExtra("checkpoint_timestamp", -1);
+                }
+                if (intent.hasExtra("checkpoint_block_height")) {
+                    selectedCheckpointBlockHeight = intent.getIntExtra("checkpoint_block_height", -1);
+                }
+                if (intent.hasExtra("checkpoint_block_hash")) {
+                    selectedCheckpointBlockHash = intent.getStringExtra("checkpoint_block_hash");
+                    selectedCheckpointVersion = intent.getIntExtra("checkpoint_version", 0);
+                    selectedCheckpointPrevBlockHash = intent.getStringExtra("checkpoint_prev_block_hash");
+                    selectedCheckpointMerkleRoot = intent.getStringExtra("checkpoint_merkle_root");
+                    selectedCheckpointTime = intent.getLongExtra("checkpoint_time", 0);
+                    selectedCheckpointBits = intent.getStringExtra("checkpoint_bits");
+                    selectedCheckpointNonce = intent.getLongExtra("checkpoint_nonce", 0);
+                    
+                    // Persist checkpoint values to SharedPreferences for service restart
+                    final android.content.SharedPreferences prefs = getSharedPreferences("blockchain_service", android.content.Context.MODE_PRIVATE);
+                    prefs.edit()
+                        .putLong("checkpoint_timestamp", selectedCheckpointTimestamp)
+                        .putInt("checkpoint_block_height", selectedCheckpointBlockHeight)
+                        .putString("checkpoint_block_hash", selectedCheckpointBlockHash)
+                        .putInt("checkpoint_version", selectedCheckpointVersion)
+                        .putString("checkpoint_prev_block_hash", selectedCheckpointPrevBlockHash)
+                        .putString("checkpoint_merkle_root", selectedCheckpointMerkleRoot)
+                        .putLong("checkpoint_time", selectedCheckpointTime)
+                        .putString("checkpoint_bits", selectedCheckpointBits)
+                        .putLong("checkpoint_nonce", selectedCheckpointNonce)
+                        .apply();
+                    
+                    log.info("Stored checkpoint values: height={}, hash={}", selectedCheckpointBlockHeight, selectedCheckpointBlockHash);
+                }
+                
                 stopSelf();
                 if (isBound.get())
                     log.info("stop is deferred because service still bound");
@@ -1031,12 +1209,24 @@ public class BlockchainService extends LifecycleService {
             connectivityNotification.setSmallIcon(R.drawable.stat_notify_peers, Math.min(numPeers, 4));
             connectivityNotification.setContentText(getString(R.string.notification_peers_connected_msg, numPeers));
         }
-        startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        try {
+            startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        } catch (android.app.ForegroundServiceStartNotAllowedException e) {
+            log.warn("Cannot update foreground service from background: {}", e.getMessage());
+        } catch (IllegalStateException e) {
+            log.warn("Cannot update foreground service: {}", e.getMessage());
+        }
     }
 
     private void startForegroundProgress(final int blocksToDownload, final int blocksLeft) {
         connectivityNotification.setProgress(blocksToDownload, blocksToDownload - blocksLeft, false);
-        startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        try {
+            startForeground(Constants.NOTIFICATION_ID_CONNECTIVITY, connectivityNotification.build());
+        } catch (android.app.ForegroundServiceStartNotAllowedException e) {
+            log.warn("Cannot update foreground service progress from background: {}", e.getMessage());
+        } catch (IllegalStateException e) {
+            log.warn("Cannot update foreground service progress: {}", e.getMessage());
+        }
     }
 
     @MainThread
@@ -1158,5 +1348,23 @@ public class BlockchainService extends LifecycleService {
         } else {
             log.info("Mempool monitoring active with {} peers", connectedPeers);
         }
+    }
+    
+    /**
+     * Create a PendingIntent that uses the same launcher intent format as the app icon
+     * This ensures notification clicks behave exactly like app icon clicks and open the wallet
+     * (not SendCoinsActivity). The launcher intent is handled by WalletActivity.onCreate()
+     * which routes through BiometricAuthActivity if needed.
+     */
+    private static PendingIntent createLauncherPendingIntent(Context context, int requestCode) {
+        // Use the same intent format as app icon launch (ACTION_MAIN + CATEGORY_LAUNCHER)
+        // This will be handled by WalletActivity.onCreate() exactly like app icon clicks
+        // and will require biometric authentication if enabled
+        Intent launcherIntent = new Intent(context, WalletActivity.class);
+        launcherIntent.setAction(Intent.ACTION_MAIN);
+        launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return PendingIntent.getActivity(context, requestCode, launcherIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 }

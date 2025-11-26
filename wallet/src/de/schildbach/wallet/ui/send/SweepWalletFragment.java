@@ -83,6 +83,7 @@ import de.schildbach.wallet.ui.ProgressDialogFragment;
 import de.schildbach.wallet.ui.TransactionsAdapter;
 import de.schildbach.wallet.ui.scan.ScanActivity;
 import de.schildbach.wallet.util.MonetarySpannable;
+import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.DumpedPrivateKey;
 import org.bitcoinj.core.ECKey;
@@ -99,6 +100,8 @@ import org.bitcoinj.core.UTXO;
 import org.bitcoinj.core.VerificationException;
 import org.bitcoinj.crypto.BIP38PrivateKey;
 import org.bitcoinj.script.Script;
+import org.bitcoinj.script.ScriptBuilder;
+import org.bitcoinj.script.ScriptOpCodes;
 import org.bitcoinj.utils.MonetaryFormat;
 import org.bitcoinj.utils.Threading;
 import org.bitcoinj.wallet.BasicKeyChain;
@@ -112,9 +115,11 @@ import org.bitcoinj.wallet.WalletTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -191,8 +196,14 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
             if (walletToSweep != null) {
                 balanceView.setVisibility(View.VISIBLE);
                 final MonetaryFormat btcFormat = config.getFormat();
-                final MonetarySpannable balanceSpannable = new MonetarySpannable(btcFormat,
-                        walletToSweep.getBalance(BalanceType.ESTIMATED));
+                // Use manual balance if available (for P2SH outputs), otherwise use wallet balance
+                Coin balanceToShow = viewModel.manualBalance != null ? viewModel.manualBalance : 
+                    walletToSweep.getBalance(BalanceType.ESTIMATED);
+                log.info("Displaying balance: {} DOGE (manual: {}, wallet: {})", 
+                    balanceToShow.toPlainString(), 
+                    viewModel.manualBalance != null ? viewModel.manualBalance.toPlainString() : "null",
+                    walletToSweep.getBalance(BalanceType.ESTIMATED).toPlainString());
+                final MonetarySpannable balanceSpannable = new MonetarySpannable(btcFormat, balanceToShow);
                 balanceSpannable.applyMarkup(null, null);
                 final SpannableStringBuilder balance = new SpannableStringBuilder(balanceSpannable);
                 balance.insert(0, ": ");
@@ -319,8 +330,49 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
         if (requestCode == REQUEST_CODE_SCAN) {
             if (resultCode == Activity.RESULT_OK) {
                 final String input = intent.getStringExtra(ScanActivity.INTENT_EXTRA_RESULT);
+                
+                // Check if QR code contains pipe-separated format: "WIF_KEY|P2SH_ADDRESS|LOCKTIME" (for CLTV checks)
+                // Legacy formats: "WIF_KEY|P2SH_ADDRESS" or just "WIF_KEY" (backward compatible)
+                String privateKeyText = input;
+                String p2shAddress = null;
+                Long locktime = null;
+                
+                if (input != null && input.contains("|")) {
+                    // New format: extract private key, P2SH address, and optionally locktime
+                    String[] parts = input.split("\\|", 3);
+                    if (parts.length >= 2) {
+                        privateKeyText = parts[0].trim();
+                        p2shAddress = parts[1].trim();
+                        
+                        // Extract locktime if present (format: WIF_KEY|P2SH_ADDRESS|LOCKTIME)
+                        if (parts.length == 3) {
+                            try {
+                                locktime = Long.parseLong(parts[2].trim());
+                            } catch (NumberFormatException e) {
+                                log.warn("Invalid locktime format in QR code: {}", parts[2]);
+                            }
+                        }
+                        
+                        // Validate P2SH address format (should start with specific prefix for Dogecoin)
+                        if (p2shAddress.isEmpty() || (!p2shAddress.startsWith("9") && !p2shAddress.startsWith("A"))) {
+                            // Invalid P2SH address format, treat as legacy format
+                            log.warn("Invalid P2SH address format in QR code, treating as legacy format");
+                            privateKeyText = input;
+                            p2shAddress = null;
+                            locktime = null;
+                        } else {
+                            log.info("Detected check format QR code with P2SH address: {} (locktime: {})", p2shAddress, locktime);
+                            viewModel.p2shAddressToSweep = p2shAddress;
+                            viewModel.p2shLocktimeToSweep = locktime;
+                        }
+                    }
+                } else {
+                    // Legacy format: just private key
+                    viewModel.p2shAddressToSweep = null;
+                    viewModel.p2shLocktimeToSweep = null;
+                }
 
-                new StringInputParser(input) {
+                new StringInputParser(privateKeyText) {
                     @Override
                     protected void handlePrivateKey(final PrefixedChecksummedBytes key) {
                         viewModel.privateKeyToSweep.setValue(key);
@@ -461,6 +513,9 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
 
                 // Fake transaction funding the wallet to sweep.
                 final Map<Sha256Hash, Transaction> fakeTxns = new HashMap<>();
+                final String p2shAddress = viewModel.p2shAddressToSweep;
+                final Long locktime = viewModel.p2shLocktimeToSweep;
+                
                 for (final UTXO utxo : sortedUtxos) {
                     Transaction fakeTx = fakeTxns.get(utxo.getHash());
                     if (fakeTx == null) {
@@ -468,8 +523,24 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
                         fakeTx.getConfidence().setConfidenceType(ConfidenceType.BUILDING);
                         fakeTxns.put(fakeTx.getTxId(), fakeTx);
                     }
+                    
+                    // Check if this is a P2SH CLTV output that needs a redeem script
+                    Script outputScript = utxo.getScript();
+                    if (p2shAddress != null && locktime != null) {
+                        // Check if this UTXO is from the P2SH address
+                        try {
+                            Address utxoAddress = outputScript.getToAddress(Constants.NETWORK_PARAMETERS);
+                            if (utxoAddress != null && utxoAddress.toString().equals(p2shAddress)) {
+                                // This is a P2SH CLTV UTXO
+                                log.info("P2SH CLTV UTXO detected (locktime: {})", locktime);
+                            }
+                        } catch (Exception e) {
+                            log.warn("Error checking P2SH address for UTXO", e);
+                        }
+                    }
+                    
                     final TransactionOutput fakeOutput = new TransactionOutput(Constants.NETWORK_PARAMETERS, fakeTx,
-                            utxo.getValue(), utxo.getScript().getProgram());
+                            utxo.getValue(), outputScript.getProgram());
                     // Fill with output dummies as needed.
                     while (fakeTx.getOutputs().size() < utxo.getIndex())
                         fakeTx.addOutput(new TransactionOutput(Constants.NETWORK_PARAMETERS, fakeTx,
@@ -482,6 +553,22 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
                 walletToSweep.clearTransactions(0);
                 for (final Transaction tx : fakeTxns.values())
                     walletToSweep.addWalletTransaction(new WalletTransaction(WalletTransaction.Pool.UNSPENT, tx));
+                
+                // Manually calculate balance from UTXOs since P2SH outputs may not be recognized as spendable
+                // by BitcoinJ's wallet.getBalance() without the redeem script
+                Coin manualBalance = Coin.ZERO;
+                for (final UTXO utxo : sortedUtxos) {
+                    manualBalance = manualBalance.add(utxo.getValue());
+                }
+                log.info("Manual balance calculation: {} DOGE from {} UTXOs (wallet.getBalance() may show 0 for P2SH outputs)", 
+                    manualBalance.toPlainString(), sortedUtxos.size());
+                
+                // Store manual balance BEFORE setting walletToSweep (so observer can use it)
+                viewModel.manualBalance = manualBalance;
+                
+                // Store UTXOs for manual transaction construction (for P2SH CLTV outputs)
+                viewModel.utxosToSweep = sortedUtxos;
+                
                 //log.info("built wallet to sweep:\n{}",
                 //        walletToSweep.toString(false, false, null, true, false, null));
                 viewModel.walletToSweep.setValue(walletToSweep);
@@ -508,7 +595,9 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
 
         final Wallet walletToSweep = viewModel.walletToSweep.getValue();
         final ECKey key = walletToSweep.getImportedKeys().iterator().next();
-        new RequestWalletBalanceTask(backgroundHandler, callback).requestWalletBalance(activity.getAssets(), key);
+        // Pass P2SH address if available (for CLTV checks)
+        final String p2shAddress = viewModel.p2shAddressToSweep;
+        new RequestWalletBalanceTask(backgroundHandler, callback).requestWalletBalance(activity.getAssets(), key, p2shAddress);
     }
 
     private void setState(final SweepWalletViewModel.State state) {
@@ -562,8 +651,11 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
         } else if (viewModel.state == SweepWalletViewModel.State.CONFIRM_SWEEP) {
             viewCancel.setText(R.string.button_cancel);
             viewGo.setText(R.string.sweep_wallet_fragment_button_sweep);
+            // Use manual balance if available (for P2SH outputs), otherwise use wallet balance
+            Coin balanceToCheck = viewModel.manualBalance != null ? viewModel.manualBalance : 
+                (walletToSweep != null ? walletToSweep.getBalance(BalanceType.ESTIMATED) : Coin.ZERO);
             viewGo.setEnabled(wallet != null && walletToSweep != null
-                    && walletToSweep.getBalance(BalanceType.ESTIMATED).signum() > 0 && fees != null);
+                    && balanceToCheck.signum() > 0 && fees != null);
         } else if (viewModel.state == SweepWalletViewModel.State.PREPARATION) {
             viewCancel.setText(R.string.button_cancel);
             viewGo.setText(R.string.send_coins_preparation_msg);
@@ -603,8 +695,195 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
         final Wallet wallet = walletActivityViewModel.wallet.getValue();
         final Wallet walletToSweep = viewModel.walletToSweep.getValue();
         final Map<FeeCategory, Coin> fees = viewModel.getDynamicFees().getValue();
+        
+        // Check if we need to manually construct transaction for P2SH CLTV outputs
+        if (viewModel.p2shAddressToSweep != null && viewModel.p2shLocktimeToSweep != null) {
+            // Manually construct transaction for P2SH CLTV outputs
+            backgroundHandler.post(() -> {
+                try {
+                    org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
+                    
+                    // Get the key from walletToSweep
+                    ECKey key = null;
+                    if (walletToSweep != null && !walletToSweep.getImportedKeys().isEmpty()) {
+                        key = walletToSweep.getImportedKeys().iterator().next();
+                    }
+                    
+                    if (key == null) {
+                        handler.post(() -> {
+                            setState(SweepWalletViewModel.State.FAILED);
+                            viewModel.showDialog.setValue(DialogEvent.warn(0, R.string.send_coins_error_msg,
+                                    "Private key not found in wallet to sweep"));
+                        });
+                        return;
+                    }
+                    
+                    // Reconstruct CLTV script
+                    Script cltvScript = new ScriptBuilder()
+                        .number(viewModel.p2shLocktimeToSweep)
+                        .op(ScriptOpCodes.OP_CHECKLOCKTIMEVERIFY)
+                        .op(ScriptOpCodes.OP_DROP)
+                        .data(key.getPubKey())
+                        .op(ScriptOpCodes.OP_CHECKSIG)
+                        .build();
+                    
+                    // Get UTXOs from stored set (filter for P2SH outputs)
+                    if (viewModel.utxosToSweep == null || viewModel.utxosToSweep.isEmpty()) {
+                        handler.post(() -> {
+                            setState(SweepWalletViewModel.State.FAILED);
+                            viewModel.showDialog.setValue(DialogEvent.warn(
+                                    R.string.sweep_wallet_fragment_insufficient_money_title,
+                                    R.string.sweep_wallet_fragment_insufficient_money_msg));
+                        });
+                        return;
+                    }
+                    
+                    // Filter UTXOs for P2SH address
+                    List<UTXO> p2shUtxos = new ArrayList<>();
+                    for (UTXO utxo : viewModel.utxosToSweep) {
+                        try {
+                            Address utxoAddress = utxo.getScript().getToAddress(Constants.NETWORK_PARAMETERS);
+                            if (utxoAddress != null && utxoAddress.toString().equals(viewModel.p2shAddressToSweep)) {
+                                p2shUtxos.add(utxo);
+                            }
+                        } catch (Exception e) {
+                            // Not a standard address, skip
+                        }
+                    }
+                    
+                    if (p2shUtxos.isEmpty()) {
+                        handler.post(() -> {
+                            setState(SweepWalletViewModel.State.FAILED);
+                            viewModel.showDialog.setValue(DialogEvent.warn(
+                                    R.string.sweep_wallet_fragment_insufficient_money_title,
+                                    R.string.sweep_wallet_fragment_insufficient_money_msg));
+                        });
+                        return;
+                    }
+                    
+                    // Create transaction manually
+                    Transaction transaction = new Transaction(Constants.NETWORK_PARAMETERS);
+                    
+                    // Set transaction locktime to satisfy CLTV
+                    transaction.setLockTime(viewModel.p2shLocktimeToSweep);
+                    
+                    // Add output to destination address
+                    Address destinationAddress = wallet.freshReceiveAddress();
+                    transaction.addOutput(viewModel.manualBalance, ScriptBuilder.createOutputScript(destinationAddress));
+                    
+                    // Add inputs with CLTV redeem script
+                    // IMPORTANT: For CLTV locktime to work, inputs MUST have non-default sequence numbers
+                    // Default sequence is 0xFFFFFFFF, which disables locktime. We use 0xFFFFFFFE to enable it.
+                    Coin totalInput = Coin.ZERO;
+                    for (UTXO utxo : p2shUtxos) {
+                        TransactionOutPoint outPoint = new TransactionOutPoint(Constants.NETWORK_PARAMETERS, 
+                                utxo.getIndex(), utxo.getHash());
+                        TransactionInput input = new TransactionInput(Constants.NETWORK_PARAMETERS, transaction, 
+                                new byte[] {}, outPoint, utxo.getValue());
+                        // Set sequence number to enable locktime (0xFFFFFFFE = locktime enabled, 0xFFFFFFFF = disabled)
+                        input.setSequenceNumber(0xFFFFFFFEL); // Enable locktime for this input
+                        transaction.addInput(input);
+                        totalInput = totalInput.add(utxo.getValue());
+                    }
+                    
+                    // Calculate fee based on configured default fee category and transaction size
+                    // Get the default fee category from configuration
+                    FeeCategory defaultFeeCategory = config.getDefaultFeeCategory();
+                    Coin feePerKb = fees.get(defaultFeeCategory);
+                    
+                    // Estimate transaction size for fee calculation
+                    // Base size: version (4) + locktime (4) + input count (1) + output count (1) = 10 bytes
+                    // Each input: prevout hash (32) + prevout index (4) + script length (1) + scriptSig (estimated 200 for P2SH CLTV) + sequence (4) = ~241 bytes
+                    // Each output: value (8) + script length (1) + scriptPubKey (25 for P2PKH) = 34 bytes
+                    int estimatedInputSize = 241; // P2SH CLTV scriptSig is larger than normal
+                    int estimatedOutputSize = 34; // P2PKH output
+                    int estimatedBaseSize = 10;
+                    int estimatedTxSize = estimatedBaseSize + (p2shUtxos.size() * estimatedInputSize) + estimatedOutputSize;
+                    
+                    // Calculate fee: (size in bytes / 1000) * feePerKb
+                    // Add some buffer for actual size differences
+                    Coin fee = feePerKb.multiply(estimatedTxSize).divide(1000);
+                    // Add 20% buffer to account for actual size differences
+                    fee = fee.add(fee.divide(5));
+                    
+                    Coin outputAmount = totalInput.subtract(fee);
+                    if (outputAmount.signum() <= 0) {
+                        handler.post(() -> {
+                            setState(SweepWalletViewModel.State.FAILED);
+                            viewModel.showDialog.setValue(DialogEvent.warn(
+                                    R.string.sweep_wallet_fragment_insufficient_money_title,
+                                    R.string.sweep_wallet_fragment_insufficient_money_msg));
+                        });
+                        return;
+                    }
+                    
+                    // Update output amount
+                    transaction.getOutput(0).setValue(outputAmount);
+                    
+                    // Sign inputs with CLTV redeem script
+                    // For P2SH, scriptSig is: <signature> <redeemScript>
+                    for (int i = 0; i < transaction.getInputs().size(); i++) {
+                        TransactionInput input = transaction.getInput(i);
+                        UTXO connectedUtxo = p2shUtxos.get(i);
+                        
+                        // Sign the transaction hash
+                        // For P2SH, we sign with SIGHASH_ALL and the redeem script
+                        Sha256Hash hash = transaction.hashForSignature(i, cltvScript, Transaction.SigHash.ALL, false);
+                        ECKey.ECDSASignature signature = key.sign(hash);
+                        
+                        // Create scriptSig: <signature with SIGHASH_ALL> <redeemScript>
+                        // Signature must include SIGHASH byte (0x01 for SIGHASH_ALL)
+                        byte[] signatureBytes = signature.encodeToDER();
+                        byte[] signatureWithHashType = new byte[signatureBytes.length + 1];
+                        System.arraycopy(signatureBytes, 0, signatureWithHashType, 0, signatureBytes.length);
+                        signatureWithHashType[signatureBytes.length] = (byte) Transaction.SigHash.ALL.value;
+                        
+                        Script scriptSig = new ScriptBuilder()
+                            .data(signatureWithHashType)
+                            .data(cltvScript.getProgram())
+                            .build();
+                        
+                        input.setScriptSig(scriptSig);
+                    }
+                    
+                    // Verify transaction
+                    transaction.verify();
+                    
+                    // Set transaction purpose to USER_PAYMENT so it appears as a sent transaction
+                    transaction.setPurpose(Transaction.Purpose.USER_PAYMENT);
+                    
+                    // Set update time so transaction appears in list
+                    transaction.setUpdateTime(new java.util.Date());
+                    
+                    handler.post(() -> {
+                        viewModel.sentTransaction.setValue(transaction);
+                        setState(SweepWalletViewModel.State.SENDING);
+                        
+                        // Try to broadcast (will fail if locktime hasn't passed, but transaction is still visible)
+                        final ListenableFuture<Transaction> future = walletActivityViewModel.broadcastTransaction(transaction);
+                        future.addListener(() -> {
+                            // Transaction will be added to wallet when broadcast succeeds
+                            if (config.getSendCoinsAutoclose())
+                                handler.postDelayed(() -> activity.finish(), Constants.AUTOCLOSE_DELAY_MS);
+                        }, Threading.THREAD_POOL);
+                    });
+                } catch (Exception e) {
+                    log.error("Error manually constructing P2SH CLTV transaction", e);
+                    handler.post(() -> {
+                        setState(SweepWalletViewModel.State.FAILED);
+                        viewModel.showDialog.setValue(DialogEvent.warn(0, R.string.send_coins_error_msg,
+                                e.toString()));
+                    });
+                }
+            });
+            return;
+        }
+        
+        // Normal sweep path for non-P2SH outputs
         final SendRequest sendRequest = SendRequest.emptyWallet(wallet.freshReceiveAddress());
-        sendRequest.feePerKb = fees.get(FeeCategory.NORMAL);
+        // Use default fee category from configuration
+        final FeeCategory defaultFeeCategory = config.getDefaultFeeCategory();
+        sendRequest.feePerKb = fees.get(defaultFeeCategory);
 
         new SendCoinsOfflineTask(walletToSweep, backgroundHandler) {
             @Override
@@ -834,7 +1113,48 @@ public class SweepWalletFragment extends Fragment implements TextureView.Surface
         vibrator.vibrate(VIBRATE_DURATION);
         scannerView.setIsResult(true);
         
-        new StringInputParser(qrText) {
+        // Check if QR code contains pipe-separated format: "WIF_KEY|P2SH_ADDRESS|LOCKTIME" (for CLTV checks)
+        // Legacy formats: "WIF_KEY|P2SH_ADDRESS" or just "WIF_KEY" (backward compatible)
+        String privateKeyText = qrText;
+        String p2shAddress = null;
+        Long locktime = null;
+        
+        if (qrText != null && qrText.contains("|")) {
+            // New format: extract private key, P2SH address, and optionally locktime
+            String[] parts = qrText.split("\\|", 3);
+            if (parts.length >= 2) {
+                privateKeyText = parts[0].trim();
+                p2shAddress = parts[1].trim();
+                
+                // Extract locktime if present (format: WIF_KEY|P2SH_ADDRESS|LOCKTIME)
+                if (parts.length == 3) {
+                    try {
+                        locktime = Long.parseLong(parts[2].trim());
+                    } catch (NumberFormatException e) {
+                        log.warn("Invalid locktime format in QR code: {}", parts[2]);
+                    }
+                }
+                
+                // Validate P2SH address format (should start with specific prefix for Dogecoin)
+                if (p2shAddress.isEmpty() || (!p2shAddress.startsWith("9") && !p2shAddress.startsWith("A"))) {
+                    // Invalid P2SH address format, treat as legacy format
+                    log.warn("Invalid P2SH address format in QR code, treating as legacy format");
+                    privateKeyText = qrText;
+                    p2shAddress = null;
+                    locktime = null;
+                } else {
+                    log.info("Detected check format QR code with P2SH address: {} (locktime: {})", p2shAddress, locktime);
+                    viewModel.p2shAddressToSweep = p2shAddress;
+                    viewModel.p2shLocktimeToSweep = locktime;
+                }
+            }
+        } else {
+            // Legacy format: just private key
+            viewModel.p2shAddressToSweep = null;
+            viewModel.p2shLocktimeToSweep = null;
+        }
+        
+        new StringInputParser(privateKeyText) {
             @Override
             protected void handlePrivateKey(final PrefixedChecksummedBytes key) {
                 viewModel.privateKeyToSweep.setValue(key);

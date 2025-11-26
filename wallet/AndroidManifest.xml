@@ -236,6 +236,13 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name="de.schildbach.wallet.ui.WriteCheckActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/write_check_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name="de.schildbach.wallet.ui.ProductManagementActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/point_of_sale_mode_title"
@@ -320,8 +327,7 @@
             android:exported="false"
             android:directBootAware="true"
             android:stopWithTask="false"
-            android:enabled="true"
-            android:foregroundServiceType="dataSync" />
+            android:enabled="true" />
 
         <service
             android:name="de.schildbach.wallet.service.PointOfSaleBackgroundService"

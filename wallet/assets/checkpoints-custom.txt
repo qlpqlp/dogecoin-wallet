@@ -1,0 +1,22 @@
+# Custom Blockchain Checkpoints
+# Format: TIMESTAMP=BLOCK_HEIGHT:BLOCK_HASH:VERSION:PREV_BLOCK_HASH:MERKLE_ROOT:TIME:BITS:NONCE:DESCRIPTION
+# TIMESTAMP: Unix timestamp in seconds (when the checkpoint was created)
+# BLOCK_HEIGHT: Block height at that checkpoint
+# BLOCK_HASH: Block hash (hex string)
+# VERSION: Block version (integer)
+# PREV_BLOCK_HASH: Previous block hash (hex string)
+# MERKLE_ROOT: Merkle root (hex string)
+# TIME: Block timestamp (Unix seconds)
+# BITS: Difficulty bits (hex string)
+# NONCE: Nonce (integer, usually 0 for AuxPoW)
+# DESCRIPTION: Human-readable description (optional)
+#
+# To add a checkpoint, get block header data from a block explorer (JSON format)
+# and extract: hash, height, version, previousblockhash, merkleroot, time, bits, nonce
+#
+# When resetting blockchain, you can choose to start from any of these checkpoints
+# or from the beginning (timestamp 0)
+
+1577836823=3043797:f6bd77f8c2ba6053bea94120a24f41a8480a38954098af5ab5e0f4d411ccfea8:6422787:a9f59c1627bf19db34b2bedf6f9d86bb4872ecc27bb3955fd9e221a7ec1cfa8a:51940ec005b9dc03e8d0ee7d15d5f048b114353debec0a392823673bfe173dd1:1577836823:1a0745e0:0:Block 3M (January 1, 2020)
+
+1735689841=5526282:054280adede001d2bc118629fc691207a26d8e2a739448e11f5d4d5ab49c3042:6422788:f832d02e8a36347fadbe0cbf375e5afbdc5c87138c51f57f548b1ead9f15b464:4e0a3b52efebf742465a89354ee3c1b1a8a0fd82bd09376b87dd09a938424e90:1735689841:1a009b86:0:Block 5M (January 1, 2025)

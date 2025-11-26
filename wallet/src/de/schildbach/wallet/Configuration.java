@@ -69,6 +69,8 @@ public class Configuration {
     public static final String PREFS_KEY_SHOW_FAMILY_MODE_MENU = "show_family_mode_menu";
     public static final String PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU = "show_recurring_payments_menu";
     public static final String PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU = "show_digital_signature_menu";
+    public static final String PREFS_KEY_SHOW_WRITE_CHECK_MENU = "show_write_check_menu";
+    public static final String PREFS_KEY_DEFAULT_FEE_CATEGORY = "default_fee_category";
 
     private static final String PREFS_KEY_LAST_VERSION = "last_version";
     private static final String PREFS_KEY_LAST_USED = "last_used";
@@ -413,6 +415,28 @@ public class Configuration {
 
     public void setShowDigitalSignatureMenu(final boolean enabled) {
         prefs.edit().putBoolean(PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU, enabled).apply();
+    }
+
+    public boolean getShowWriteCheckMenu() {
+        return prefs.getBoolean(PREFS_KEY_SHOW_WRITE_CHECK_MENU, true);
+    }
+
+    public void setShowWriteCheckMenu(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_SHOW_WRITE_CHECK_MENU, enabled).apply();
+    }
+
+    public de.schildbach.wallet.ui.send.FeeCategory getDefaultFeeCategory() {
+        final String categoryName = prefs.getString(PREFS_KEY_DEFAULT_FEE_CATEGORY, "ECONOMIC");
+        try {
+            return de.schildbach.wallet.ui.send.FeeCategory.valueOf(categoryName);
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid fee category in preferences: {}, defaulting to ECONOMIC", categoryName);
+            return de.schildbach.wallet.ui.send.FeeCategory.ECONOMIC;
+        }
+    }
+
+    public void setDefaultFeeCategory(final de.schildbach.wallet.ui.send.FeeCategory feeCategory) {
+        prefs.edit().putString(PREFS_KEY_DEFAULT_FEE_CATEGORY, feeCategory.name()).apply();
     }
 
     public void registerOnSharedPreferenceChangeListener(final OnSharedPreferenceChangeListener listener) {

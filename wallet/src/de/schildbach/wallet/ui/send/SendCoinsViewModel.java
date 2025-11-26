@@ -58,7 +58,7 @@ public class SendCoinsViewModel extends AndroidViewModel {
     public State state = null;
     @Nullable
     public PaymentIntent paymentIntent = null;
-    public FeeCategory feeCategory = FeeCategory.NORMAL;
+    public FeeCategory feeCategory;
     @Nullable
     public AddressAndLabel validatedAddress = null;
     @Nullable
@@ -76,5 +76,6 @@ public class SendCoinsViewModel extends AndroidViewModel {
         this.dynamicFees = new DynamicFeeLiveData(this.application);
         this.balance = new WalletBalanceLiveData(this.application, BalanceType.AVAILABLE);
         this.sentTransaction = new TransactionLiveData(this.application);
+        this.feeCategory = this.application.getConfiguration().getDefaultFeeCategory();
     }
 }

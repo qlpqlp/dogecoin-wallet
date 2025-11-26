@@ -90,6 +90,9 @@ public class FamilyModeActivity extends AbstractWalletActivity {
         familyDatabase = new FamilyMemberDatabase(this);
         familyMembers = new ArrayList<>();
         
+        // Initialize ExcludedAddressHelper
+        ExcludedAddressHelper.initialize(this);
+        
         initializeViews();
         setupRecyclerView();
         loadFamilyMembers();
@@ -268,8 +271,9 @@ public class FamilyModeActivity extends AbstractWalletActivity {
             // Add child name to wallet's address book
             addChildToAddressBook(childName, address);
             
-            // Note: Child address is NOT excluded from spending when added from parent's phone
-            // The child will be able to spend from this address when Child Mode is activated on their phone
+            // Automatically exclude the child's address from spending in "Your Addresses"
+            // This prevents the parent from accidentally spending from the child's address
+            ExcludedAddressHelper.excludeAddress(address, childName);
             
             loadFamilyMembers();
             updateUI();

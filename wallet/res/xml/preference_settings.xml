@@ -43,6 +43,14 @@
             android:summary="@string/preferences_enable_logging_summary"
             android:defaultValue="false" />
 
+        <ListPreference
+            android:key="default_fee_category"
+            android:title="@string/preferences_default_fee_category_title"
+            android:summary="@string/preferences_default_fee_category_summary"
+            android:defaultValue="ECONOMIC"
+            android:entries="@array/preferences_fee_category_labels"
+            android:entryValues="@array/preferences_fee_category_values" />
+
         <Preference
             android:key="payment_terminal_mode"
             android:title="@string/preferences_payment_terminal_title"
@@ -70,6 +78,12 @@
             android:key="show_digital_signature_menu"
             android:title="@string/preferences_show_digital_signature_menu_title"
             android:summary="@string/preferences_show_digital_signature_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_write_check_menu"
+            android:title="@string/preferences_show_write_check_menu_title"
+            android:summary="@string/preferences_show_write_check_menu_summary"
             android:defaultValue="true" />
 
         <Preference

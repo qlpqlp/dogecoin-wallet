@@ -115,49 +115,125 @@ public final class RequestWalletBalanceTask {
     }
 
     public void requestWalletBalance(final AssetManager assets, final ECKey key) {
+        requestWalletBalance(assets, key, null);
+    }
+
+    public void requestWalletBalance(final AssetManager assets, final ECKey key, @Nullable final String p2shAddress) {
         backgroundHandler.post(() -> {
             org.bitcoinj.core.Context.propagate(Constants.CONTEXT);
 
             final Address legacyAddress = LegacyAddress.fromKey(Constants.NETWORK_PARAMETERS, key);
-            final String addressesStr;
-            // DOGE: No segwit for now
-            /*if (key.isCompressed()) {
-                final Address segwitAddress = SegwitAddress.fromKey(Constants.NETWORK_PARAMETERS, key);
-                addressesStr = legacyAddress.toString() + "," + segwitAddress.toString();
-            } else {*/
-                addressesStr = legacyAddress.toString();
-            //}
-
-            // Use either dogechain or chain.so
-            List<String> urls = new ArrayList<>(2);
-            urls.add(Constants.BLOCKCYPHER_API_URL);
-            //urls.add(Constants.DOGECHAIN_API_URL); // Seems unreliable too now
-            //urls.add(Constants.CHAINSO_API_URL); // inactive for now
-            Collections.shuffle(urls, new Random(System.nanoTime()));
-
-            final StringBuilder url = new StringBuilder(urls.get(0));
-            url.append(addressesStr);
-
-            log.debug("trying to request wallet balance from {}", url);
-
-            final Request.Builder request = new Request.Builder();
-            request.url(HttpUrl.parse(url.toString()).newBuilder().encodedQuery("unspentOnly=true&includeScript=true").build());
-
-            final Call call = Constants.HTTP_CLIENT.newCall(request.build());
-
-            try {
-                final Response response = call.execute();
-                if (response.isSuccessful()) {
-                    String content = response.body().string();
-                    final JSONObject json = new JSONObject(content);
-                    final JSONArray jsonOutputs = json.optJSONArray("txrefs");
-
-                    final Set<UTXO> utxoSet = new HashSet<>();
-                    if (jsonOutputs == null) {
-                        onResult(utxoSet);
-                        return;
+            
+            // If P2SH address is provided (for CLTV checks), query both addresses separately
+            // BlockCypher API doesn't support comma-separated addresses in URL path
+            if (p2shAddress != null && !p2shAddress.trim().isEmpty()) {
+                log.info("Querying both P2PKH ({}) and P2SH ({}) addresses", legacyAddress.toString(), p2shAddress);
+                
+                // Query both addresses and combine results
+                final Set<UTXO> combinedUtxos = new HashSet<>();
+                final java.util.concurrent.atomic.AtomicInteger pendingRequests = new java.util.concurrent.atomic.AtomicInteger(2);
+                final java.util.concurrent.atomic.AtomicBoolean hasError = new java.util.concurrent.atomic.AtomicBoolean(false);
+                
+                // Query P2PKH address
+                queryAddress(legacyAddress.toString(), new java.util.function.Consumer<Set<UTXO>>() {
+                    @Override
+                    public void accept(Set<UTXO> utxos) {
+                        synchronized (combinedUtxos) {
+                            combinedUtxos.addAll(utxos);
+                            if (pendingRequests.decrementAndGet() == 0 && !hasError.get()) {
+                                log.info("Fetched unspent outputs from both addresses: {} UTXOs total", combinedUtxos.size());
+                                onResult(combinedUtxos);
+                            }
+                        }
                     }
+                }, new ResultCallback() {
+                    @Override
+                    public void onResult(Set<UTXO> utxos) {
+                        // Should not be called
+                    }
+                    
+                    @Override
+                    public void onFail(int messageResId, Object... messageArgs) {
+                        if (!hasError.getAndSet(true)) {
+                            RequestWalletBalanceTask.this.onFail(messageResId, messageArgs);
+                        }
+                    }
+                });
+                
+                // Query P2SH address
+                queryAddress(p2shAddress.trim(), new java.util.function.Consumer<Set<UTXO>>() {
+                    @Override
+                    public void accept(Set<UTXO> utxos) {
+                        synchronized (combinedUtxos) {
+                            combinedUtxos.addAll(utxos);
+                            if (pendingRequests.decrementAndGet() == 0 && !hasError.get()) {
+                                log.info("Fetched unspent outputs from both addresses: {} UTXOs total", combinedUtxos.size());
+                                onResult(combinedUtxos);
+                            }
+                        }
+                    }
+                }, new ResultCallback() {
+                    @Override
+                    public void onResult(Set<UTXO> utxos) {
+                        // Should not be called
+                    }
+                    
+                    @Override
+                    public void onFail(int messageResId, Object... messageArgs) {
+                        if (!hasError.getAndSet(true)) {
+                            RequestWalletBalanceTask.this.onFail(messageResId, messageArgs);
+                        }
+                    }
+                });
+            } else {
+                // Single address query (legacy behavior)
+                queryAddress(legacyAddress.toString(), new java.util.function.Consumer<Set<UTXO>>() {
+                    @Override
+                    public void accept(Set<UTXO> utxos) {
+                        onResult(utxos);
+                    }
+                }, new ResultCallback() {
+                    @Override
+                    public void onResult(Set<UTXO> utxos) {
+                        // Should not be called
+                    }
+                    
+                    @Override
+                    public void onFail(int messageResId, Object... messageArgs) {
+                        RequestWalletBalanceTask.this.onFail(messageResId, messageArgs);
+                    }
+                });
+            }
+        });
+    }
+    
+    private void queryAddress(final String address, final java.util.function.Consumer<Set<UTXO>> onSuccess, final ResultCallback onFail) {
+        // Use either dogechain or chain.so
+        List<String> urls = new ArrayList<>(2);
+        urls.add(Constants.BLOCKCYPHER_API_URL);
+        //urls.add(Constants.DOGECHAIN_API_URL); // Seems unreliable too now
+        //urls.add(Constants.CHAINSO_API_URL); // inactive for now
+        Collections.shuffle(urls, new Random(System.nanoTime()));
 
+        final StringBuilder url = new StringBuilder(urls.get(0));
+        url.append(address);
+
+        log.debug("trying to request wallet balance from {}", url);
+
+        final Request.Builder request = new Request.Builder();
+        request.url(HttpUrl.parse(url.toString()).newBuilder().encodedQuery("unspentOnly=true&includeScript=true").build());
+
+        final Call call = Constants.HTTP_CLIENT.newCall(request.build());
+
+        try {
+            final Response response = call.execute();
+            if (response.isSuccessful()) {
+                String content = response.body().string();
+                final JSONObject json = new JSONObject(content);
+                final JSONArray jsonOutputs = json.optJSONArray("txrefs");
+
+                final Set<UTXO> utxoSet = new HashSet<>();
+                if (jsonOutputs != null) {
                     for (int i = 0; i < jsonOutputs.length(); i++) {
                         final JSONObject jsonOutput = jsonOutputs.getJSONObject(i);
 
@@ -169,22 +245,22 @@ public final class RequestWalletBalanceTask {
                         UTXO utxo = new UTXO(utxoHash, utxoIndex, uxtutx, -1, false, new Script(utxoScriptBytes));
                         utxoSet.add(utxo);
                     }
-
-                    log.info("fetched unspent outputs from {}", url);
-                    onResult(utxoSet);
-                } else {
-                    final String responseMessage = response.message();
-                    log.info("got http error '{}: {}' from {}", response.code(), responseMessage, url);
-                    onFail(R.string.error_http, response.code(), responseMessage);
                 }
-            } catch (final JSONException x) {
-                log.info("problem parsing json from " + url, x);
-                onFail(R.string.error_parse, x.getMessage());
-            } catch (final IOException x) {
-                log.info("problem querying unspent outputs from " + url, x);
-                onFail(R.string.error_io, x.getMessage());
+
+                log.info("fetched {} unspent outputs from {}", utxoSet.size(), url);
+                onSuccess.accept(utxoSet);
+            } else {
+                final String responseMessage = response.message();
+                log.info("got http error '{}: {}' from {}", response.code(), responseMessage, url);
+                onFail.onFail(R.string.error_http, response.code(), responseMessage);
             }
-        });
+        } catch (final JSONException x) {
+            log.info("problem parsing json from " + url, x);
+            onFail.onFail(R.string.error_parse, x.getMessage());
+        } catch (final IOException x) {
+            log.info("problem querying unspent outputs from " + url, x);
+            onFail.onFail(R.string.error_io, x.getMessage());
+        }
     }
 
     protected void onResult(final Set<UTXO> utxos) {

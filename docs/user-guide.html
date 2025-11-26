@@ -530,6 +530,262 @@
             <li>Restart the app and try again</li>
         </ul>
         
+        <h2 id="write-a-check"><i class="fas fa-edit"></i> Write a Check</h2>
+        <p>Create time-locked Dogecoin payments just like traditional bank checks! The "Write a Check" feature allows you to create virtual checks with recipient information, future dates, amounts, memos, and signatures. Each check uses advanced P2SH CLTV (Pay-to-Script-Hash with CheckLockTimeVerify) addresses that lock funds until a specified date, making it perfect for rent payments, gifts, scheduled payments, or any scenario where you need to send funds that can only be spent in the future.</p>
+        
+        <h3>What is Write a Check?</h3>
+        <p>Write a Check transforms your Dogecoin Wallet into a digital checkbook system. Unlike traditional bank checks, Dogecoin checks use blockchain technology to create cryptographically secure, time-locked payments. Each check generates a unique P2SH CLTV address that can receive funds immediately but cannot be spent until the specified timelock date. This provides the same functionality as post-dated checks but with the security and transparency of blockchain technology.</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-lock"></i> P2SH CLTV Addresses:</strong> Each check creates a Pay-to-Script-Hash address with a CheckLockTimeVerify script. The address can receive funds immediately, but spending is locked until the check date. This is enforced at the blockchain level, not just in the wallet.
+        </div>
+        
+        <h3>Creating a Check</h3>
+        <p>To create a new check:</p>
+        <ol>
+            <li>Open the main menu (three dots in top-right corner)</li>
+            <li>Select "Write a Check" (if visible - can be hidden in Settings → Configuration)</li>
+            <li>Tap the "+" button to create a new check</li>
+            <li>Fill in the check details:
+                <ul>
+                    <li><strong>Pay To:</strong> The recipient's name or identifier</li>
+                    <li><strong>Date:</strong> The date when the check can be spent (timelock date)</li>
+                    <li><strong>Expiration Date:</strong> Optional expiration date for the check</li>
+                    <li><strong>Amount:</strong> The amount of Dogecoin to send</li>
+                    <li><strong>Memo:</strong> Optional note or message</li>
+                    <li><strong>Signature:</strong> Your name or "Anonymous"</li>
+                </ul>
+            </li>
+            <li>Tap "Issue Check" to create and send the check</li>
+        </ol>
+        
+        <h3>Check Status</h3>
+        <p>Checks can have the following statuses:</p>
+        <ul>
+            <li><strong>Active:</strong> Check has been created and funds are locked until the timelock date</li>
+            <li><strong>Deposited:</strong> Check has been spent/swept by the recipient</li>
+            <li><strong>Canceled:</strong> Check has been canceled and funds returned to your wallet</li>
+        </ul>
+        
+        <h3>Managing Checks</h3>
+        <p>From the Write a Check screen, you can:</p>
+        <ul>
+            <li><strong>View All Checks:</strong> See all your created checks with their status</li>
+            <li><strong>Print Check:</strong> Generate a PDF of the check with QR code for easy redemption</li>
+            <li><strong>View Transaction:</strong> See the check creation transaction on the blockchain</li>
+            <li><strong>Cancel Check:</strong> Return funds to your wallet (only after timelock date has been reached)</li>
+            <li><strong>Share Check:</strong> Share check details via QR code or other methods</li>
+        </ul>
+        
+        <h3>Printing Checks</h3>
+        <p>Each check can be printed as a PDF document that includes:</p>
+        <ul>
+            <li>Check design with all details (Pay To, Amount, Date, Memo, Signature)</li>
+            <li>QR code containing the private key, P2SH address, and locktime</li>
+            <li>Dogecoin branding and professional formatting</li>
+        </ul>
+        <p>The PDF can be saved to your device and printed or shared digitally.</p>
+        
+        <h3>Sweeping a Check</h3>
+        <p>To redeem a check (sweep funds into your wallet):</p>
+        <ol>
+            <li>Open Settings → Sweep Paper Wallet</li>
+            <li>Scan the QR code from the check PDF</li>
+            <li>The wallet will automatically detect it's a P2SH CLTV check</li>
+            <li>Confirm the sweep transaction</li>
+            <li>Funds will be transferred to your wallet after the timelock date</li>
+        </ol>
+        
+        <h3>Check Cancellation</h3>
+        <p>You can cancel a check and return funds to your wallet, but only after the timelock date has been reached:</p>
+        <ul>
+            <li>Checks cannot be canceled before the timelock date</li>
+            <li>Once the timelock date passes, you can cancel the check</li>
+            <li>Canceled checks return funds to your wallet address</li>
+            <li>Transaction fees apply when canceling (uses your default fee category from Settings)</li>
+        </ul>
+        
+        <h3>Transaction Labels</h3>
+        <p>When a check is deposited or canceled, the transaction is automatically labeled in your transaction list:</p>
+        <ul>
+            <li><strong>Deposited Checks:</strong> Show as "Deposited - [Pay To]" in the transaction list</li>
+            <li><strong>Canceled Checks:</strong> Show as "Canceled - [Pay To]" in the transaction list</li>
+        </ul>
+        <p>This makes it easy to identify check-related transactions in your wallet history.</p>
+        
+        <h3>Real-World Use Cases</h3>
+        <ul>
+            <li><strong>Rent Payments:</strong> Create monthly rent checks dated for the 1st. Landlord receives PDF and sweeps on or after the 1st. If not swept by expiration, funds return to you.</li>
+            <li><strong>Paying Contractors:</strong> Pay plumbers, electricians, or handymen after work is completed. Date the check for after completion, include memo with job details.</li>
+            <li><strong>Bill Payments:</strong> Pay utilities, subscriptions, or services. Create checks dated for each due date and send PDFs.</li>
+            <li><strong>Gifts:</strong> Send birthday, wedding, or graduation gifts. Date for the occasion, include personal memo. Recipient can't spend early.</li>
+            <li><strong>Business Payments:</strong> Pay suppliers on net-30 terms. Create checks dated 30 days from invoice, include invoice number in memo.</li>
+            <li><strong>Escrow for Services:</strong> Pay for services that take time (website development, consulting). Date for project completion, cancel if project fails.</li>
+            <li><strong>Tuition Payments:</strong> Pay for courses or workshops. Date for course start, cancel if you drop out before the date.</li>
+            <li><strong>Large Purchases:</strong> Make down payments for cars or appliances. Date for delivery/pickup, cancel if deal falls through.</li>
+        </ul>
+        
+        <h3>Best Practices</h3>
+        <ul>
+            <li>Always verify the check date is in the future before issuing</li>
+            <li>Set expiration dates appropriately (default 30 days, adjust based on use case)</li>
+            <li>Keep a record of all issued checks for accounting purposes</li>
+            <li>Share the PDF check securely with the recipient (email, messaging, or physical delivery)</li>
+            <li>Ensure the recipient understands how to sweep the check using "Sweep Paper Wallet"</li>
+            <li>Monitor check status regularly to see if checks have been swept</li>
+            <li>Cancel checks manually if needed before expiration</li>
+            <li>Set your "Own Name" in Settings → Configuration for personalized signatures</li>
+            <li>Use descriptive memos to track payment purpose (e.g., "Rent - January 2025")</li>
+        </ul>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Important Security Note:</strong> The PDF check contains the private key (WIF format) in a QR code. Treat it with the same security as cash or a physical check. Once the recipient has the private key, they can access the funds after the timelock date. Never share checks with untrusted parties. The timelock prevents early spending, but once the date arrives, anyone with the private key can sweep the funds.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Advantages Over Traditional Checks:</strong>
+            <ul>
+                <li><strong>Global:</strong> Works anywhere with internet - no bank required</li>
+                <li><strong>Instant Creation:</strong> No need to order checks or wait for delivery</li>
+                <li><strong>Cryptographically Secure:</strong> Blockchain-level security with cryptographic proof</li>
+                <li><strong>Transparent:</strong> All transactions are visible on the blockchain</li>
+                <li><strong>Programmable:</strong> Automatic expiration and cancellation</li>
+                <li><strong>Lower Fees:</strong> No check processing fees - just standard Dogecoin transaction fees</li>
+                <li><strong>Memo Field:</strong> Include payment details directly in the check</li>
+                <li><strong>Status Tracking:</strong> Real-time status updates using blockchain data</li>
+            </ul>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Use checks for post-dated payments, gift cards, or any scenario where you want funds to be locked until a specific date. The timelock ensures funds cannot be spent before the intended date, providing security and control over payment timing.
+        </div>
+        
+        <h2 id="blockchain-checkpoints"><i class="fas fa-sync-alt"></i> Blockchain Sync Checkpoints</h2>
+        <p>Reset blockchain synchronization with custom checkpoints to speed up initial sync. This feature allows you to start blockchain synchronization from a specific block height instead of syncing from the beginning.</p>
+        
+        <h3>What are Blockchain Checkpoints?</h3>
+        <p>Blockchain checkpoints are known good states of the blockchain at specific block heights. By starting sync from a checkpoint, you can:</p>
+        <ul>
+            <li>Skip syncing older blocks that you've already verified</li>
+            <li>Speed up initial wallet synchronization</li>
+            <li>Reduce bandwidth and storage usage</li>
+            <li>Get your wallet ready faster</li>
+        </ul>
+        
+        <h3>When to Use Checkpoints</h3>
+        <p>Use blockchain checkpoints when:</p>
+        <ul>
+            <li>Setting up a new wallet and want faster initial sync</li>
+            <li>Resetting your blockchain data after issues</li>
+            <li>You know a specific block height that's trustworthy</li>
+            <li>You want to skip syncing very old blocks</li>
+        </ul>
+        
+        <h3>Using Custom Checkpoints</h3>
+        <p>To reset blockchain with a custom checkpoint:</p>
+        <ol>
+            <li>Open Settings → Advanced Tools</li>
+            <li>Select "Reset Block Chain"</li>
+            <li>Choose "Reset with Custom Checkpoint"</li>
+            <li>Select a checkpoint from the list (loaded from checkpoints-custom.txt)</li>
+            <li>Confirm the reset</li>
+            <li>Wallet will restart and begin syncing from the selected checkpoint</li>
+        </ol>
+        
+        <h3>Checkpoint Data</h3>
+        <p>Custom checkpoints are loaded from the <code>checkpoints-custom.txt</code> asset file. Each checkpoint includes:</p>
+        <ul>
+            <li><strong>Block Height:</strong> The block number to start from</li>
+            <li><strong>Block Hash:</strong> The hash of the checkpoint block</li>
+            <li><strong>Timestamp:</strong> When the block was created</li>
+            <li><strong>Other Block Data:</strong> Version, previous block hash, merkle root, etc.</li>
+        </ul>
+        
+        <h3>Standard vs Custom Checkpoints</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Standard Checkpoints:</strong> The wallet includes built-in checkpoints for known good blockchain states. These are used automatically during normal sync.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-cog"></i> Custom Checkpoints:</strong> You can add your own checkpoints to the <code>checkpoints-custom.txt</code> file for specific block heights you trust. This is useful for advanced users who want to start from a specific point.
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Only use checkpoints from trusted sources. Using an incorrect checkpoint could result in an invalid blockchain state. Always verify checkpoint data before using.
+        </div>
+        
+        <h2 id="custom-fees"><i class="fas fa-sliders-h"></i> Custom Transaction Fees</h2>
+        <p>Configure your default transaction fee category to automatically apply to all transactions. This ensures consistent fee selection across sending coins, sweeping wallets, and canceling checks.</p>
+        
+        <h3>What are Transaction Fee Categories?</h3>
+        <p>The wallet supports three fee categories:</p>
+        <ul>
+            <li><strong>Economic:</strong> Lower cost option. When there are too many pending transactions in the mempool, it can take a little longer to confirm.</li>
+            <li><strong>Normal:</strong> Standard fees that can be faster than Economic. When there are too many transactions in the mempool, it may take longer to confirm.</li>
+            <li><strong>Priority:</strong> Will be the fastest option when there are too many transactions in the mempool, ensuring quicker confirmation during high network activity.</li>
+        </ul>
+        
+        <h3>Current Fee Rates</h3>
+        <p>All fee categories currently use the same rate: <strong>0.01 DOGE per KB</strong> (1,000,000 satoshis per KB). This is configurable via the <code>fees.txt</code> asset file.</p>
+        <p>The actual fee you pay depends on:</p>
+        <ul>
+            <li>Your selected fee category</li>
+            <li>The size of your transaction in bytes</li>
+            <li>A 20% buffer added for safety</li>
+        </ul>
+        
+        <h3>Setting Default Fee Category</h3>
+        <p>To configure your default transaction fee category:</p>
+        <ol>
+            <li>Open Settings → Configuration</li>
+            <li>Scroll to "Default Transaction Fees"</li>
+            <li>Select your preferred category:
+                <ul>
+                    <li><strong>Economic:</strong> Lower cost option. When there are too many pending transactions in the mempool, it can take a little longer to confirm.</li>
+                    <li><strong>Normal:</strong> Standard fees that can be faster than Economic. When there are too many transactions in the mempool, it may take longer to confirm. (Recommended)</li>
+                    <li><strong>Priority:</strong> Will be the fastest option when there are too many transactions in the mempool, ensuring quicker confirmation during high network activity.</li>
+                </ul>
+            </li>
+            <li>The setting is saved automatically</li>
+        </ol>
+        
+        <h3>Where Default Fees Are Applied</h3>
+        <p>Your default fee category is automatically used for:</p>
+        <ul>
+            <li><strong>Sending Coins:</strong> All send transactions use your default fee category</li>
+            <li><strong>Sweeping Paper Wallets:</strong> When sweeping paper wallets or private keys</li>
+            <li><strong>Sweeping Checks:</strong> When redeeming checks via sweep</li>
+            <li><strong>Canceling Checks:</strong> When canceling checks and returning funds</li>
+        </ul>
+        
+        <h3>Fee Calculation</h3>
+        <p>Transaction fees are calculated based on:</p>
+        <ol>
+            <li><strong>Transaction Size:</strong> The size of your transaction in bytes (inputs, outputs, scripts)</li>
+            <li><strong>Fee Rate:</strong> The fee per KB for your selected category</li>
+            <li><strong>Calculation:</strong> (Transaction Size / 1000) × Fee Rate</li>
+            <li><strong>Buffer:</strong> A 20% buffer is added to account for actual size differences</li>
+        </ol>
+        
+        <h3>Example Fee Calculation</h3>
+        <p>For a typical transaction (~500 bytes) with Normal fee category (0.01 DOGE per KB):</p>
+        <ul>
+            <li>Base fee: (500 / 1000) × 0.01 DOGE = 0.005 DOGE</li>
+            <li>With 20% buffer: 0.005 × 1.2 = 0.006 DOGE</li>
+            <li><strong>Total fee: ~0.006 DOGE</strong></li>
+        </ul>
+        
+        <h3>Changing Fees Per Transaction</h3>
+        <p>While your default fee category is used automatically, you can still change the fee category for individual transactions:</p>
+        <ul>
+            <li><strong>Send Coins:</strong> Use the fee category menu (three dots) in the Send Coins screen</li>
+            <li><strong>Other Transactions:</strong> Will use your default setting</li>
+        </ul>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Set your default fee category to "Normal" for most use cases. This provides a good balance between confirmation speed and cost. Use "Economic" when you want to save on fees and don't mind waiting a bit longer during high network activity. Use "Priority" when you need the fastest confirmation, especially during periods of high mempool activity.
+        </div>
+        
         <h2 id="settings-menu"><i class="fas fa-cog"></i> Settings Menu</h2>
         <p>The Settings menu provides access to configuration options, wallet management tools, and important information. Access Settings by tapping the menu button (three dots) in the top-right corner and selecting "Settings".</p>
         
@@ -541,7 +797,8 @@
         <ul>
             <li>Enable/disable logging</li>
             <li>Point of Sale Mode toggle</li>
-            <li>Menu visibility settings (Family Mode, Recurring Payments, Digital Signature)</li>
+            <li>Menu visibility settings (Family Mode, Recurring Payments, Digital Signature, Write a Check)</li>
+            <li><strong>Default Transaction Fees:</strong> Set your preferred fee category (Economic, Normal, Priority) for all transactions</li>
             <li>Sync mode preferences</li>
             <li>Other wallet configuration options</li>
         </ul>
@@ -569,6 +826,7 @@
             <li><strong>Network Monitor:</strong> Monitor network status and peer connections</li>
             <li><strong>Extended Public Key:</strong> Access and share your extended public key</li>
             <li><strong>Reset Block Chain:</strong> Reset blockchain, transactions, and wallet balance (use with caution)</li>
+            <li><strong>Reset Blockchain Checkpoints:</strong> Reset blockchain sync with custom checkpoints for faster initial sync (see <a href="#blockchain-checkpoints">Blockchain Sync Checkpoints</a> section)</li>
             <li><strong>Report Issue:</strong> Report bugs or issues with the wallet</li>
         </ul>
         

@@ -24,6 +24,7 @@ import de.schildbach.wallet.WalletApplication;
 import de.schildbach.wallet.data.DynamicFeeLiveData;
 import de.schildbach.wallet.data.TransactionLiveData;
 import de.schildbach.wallet.ui.DialogEvent;
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.PrefixedChecksummedBytes;
 import org.bitcoinj.wallet.Wallet;
 
@@ -45,6 +46,16 @@ public class SweepWalletViewModel extends AndroidViewModel {
     public final TransactionLiveData sentTransaction;
     public final MutableLiveData<DialogEvent> showDialog = new MutableLiveData<>();
     public final MutableLiveData<DialogEvent> showDialogWithRetryRequestBalance = new MutableLiveData<>();
+
+    // Optional P2SH CLTV address and locktime for check sweeping (format: WIF_KEY|P2SH_ADDRESS|LOCKTIME)
+    public String p2shAddressToSweep = null;
+    public Long p2shLocktimeToSweep = null; // Unix timestamp in seconds
+    
+    // Manual balance calculation (for P2SH outputs that wallet.getBalance() doesn't recognize)
+    public Coin manualBalance = null;
+    
+    // Store UTXOs for manual transaction construction (for P2SH CLTV outputs)
+    public java.util.Set<org.bitcoinj.core.UTXO> utxosToSweep = null;
 
     public State state = State.DECODE_KEY;
 

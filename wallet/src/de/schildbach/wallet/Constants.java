@@ -161,8 +161,8 @@ public final class Constants {
 
     public static final String BLOCKCYPHER_API_URL = "https://api.blockcypher.com/v1/doge/main/addrs/";
 
-    public static final String SOURCE_URL = "https://github.com/langerhans/dogecoin-wallet-new";
-    public static final String BINARY_URL = "https://github.com/langerhans/dogecoin-wallet-new/releases/latest";
+    public static final String SOURCE_URL = "https://github.com/qlpqlp/dogecoin-wallet";
+    public static final String BINARY_URL = "https://github.com/qlpqlp/dogecoin-wallet/releases/latest";
 
     public static final int PEER_DISCOVERY_TIMEOUT_MS = 5 * (int) DateUtils.SECOND_IN_MILLIS;
     public static final int PEER_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;

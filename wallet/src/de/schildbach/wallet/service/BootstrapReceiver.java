@@ -150,8 +150,14 @@ public class BootstrapReceiver extends BroadcastReceiver {
         notification.setSmallIcon(R.drawable.stat_notify_received_24dp);
         notification.setContentTitle(title);
         notification.setContentText(text);
-        notification.setContentIntent(PendingIntent.getActivity(application, 0, new Intent(application, WalletActivity.class),
-                PendingIntent.FLAG_IMMUTABLE));
+        // Use launcher pending intent to open wallet (like widget balance button does)
+        Intent launcherIntent = new Intent(application, WalletActivity.class);
+        launcherIntent.setAction(Intent.ACTION_MAIN);
+        launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(application, 0, launcherIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        notification.setContentIntent(pendingIntent);
         notification.setAutoCancel(true);
 
         if (!canDonate) {
@@ -204,4 +210,5 @@ public class BootstrapReceiver extends BroadcastReceiver {
         nm.cancel(Constants.NOTIFICATION_ID_INACTIVITY);
         context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
     }
+    
 }

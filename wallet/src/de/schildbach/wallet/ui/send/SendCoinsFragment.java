@@ -580,7 +580,7 @@ public final class SendCoinsFragment extends Fragment {
                 && viewModel.paymentIntent.mayEditAmount() && viewModel.balance.getValue() != null);
 
         final MenuItem feeCategoryAction = menu.findItem(R.id.send_coins_options_fee_category);
-        feeCategoryAction.setVisible(false); //DOGE: We only have static fees
+        feeCategoryAction.setVisible(true);
         feeCategoryAction.setEnabled(viewModel.state == SendCoinsViewModel.State.INPUT);
         if (viewModel.feeCategory == FeeCategory.ECONOMIC)
             menu.findItem(R.id.send_coins_options_fee_category_economic).setChecked(true);
@@ -1431,8 +1431,12 @@ public final class SendCoinsFragment extends Fragment {
                 .getSerializable(SendCoinsActivity.INTENT_EXTRA_FEE_CATEGORY);
 
         if (feeCategory != null) {
-            log.info("got fee category {}", feeCategory);
+            log.info("got fee category from intent: {}", feeCategory);
             viewModel.feeCategory = feeCategory;
+        } else {
+            // Use default fee category from configuration if not provided in intent
+            viewModel.feeCategory = application.getConfiguration().getDefaultFeeCategory();
+            log.info("using configured default fee category: {}", viewModel.feeCategory);
         }
 
         updateStateFrom(paymentIntent);

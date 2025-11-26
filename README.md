@@ -19,9 +19,32 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 88
+## 🚀 Latest Updates - Version 89
 
 ### 📱 New Features
+- **Write a Check**: Create timelocked Dogecoin checks with expiration dates
+  - **Timelock Transactions**: Create checks that can only be spent after a specific date using CLTV (CheckLockTimeVerify) scripts
+  - **PDF Generation**: Generate printable PDF checks with QR codes for easy redemption
+  - **Check Management**: View, cancel, and track all your checks with status indicators (Active, Deposited, Canceled)
+  - **Automatic Status Detection**: Wallet automatically detects when checks are deposited or canceled
+  - **Transaction Labels**: Check transactions are automatically labeled in the transaction list with "Deposited - [Pay To]" or "Canceled - [Pay To]"
+  - **Sweep Checks**: Scan QR codes from check PDFs to sweep funds into your wallet
+  - **Timelock Protection**: Checks can only be canceled after the timelock date has been reached
+  - **Menu Integration**: Access "Write a Check" from the main menu (can be hidden in Settings → Configuration)
+- **Blockchain Sync Checkpoints**: Reset blockchain sync with custom checkpoints
+  - **Custom Checkpoints**: Select from predefined blockchain checkpoints to speed up initial sync
+  - **Faster Sync**: Start blockchain synchronization from a specific block height instead of the beginning
+  - **Checkpoint Management**: Load custom checkpoints from `checkpoints-custom.txt` asset file
+  - **Settings Integration**: Access "Reset Blockchain Checkpoints" from Settings → Advanced Tools
+- **Custom Transaction Fees**: Configure default transaction fee category
+  - **Fee Categories**: Choose from Economic, Normal, or Priority fee levels
+  - **Default Setting**: Set your preferred fee category in Settings → Configuration → Default Transaction Fees
+  - **Automatic Application**: Default fee category is automatically used for:
+    - Sending coins
+    - Sweeping paper wallets
+    - Canceling checks
+  - **Fee Calculation**: Fees are calculated based on transaction size and selected category
+  - **Current Rates**: All categories use 0.01 DOGE per KB (configurable via fees.txt)
 - **Settings Menu Categorization**: Improved organization with categorized sections
   - **Wallet Management**: Configuration, Encrypt Keys, Backup Wallet, Restore Wallet, Sweep Wallet
   - **Network & Information**: Exchange Rates, Network Monitor, Extended Public Key

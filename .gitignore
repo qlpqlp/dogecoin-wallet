@@ -5,6 +5,7 @@ local.properties
 .project
 .settings/
 .idea/
+.vs/
 *.iml
 bin/
 gen/

@@ -43,6 +43,7 @@ public class BiometricHelper {
 
     /**
      * Check if biometric authentication is available on the device
+     * Includes both biometric (fingerprint/face) and device credentials (PIN/pattern/password)
      */
     public static boolean isBiometricAvailable(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -50,7 +51,9 @@ public class BiometricHelper {
         }
         
         BiometricManager biometricManager = BiometricManager.from(context);
-        int biometricStatus = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK);
+        // Check for both biometric and device credentials (PIN/pattern/password)
+        int authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+        int biometricStatus = biometricManager.canAuthenticate(authenticators);
         
         return biometricStatus == BiometricManager.BIOMETRIC_SUCCESS;
     }
@@ -133,11 +136,15 @@ public class BiometricHelper {
             return;
         }
 
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(activity.getString(R.string.biometric_auth_title))
                 .setSubtitle(activity.getString(R.string.biometric_auth_subtitle))
-                .setNegativeButtonText(activity.getString(R.string.biometric_auth_cancel))
-                .build();
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
+        
+        // When DEVICE_CREDENTIAL is included, don't set negative button text
+        // The system will automatically show "Use PIN" or similar option
+        // Only set negative button if we're not using device credentials
+        BiometricPrompt.PromptInfo promptInfo = builder.build();
 
         BiometricPrompt biometricPrompt = new BiometricPrompt(activity, 
                 ContextCompat.getMainExecutor(activity), callback);
@@ -154,11 +161,14 @@ public class BiometricHelper {
             return;
         }
 
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(activity.getString(R.string.biometric_setup_title))
                 .setSubtitle(activity.getString(R.string.biometric_setup_subtitle))
-                .setNegativeButtonText(activity.getString(R.string.biometric_auth_cancel))
-                .build();
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
+        
+        // When DEVICE_CREDENTIAL is included, don't set negative button text
+        // The system will automatically show "Use PIN" or similar option
+        BiometricPrompt.PromptInfo promptInfo = builder.build();
 
         BiometricPrompt biometricPrompt = new BiometricPrompt(activity, 
                 ContextCompat.getMainExecutor(activity), callback);

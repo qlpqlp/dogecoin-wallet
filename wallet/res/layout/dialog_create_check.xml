@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/bg_level1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_pay_to"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_pay_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:hint="@string/write_check_pay_to_hint"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_date"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btn_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/write_check_date_hint"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+        style="@style/My.Dialog.Button" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_expiration_date"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btn_select_expiration_date"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/write_check_expiration_date_hint"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+        style="@style/My.Dialog.Button" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_amount"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:hint="@string/write_check_amount_hint"
+        android:inputType="numberDecimal"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_memo"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:hint="@string/write_check_memo_hint"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:maxLines="4"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/write_check_signature"
+        android:textSize="14sp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:textColor="@color/fg_significant"
+        android:padding="12dp"
+        android:background="@color/bg_level2"
+        android:layout_marginBottom="24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/button_cancel"
+            android:textSize="14sp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_marginEnd="8dp"
+            style="@style/My.Dialog.Button" />
+
+        <Button
+            android:id="@+id/btn_issue"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/write_check_issue"
+            android:textSize="14sp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            style="@style/My.Dialog.Button" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

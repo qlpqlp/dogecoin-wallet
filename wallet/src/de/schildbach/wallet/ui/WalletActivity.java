@@ -455,6 +455,13 @@ public final class WalletActivity extends AbstractWalletActivity {
             radiodogeStatusChecker.stopChecking();
         }
         
+        // Remove menu blur when navigating to another activity
+        if (isMenuOpen || isBlurApplied) {
+            isMenuOpen = false;
+            closeOptionsMenu();
+            hideMenuBlurOverlay();
+        }
+        
         // Note: Biometric authentication is cleared when app goes to background
         // (handled by WalletApplication), not here, to allow navigation within the app
         
@@ -810,12 +817,15 @@ public final class WalletActivity extends AbstractWalletActivity {
     private View menuBlurOverlay;
     
     private boolean isMenuOpen = false;
+    private boolean isBlurApplied = false;
     
     @Override
     public boolean onMenuOpened(final int featureId, final Menu menu) {
-        // Add blur overlay when menu opens
-        isMenuOpen = true;
-        showMenuBlurOverlay();
+        // Only show blur if not already showing (prevents double blur on submenu open)
+        if (!isBlurApplied) {
+            isMenuOpen = true;
+            showMenuBlurOverlay();
+        }
         
         // Ensure icons are set when menu opens (for overflow menu)
         // Use post-delay to ensure menu is fully rendered before setting icons
@@ -833,9 +843,12 @@ public final class WalletActivity extends AbstractWalletActivity {
     
     @Override
     public void onPanelClosed(final int featureId, final Menu menu) {
-        // Remove blur overlay when menu closes
-        isMenuOpen = false;
-        hideMenuBlurOverlay();
+        // Only remove blur when the main menu panel closes, not when submenus close
+        // Check if menu is null or empty to determine if it's the main menu closing
+        if (menu == null || menu.size() == 0 || featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+            isMenuOpen = false;
+            hideMenuBlurOverlay();
+        }
         super.onPanelClosed(featureId, menu);
     }
     
@@ -853,7 +866,7 @@ public final class WalletActivity extends AbstractWalletActivity {
     }
     
     private void showMenuBlurOverlay() {
-        if (menuBlurOverlay != null) {
+        if (menuBlurOverlay != null || isBlurApplied) {
             return; // Already showing
         }
         
@@ -922,11 +935,13 @@ public final class WalletActivity extends AbstractWalletActivity {
             menuBlurOverlay.bringToFront();
             
             // Apply blur to content view if available (Android 12+)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null) {
+            // Only apply if not already applied
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null && !isBlurApplied) {
                 try {
                     android.graphics.RenderEffect blur = android.graphics.RenderEffect.createBlurEffect(
                         15f, 15f, android.graphics.Shader.TileMode.CLAMP);
                     contentView.setRenderEffect(blur);
+                    isBlurApplied = true;
                 } catch (Exception e) {
                     // Blur not supported, use semi-transparent overlay only
                 }
@@ -942,33 +957,39 @@ public final class WalletActivity extends AbstractWalletActivity {
     }
     
     private void hideMenuBlurOverlay() {
-        if (menuBlurOverlay != null) {
+        if (menuBlurOverlay != null || isBlurApplied) {
             // Remove blur from content view if applied
             View contentView = findViewById(android.R.id.content);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && contentView != null && isBlurApplied) {
                 try {
                     contentView.setRenderEffect(null);
+                    isBlurApplied = false;
                 } catch (Exception e) {
                     // Ignore
                 }
             }
             
-            // Animate fade out
-            menuBlurOverlay.animate()
-                .alpha(0f)
-                .setDuration(200)
-                .setInterpolator(new android.view.animation.DecelerateInterpolator())
-                .setListener(new android.animation.AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(android.animation.Animator animation) {
-                        if (menuBlurOverlay != null && menuBlurOverlay.getParent() != null) {
-                            android.view.ViewGroup parent = (android.view.ViewGroup) menuBlurOverlay.getParent();
-                            parent.removeView(menuBlurOverlay);
+            if (menuBlurOverlay != null) {
+                // Animate fade out
+                menuBlurOverlay.animate()
+                    .alpha(0f)
+                    .setDuration(200)
+                    .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                    .setListener(new android.animation.AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(android.animation.Animator animation) {
+                            if (menuBlurOverlay != null && menuBlurOverlay.getParent() != null) {
+                                android.view.ViewGroup parent = (android.view.ViewGroup) menuBlurOverlay.getParent();
+                                parent.removeView(menuBlurOverlay);
+                            }
+                            menuBlurOverlay = null;
+                            isBlurApplied = false;
                         }
-                        menuBlurOverlay = null;
-                    }
-                })
-                .start();
+                    })
+                    .start();
+            } else {
+                isBlurApplied = false;
+            }
         }
     }
 
@@ -1043,6 +1064,12 @@ public final class WalletActivity extends AbstractWalletActivity {
             digitalSignatureOption.setVisible(config.getShowDigitalSignatureMenu());
         }
 
+        // Write a Check
+        final MenuItem writeCheckOption = menu.findItem(R.id.wallet_options_write_check);
+        if (writeCheckOption != null) {
+            writeCheckOption.setVisible(config.getShowWriteCheckMenu());
+        }
+
         // Ensure icons are visible in overflow menu items
         ensureMenuIconsVisible(menu);
 
@@ -1085,6 +1112,11 @@ public final class WalletActivity extends AbstractWalletActivity {
         final MenuItem digitalSignatureItem = menu.findItem(R.id.wallet_options_digital_signature);
         if (digitalSignatureItem != null) {
             digitalSignatureItem.setIcon(R.drawable.ic_pen_signing_white_24dp);
+        }
+        
+        final MenuItem writeCheckItem = menu.findItem(R.id.wallet_options_write_check);
+        if (writeCheckItem != null) {
+            writeCheckItem.setIcon(R.drawable.ic_checkbook_white_24dp);
         }
         
         final MenuItem accountingReportsItem = menu.findItem(R.id.wallet_options_accounting_reports);
@@ -1140,6 +1172,13 @@ public final class WalletActivity extends AbstractWalletActivity {
     public boolean onOptionsItemSelected(final MenuItem item) {
         int itemId = item.getItemId();
         
+        // Remove blur and close menu when navigating to another activity
+        if (isMenuOpen || isBlurApplied) {
+            isMenuOpen = false;
+            closeOptionsMenu();
+            hideMenuBlurOverlay();
+        }
+        
         // Check if child mode is active and PIN protection is needed
         boolean isChildModeActive = de.schildbach.wallet.util.ChildModeHelper.isChildModeActive(this);
         boolean needsPinProtection = isChildModeActive && (itemId == R.id.wallet_options_family_mode || 
@@ -1186,6 +1225,9 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_digital_signature) {
             startActivity(new Intent(this, DigitalSignaturesListActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_write_check) {
+            startActivity(new Intent(this, WriteCheckActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_accounting_reports) {
             startActivity(new Intent(this, AccountingReportsActivity.class));

@@ -67,10 +67,10 @@ public class StartBlockchainService extends JobService {
         jobInfo.setMinimumLatency(interval);
         jobInfo.setOverrideDeadline(DateUtils.WEEK_IN_MILLIS);
         jobInfo.setRequiredNetworkType(expectLargeData ? JobInfo.NETWORK_TYPE_UNMETERED : JobInfo.NETWORK_TYPE_ANY);
-        jobInfo.setRequiresDeviceIdle(true);
+        jobInfo.setRequiresDeviceIdle(false); // Allow running even when device is not idle for better background sync
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            jobInfo.setRequiresBatteryNotLow(true);
-            jobInfo.setRequiresStorageNotLow(true);
+            jobInfo.setRequiresBatteryNotLow(false); // Allow running on low battery for better background sync
+            jobInfo.setRequiresStorageNotLow(true); // Still require storage to be available
         }
         jobScheduler.schedule(jobInfo.build());
     }
@@ -89,10 +89,11 @@ public class StartBlockchainService extends JobService {
         if (storageLow)
             log.info("storage low, not starting block chain sync");
         if (batteryLow)
-            log.info("battery low, not starting block chain sync");
+            log.info("battery low, still starting block chain sync (will be throttled by system)");
         if (powerSaveMode)
-            log.info("power save mode, not starting block chain sync");
-        if (!storageLow && !batteryLow && !powerSaveMode)
+            log.info("power save mode, still starting block chain sync (will be throttled by system)");
+        // Only skip if storage is low, allow running on low battery/power save (system will throttle)
+        if (!storageLow)
             BlockchainService.start(this, false);
         return false;
     }

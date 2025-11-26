@@ -80,12 +80,15 @@ public class BiometricAuthActivity extends FragmentActivity {
     }
     
     private void showBiometricAuthentication() {
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(getString(R.string.biometric_auth_title))
                 .setSubtitle(getString(R.string.biometric_auth_subtitle))
-                .setNegativeButtonText(getString(R.string.biometric_auth_cancel))
                 .setConfirmationRequired(true) // Force confirmation
-                .build();
+                .setAllowedAuthenticators(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK | androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL);
+        
+        // When DEVICE_CREDENTIAL is included, don't set negative button text
+        // The system will automatically show "Use PIN" or similar option
+        BiometricPrompt.PromptInfo promptInfo = builder.build();
         
         BiometricPrompt biometricPrompt = new BiometricPrompt(this, 
                 ContextCompat.getMainExecutor(this), new BiometricPrompt.AuthenticationCallback() {

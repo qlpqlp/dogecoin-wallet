@@ -142,6 +142,9 @@ public class WalletApplication extends Application {
                 config.updateLastBluetoothAddress(Bluetooth.getAddress(bluetoothAdapter));
             } catch (SecurityException e) {
                 log.info("Bluetooth permission not granted, skipping Bluetooth address update", e);
+            } catch (Exception e) {
+                // Handle any other exceptions (e.g., BLUETOOTH_CONNECT permission on Android 12+)
+                log.info("Bluetooth address update failed, skipping", e);
             }
         }
 
