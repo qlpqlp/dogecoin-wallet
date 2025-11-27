@@ -19,9 +19,22 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ### 🌐 More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 89
+## 🚀 Latest Updates - Version 90
 
 ### 📱 New Features
+- **Use Doge**: Discover stores and businesses that accept Dogecoin near you!
+  - **Interactive GPS-Enabled Map**: Automatically detects your location and shows nearby stores on an interactive map
+  - **Store Discovery**: Browse stores that accept Dogecoin with detailed information including name, category, description, address, contact info, and website
+  - **Store Filtering**: Filter stores by name or category using the search bar
+  - **Store Listings**: View stores in a scrollable list with quick access to details
+  - **Share Functionality**: Share store information with Google Maps links (format: `https://www.google.com/maps?q=lat,lon`)
+  - **Community Sources**: Load stores from multiple JSON sources including the default community repository
+  - **Custom Sources**: Add your own JSON sources to load stores from different providers
+  - **Store Details**: View complete store information including category, description, address, location, phone, email, and website
+  - **Menu Integration**: Access "Use Doge" from the main menu (can be enabled/disabled in Settings → Configuration → Menu Options)
+  - **Privacy-Focused**: Location data is only used locally on your device and never transmitted to any server
+  - **JSON Format Support**: Stores can be contributed via JSON format following the community specification
+  - **Contribute Stores**: Add stores to the community database or create your own JSON source
 - **Write a Check**: Create timelocked Dogecoin checks with expiration dates
   - **Timelock Transactions**: Create checks that can only be spent after a specific date using CLTV (CheckLockTimeVerify) scripts
   - **PDF Generation**: Generate printable PDF checks with QR codes for easy redemption
@@ -101,10 +114,16 @@ Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive doc
     - **Advanced Tools**: Network monitoring, diagnostics, and reporting
   - **Simplified Navigation**: More intuitive menu structure makes it easier to find what you need
   - **Enhanced Descriptions**: Added detailed descriptions to help users understand each option
-- **Menu Visibility Customization**: Control which menu items are visible in Settings → Configuration
-  - **Family Mode Menu**: Show or hide the Family Mode menu option
-  - **Recurring Payments Menu**: Show or hide the Recurring Payments menu option
-  - **Digital Signature Menu**: Show or hide the Digital Signature menu option
+- **Menu Visibility Customization**: Control which menu items are visible in Settings → Configuration → Menu Options
+  - **Family Mode**: Show or hide the Family Mode menu option
+  - **Point of Sale**: Show or hide the Point of Sale menu option
+  - **Payment Terminal Mode**: Configure payment terminal settings
+  - **Recurring Payments**: Show or hide the Recurring Payments menu option
+  - **Digital Signature**: Show or hide the Digital Signature menu option
+  - **Write a Check**: Show or hide the Write a Check menu option
+  - **Use Doge**: Show or hide the Use Doge menu option
+  - **Simplified Titles**: Preference titles simplified (e.g., "Show Family Mode Menu" → "Family Mode")
+  - **New Menu Options Category**: All menu-related preferences organized in a dedicated "Menu Options" category
   - **Default Visibility**: All menu items are visible by default for easy access
   - **Instant Updates**: Menu visibility changes take effect immediately
 - **Comprehensive Translations**: Full internationalization support

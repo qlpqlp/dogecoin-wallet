@@ -1119,6 +1119,11 @@ public final class WalletActivity extends AbstractWalletActivity {
             writeCheckItem.setIcon(R.drawable.ic_checkbook_white_24dp);
         }
         
+        final MenuItem useDogeItem = menu.findItem(R.id.wallet_options_use_doge);
+        if (useDogeItem != null) {
+            useDogeItem.setIcon(R.drawable.ic_place_white_24dp);
+        }
+        
         final MenuItem accountingReportsItem = menu.findItem(R.id.wallet_options_accounting_reports);
         if (accountingReportsItem != null) {
             accountingReportsItem.setIcon(R.drawable.ic_bar_chart_white_24dp);
@@ -1228,6 +1233,9 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_write_check) {
             startActivity(new Intent(this, WriteCheckActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_use_doge) {
+            startActivity(new Intent(this, UseDogeActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_accounting_reports) {
             startActivity(new Intent(this, AccountingReportsActivity.class));

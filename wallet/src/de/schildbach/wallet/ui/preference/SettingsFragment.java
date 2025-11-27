@@ -72,6 +72,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     private EditTextPreference bluetoothAddressPreference;
     private android.preference.CheckBoxPreference biometricPreference;
     private android.preference.CheckBoxPreference radiodogePreference;
+    private android.preference.CheckBoxPreference useDogePreference;
     private android.preference.CheckBoxPreference enableLoggingPreference;
 
     private static final int BLUETOOTH_ADDRESS_LENGTH = 6 * 2 + 5; // including the colons
@@ -171,6 +172,13 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             radiodogePreference.setOnPreferenceChangeListener(this);
         }
 
+        // Initialize Use Doge preference
+        useDogePreference = (android.preference.CheckBoxPreference) findPreference(Configuration.PREFS_KEY_USE_DOGE_ENABLED);
+        if (useDogePreference != null) {
+            useDogePreference.setChecked(config.getUseDogeEnabled());
+            useDogePreference.setOnPreferenceChangeListener(this);
+        }
+
         // Initialize Enable Logging preference
         enableLoggingPreference = (android.preference.CheckBoxPreference) findPreference(Configuration.PREFS_KEY_ENABLE_LOGGING);
         if (enableLoggingPreference != null) {
@@ -206,6 +214,9 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         if (radiodogePreference != null) {
             radiodogePreference.setOnPreferenceChangeListener(null);
         }
+        if (useDogePreference != null) {
+            useDogePreference.setOnPreferenceChangeListener(null);
+        }
         if (enableLoggingPreference != null) {
             enableLoggingPreference.setOnPreferenceChangeListener(null);
         }
@@ -229,6 +240,8 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 updateBiometricPreference((Boolean) newValue);
             else if (preference.equals(radiodogePreference))
                 updateRadioDogePreference((Boolean) newValue);
+            else if (preference.equals(useDogePreference))
+                config.setUseDogeEnabled((Boolean) newValue);
             else if (preference.equals(enableLoggingPreference))
                 updateEnableLoggingPreference((Boolean) newValue);
         });

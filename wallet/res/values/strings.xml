@@ -244,6 +244,7 @@
     <string name="preferences_category_general">General</string>
     <string name="preferences_category_privacy">Privacy control</string>
     <string name="preferences_category_merchants">Merchants</string>
+    <string name="preferences_category_menu_options">Menu Options</string>
     <string name="preferences_category_diagnostics">Diagnostics</string>
     <string name="preferences_category_labs">Labs</string>
     <string name="preferences_category_wallet_management">Wallet Management</string>
@@ -295,9 +296,12 @@
     <string name="preferences_bluetooth_address_dialog_message">Unfortunately Android is preventing the automatic detection of your device\'s Bluetooth address. You need to look it up in the Android Bluetooth settings and enter it here.\n\nPlease make sure that every character is correct. Colons can be omitted, and case is not important.</string>
     <string name="preferences_radiodoge_title">RadioDoge Support</string>
     <string name="preferences_radiodoge_summary">Use RadioDoge to broadcast transactions when no internet connection is available</string>
+    <string name="use_doge_activity_title">Use Doge</string>
+    <string name="preferences_use_doge_title">Use Doge</string>
+    <string name="preferences_use_doge_summary">Show map of stores that accept Dogecoin</string>
     <string name="preferences_enable_logging_title">Enable Logging</string>
     <string name="preferences_enable_logging_summary">Enable detailed logging for debugging. Logs are stored in app files and may grow large if enabled.</string>
-    <string name="preferences_point_of_sale_mode_title">Point of Sale Mode</string>
+    <string name="preferences_point_of_sale_mode_title">Point of Sale</string>
     <string name="preferences_point_of_sale_mode_summary">Enable product catalog and web-based POS system for merchants</string>
     <string name="point_of_sale_mode_title">Point of Sale Mode</string>
     <string name="radiodoge_status_message">Using RadioDoge for payments without Internet</string>
@@ -747,11 +751,11 @@
     <string name="education_transaction_fees_cheap">Why so cheap? Dogecoin fees are much lower than banks or other cryptocurrencies, making it perfect for everyday use</string>
 
     <!-- Menu Visibility Preferences -->
-    <string name="preferences_show_family_mode_menu_title">Show Family Mode Menu</string>
+    <string name="preferences_show_family_mode_menu_title">Family Mode</string>
     <string name="preferences_show_family_mode_menu_summary">Show or hide the Family Mode menu option</string>
-    <string name="preferences_show_recurring_payments_menu_title">Show Recurring Payments Menu</string>
+    <string name="preferences_show_recurring_payments_menu_title">Recurring Payments</string>
     <string name="preferences_show_recurring_payments_menu_summary">Show or hide the Recurring Payments menu option</string>
-    <string name="preferences_show_digital_signature_menu_title">Show Digital Signature Menu</string>
+    <string name="preferences_show_digital_signature_menu_title">Digital Signature</string>
     <string name="preferences_show_digital_signature_menu_summary">Show or hide the Digital Signature menu option</string>
     <string name="preferences_show_write_check_menu_title">Write a Check</string>
     <string name="preferences_show_write_check_menu_summary">Show or hide the Write a Check menu option</string>

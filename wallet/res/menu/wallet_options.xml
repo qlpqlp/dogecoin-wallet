@@ -71,6 +71,11 @@
         android:showAsAction="never"
         android:title="@string/write_check_menu_title" />
     <item
+        android:id="@+id/wallet_options_use_doge"
+        android:icon="@drawable/ic_place_white_24dp"
+        android:showAsAction="never"
+        android:title="@string/use_doge_activity_title" />
+    <item
         android:id="@+id/wallet_options_accounting_reports"
         android:icon="@drawable/ic_bar_chart_white_24dp"
         android:showAsAction="never"

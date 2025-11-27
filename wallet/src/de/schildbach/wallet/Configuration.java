@@ -70,6 +70,7 @@ public class Configuration {
     public static final String PREFS_KEY_SHOW_RECURRING_PAYMENTS_MENU = "show_recurring_payments_menu";
     public static final String PREFS_KEY_SHOW_DIGITAL_SIGNATURE_MENU = "show_digital_signature_menu";
     public static final String PREFS_KEY_SHOW_WRITE_CHECK_MENU = "show_write_check_menu";
+    public static final String PREFS_KEY_USE_DOGE_ENABLED = "use_doge_enabled";
     public static final String PREFS_KEY_DEFAULT_FEE_CATEGORY = "default_fee_category";
 
     private static final String PREFS_KEY_LAST_VERSION = "last_version";
@@ -423,6 +424,14 @@ public class Configuration {
 
     public void setShowWriteCheckMenu(final boolean enabled) {
         prefs.edit().putBoolean(PREFS_KEY_SHOW_WRITE_CHECK_MENU, enabled).apply();
+    }
+
+    public boolean getUseDogeEnabled() {
+        return prefs.getBoolean(PREFS_KEY_USE_DOGE_ENABLED, true);
+    }
+
+    public void setUseDogeEnabled(final boolean enabled) {
+        prefs.edit().putBoolean(PREFS_KEY_USE_DOGE_ENABLED, enabled).apply();
     }
 
     public de.schildbach.wallet.ui.send.FeeCategory getDefaultFeeCategory() {

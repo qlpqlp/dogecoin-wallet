@@ -355,6 +355,186 @@
             <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Digital signatures are perfect for proving authorship, authenticity, and integrity without bloating the blockchain with data. Think of it as cryptographic proof that your Dogecoin address "approved" the content at a specific moment in time.
         </div>
         
+        <h2 id="use-doge"><i class="fas fa-map-marker-alt"></i> Use Doge - Discover Stores That Accept Dogecoin</h2>
+        <p>Use Doge is a powerful feature that helps you discover stores, businesses, and locations that accept Dogecoin near you! It displays an interactive GPS-enabled map with store listings from community-contributed sources.</p>
+        
+        <h3>How It Works</h3>
+        <p>Use Doge uses an interactive map powered by Leaflet to display stores that accept Dogecoin:</p>
+        <ol>
+            <li><strong>GPS Location:</strong> The map automatically detects your GPS location and zooms to your current position</li>
+            <li><strong>Store Markers:</strong> Yellow Dogecoin markers (Ð) show stores on the map</li>
+            <li><strong>Store Listings:</strong> Browse stores in a scrollable list below the map</li>
+            <li><strong>Filter & Search:</strong> Filter stores by name or category using the search bar</li>
+            <li><strong>Store Details:</strong> Tap on a store marker or list item to view detailed information</li>
+            <li><strong>Multiple Sources:</strong> Loads stores from multiple JSON sources for comprehensive coverage</li>
+        </ol>
+        
+        <h3>Accessing Use Doge</h3>
+        <ol>
+            <li>Open the main wallet menu (tap the three-dot menu icon)</li>
+            <li>Select "Use Doge" (this menu item can be enabled/disabled in Settings → Configuration → Menu Options → Use Doge)</li>
+            <li>Grant location permission when prompted (required for GPS location)</li>
+            <li>The map will load and zoom to your current location</li>
+        </ol>
+        
+        <h3>Using the Map</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-map"></i> Map Features:</strong>
+            <ul>
+                <li><strong>Zoom Controls:</strong> Use pinch-to-zoom or zoom buttons to navigate the map</li>
+                <li><strong>Store Markers:</strong> Yellow Dogecoin markers show store locations</li>
+                <li><strong>Marker Popups:</strong> Tap a marker to see store name, category, and basic info</li>
+                <li><strong>Store Details:</strong> Tap "View Details" in popup or list item for full information</li>
+                <li><strong>Auto-Zoom:</strong> Map automatically zooms to your GPS location when opened</li>
+            </ul>
+        </div>
+        
+        <h3>Store Information</h3>
+        <p>Each store listing includes:</p>
+        <ul>
+            <li><strong>Name:</strong> Store or business name</li>
+            <li><strong>Category:</strong> Type of business (Restaurant, Retail, Service, etc.)</li>
+            <li><strong>Description:</strong> Additional details about the store</li>
+            <li><strong>Address:</strong> Physical address of the store</li>
+            <li><strong>Location:</strong> City and country</li>
+            <li><strong>Contact:</strong> Phone number and email address</li>
+            <li><strong>Website:</strong> Link to store's website</li>
+            <li><strong>Social Media:</strong> Links to social media profiles</li>
+        </ul>
+        
+        <h3>Sharing Store Information</h3>
+        <p>You can share store information with others:</p>
+        <ol>
+            <li>Tap on a store marker or list item to view details</li>
+            <li>Tap the "Share" button in the store details dialog</li>
+            <li>Choose how to share (messaging, email, social media, etc.)</li>
+            <li>The shared information includes:
+                <ul>
+                    <li>Store name and category</li>
+                    <li>Description and address</li>
+                    <li>Contact information (phone, email, website)</li>
+                    <li>Google Maps link with coordinates (format: <code>https://www.google.com/maps?q=40.7128,-74.0060</code>)</li>
+                </ul>
+            </li>
+        </ol>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Note:</strong> Only fields with data are included in the share. Empty or null fields are automatically excluded for cleaner sharing.
+        </div>
+        
+        <h3>Adding JSON Sources</h3>
+        <p>You can add custom JSON sources to load stores from different providers:</p>
+        <ol>
+            <li>Open Use Doge from the main menu</li>
+            <li>Tap the configuration button (gear icon) in the top-right corner</li>
+            <li>Tap "Add Source" to add a new JSON source URL</li>
+            <li>Enter the JSON source URL (must be publicly accessible)</li>
+            <li>Tap "Save" to add the source</li>
+            <li>Stores from all sources will be loaded and displayed on the map</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Default Source:</strong>
+            <p>The app includes a default community source: <code>https://raw.githubusercontent.com/qlpqlp/dogecoin-stores/main/doge-stores.json</code></p>
+        </div>
+        
+        <h3>JSON Store Format</h3>
+        <p>Stores must be provided in JSON format as an array of store objects. Each store object should follow this structure:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">[
+  {
+    "lat": 40.7128,
+    "lon": -74.0060,
+    "category": "Restaurant",
+    "name": "Doge Pizza",
+    "description": "Delicious pizza accepting Dogecoin payments",
+    "address": "123 Main Street",
+    "postal": "10001",
+    "location": "New York",
+    "country": "United States",
+    "email": "info@dogepizza.com",
+    "phone": "+1-555-123-4567",
+    "website": "https://dogepizza.com",
+    "social": [
+      "https://x.com/dogepizza",
+      "https://facebook.com/dogepizza"
+    ]
+  }
+]</pre>
+        
+        <h4>Field Descriptions</h4>
+        <ul>
+            <li><strong>lat</strong> (required): Latitude coordinate (decimal degrees, e.g., 40.7128)</li>
+            <li><strong>lon</strong> (required): Longitude coordinate (decimal degrees, e.g., -74.0060)</li>
+            <li><strong>category</strong> (optional): Store category (e.g., "Restaurant", "Retail", "Service")</li>
+            <li><strong>name</strong> (required): Store or business name</li>
+            <li><strong>description</strong> (optional): Additional description or details</li>
+            <li><strong>address</strong> (optional): Street address</li>
+            <li><strong>postal</strong> (optional): Postal/ZIP code</li>
+            <li><strong>location</strong> (optional): City or location name</li>
+            <li><strong>country</strong> (optional): Country name</li>
+            <li><strong>email</strong> (optional): Contact email address</li>
+            <li><strong>phone</strong> (optional): Contact phone number</li>
+            <li><strong>website</strong> (optional): Store website URL</li>
+            <li><strong>social</strong> (optional): Array of social media profile URLs</li>
+        </ul>
+        
+        <h3>Contributing Stores</h3>
+        <p>There are several ways to contribute stores to the community database:</p>
+        
+        <h4>Option 1: Contribute to the Community Repository</h4>
+        <p>The default source is maintained at: <a href="https://github.com/qlpqlp/dogecoin-stores" target="_blank" style="color: #ffc107; text-decoration: underline;">https://github.com/qlpqlp/dogecoin-stores</a></p>
+        <ol>
+            <li>Fork the repository on GitHub</li>
+            <li>Add your store(s) to the <code>doge-stores.json</code> file following the JSON format above</li>
+            <li>Submit a pull request with your additions</li>
+            <li>Once merged, your stores will be available to all users via the default source</li>
+        </ol>
+        
+        <h4>Option 2: Create Your Own JSON Source</h4>
+        <p>You can host your own JSON file and add it as a custom source:</p>
+        <ol>
+            <li>Create a JSON file following the store format above</li>
+            <li>Host it on a web server or GitHub (using raw GitHub URLs)</li>
+            <li>Ensure the URL is publicly accessible</li>
+            <li>Add the URL as a custom source in the app</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> Example GitHub Hosting:</strong>
+            <p>Create a file <code>my-stores.json</code> in your GitHub repository and use the raw URL:</p>
+            <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;">https://raw.githubusercontent.com/yourusername/yourrepo/main/my-stores.json</pre>
+        </div>
+        
+        <h3>Privacy & Permissions</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-shield-alt"></i> Location Permission:</strong>
+            <p>Use Doge requires location permission to show your GPS position on the map. Your location is only used locally on your device and is never transmitted to any server. The app only uses your location to center the map on your position.</p>
+        </div>
+        
+        <h3>Troubleshooting</h3>
+        <h4>Map Not Showing Stores</h4>
+        <ul>
+            <li>Check your internet connection</li>
+            <li>Verify that JSON sources are accessible</li>
+            <li>Check the app logs for JSON parsing errors</li>
+            <li>Try refreshing the store list</li>
+        </ul>
+        
+        <h4>Location Not Working</h4>
+        <ul>
+            <li>Ensure location permission is granted</li>
+            <li>Check that GPS is enabled on your device</li>
+            <li>Try restarting the app</li>
+            <li>Check device location settings</li>
+        </ul>
+        
+        <h4>Custom Source Not Loading</h4>
+        <ul>
+            <li>Verify the URL is correct and publicly accessible</li>
+            <li>Check that the JSON format is valid</li>
+            <li>Ensure CORS headers are configured if using a custom domain</li>
+            <li>Test the URL in a web browser to verify it returns valid JSON</li>
+        </ul>
+        
         <h2 id="recurring-payments"><i class="fas fa-credit-card"></i> Recurring Payments</h2>
         <p>Schedule automatic payments:</p>
         <ol>

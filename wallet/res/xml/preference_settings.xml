@@ -51,40 +51,6 @@
             android:entries="@array/preferences_fee_category_labels"
             android:entryValues="@array/preferences_fee_category_values" />
 
-        <Preference
-            android:key="payment_terminal_mode"
-            android:title="@string/preferences_payment_terminal_title"
-            android:summary="@string/preferences_payment_terminal_summary" />
-
-        <CheckBoxPreference
-            android:key="point_of_sale_mode"
-            android:title="@string/preferences_point_of_sale_mode_title"
-            android:summary="@string/preferences_point_of_sale_mode_summary"
-            android:defaultValue="false" />
-
-        <CheckBoxPreference
-            android:key="show_family_mode_menu"
-            android:title="@string/preferences_show_family_mode_menu_title"
-            android:summary="@string/preferences_show_family_mode_menu_summary"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:key="show_recurring_payments_menu"
-            android:title="@string/preferences_show_recurring_payments_menu_title"
-            android:summary="@string/preferences_show_recurring_payments_menu_summary"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:key="show_digital_signature_menu"
-            android:title="@string/preferences_show_digital_signature_menu_title"
-            android:summary="@string/preferences_show_digital_signature_menu_summary"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:key="show_write_check_menu"
-            android:title="@string/preferences_show_write_check_menu_title"
-            android:summary="@string/preferences_show_write_check_menu_summary"
-            android:defaultValue="true" />
 
         <Preference
             android:key="data_usage"
@@ -154,5 +120,50 @@
             android:summary="@string/preferences_bluetooth_address_summary"
             android:dialogMessage="@string/preferences_bluetooth_address_dialog_message"
             android:inputType="text|textNoSuggestions" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preferences_category_menu_options">
+
+        <CheckBoxPreference
+            android:key="show_family_mode_menu"
+            android:title="@string/preferences_show_family_mode_menu_title"
+            android:summary="@string/preferences_show_family_mode_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="point_of_sale_mode"
+            android:title="@string/preferences_point_of_sale_mode_title"
+            android:summary="@string/preferences_point_of_sale_mode_summary"
+            android:defaultValue="false" />
+
+        <Preference
+            android:key="payment_terminal_mode"
+            android:title="@string/preferences_payment_terminal_title"
+            android:summary="@string/preferences_payment_terminal_summary" />
+
+        <CheckBoxPreference
+            android:key="show_recurring_payments_menu"
+            android:title="@string/preferences_show_recurring_payments_menu_title"
+            android:summary="@string/preferences_show_recurring_payments_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_digital_signature_menu"
+            android:title="@string/preferences_show_digital_signature_menu_title"
+            android:summary="@string/preferences_show_digital_signature_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_write_check_menu"
+            android:title="@string/preferences_show_write_check_menu_title"
+            android:summary="@string/preferences_show_write_check_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="use_doge_enabled"
+            android:title="@string/preferences_use_doge_title"
+            android:summary="@string/preferences_use_doge_summary"
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>
