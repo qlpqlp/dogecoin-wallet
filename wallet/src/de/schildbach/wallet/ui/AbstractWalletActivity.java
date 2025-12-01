@@ -62,11 +62,11 @@ public abstract class AbstractWalletActivity extends FragmentActivity {
     
     private void addStatusBarPadding() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // On Android 16 (API 35), we opt out of edge-to-edge
+            // On Android 15 (API 35) and above, we opt out of edge-to-edge
             // With opt-out, the system handles padding automatically - don't modify it
-            boolean isAndroid16 = Build.VERSION.SDK_INT >= 35; // Android 16 (API 35)
+            boolean isAndroid15OrAbove = Build.VERSION.SDK_INT >= 35; // Android 15 (API 35)
             
-            if (isAndroid16) {
+            if (isAndroid15OrAbove) {
                 // With edge-to-edge opt-out, don't modify padding - let the system handle it
                 // Only reset left padding to 0 if needed
                 View contentView = findViewById(android.R.id.content);
@@ -74,33 +74,16 @@ public abstract class AbstractWalletActivity extends FragmentActivity {
                     contentView.setPadding(0, contentView.getPaddingTop(), 
                         contentView.getPaddingRight(), contentView.getPaddingBottom());
                 }
-                return; // Don't add any padding on Android 16
+                return; // Don't add any padding on Android 15 and above
             }
             
-            // For Android 14 and 15, use original padding logic
-            int statusBarHeight = getStatusBarHeight();
-            // Add moderate extra padding to ensure content is fully visible
-            int extraPadding = (int) (getResources().getDisplayMetrics().density * 55); // 55dp extra
-            int totalPadding = statusBarHeight + extraPadding;
-            
-            // Get navigation bar height and add it to bottom padding
-            int navigationBarHeight = getNavigationBarHeight();
-            
-            // Dynamic bottom padding based on screen size + navigation bar
-            int screenHeight = getResources().getDisplayMetrics().heightPixels;
-            
-            // Calculate dynamic bottom padding (smaller for larger screens)
-            int baseBottomPadding = (int) (getResources().getDisplayMetrics().density * 8); // 8dp base
-            int dynamicBottomPadding = Math.max(baseBottomPadding, screenHeight / 100); // Scale with screen height
-            int maxBottomPadding = (int) (getResources().getDisplayMetrics().density * 20); // Max 20dp
-            int calculatedBottomPadding = Math.min(dynamicBottomPadding, maxBottomPadding);
-            
-            // Add navigation bar height to ensure content is above it
-            int finalBottomPadding = calculatedBottomPadding + navigationBarHeight;
-            
+            // For Android below 15 (API < 35), don't add any padding
+            // The system should handle it naturally, and adding padding causes content
+            // to have unwanted margins and prevents bottom bar from sticking to bottom
             View contentView = findViewById(android.R.id.content);
             if (contentView != null) {
-                contentView.setPadding(0, totalPadding, 0, finalBottomPadding);
+                // Only reset padding to 0 to ensure no unwanted margins
+                contentView.setPadding(0, 0, 0, 0);
             }
         }
     }

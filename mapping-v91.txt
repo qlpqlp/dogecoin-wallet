@@ -3,8 +3,8 @@
 # min_api: 21
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: 3346482d9fa79e15740bf5539bf466be3ef80ea12f4df356b6af71d5b476797e
-# pg_map_hash: SHA-256 3346482d9fa79e15740bf5539bf466be3ef80ea12f4df356b6af71d5b476797e
+# pg_map_id: ea9c8d72d54008a4f0f6d6a6a11853bdaa31ac5bc6e9855c4514ad72cfdc4629
+# pg_map_hash: SHA-256 ea9c8d72d54008a4f0f6d6a6a11853bdaa31ac5bc6e9855c4514ad72cfdc4629
 android.app.ForegroundServiceStartNotAllowedException -> android.app.ForegroundServiceStartNotAllowedException:
 # {"id":"com.android.tools.r8.synthesized"}
     void <clinit>() -> <clinit>
@@ -124979,35 +124979,23 @@ de.schildbach.wallet.ui.AbstractWalletActivity -> de.schildbach.wallet.ui.Abstra
     73:73:void addStatusBarPadding() -> addStatusBarPadding
     74:74:void addStatusBarPadding() -> addStatusBarPadding
     75:75:void addStatusBarPadding() -> addStatusBarPadding
-    81:81:void addStatusBarPadding() -> addStatusBarPadding
     83:83:void addStatusBarPadding() -> addStatusBarPadding
-    87:87:void addStatusBarPadding() -> addStatusBarPadding
-    90:90:void addStatusBarPadding() -> addStatusBarPadding
-    93:93:void addStatusBarPadding() -> addStatusBarPadding
-    94:94:void addStatusBarPadding() -> addStatusBarPadding
-    95:95:void addStatusBarPadding() -> addStatusBarPadding
-    96:96:void addStatusBarPadding() -> addStatusBarPadding
-    101:101:void addStatusBarPadding() -> addStatusBarPadding
-    103:103:void addStatusBarPadding() -> addStatusBarPadding
-    119:119:int getNavigationBarHeight() -> getNavigationBarHeight
-    121:121:int getNavigationBarHeight() -> getNavigationBarHeight
-    110:110:int getStatusBarHeight() -> getStatusBarHeight
-    112:112:int getStatusBarHeight() -> getStatusBarHeight
-    127:127:de.schildbach.wallet.WalletApplication getWalletApplication() -> getWalletApplication
+    86:86:void addStatusBarPadding() -> addStatusBarPadding
+    110:110:de.schildbach.wallet.WalletApplication getWalletApplication() -> getWalletApplication
     47:47:void onCreate(android.os.Bundle) -> onCreate
     51:51:void onCreate(android.os.Bundle) -> onCreate
     59:59:void onCreate(android.os.Bundle) -> onCreate
     60:60:void onCreate(android.os.Bundle) -> onCreate
-    132:132:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    133:133:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    136:136:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    142:142:void setShowWhenLocked(boolean) -> setShowWhenLocked
-    143:143:void setShowWhenLocked(boolean) -> setShowWhenLocked
-    145:145:void setShowWhenLocked(boolean) -> setShowWhenLocked
-    147:147:void setShowWhenLocked(boolean) -> setShowWhenLocked
-    152:152:void startExternalDocument(android.net.Uri) -> startExternalDocument
-    154:154:void startExternalDocument(android.net.Uri) -> startExternalDocument
-    155:155:void startExternalDocument(android.net.Uri) -> startExternalDocument
+    115:115:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    116:116:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    119:119:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    125:125:void setShowWhenLocked(boolean) -> setShowWhenLocked
+    126:126:void setShowWhenLocked(boolean) -> setShowWhenLocked
+    128:128:void setShowWhenLocked(boolean) -> setShowWhenLocked
+    130:130:void setShowWhenLocked(boolean) -> setShowWhenLocked
+    135:135:void startExternalDocument(android.net.Uri) -> startExternalDocument
+    137:137:void startExternalDocument(android.net.Uri) -> startExternalDocument
+    138:138:void startExternalDocument(android.net.Uri) -> startExternalDocument
 de.schildbach.wallet.ui.AbstractWalletActivity$$ExternalSyntheticApiModelOutline0 -> de.schildbach.wallet.ui.AbstractWalletActivity$$ExternalSyntheticApiModelOutline0:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
@@ -135014,33 +135002,57 @@ de.schildbach.wallet.ui.UseDogeActivity$WebAppInterface$$ExternalSyntheticLambda
       # {"id":"com.android.tools.r8.synthesized"}
 de.schildbach.wallet.ui.WalletActionsFragment -> de.schildbach.wallet.ui.WalletActionsFragment:
 # {"id":"sourceFile","fileName":"WalletActionsFragment.java"}
-    56:56:void lambda$onCreateView$1(android.view.View) -> $r8$lambda$CreWUZQHgTzcCJ6FFWFZ3uRg9ec
+    70:70:void lambda$onCreateView$3(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> $r8$lambda$2gt1V4bHd1YAu8ah6ycbirnspC4
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletActionsFragment;Landroid/view/View;Landroid/widget/Button;Landroid/widget/Button;Landroid/view/View;)V"}
+    54:54:void lambda$onCreateView$1(android.view.View) -> $r8$lambda$CreWUZQHgTzcCJ6FFWFZ3uRg9ec
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletActionsFragment;Landroid/view/View;)V"}
-    56:56:void lambda$onCreateView$1(android.view.View) -> $r8$lambda$CreWUZQHgTzcCJ6FFWFZ3uRg9ec
-    59:59:void lambda$onCreateView$2(android.view.View) -> $r8$lambda$E7xHm-8vuATheeNZ6LrtQkHIEmc
+    54:54:void lambda$onCreateView$1(android.view.View) -> $r8$lambda$CreWUZQHgTzcCJ6FFWFZ3uRg9ec
+    57:57:void lambda$onCreateView$2(android.view.View) -> $r8$lambda$E7xHm-8vuATheeNZ6LrtQkHIEmc
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletActionsFragment;Landroid/view/View;)V"}
-    59:59:void lambda$onCreateView$2(android.view.View) -> $r8$lambda$E7xHm-8vuATheeNZ6LrtQkHIEmc
-    53:53:void lambda$onCreateView$0(android.view.View) -> $r8$lambda$akEISYGGmgw_lnG6D8ZedKEUN6s
+    57:57:void lambda$onCreateView$2(android.view.View) -> $r8$lambda$E7xHm-8vuATheeNZ6LrtQkHIEmc
+    51:51:void lambda$onCreateView$0(android.view.View) -> $r8$lambda$akEISYGGmgw_lnG6D8ZedKEUN6s
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletActionsFragment;Landroid/view/View;)V"}
-    53:53:void lambda$onCreateView$0(android.view.View) -> $r8$lambda$akEISYGGmgw_lnG6D8ZedKEUN6s
-    38:38:void <init>() -> <init>
-    43:43:void onAttach(android.content.Context) -> onAttach
-    44:44:void onAttach(android.content.Context) -> onAttach
+    51:51:void lambda$onCreateView$0(android.view.View) -> $r8$lambda$akEISYGGmgw_lnG6D8ZedKEUN6s
+    138:138:void lambda$onResume$4(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> $r8$lambda$xLSpGJpPQo3r23Y-tN3FADwZt8U
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lde/schildbach/wallet/ui/WalletActionsFragment;Landroid/view/View;Landroid/widget/Button;Landroid/widget/Button;Landroid/view/View;)V"}
+    36:36:void <init>() -> <init>
+    36:36:void access$000(de.schildbach.wallet.ui.WalletActionsFragment,android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> access$000
+    77:77:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    82:82:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    83:83:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    84:84:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    107:107:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    108:108:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    110:110:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    111:111:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    116:116:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    117:117:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    119:119:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    120:120:void checkAndHideTextIfNeeded(android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> checkAndHideTextIfNeeded
+    41:41:void onAttach(android.content.Context) -> onAttach
+    42:42:void onAttach(android.content.Context) -> onAttach
+    48:48:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     50:50:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    52:52:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    51:51:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     53:53:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    55:55:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    54:54:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     56:56:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    57:57:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     58:58:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    59:59:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    60:60:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    67:67:void onResume() -> onResume
-    69:69:void onResume() -> onResume
-    73:73:void updateView() -> updateView
-    75:75:void updateView() -> updateView
-    76:76:void updateView() -> updateView
-    77:77:void updateView() -> updateView
-    78:78:void updateView() -> updateView
+    62:62:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    70:70:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    127:127:void onResume() -> onResume
+    129:129:void onResume() -> onResume
+    132:132:void onResume() -> onResume
+    134:134:void onResume() -> onResume
+    135:135:void onResume() -> onResume
+    136:136:void onResume() -> onResume
+    138:138:void onResume() -> onResume
+    144:144:void updateView() -> updateView
+    146:146:void updateView() -> updateView
+    147:147:void updateView() -> updateView
+    148:148:void updateView() -> updateView
+    149:149:void updateView() -> updateView
 de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda0 -> de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda0:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
@@ -135068,6 +135080,44 @@ de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda2 -> de.sc
       # {"id":"com.android.tools.r8.synthesized"}
     0:0:void onClick(android.view.View) -> onClick
       # {"id":"com.android.tools.r8.synthesized"}
+de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda3 -> de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda3:
+# {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
+# {"id":"com.android.tools.r8.synthesized"}
+    de.schildbach.wallet.ui.WalletActionsFragment de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$bdd5341b0bf0b9ce1a4d227d19af7ea6d0c6b8a9751d64d526a77d6f4acee453$3.f$0 -> f$0
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.view.View de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$bdd5341b0bf0b9ce1a4d227d19af7ea6d0c6b8a9751d64d526a77d6f4acee453$3.f$1 -> f$1
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.widget.Button de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$bdd5341b0bf0b9ce1a4d227d19af7ea6d0c6b8a9751d64d526a77d6f4acee453$3.f$2 -> f$2
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.widget.Button de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$bdd5341b0bf0b9ce1a4d227d19af7ea6d0c6b8a9751d64d526a77d6f4acee453$3.f$3 -> f$3
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.view.View de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$bdd5341b0bf0b9ce1a4d227d19af7ea6d0c6b8a9751d64d526a77d6f4acee453$3.f$4 -> f$4
+      # {"id":"com.android.tools.r8.synthesized"}
+    0:0:void <init>(de.schildbach.wallet.ui.WalletActionsFragment,android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> <init>
+      # {"id":"com.android.tools.r8.synthesized"}
+    0:0:void run() -> run
+      # {"id":"com.android.tools.r8.synthesized"}
+de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda4 -> de.schildbach.wallet.ui.WalletActionsFragment$$ExternalSyntheticLambda4:
+# {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
+# {"id":"com.android.tools.r8.synthesized"}
+    de.schildbach.wallet.ui.WalletActionsFragment de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$e09b89fbce0561ad6c5cfb521394948b6ff012ba384a5cbefccd7f1c76175511$0.f$0 -> f$0
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.view.View de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$e09b89fbce0561ad6c5cfb521394948b6ff012ba384a5cbefccd7f1c76175511$0.f$1 -> f$1
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.widget.Button de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$e09b89fbce0561ad6c5cfb521394948b6ff012ba384a5cbefccd7f1c76175511$0.f$2 -> f$2
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.widget.Button de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$e09b89fbce0561ad6c5cfb521394948b6ff012ba384a5cbefccd7f1c76175511$0.f$3 -> f$3
+      # {"id":"com.android.tools.r8.synthesized"}
+    android.view.View de.schildbach.wallet.ui.WalletActionsFragment$$InternalSyntheticLambda$1$e09b89fbce0561ad6c5cfb521394948b6ff012ba384a5cbefccd7f1c76175511$0.f$4 -> f$4
+      # {"id":"com.android.tools.r8.synthesized"}
+    0:0:void <init>(de.schildbach.wallet.ui.WalletActionsFragment,android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> <init>
+      # {"id":"com.android.tools.r8.synthesized"}
+    0:0:void run() -> run
+      # {"id":"com.android.tools.r8.synthesized"}
+de.schildbach.wallet.ui.WalletActionsFragment$1 -> de.schildbach.wallet.ui.WalletActionsFragment$1:
+# {"id":"sourceFile","fileName":"WalletActionsFragment.java"}
+    62:62:void <init>(de.schildbach.wallet.ui.WalletActionsFragment,android.view.View,android.widget.Button,android.widget.Button,android.view.View) -> <init>
+    65:65:void onGlobalLayout() -> onGlobalLayout
 de.schildbach.wallet.ui.WalletActivity -> de.schildbach.wallet.ui.WalletActivity:
 # {"id":"sourceFile","fileName":"WalletActivity.java"}
     400:400:void lambda$onResume$8() -> $r8$lambda$-BKaqbqL679W4b5G0Gbeu9DYcTU

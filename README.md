@@ -16,10 +16,10 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
   </div>
 </div>
 
-### 🌐 More Information & Documentation
+###    More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 90
+## 🚀 Latest Updates - Version 91
 
 ### 📱 New Features
 - **Use Doge**: Discover stores and businesses that accept Dogecoin near you!
@@ -443,7 +443,7 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: v1.0 (Version Code: 88)
+- **Current Version**: v1.0 (Version Code: 91)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Status**: Available now on Google Play Store
@@ -599,7 +599,7 @@ After building, you'll find:
 
 #### **Current Build Configuration**:
 - **Version Name**: 1.0
-- **Version Code**: 86
+- **Version Code**: 91
 - **Target SDK**: 35
 - **Minify**: Enabled (R8)
 - **Signing**: Release keystore configured
