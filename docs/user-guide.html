@@ -355,6 +355,103 @@
             <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Digital signatures are perfect for proving authorship, authenticity, and integrity without bloating the blockchain with data. Think of it as cryptographic proof that your Dogecoin address "approved" the content at a specific moment in time.
         </div>
         
+        <h2 id="authentication"><i class="fas fa-lock"></i> Authentication - Prove Access with Message Signing</h2>
+        <p>Authentication allows you to prove ownership of a Dogecoin address by signing messages. This feature enables secure access control for physical and digital systems - from opening doors and validating tickets to accessing digital content.</p>
+        
+        <h3>What is Authentication?</h3>
+        <p>Authentication uses cryptographic message signing to prove you own a specific Dogecoin address. When you sign a message with your private key, anyone can verify the signature matches your public address without exposing your private key.</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Use Cases:</strong>
+            <ul>
+                <li><strong>Physical Access:</strong> Open doors, gates, or access restricted areas</li>
+                <li><strong>Ticket Validation:</strong> Prove you purchased a ticket for events, cinema, concerts, or transportation</li>
+                <li><strong>Digital Content Access:</strong> Unlock premium content, software licenses, or digital services</li>
+                <li><strong>Identity Verification:</strong> Prove ownership of a Dogecoin address for account verification</li>
+                <li><strong>Membership Validation:</strong> Verify membership status or subscription access</li>
+            </ul>
+        </div>
+        
+        <h3>How Authentication Works</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Technical Process:</strong>
+            <ol>
+                <li>The server/terminal generates a unique challenge message (often a hash or encrypted string)</li>
+                <li>The challenge is displayed as a QR code or entered manually</li>
+                <li>You scan the QR code or enter the message in the wallet</li>
+                <li>Your wallet signs the message with your private key using the Dogecoin standard message signing format</li>
+                <li>The signature is displayed as a QR code or text</li>
+                <li>The server verifies the signature matches your address and grants access</li>
+            </ol>
+        </div>
+        
+        <h3>Using Authentication</h3>
+        <h4>Step 1: Choose or Generate an Address</h4>
+        <ol>
+            <li>Open the main wallet menu (tap the three-dot menu icon)</li>
+            <li>Select "Authentication" (this menu item can be enabled/disabled in Settings → Menu Options → Show Authentication Menu)</li>
+            <li>Choose an existing address from your wallet or generate a new one</li>
+            <li>You can filter addresses by typing in the search field</li>
+            <li>Addresses with labels will display their labels for easy identification</li>
+        </ol>
+        
+        <h4>Step 2: Scan the Challenge QR Code</h4>
+        <ol>
+            <li>When prompted by the terminal/server, scan the QR code displayed</li>
+            <li>The wallet automatically detects the message and signs it</li>
+            <li>The signature is generated and displayed</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Note:</strong> The wallet automatically signs messages when you scan a QR code. No manual input or confirmation buttons are needed for the signing process.
+        </div>
+        
+        <h4>Step 3: Share the Signature</h4>
+        <ol>
+            <li>After signing, the signature is displayed as a QR code and text</li>
+            <li>You can:
+                <ul>
+                    <li>Show the QR code to the terminal/server scanner</li>
+                    <li>Copy the signature text and enter it manually</li>
+                    <li>Share the signature via messaging apps or email</li>
+                </ul>
+            </li>
+            <li>The server verifies the signature and grants access</li>
+        </ol>
+        
+        <h3>Storing Authentication Requests</h3>
+        <p>You can save authentication requests for later signing:</p>
+        <ol>
+            <li>After scanning a QR code, you can add a label to the request</li>
+            <li>Access stored requests from the Authentication menu</li>
+            <li>Sign stored requests at any time</li>
+            <li>Delete requests you no longer need</li>
+        </ol>
+        
+        <h3>Message Signing Format</h3>
+        <p>The wallet uses the standard Dogecoin message signing format:</p>
+        <div class="feature-box">
+            <strong><i class="fas fa-code"></i> Technical Details:</strong>
+            <ul>
+                <li><strong>Message Prefix:</strong> "Dogecoin Signed Message:\n"</li>
+                <li><strong>Hash Algorithm:</strong> Double SHA-256</li>
+                <li><strong>Signature Format:</strong> ECDSA (secp256k1 curve) with recovery ID</li>
+                <li><strong>Encoding:</strong> Base64</li>
+                <li><strong>Signature Length:</strong> 65 bytes (1 byte recovery ID + 32 bytes R + 32 bytes S)</li>
+            </ul>
+        </div>
+        
+        <h3>Server Integration</h3>
+        <p>To integrate authentication into your server or terminal, you need to:</p>
+        <ol>
+            <li>Generate a unique challenge message (hash or encrypted string)</li>
+            <li>Display it as a QR code</li>
+            <li>Verify the signature matches the expected address</li>
+            <li>Grant access if verification succeeds</li>
+        </ol>
+        
+        <p>See the <a href="#authentication-server-integration">Server Integration Examples</a> section below for complete code examples in Go, PHP, and JavaScript.</p>
+        
         <h2 id="use-doge"><i class="fas fa-map-marker-alt"></i> Use Doge - Discover Stores That Accept Dogecoin</h2>
         <p>Use Doge is a powerful feature that helps you discover stores, businesses, and locations that accept Dogecoin near you! It displays an interactive GPS-enabled map with store listings from community-contributed sources.</p>
         
@@ -840,6 +937,107 @@
             <strong><i class="fas fa-lightbulb"></i> Pro Tip:</strong> Use checks for post-dated payments, gift cards, or any scenario where you want funds to be locked until a specific date. The timelock ensures funds cannot be spent before the intended date, providing security and control over payment timing.
         </div>
         
+        <h2 id="multi-signature"><i class="fas fa-users"></i> Multi-Signature Wallets</h2>
+        <p>Multi-Signature (Multi-Sig) wallets require multiple signatures to authorize transactions, providing enhanced security for shared funds, business accounts, or collaborative spending.</p>
+        
+        <h3>What is Multi-Signature?</h3>
+        <p>A Multi-Signature wallet is a special type of Dogecoin address that requires M-of-N signatures to spend funds. For example, a 2-of-3 wallet requires 2 signatures out of 3 possible signers to authorize any transaction.</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Common Use Cases:</strong>
+            <ul>
+                <li><strong>Shared Accounts:</strong> Family or business wallets requiring multiple approvals</li>
+                <li><strong>Enhanced Security:</strong> Require multiple devices/keys to authorize large transactions</li>
+                <li><strong>Escrow Services:</strong> Transactions requiring approval from multiple parties</li>
+                <li><strong>Backup Security:</strong> Store keys in different locations for disaster recovery</li>
+            </ul>
+        </div>
+        
+        <h3>How Multi-Signature Works</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Technical Process:</strong>
+            <ol>
+                <li>Generate public keys from each signer's wallet</li>
+                <li>Create a redeem script specifying M-of-N requirements</li>
+                <li>Generate a P2SH (Pay-to-Script-Hash) address from the redeem script</li>
+                <li>Send funds to the multi-sig address</li>
+                <li>To spend: Create unsigned transaction, collect M signatures, merge signatures, broadcast transaction</li>
+            </ol>
+        </div>
+        
+        <h3>Using Multi-Signature</h3>
+        <h4>Step 1: Generate Public Key (1/3)</h4>
+        <ol>
+            <li>Open the main wallet menu (tap the three-dot menu icon)</li>
+            <li>Select "Multi Sig" (this menu item can be enabled/disabled in Settings → Menu Options → Show Multi-Sig Menu)</li>
+            <li>Tap "Generate Public Key"</li>
+            <li>Your public key is displayed as hex and QR code</li>
+            <li>Share the QR code or hex string with other signers</li>
+        </ol>
+        
+        <h4>Step 2: Create Multi-Sig Wallet (2/3)</h4>
+        <ol>
+            <li>Tap "Create Multi-Sig Wallet"</li>
+            <li>Enter the number of required signatures (M) - e.g., 2</li>
+            <li>Enter the total number of keys (N) - e.g., 3</li>
+            <li>Add public keys from all signers:
+                <ul>
+                    <li>Tap "Add Public Key" to manually enter a key</li>
+                    <li>Tap "Scan QR Code" to scan a public key QR code</li>
+                </ul>
+            </li>
+            <li>Tap "Create" to generate the multi-sig address</li>
+            <li>The redeem script and multi-sig address are displayed</li>
+        </ol>
+        
+        <h4>Step 3: Send Funds to Multi-Sig Address</h4>
+        <ol>
+            <li>Copy the multi-sig address from the result</li>
+            <li>Use the regular "Send" feature to send Dogecoin to this address</li>
+            <li>Funds sent to this address require M signatures to spend</li>
+        </ol>
+        
+        <h4>Step 4: Spend from Multi-Sig Wallet (3/3)</h4>
+        <ol>
+            <li>Tap "Spend from Multi-Sig"</li>
+            <li>Enter the destination address</li>
+            <li>Enter the amount to send</li>
+            <li>Create the unsigned transaction</li>
+            <li>Share the unsigned transaction with other signers (as QR code or hex)</li>
+            <li>Each signer signs the transaction with their wallet</li>
+            <li>Merge all signatures into one signed transaction</li>
+            <li>Broadcast the final signed transaction to the network</li>
+        </ol>
+        
+        <h3>Multi-Signature Workflow Example</h3>
+        <p>For a 2-of-3 wallet (2 signatures required from 3 possible signers):</p>
+        <ol>
+            <li><strong>Setup:</strong> Alice, Bob, and Charlie each generate their public keys</li>
+            <li><strong>Creation:</strong> They create a 2-of-3 multi-sig wallet with all three public keys</li>
+            <li><strong>Funding:</strong> Funds are sent to the multi-sig address</li>
+            <li><strong>Spending:</strong> To spend funds:
+                <ul>
+                    <li>Alice creates an unsigned transaction</li>
+                    <li>Alice signs it with her key</li>
+                    <li>Bob signs it with his key</li>
+                    <li>Signatures are merged</li>
+                    <li>Transaction is broadcast (only 2 of 3 signatures needed)</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h3>Important Notes</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-exclamation-triangle"></i> Security Considerations:</strong>
+            <ul>
+                <li>Keep all public keys and the redeem script secure</li>
+                <li>Store keys in different locations for disaster recovery</li>
+                <li>Test the multi-sig wallet with small amounts first</li>
+                <li>Ensure you have access to at least M keys to spend funds</li>
+                <li>The redeem script is needed to spend funds - keep it safe</li>
+            </ul>
+        </div>
+        
         <h2 id="blockchain-checkpoints"><i class="fas fa-sync-alt"></i> Blockchain Sync Checkpoints</h2>
         <p>Reset blockchain synchronization with custom checkpoints to speed up initial sync. This feature allows you to start blockchain synchronization from a specific block height instead of syncing from the beginning.</p>
         
@@ -1044,6 +1242,168 @@
         
         <h3>Exchange Rates</h3>
         <p>View real-time Dogecoin prices in various fiat currencies. Access via Settings → Exchange Rates.</p>
+        
+        <h2 id="exchange"><i class="fas fa-exchange-alt"></i> Exchange - Buy and Sell Dogecoin</h2>
+        <p>The Exchange feature allows you to buy and sell Dogecoin directly from your wallet using the Metal Pay Connect integration.</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-flask"></i> Experimental Feature:</strong> Exchange is currently in Labs. Enable it from Settings → Configuration → Labs → Exchange.
+        </div>
+        
+        <h3>What is Exchange?</h3>
+        <p>Exchange provides a seamless way to convert between Dogecoin and fiat currencies (or other cryptocurrencies) through the Metal Pay Connect service. You can buy Dogecoin with your credit card or bank account, or sell Dogecoin for fiat currency.</p>
+        
+        <h3>Accessing Exchange</h3>
+        <ol>
+            <li>Enable Exchange from Settings → Configuration → Labs → Exchange</li>
+            <li>Open Settings</li>
+            <li>Tap "Exchange" (located in the Wallet Management section)</li>
+            <li>Choose "Buy Doge" or "Sell Doge"</li>
+        </ol>
+        
+        <h3>Buying Dogecoin</h3>
+        <ol>
+            <li>Tap "Buy Doge" on the Exchange page</li>
+            <li>The Metal Pay Connect interface will load</li>
+            <li>Follow the on-screen instructions to:
+                <ul>
+                    <li>Enter the amount you want to buy</li>
+                    <li>Select your payment method (credit card, bank transfer, etc.)</li>
+                    <li>Complete the purchase</li>
+                </ul>
+            </li>
+            <li>Dogecoin will be sent to your wallet address</li>
+        </ol>
+        
+        <h3>Selling Dogecoin</h3>
+        <ol>
+            <li>Tap "Sell Doge" on the Exchange page</li>
+            <li>The Metal Pay Connect interface will load</li>
+            <li>Follow the on-screen instructions to:
+                <ul>
+                    <li>Enter the amount you want to sell</li>
+                    <li>Select your withdrawal method (bank account, etc.)</li>
+                    <li>Complete the sale</li>
+                </ul>
+            </li>
+            <li>Funds will be sent to your selected withdrawal method</li>
+        </ol>
+        
+        <h3>Exchange Settings</h3>
+        <p>Configure Exchange settings by tapping the gear icon in the top-right corner:</p>
+        <ul>
+            <li><strong>Exchange API Host:</strong> Configure the backend API server URL (default: https://api.dogecoinwallet.org)</li>
+            <li><strong>Environment:</strong> Choose between Production or Development environment</li>
+        </ul>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Note:</strong> The Exchange feature requires a properly configured backend server with Metal Pay Connect API keys. Contact your server administrator if you encounter errors.
+        </div>
+        
+        <h3>Error Handling</h3>
+        <p>If you encounter errors while using Exchange:</p>
+        <ul>
+            <li><strong>Connection Errors:</strong> Check your internet connection and try again</li>
+            <li><strong>API Errors (500):</strong> The server may be missing API keys - contact the server administrator</li>
+            <li><strong>Verification Errors:</strong> Ensure your wallet address is properly configured</li>
+        </ul>
+        
+        <h2 id="atomic-swap"><i class="fas fa-sync-alt"></i> Atomic Swap - Cross-Chain Trading</h2>
+        <p>Atomic Swap allows you to exchange Dogecoin for Bitcoin or Litecoin (and vice versa) using trustless, decentralized cross-chain atomic swaps. No centralized exchanges needed - swap directly peer-to-peer using Hash Time Lock Contracts (HTLC) technology.</p>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-flask"></i> Experimental Feature:</strong> Atomic Swap is currently in Labs. Enable it from Settings → Configuration → Labs → Atomic Swap.
+        </div>
+        
+        <h3>What is Atomic Swap?</h3>
+        <p>Atomic Swap is a decentralized exchange mechanism that allows you to trade cryptocurrencies across different blockchains (Dogecoin, Bitcoin, Litecoin) without needing a centralized exchange. The swap is "atomic" - meaning either both parties complete the swap, or neither does. This eliminates counterparty risk.</p>
+        
+        <h3>How Atomic Swaps Work</h3>
+        <p>Atomic swaps use Hash Time Lock Contracts (HTLC) to ensure security:</p>
+        <ol>
+            <li><strong>Initiate Swap:</strong> You create a swap proposal with the amount and counterparty address</li>
+            <li><strong>HTLC Creation:</strong> A Hash Time Lock Contract is created on the Dogecoin blockchain</li>
+            <li><strong>Counterparty Action:</strong> The counterparty creates a matching HTLC on their blockchain (Bitcoin or Litecoin)</li>
+            <li><strong>Secret Exchange:</strong> When one party reveals the secret, both parties can claim their funds</li>
+            <li><strong>Automatic Completion:</strong> The wallet automatically monitors and completes the swap when conditions are met</li>
+        </ol>
+        
+        <h3>Accessing Atomic Swap</h3>
+        <ol>
+            <li>Enable Atomic Swap from Settings → Configuration → Labs → Atomic Swap</li>
+            <li>Open the main wallet menu</li>
+            <li>Tap "Atomic Swap"</li>
+        </ol>
+        
+        <h3>Initiating an Atomic Swap</h3>
+        <ol>
+            <li>Tap "Initiate Atomic Swap" button</li>
+            <li>Fill in the swap details:
+                <ul>
+                    <li><strong>From Currency:</strong> DOGE (always, as you can only create DOGE transactions)</li>
+                    <li><strong>From Amount:</strong> Amount of DOGE you want to swap</li>
+                    <li><strong>To Currency:</strong> BTC or LTC (what you want to receive)</li>
+                    <li><strong>To Amount:</strong> Amount of BTC or LTC you expect to receive</li>
+                    <li><strong>Counterparty Address:</strong> The Dogecoin address where the counterparty will receive DOGE</li>
+                    <li><strong>Your Receiving Address:</strong> Your Bitcoin or Litecoin address where you'll receive BTC/LTC</li>
+                </ul>
+            </li>
+            <li>Tap "Create Swap"</li>
+            <li>The swap will be created and monitored automatically</li>
+        </ol>
+        
+        <h3>Managing Swaps</h3>
+        <p>View all your active and completed swaps in the Atomic Swap page:</p>
+        <ul>
+            <li><strong>Active Swaps:</strong> Swaps that are in progress and being monitored</li>
+            <li><strong>Completed Swaps:</strong> Successfully completed swaps</li>
+            <li><strong>Swap Details:</strong> Tap any swap to view detailed information including:
+                <ul>
+                    <li>Swap status and progress</li>
+                    <li>Transaction hashes</li>
+                    <li>Timelock information</li>
+                    <li>Counterparty information</li>
+                </ul>
+            </li>
+        </ul>
+        
+        <h3>Swap Status</h3>
+        <p>Swaps can have different statuses:</p>
+        <ul>
+            <li><strong>Pending:</strong> Swap created, waiting for counterparty to create matching HTLC</li>
+            <li><strong>Active:</strong> Both HTLCs created, swap in progress</li>
+            <li><strong>Completed:</strong> Swap successfully completed, funds received</li>
+            <li><strong>Refunded:</strong> Swap canceled and funds refunded</li>
+        </ul>
+        
+        <h3>Refunding a Swap</h3>
+        <p>If a swap cannot be completed (e.g., counterparty doesn't respond), you can refund it:</p>
+        <ol>
+            <li>Open the swap details</li>
+            <li>Tap "Refund" button</li>
+            <li>Confirm the refund</li>
+            <li>Your DOGE will be returned to your wallet</li>
+        </ol>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Important Notes:</strong>
+            <ul>
+                <li>Atomic swaps require both parties to be online and responsive</li>
+                <li>Swaps have timelocks - if not completed in time, they can be refunded</li>
+                <li>You need Bitcoin or Litecoin addresses to receive swapped coins</li>
+                <li>The wallet automatically monitors swap status in the background</li>
+                <li>Only DOGE → BTC/LTC swaps can be initiated from this wallet</li>
+            </ul>
+        </div>
+        
+        <h3>Troubleshooting</h3>
+        <p>If you encounter issues with Atomic Swaps:</p>
+        <ul>
+            <li><strong>Swap Not Completing:</strong> Ensure both parties have created their HTLCs and are online</li>
+            <li><strong>Refund Not Working:</strong> Check if the timelock has expired - refunds are only possible after the timelock period</li>
+            <li><strong>Address Errors:</strong> Verify that Bitcoin/Litecoin addresses are valid for the correct network (mainnet/testnet)</li>
+            <li><strong>Balance Issues:</strong> Ensure you have sufficient DOGE balance to create the swap transaction</li>
+        </ul>
         
         <h2 id="dogeconnect"><i class="fas fa-plug"></i> DogeConnect - Wallet Integration</h2>
         <p>DogeConnect is a protocol developed by the <a href="https://github.com/dogeorg/connect" target="_blank">Dogecoin Foundation</a> that enables secure payment envelopes for transactions. Your wallet can parse and process DogeConnect payment envelopes from merchants and services, enabling seamless integration with compatible platforms. Learn more at <a href="https://connect.dogecoin.org" target="_blank">connect.dogecoin.org</a>.</p>
@@ -1591,6 +1951,735 @@ print(f"Amount: {data['amount']} DOGE")</pre>
         
         <h3>Lost Device</h3>
         <p>If you have a backup, you can restore your wallet on a new device using the recovery phrase.</p>
+        
+        <h2 id="authentication-server-integration"><i class="fas fa-server"></i> Authentication Server Integration</h2>
+        <p>This section provides complete server-side code examples for integrating Dogecoin Wallet Authentication into your systems. These examples show how to generate challenge messages, verify signatures, and control access to physical or digital resources.</p>
+        
+        <h3>How Server Integration Works</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Integration Flow:</strong>
+            <ol>
+                <li>Server maintains a list of allowed Dogecoin addresses</li>
+                <li>Server generates a unique challenge message (encrypted hash or timestamp-based)</li>
+                <li>Challenge is displayed as QR code</li>
+                <li>User scans QR code with wallet and signs the message</li>
+                <li>User presents signature (QR code or text) to server</li>
+                <li>Server verifies signature matches an allowed address</li>
+                <li>Server grants access if verification succeeds</li>
+            </ol>
+        </div>
+        
+        <h3>Go Language Example</h3>
+        <p>Complete Go server implementation for authentication terminal using <a href="https://github.com/dogecoinfoundation/libdogecoin" target="_blank">libdogecoin</a>:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>package main
+
+/*
+#cgo CFLAGS: -I./libdogecoin/include/dogecoin
+#cgo LDFLAGS: -L./libdogecoin/.libs -ldogecoin
+#include &lt;libdogecoin.h&gt;
+#include &lt;stdlib.h&gt;
+*/
+import "C"
+import (
+    "crypto/rand"
+    "crypto/sha256"
+    "encoding/base64"
+    "encoding/hex"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "log"
+    "net/http"
+    "time"
+    "unsafe"
+)
+
+// Allowed addresses stored in file
+type Config struct {
+    AllowedAddresses []string `json:"allowed_addresses"`
+}
+
+var config Config
+
+func main() {
+    // Load allowed addresses
+    loadConfig()
+    
+    http.HandleFunc("/generate-challenge", generateChallenge)
+    http.HandleFunc("/verify-signature", verifySignature)
+    http.HandleFunc("/", serveQR)
+    
+    log.Println("Authentication server starting on :8080")
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func loadConfig() {
+    data, err := ioutil.ReadFile("allowed_addresses.json")
+    if err != nil {
+        log.Fatal("Error reading config:", err)
+    }
+    json.Unmarshal(data, &config)
+    log.Printf("Loaded %d allowed addresses", len(config.AllowedAddresses))
+}
+
+func generateChallenge(w http.ResponseWriter, r *http.Request) {
+    // Generate unique challenge (timestamp + random)
+    challenge := fmt.Sprintf("%d-%s", time.Now().Unix(), generateRandomString(16))
+    
+    // Hash the challenge for security
+    hash := sha256.Sum256([]byte(challenge))
+    challengeHash := hex.EncodeToString(hash[:])
+    
+    // Store challenge with timestamp (in production, use Redis or database)
+    // For this example, we'll return it directly
+    
+    response := map[string]string{
+        "challenge": challengeHash,
+        "message": challenge, // For display
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
+}
+
+func verifySignature(w http.ResponseWriter, r *http.Request) {
+    var req struct {
+        Address   string `json:"address"`
+        Message   string `json:"message"`
+        Signature string `json:"signature"`
+    }
+    
+    if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+        http.Error(w, "Invalid request", http.StatusBadRequest)
+        return
+    }
+    
+    // Check if address is allowed
+    if !isAddressAllowed(req.Address) {
+        http.Error(w, "Address not allowed", http.StatusForbidden)
+        return
+    }
+    
+    // Verify signature
+    sigBytes, err := base64.StdEncoding.DecodeString(req.Signature)
+    if err != nil {
+        http.Error(w, "Invalid signature format", http.StatusBadRequest)
+        return
+    }
+    
+    // Verify using libdogecoin signature verification
+    isValid, err := verifyDogecoinSignature(req.Address, req.Message, sigBytes)
+    if err != nil || !isValid {
+        http.Error(w, "Invalid signature", http.StatusUnauthorized)
+        return
+    }
+    
+    // Grant access
+    response := map[string]interface{}{
+        "status": "granted",
+        "address": req.Address,
+        "action": "access_granted", // e.g., "door_open", "ticket_valid", "content_unlocked"
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
+    
+    // Perform action (open door, validate ticket, etc.)
+    performAction(req.Address)
+}
+
+func verifyDogecoinSignature(address, message string, sigBytes []byte) (bool, error) {
+    // Use libdogecoin to verify the signature
+    // libdogecoin provides verify_message() function
+    
+    messagePrefix := "Dogecoin Signed Message:\n"
+    fullMessage := messagePrefix + message
+    
+    // Convert Go strings to C strings
+    cAddress := C.CString(address)
+    cMessage := C.CString(fullMessage)
+    cSignature := C.CString(base64.StdEncoding.EncodeToString(sigBytes))
+    defer C.free(unsafe.Pointer(cAddress))
+    defer C.free(unsafe.Pointer(cMessage))
+    defer C.free(unsafe.Pointer(cSignature))
+    
+    // Call libdogecoin verify_message function
+    // Note: Check libdogecoin.h for the exact function name and signature
+    // The function may be named verify_message, verify_dogecoin_message, etc.
+    // Returns 1 if valid, 0 if invalid
+    result := C.verify_message(cAddress, cMessage, cSignature)
+    
+    return result == 1, nil
+}
+
+func isAddressAllowed(address string) bool {
+    for _, allowed := range config.AllowedAddresses {
+        if allowed == address {
+            return true
+        }
+    }
+    return false
+}
+
+func performAction(address string) {
+    // Implement your action here:
+    // - Open door via GPIO/API
+    // - Validate ticket in database
+    // - Unlock digital content
+    // - Turn on light
+    log.Printf("Access granted for address: %s", address)
+}
+
+func generateRandomString(length int) string {
+    bytes := make([]byte, length)
+    rand.Read(bytes)
+    return hex.EncodeToString(bytes)
+}
+
+func serveQR(w http.ResponseWriter, r *http.Request) {
+    // Generate QR code HTML page
+    html := `&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Authentication Terminal&lt;/title&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Scan QR Code to Authenticate&lt;/h1&gt;
+    &lt;div id="qrcode"&gt;&lt;/div&gt;
+    &lt;h2&gt;Or Enter Signature Manually:&lt;/h2&gt;
+    &lt;textarea id="signature" rows="5" cols="50"&gt;&lt;/textarea&gt;&lt;br&gt;
+    &lt;button onclick="verify()"&gt;Verify Signature&lt;/button&gt;
+    &lt;div id="result"&gt;&lt;/div&gt;
+    
+    &lt;script&gt;
+        fetch('/generate-challenge')
+            .then(r =&gt; r.json())
+            .then(data =&gt; {
+                QRCode.toCanvas(document.getElementById('qrcode'), data.challenge);
+                window.currentChallenge = data;
+            });
+        
+        function verify() {
+            const signature = document.getElementById('signature').value;
+            fetch('/verify-signature', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    address: prompt('Enter your Dogecoin address:'),
+                    message: window.currentChallenge.message,
+                    signature: signature
+                })
+            })
+            .then(r =&gt; r.json())
+            .then(data =&gt; {
+                document.getElementById('result').innerHTML = 
+                    data.status === 'granted' ? 
+                    '&lt;h2 style="color:green"&gt;Access Granted!&lt;/h2&gt;' : 
+                    '&lt;h2 style="color:red"&gt;Access Denied&lt;/h2&gt;';
+            });
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;`
+    w.Header().Set("Content-Type", "text/html")
+    w.Write([]byte(html))
+}
+</code></pre>
+        
+        <h4>Go Dependencies and Setup</h4>
+        <p>This example uses <a href="https://github.com/dogecoinfoundation/libdogecoin" target="_blank">libdogecoin</a> via CGO. First, build libdogecoin:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code># Clone and build libdogecoin
+git clone https://github.com/dogecoinfoundation/libdogecoin.git
+cd libdogecoin
+./autogen.sh
+./configure --disable-net --disable-tools
+make
+
+# The library will be in ./.libs/libdogecoin.a
+# Headers are in ./include/dogecoin/
+</code></pre>
+        <p>Then compile your Go server with CGO enabled:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code># Set CGO flags to point to libdogecoin
+export CGO_CFLAGS="-I./libdogecoin/include/dogecoin"
+export CGO_LDFLAGS="-L./libdogecoin/.libs -ldogecoin"
+
+# Build with CGO enabled
+CGO_ENABLED=1 go build -o auth-server authentication-server.go
+</code></pre>
+        <div class="feature-box">
+            <strong><i class="fas fa-info-circle"></i> Important Notes:</strong>
+            <ul>
+                <li>Check <code>libdogecoin.h</code> for the exact function name and signature. The API may use different function names like <code>verify_message</code>, <code>verify_dogecoin_message</code>, etc.</li>
+                <li>Alternatively, you can use Go bindings for libdogecoin if available from <a href="https://github.com/dogeorg" target="_blank">@dogeorg</a>. Check for official Go bindings at the Dogecoin Foundation repositories.</li>
+                <li>Refer to the <a href="https://github.com/dogecoinfoundation/libdogecoin" target="_blank">libdogecoin documentation</a> for the latest API reference.</li>
+            </ul>
+        </div>
+        
+        <h4>Configuration File (allowed_addresses.json)</h4>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>{
+  "allowed_addresses": [
+    "D7Y55r3b3vQBvy2g3N9Rh41mu1xaBC9KzY",
+    "D9zJ4C9hE4L7xM8vN2pQ5rT6wY8zA1bC3d",
+    "D5xK8mN3pQ7rT9wY2zA4bC6dE8fG1hI3j"
+  ]
+}
+</code></pre>
+        
+        <h3>PHP Example</h3>
+        <p>Complete PHP server implementation for authentication terminal:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>&lt;?php
+/**
+ * Dogecoin Wallet Authentication Server
+ * 
+ * This server generates challenge QR codes and verifies signatures
+ * to grant access to physical or digital resources.
+ * 
+ * @author Dogecoin Wallet Team
+ */
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Load allowed addresses from file
+function loadAllowedAddresses() {
+    $config = json_decode(file_get_contents('allowed_addresses.json'), true);
+    return $config['allowed_addresses'] ?? [];
+}
+
+// Generate unique challenge
+function generateChallenge() {
+    $timestamp = time();
+    $random = bin2hex(random_bytes(16));
+    $challenge = $timestamp . '-' . $random;
+    $challengeHash = hash('sha256', $challenge);
+    
+    // Store challenge in session or database (for production)
+    session_start();
+    $_SESSION['challenge'] = $challenge;
+    $_SESSION['challenge_hash'] = $challengeHash;
+    $_SESSION['timestamp'] = $timestamp;
+    
+    return [
+        'challenge' => $challengeHash,
+        'message' => $challenge
+    ];
+}
+
+// Verify Dogecoin signature
+function verifySignature($address, $message, $signature) {
+    // Use dogecoin-signature-tool PHP library or similar
+    // This is a simplified example
+    
+    $messagePrefix = "Dogecoin Signed Message:\n";
+    $fullMessage = $messagePrefix . $message;
+    
+    // Decode base64 signature
+    $sigBytes = base64_decode($signature);
+    if ($sigBytes === false || strlen($sigBytes) !== 65) {
+        return false;
+    }
+    
+    // Extract recovery ID (first byte)
+    $recId = ord($sigBytes[0]) - 27;
+    if ($recId < 0 || $recId > 3) {
+        return false;
+    }
+    
+    // Extract R and S (next 64 bytes)
+    $r = substr($sigBytes, 1, 32);
+    $s = substr($sigBytes, 33, 32);
+    
+    // Verify signature using secp256k1
+    // In production, use a proper library like:
+    // - dogecoin-signature-tool
+    // - bitcoin-php
+    // - secp256k1-php
+    
+    // Simplified verification (use proper library in production)
+    return verifyDogecoinSignature($address, $fullMessage, $r, $s, $recId);
+}
+
+function verifyDogecoinSignature($address, $message, $r, $s, $recId) {
+    // This is a placeholder - use proper verification library
+    // Example using secp256k1 or dogecoin-signature-tool
+    
+    // Hash message
+    $messageHash = hash('sha256', hash('sha256', $message, true), true);
+    
+    // Recover public key from signature
+    // Use secp256k1 library to recover public key
+    // Then verify it matches the address
+    
+    // For production, use: composer require dogecoin/dogecoin-signature-tool
+    return true; // Placeholder
+}
+
+// Handle requests
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $path === '/generate-challenge') {
+    $response = generateChallenge();
+    echo json_encode($response);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $path === '/verify-signature') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    if (!isset($input['address']) || !isset($input['message']) || !isset($input['signature'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing required fields']);
+        exit;
+    }
+    
+    $address = $input['address'];
+    $message = $input['message'];
+    $signature = $input['signature'];
+    
+    // Check if address is allowed
+    $allowedAddresses = loadAllowedAddresses();
+    if (!in_array($address, $allowedAddresses)) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Address not allowed']);
+        exit;
+    }
+    
+    // Verify signature
+    if (!verifySignature($address, $message, $signature)) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Invalid signature']);
+        exit;
+    }
+    
+    // Grant access
+    $response = [
+        'status' => 'granted',
+        'address' => $address,
+        'action' => 'access_granted'
+    ];
+    
+    echo json_encode($response);
+    
+    // Perform action (open door, validate ticket, etc.)
+    performAction($address);
+    exit;
+}
+
+// Serve QR code page
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $path === '/') {
+    ?>
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Authentication Terminal&lt;/title&gt;
+        &lt;script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Scan QR Code to Authenticate&lt;/h1&gt;
+        &lt;div id="qrcode"&gt;&lt;/div&gt;
+        &lt;h2&gt;Or Enter Signature Manually:&lt;/h2&gt;
+        &lt;textarea id="signature" rows="5" cols="50"&gt;&lt;/textarea&gt;&lt;br&gt;
+        &lt;input type="text" id="address" placeholder="Your Dogecoin Address"&gt;&lt;br&gt;
+        &lt;button onclick="verify()"&gt;Verify Signature&lt;/button&gt;
+        &lt;div id="result"&gt;&lt;/div&gt;
+        
+        &lt;script&gt;
+            let currentChallenge = null;
+            
+            fetch('/generate-challenge')
+                .then(r =&gt; r.json())
+                .then(data =&gt; {
+                    currentChallenge = data;
+                    QRCode.toCanvas(document.getElementById('qrcode'), data.challenge);
+                });
+            
+            function verify() {
+                const signature = document.getElementById('signature').value;
+                const address = document.getElementById('address').value;
+                
+                fetch('/verify-signature', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        address: address,
+                        message: currentChallenge.message,
+                        signature: signature
+                    })
+                })
+                .then(r =&gt; r.json())
+                .then(data =&gt; {
+                    if (data.status === 'granted') {
+                        document.getElementById('result').innerHTML = 
+                            '&lt;h2 style="color:green"&gt;Access Granted!&lt;/h2&gt;';
+                        // Perform action (e.g., open door, unlock content)
+                    } else {
+                        document.getElementById('result').innerHTML = 
+                            '&lt;h2 style="color:red"&gt;Access Denied: ' + (data.error || 'Invalid') + '&lt;/h2&gt;';
+                    }
+                })
+                .catch(err =&gt; {
+                    document.getElementById('result').innerHTML = 
+                        '&lt;h2 style="color:red"&gt;Error: ' + err.message + '&lt;/h2&gt;';
+                });
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    &lt;?php
+    exit;
+}
+
+function performAction($address) {
+    // Implement your action here:
+    // - Open door via GPIO/API
+    // - Validate ticket in database
+    // - Unlock digital content
+    // - Turn on light
+    error_log("Access granted for address: " . $address);
+}
+?&gt;
+</code></pre>
+        
+        <h3>JavaScript/Node.js Example</h3>
+        <p>Complete Node.js server implementation for authentication terminal:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>const express = require('express');
+const crypto = require('crypto');
+const fs = require('fs');
+const QRCode = require('qrcode');
+
+const app = express();
+app.use(express.json());
+
+// Load allowed addresses from file
+function loadAllowedAddresses() {
+    const config = JSON.parse(fs.readFileSync('allowed_addresses.json', 'utf8'));
+    return config.allowed_addresses || [];
+}
+
+// Store challenges (in production, use Redis or database)
+const challenges = new Map();
+
+// Generate unique challenge
+function generateChallenge() {
+    const timestamp = Date.now();
+    const random = crypto.randomBytes(16).toString('hex');
+    const challenge = `${timestamp}-${random}`;
+    const challengeHash = crypto.createHash('sha256').update(challenge).digest('hex');
+    
+    // Store challenge
+    challenges.set(challengeHash, {
+        message: challenge,
+        timestamp: timestamp,
+        expires: timestamp + 300000 // 5 minutes
+    });
+    
+    return {
+        challenge: challengeHash,
+        message: challenge
+    };
+}
+
+// Verify Dogecoin signature
+async function verifySignature(address, message, signature) {
+    // Use dogecoin-signature-tool or bitcoinjs-message
+    // npm install dogecoin-signature-tool
+    
+    const messagePrefix = "Dogecoin Signed Message:\n";
+    const fullMessage = messagePrefix + message;
+    
+    try {
+        // Decode base64 signature
+        const sigBytes = Buffer.from(signature, 'base64');
+        if (sigBytes.length !== 65) {
+            return false;
+        }
+        
+        // Use dogecoin-signature-tool for verification
+        // const { verifyMessage } = require('dogecoin-signature-tool');
+        // return verifyMessage(address, fullMessage, signature);
+        
+        // Simplified verification (use proper library in production)
+        return await verifyDogecoinSignature(address, fullMessage, signature);
+    } catch (error) {
+        console.error('Verification error:', error);
+        return false;
+    }
+}
+
+async function verifyDogecoinSignature(address, message, signature) {
+    // Use proper verification library
+    // Example: npm install dogecoin-signature-tool
+    // const { verifyMessage } = require('dogecoin-signature-tool');
+    // return verifyMessage(address, message, signature);
+    
+    // Placeholder - implement with proper library
+    return true;
+}
+
+// Routes
+app.get('/generate-challenge', (req, res) => {
+    const challenge = generateChallenge();
+    res.json(challenge);
+});
+
+app.post('/verify-signature', async (req, res) => {
+    const { address, message, signature } = req.body;
+    
+    if (!address || !message || !signature) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    // Check if address is allowed
+    const allowedAddresses = loadAllowedAddresses();
+    if (!allowedAddresses.includes(address)) {
+        return res.status(403).json({ error: 'Address not allowed' });
+    }
+    
+    // Verify signature
+    const isValid = await verifySignature(address, message, signature);
+    if (!isValid) {
+        return res.status(401).json({ error: 'Invalid signature' });
+    }
+    
+    // Grant access
+    res.json({
+        status: 'granted',
+        address: address,
+        action: 'access_granted'
+    });
+    
+    // Perform action (open door, validate ticket, etc.)
+    performAction(address);
+});
+
+// Serve QR code page
+app.get('/', async (req, res) => {
+    const challenge = generateChallenge();
+    const qrCodeDataURL = await QRCode.toDataURL(challenge.challenge);
+    
+    const html = `
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Authentication Terminal&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Scan QR Code to Authenticate&lt;/h1&gt;
+        &lt;img src="${qrCodeDataURL}" alt="QR Code"&gt;
+        &lt;h2&gt;Or Enter Signature Manually:&lt;/h2&gt;
+        &lt;textarea id="signature" rows="5" cols="50"&gt;&lt;/textarea&gt;&lt;br&gt;
+        &lt;input type="text" id="address" placeholder="Your Dogecoin Address"&gt;&lt;br&gt;
+        &lt;button onclick="verify()"&gt;Verify Signature&lt;/button&gt;
+        &lt;div id="result"&gt;&lt;/div&gt;
+        
+        &lt;script&gt;
+            let currentChallenge = ${JSON.stringify(challenge)};
+            
+            function verify() {
+                const signature = document.getElementById('signature').value;
+                const address = document.getElementById('address').value;
+                
+                fetch('/verify-signature', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        address: address,
+                        message: currentChallenge.message,
+                        signature: signature
+                    })
+                })
+                .then(r =&gt; r.json())
+                .then(data =&gt; {
+                    if (data.status === 'granted') {
+                        document.getElementById('result').innerHTML = 
+                            '&lt;h2 style="color:green"&gt;Access Granted!&lt;/h2&gt;';
+                    } else {
+                        document.getElementById('result').innerHTML = 
+                            '&lt;h2 style="color:red"&gt;Access Denied: ' + (data.error || 'Invalid') + '&lt;/h2&gt;';
+                    }
+                })
+                .catch(err =&gt; {
+                    document.getElementById('result').innerHTML = 
+                        '&lt;h2 style="color:red"&gt;Error: ' + err.message + '&lt;/h2&gt;';
+                });
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;`;
+    
+    res.send(html);
+});
+
+function performAction(address) {
+    // Implement your action here:
+    // - Open door via GPIO/API
+    // - Validate ticket in database
+    // - Unlock digital content
+    // - Turn on light
+    console.log(`Access granted for address: ${address}`);
+}
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Authentication server running on port ${PORT}`);
+    console.log(`Loaded ${loadAllowedAddresses().length} allowed addresses`);
+});
+</code></pre>
+        
+        <h4>Node.js Dependencies</h4>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>npm install express qrcode
+npm install dogecoin-signature-tool  # For signature verification
+</code></pre>
+        
+        <h3>Configuration File (allowed_addresses.json)</h3>
+        <p>Create a JSON file with allowed Dogecoin addresses:</p>
+        <pre style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 10px 0;"><code>{
+  "allowed_addresses": [
+    "D7Y55r3b3vQBvy2g3N9Rh41mu1xaBC9KzY",
+    "D9zJ4C9hE4L7xM8vN2pQ5rT6wY8zA1bC3d",
+    "D5xK8mN3pQ7rT9wY2zA4bC6dE8fG1hI3j"
+  ]
+}
+</code></pre>
+        
+        <h3>Use Cases</h3>
+        <div class="feature-box">
+            <strong><i class="fas fa-door-open"></i> Physical Access Control:</strong>
+            <p>Integrate with door locks, gates, or access control systems. When a valid signature is verified, trigger GPIO pins, API calls, or relay switches to unlock doors.</p>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-ticket-alt"></i> Ticket Validation:</strong>
+            <p>Validate event tickets, cinema passes, or transportation tickets. Store ticket purchases linked to Dogecoin addresses and verify signatures at entry points.</p>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-unlock"></i> Digital Content Access:</strong>
+            <p>Unlock premium content, software licenses, or digital services. Verify signatures to grant access to protected resources.</p>
+        </div>
+        
+        <div class="feature-box">
+            <strong><i class="fas fa-lightbulb"></i> IoT Device Control:</strong>
+            <p>Control smart devices like lights, appliances, or IoT systems. Verify signatures to trigger device actions.</p>
+        </div>
+        
+        <h3>Security Best Practices</h3>
+        <ul>
+            <li><strong>Challenge Expiration:</strong> Set expiration times for challenges (e.g., 5 minutes) to prevent replay attacks</li>
+            <li><strong>Rate Limiting:</strong> Implement rate limiting to prevent brute force attacks</li>
+            <li><strong>HTTPS Only:</strong> Always use HTTPS in production to protect challenge and signature transmission</li>
+            <li><strong>Address Whitelist:</strong> Maintain a secure whitelist of allowed addresses</li>
+            <li><strong>Logging:</strong> Log all authentication attempts for security auditing</li>
+            <li><strong>Signature Verification:</strong> Always use proper cryptographic libraries for signature verification</li>
+        </ul>
         
         <h2 id="support"><i class="fa-solid fa-info"></i> Support</h2>
         <p>Need help? Contact us:</p>

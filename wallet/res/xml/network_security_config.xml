@@ -15,6 +15,9 @@
         <!-- Various domains to fetch exchange rates from. -->
         <domain includeSubdomains="true">coingecko.com</domain>
         <domain includeSubdomains="true">bitcoinaverage.com</domain>
+        <!-- Metal Pay Connect SDK CDN -->
+        <domain includeSubdomains="true">unpkg.com</domain>
+        <domain includeSubdomains="true">connect.metalpay.com</domain>
 
         <trust-anchors>
             <certificates src="system" />

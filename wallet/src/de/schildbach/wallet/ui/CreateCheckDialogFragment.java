@@ -600,27 +600,24 @@ public class CreateCheckDialogFragment extends DialogFragment {
                     log.info("Attempting to broadcast transaction: {} (inputs: {}, outputs: {})", 
                         txHash, transaction.getInputs().size(), transaction.getOutputs().size());
                     
-                    // Check if transaction is relevant before broadcasting
+                    // Always broadcast check transactions - they send funds to P2SH addresses
+                    // The wallet may not recognize them as relevant until broadcast
                     boolean isRelevant = wallet.isTransactionRelevant(transaction);
                     log.info("Transaction relevance check: {} (relevant: {})", txHash, isRelevant);
                     
-                    if (isRelevant) {
-                        ListenableFuture<Transaction> future = viewModel.broadcastTransaction(transaction);
-                        future.addListener(() -> {
-                            try {
-                                Transaction result = future.get();
-                                log.info("Transaction broadcast completed successfully: {}", txHash);
-                            } catch (Exception e) {
-                                log.error("Transaction broadcast future failed: {}", txHash, e);
-                            }
-                        }, MoreExecutors.directExecutor());
-                        log.info("Transaction broadcast initiated: {} (sending to CLTV address, script locktime: {})", 
-                            txHash, date.getTime() / 1000);
-                    } else {
-                        log.warn("Transaction not considered relevant by wallet: {} - it may still be broadcast when wallet syncs", txHash);
-                        // Transaction is stored in wallet, it will be broadcast when relevant
-                        // The wallet will handle broadcasting when it detects the transaction is relevant
-                    }
+                    // Broadcast regardless of relevance - check transactions need to be broadcast
+                    // to send funds to the P2SH check address
+                    ListenableFuture<Transaction> future = viewModel.broadcastTransaction(transaction);
+                    future.addListener(() -> {
+                        try {
+                            Transaction result = future.get();
+                            log.info("Transaction broadcast completed successfully: {}", txHash);
+                        } catch (Exception e) {
+                            log.error("Transaction broadcast future failed: {}", txHash, e);
+                        }
+                    }, MoreExecutors.directExecutor());
+                    log.info("Transaction broadcast initiated: {} (sending to CLTV address, script locktime: {})", 
+                        txHash, date.getTime() / 1000);
                 } catch (Exception e) {
                     log.error("Failed to broadcast transaction: {}", txHash, e);
                     // Transaction is already stored in wallet, so it will be visible

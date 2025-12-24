@@ -19,9 +19,35 @@ Welcome to the reborn of the _Dogecoin Wallet_, a standalone, self-custodial Dog
 ###    More Information & Documentation
 Visit **[dogecoinwallet.org](https://dogecoinwallet.org)** for comprehensive documentation, user guides, and the latest updates about the Dogecoin Wallet.
 
-## 🚀 Latest Updates - Version 91
+## 🚀 Latest Updates - Version 92
 
 ### 📱 New Features
+- **Atomic Swap (Labs)**: Cross-chain atomic swaps for decentralized exchanges
+  - **Cross-Chain Trading**: Exchange Dogecoin for Bitcoin or Litecoin using Hash Time Lock Contracts (HTLC)
+  - **Trustless Swaps**: No need for centralized exchanges - swap directly peer-to-peer
+  - **HTLC Technology**: Uses secure Hash Time Lock Contracts to ensure atomicity
+  - **Multi-Chain Support**: Swap DOGE ↔ BTC or DOGE ↔ LTC seamlessly
+  - **Swap Management**: View, monitor, and manage all your atomic swaps in one place
+  - **Automatic Monitoring**: Background service monitors swap status and automatically completes when conditions are met
+  - **Refund Capability**: Cancel and refund swaps if counterparty doesn't complete their part
+  - **Labs Integration**: Enable/disable from Settings → Configuration → Labs
+  - **Menu Integration**: Access "Atomic Swap" from the main menu when enabled
+  - **Experimental Feature**: Currently in Labs for testing and refinement
+- **Exchange (Labs)**: Buy and sell Dogecoin directly from your wallet
+  - **Metal Pay Connect Integration**: Seamlessly buy and sell Dogecoin using Metal Pay Connect SDK
+  - **Buy Dogecoin**: Purchase DOGE with fiat currency directly from your wallet
+  - **Sell Dogecoin**: Sell your DOGE for fiat currency with automatic balance detection
+  - **Fiat Currency Support**: Supports multiple fiat currencies matching your Exchange Rates settings
+  - **Automatic Wallet Integration**: Automatically populates your wallet address for buying and available balance for selling
+  - **Modern Modal Interface**: Beautiful modal dialog with rounded corners for seamless user experience
+  - **Dark Mode Support**: Automatically adapts to your device's dark mode setting
+  - **Secure API Integration**: HMAC-signed API requests for secure authentication
+  - **Labs Integration**: Enable/disable from Settings → Configuration → Labs
+  - **Settings Integration**: Access "Exchange" from Settings menu when enabled
+  - **Experimental Feature**: Currently in Labs for testing and refinement
+  - **Server Setup**: The Exchange API server code is located in the `exchange-api/` folder. You need to run a PHP server to host the API endpoint. See `exchange-api/README_SERVER_SETUP.md` for detailed setup instructions.
+  - **API Documentation**: Full Metal Pay Connect API documentation: [https://connect-docs.metalpay.com/docs/authentication-flow](https://connect-docs.metalpay.com/docs/authentication-flow)
+  - **Get API Credentials**: Register for Metal Pay Connect API key and secret: [https://www.metalpay.com/metal-pay-connect#form](https://www.metalpay.com/metal-pay-connect#form)
 - **Use Doge**: Discover stores and businesses that accept Dogecoin near you!
   - **Interactive GPS-Enabled Map**: Automatically detects your location and shows nearby stores on an interactive map
   - **Store Discovery**: Browse stores that accept Dogecoin with detailed information including name, category, description, address, contact info, and website
@@ -175,6 +201,27 @@ This project contains several sub-projects:
      your Android app.
 
 ## 📋 VERSION HISTORY
+
+### Version 92 - Atomic Swap, Exchange, Labs Category & UI Improvements
+- **Atomic Swap (Labs)**: Cross-chain atomic swaps for trustless DOGE ↔ BTC/LTC exchanges
+  - Hash Time Lock Contracts (HTLC) for secure, decentralized trading
+  - Multi-chain support with automatic swap monitoring
+  - Background service for swap status tracking
+  - Refund capability for incomplete swaps
+- **Exchange (Labs)**: Buy and sell Dogecoin directly from wallet
+  - Metal Pay Connect SDK integration
+  - Multiple fiat currency support
+  - Automatic wallet address and balance integration
+  - Modern modal interface with dark mode support
+- **Labs Category**: Experimental features section in Settings
+  - Enable/disable experimental features individually
+  - Easy access to all Labs features
+  - User control over experimental functionality
+- **UI Improvements**: Enhanced icon visibility and color consistency
+  - Menu icons properly tinted for light/dark mode
+  - Settings category titles use golden color in light mode
+  - Button text colors adapt to theme
+  - Improved visual consistency across all screens
 
 ### Version 88 - Settings Menu Organization, Menu UI Enhancements & POS Background Service
 - **Settings Menu Categorization**: Improved organization with categorized sections
@@ -443,7 +490,7 @@ This feature is powered by the [RadioDoge V3 project](https://github.com/dogecoi
 ## 📱 Platform Support
 
 ### Android
-- **Current Version**: v1.0 (Version Code: 91)
+- **Current Version**: v1.0 (Version Code: 92)
 - **Target SDK**: API 35 (Android 15)
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Status**: Available now on Google Play Store
@@ -599,7 +646,7 @@ After building, you'll find:
 
 #### **Current Build Configuration**:
 - **Version Name**: 1.0
-- **Version Code**: 91
+- **Version Code**: 92
 - **Target SDK**: 35
 - **Minify**: Enabled (R8)
 - **Signing**: Release keystore configured
@@ -659,6 +706,38 @@ To publish on Google Play:
 2. Prepare store listing materials
 3. Upload signed APK or AAB
 4. Complete store listing and publish
+
+## 🔌 EXCHANGE API SERVER SETUP
+
+The Exchange feature requires a backend API server to generate HMAC signatures for Metal Pay Connect authentication. The server code is located in the `exchange-api/` folder.
+
+### Quick Start
+
+1. **Get API Credentials**:
+   - Register for Metal Pay Connect API key and secret at: [https://www.metalpay.com/metal-pay-connect#form](https://www.metalpay.com/metal-pay-connect#form)
+
+2. **Review API Documentation**:
+   - Full Metal Pay Connect API documentation: [https://connect-docs.metalpay.com/docs/authentication-flow](https://connect-docs.metalpay.com/docs/authentication-flow)
+
+3. **Set Up PHP Server**:
+   - The Exchange API server is written in PHP
+   - Navigate to the `exchange-api/` folder
+   - Upload files to your web server or run a local PHP server
+   - Configure environment variables (`SECRET_KEY` and `API_KEY`)
+   - See `exchange-api/README_SERVER_SETUP.md` for detailed setup instructions
+
+### Server Requirements
+
+- PHP 5.6 or higher
+- Apache with `mod_rewrite` enabled (for `.htaccess` routing)
+- Environment variables configured (`SECRET_KEY` and `API_KEY`)
+- HTTPS recommended for production
+
+### Files in `exchange-api/`:
+
+- `index.php` - Main API endpoint for generating HMAC signatures
+- `.htaccess` - URL rewriting configuration
+- `README_SERVER_SETUP.md` - Detailed server setup instructions
 
 ## 👥 DEVELOPMENT TEAM & CONTRIBUTIONS
 

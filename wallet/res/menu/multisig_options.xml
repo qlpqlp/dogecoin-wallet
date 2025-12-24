@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/multisig_options_sign"
+        android:title="@string/multisig_sign_transaction"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/multisig_options_merge"
+        android:title="@string/multisig_merge_signatures"
+        android:showAsAction="never" />
+</menu>
+

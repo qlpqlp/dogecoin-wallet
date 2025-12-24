@@ -48,6 +48,7 @@ public final class AboutFragment extends PreferenceFragment {
     private PackageManager packageManager;
 
     private static final String KEY_ABOUT_VERSION = "about_version";
+    private static final String KEY_ABOUT_BUILD_VERSION = "about_build_version";
     private static final String KEY_ABOUT_MARKET_APP = "about_market_app";
     private static final String KEY_ABOUT_CREDITS_BITCOINJ = "about_credits_bitcoinj";
 
@@ -90,6 +91,8 @@ public final class AboutFragment extends PreferenceFragment {
             new ApkHashFragment().show(getFragmentManager(), null);
             return true;
         });
+        final Preference buildVersionPref = findPreference(KEY_ABOUT_BUILD_VERSION);
+        buildVersionPref.setSummary(String.valueOf(packageInfo.versionCode));
         findPreference("about_copyright").setOnPreferenceClickListener(pref -> {
             counter++;
             if (counter >= 7) {

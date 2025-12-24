@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/bg_level1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/atomic_swap_from_currency"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_from_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_level2"
+        android:padding="12dp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/atomic_swap_amount"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_from_amount"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:textColorHint="@color/fg_insignificant"
+        android:hint="Enter amount"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/atomic_swap_to_currency"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_to_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_level2"
+        android:padding="12dp"
+        android:textColor="@color/fg_significant"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/atomic_swap_amount"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_to_amount"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:textColorHint="@color/fg_insignificant"
+        android:hint="Enter amount"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Counterparty Dogecoin Address"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_counterparty_address"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:textColorHint="@color/fg_insignificant"
+        android:hint="Enter counterparty's Dogecoin address (where they receive DOGE)"
+        android:inputType="text"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/text_my_receiving_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Receiving Address"
+        android:textColor="@color/fg_significant"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/edit_my_receiving_address"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bg_level2"
+        android:padding="16dp"
+        android:textColor="@color/fg_significant"
+        android:textColorHint="@color/fg_insignificant"
+        android:hint="Enter your Bitcoin/Litecoin address (where you receive BTC/LTC)"
+        android:inputType="text"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/amber"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_cancel_24dp"
+            android:drawablePadding="8dp"
+            android:minWidth="100dp"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_create_swap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Swap"
+            android:textColor="@color/amber"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_save_24dp"
+            android:drawablePadding="8dp"
+            android:minWidth="100dp" />
+    </LinearLayout>
+
+</LinearLayout>
+

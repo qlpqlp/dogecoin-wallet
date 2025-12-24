@@ -71,6 +71,21 @@
         android:showAsAction="never"
         android:title="@string/write_check_menu_title" />
     <item
+        android:id="@+id/wallet_options_multisig"
+        android:icon="@drawable/ic_diversity_3_white_24dp"
+        android:showAsAction="never"
+        android:title="@string/multisig_menu_title" />
+    <item
+        android:id="@+id/wallet_options_authentication"
+        android:icon="@drawable/ic_lock_white_24dp"
+        android:showAsAction="never"
+        android:title="@string/authentication_menu_title" />
+    <item
+        android:id="@+id/wallet_options_atomic_swap"
+        android:icon="@drawable/ic_sync_white_24dp"
+        android:showAsAction="never"
+        android:title="Atomic Swap" />
+    <item
         android:id="@+id/wallet_options_use_doge"
         android:icon="@drawable/ic_place_white_24dp"
         android:showAsAction="never"

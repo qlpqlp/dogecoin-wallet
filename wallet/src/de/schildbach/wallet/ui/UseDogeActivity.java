@@ -45,6 +45,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -158,20 +159,42 @@ public class UseDogeActivity extends AbstractWalletActivity {
             public void afterTextChanged(Editable s) {}
         });
         
-        // Setup buttons
+        // Setup buttons with initial icon tinting
+        updateShowListButtonIcon();
+        
         btnShowList.setOnClickListener(v -> {
             if (layoutList.getVisibility() == View.VISIBLE) {
                 layoutList.setVisibility(View.GONE);
                 btnShowList.setText("Show List");
-                btnShowList.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_list_white_24dp, 0, 0, 0);
             } else {
                 layoutList.setVisibility(View.VISIBLE);
                 btnShowList.setText("Hide List");
-                btnShowList.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_close_white_24dp, 0, 0, 0);
             }
+            updateShowListButtonIcon();
         });
         
         btnConfig.setOnClickListener(v -> showConfigDialog());
+    }
+    
+    private void updateShowListButtonIcon() {
+        // Detect dark mode for icon tinting
+        int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+        boolean isDarkMode = nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+        int tintColor = isDarkMode ? 
+            ContextCompat.getColor(this, android.R.color.white) : 
+            ContextCompat.getColor(this, android.R.color.black);
+        
+        Drawable icon;
+        if (layoutList.getVisibility() == View.VISIBLE) {
+            icon = ContextCompat.getDrawable(this, R.drawable.ic_close_white_24dp);
+        } else {
+            icon = ContextCompat.getDrawable(this, R.drawable.ic_list_white_24dp);
+        }
+        
+        if (icon != null) {
+            icon.setTint(tintColor);
+            btnShowList.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+        }
         
         // Request location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

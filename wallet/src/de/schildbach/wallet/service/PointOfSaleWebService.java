@@ -296,7 +296,9 @@ public class PointOfSaleWebService {
                 
                 // Price and quantity in a clean layout
                 html.append("<div class=\"product-price-qty\">");
-                html.append("<div class=\"price\">").append(product.getPriceDoge()).append(" DOGE</div>");
+                // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+                double priceInDoge = product.getPriceDoge() / 100000000.0;
+                html.append("<div class=\"price\">").append(String.format("%.8f", priceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "")).append(" DOGE</div>");
                 // Show stock quantity (or "Unlimited" if -1)
                 if (product.getQuantity() == -1) {
                     html.append("<div class=\"quantity\">Stock: Unlimited</div>");
@@ -419,7 +421,9 @@ public class PointOfSaleWebService {
             html.append("</div>");
             html.append("<div class=\"payment-detail-item-inline\">");
             html.append("<span class=\"detail-label\">Amount to Pay:</span>");
-            html.append("<span class=\"detail-value total-amount\">").append(totalPrice).append(" DOGE</span>");
+            // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+            double totalPriceInDoge = totalPrice / 100000000.0;
+            html.append("<span class=\"detail-value total-amount\">").append(String.format("%.8f", totalPriceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "")).append(" DOGE</span>");
             html.append("</div>");
             html.append("</div>");
             
@@ -611,7 +615,9 @@ public class PointOfSaleWebService {
             
             // Product details
             html.append("<div class=\"product-details\">");
-            html.append("<div class=\"price\">Price: ").append(product.getPriceDoge()).append(" DOGE each</div>");
+            // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+            double priceInDoge = product.getPriceDoge() / 100000000.0;
+            html.append("<div class=\"price\">Price: ").append(String.format("%.8f", priceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "")).append(" DOGE each</div>");
             // Show stock quantity (or "Unlimited" if -1)
             if (product.getQuantity() == -1) {
                 html.append("<div class=\"quantity-info\">In Stock: Unlimited</div>");
@@ -626,7 +632,9 @@ public class PointOfSaleWebService {
             html.append("<button onclick=\"updateQuantity()\">Update</button>");
             html.append("</div>");
             
-            html.append("<div class=\"total-price\">Total: <strong>").append(totalPrice).append(" DOGE</strong></div>");
+            // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+            double totalPriceInDoge = totalPrice / 100000000.0;
+            html.append("<div class=\"total-price\">Total: <strong>").append(String.format("%.8f", totalPriceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "")).append(" DOGE</strong></div>");
             html.append("</div>"); // product-details
             
             // Payment section with QR code
@@ -653,7 +661,8 @@ public class PointOfSaleWebService {
             html.append("<button id=\"btn-copy-address\" onclick=\"copyAddress()\">Copy</button>");
             html.append("</div>");
             
-            html.append("<div class=\"payment-amount\">Amount: <strong>").append(totalPrice).append(" DOGE</strong></div>");
+            // Reuse totalPriceInDoge already calculated above
+            html.append("<div class=\"payment-amount\">Amount: <strong>").append(String.format("%.8f", totalPriceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "")).append(" DOGE</strong></div>");
             html.append("<p class=\"payment-info\">Scan the QR code or copy the address to send payment</p>");
             html.append("</div>"); // payment-content-wrapper
             html.append("</div>"); // payment-section

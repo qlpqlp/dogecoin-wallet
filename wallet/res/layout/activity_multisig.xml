@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_level0">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/bg_level3">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/multisig_activity_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/fg_significant"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/multisig_activity_description"
+            android:textSize="14sp"
+            android:textColor="@color/fg_less_significant"
+            android:layout_marginTop="4dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal" />
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Step 1: Generate Public Key Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/bg_level3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/multisig_step1_title"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_step1_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="12dp" />
+
+                    <Button
+                        android:id="@+id/btn_generate_public_key"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_generate_public_key"
+                        android:drawableStart="@drawable/ic_add_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        style="@style/My.Dialog.Button" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_public_key_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone"
+                        android:background="@color/bg_level2"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/multisig_your_public_key"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/text_public_key"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:textSize="11sp"
+                            android:textColor="@color/fg_significant"
+                            android:background="@color/bg_level1"
+                            android:padding="8dp"
+                            android:scrollbars="horizontal"
+                            android:layout_marginBottom="8dp" />
+
+                        <ImageView
+                            android:id="@+id/qr_code_public_key"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="gone"
+                            android:contentDescription="@string/multisig_qr_code" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/btn_share_public_key"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/multisig_share_public_key"
+                                android:drawableStart="@drawable/ic_share_white_24dp"
+                                android:drawablePadding="8dp"
+                                android:drawableTint="@android:color/white"
+                                android:layout_marginEnd="4dp"
+                                style="@style/My.Dialog.Button" />
+
+                            <Button
+                                android:id="@+id/btn_show_qr_public_key"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/multisig_show_qr"
+                                android:drawableStart="@drawable/ic_qrcode_white_24dp"
+                                android:drawablePadding="8dp"
+                                android:drawableTint="@android:color/white"
+                                android:layout_marginStart="4dp"
+                                style="@style/My.Dialog.Button" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Step 2: Create Multi-Sig Wallet Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/bg_level3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/multisig_step2_title"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_step2_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="12dp" />
+
+                    <Button
+                        android:id="@+id/btn_create_multisig"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_create_wallet"
+                        android:drawableStart="@drawable/ic_lock_white_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        style="@style/My.Dialog.Button" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_multisig_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone"
+                        android:background="@color/bg_level2"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/text_multisig_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:textColor="@color/fg_significant"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/multisig_address"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/text_multisig_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:textSize="13sp"
+                            android:textColor="@color/fg_significant"
+                            android:background="@color/bg_level1"
+                            android:padding="8dp"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/multisig_redeem_script"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/text_redeem_script"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:textSize="10sp"
+                            android:textColor="@color/fg_significant"
+                            android:background="@color/bg_level1"
+                            android:padding="8dp"
+                            android:maxLines="3"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Step 3: Manage Multi-Sig Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/bg_level3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/multisig_step3_title"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_step3_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="12dp" />
+
+                    <Button
+                        android:id="@+id/btn_send_to_multisig"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_send_to_address"
+                        android:drawableStart="@drawable/ic_send_white_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        android:layout_marginBottom="8dp"
+                        style="@style/My.Dialog.Button" />
+
+                    <Button
+                        android:id="@+id/btn_spend_from_multisig"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/multisig_spend_from"
+                        android:drawableStart="@drawable/ic_send_flipped_white_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        style="@style/My.Dialog.Button" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

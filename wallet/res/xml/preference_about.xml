@@ -6,6 +6,9 @@
         android:key="about_version"
         android:title="@string/about_version_title" />
     <Preference
+        android:key="about_build_version"
+        android:title="@string/about_build_version_title" />
+    <Preference
         android:key="about_copyright"
         android:summary="© 2011-2020, the Bitcoin Wallet developers\n© 2013-2025, the Dogecoin Wallet developers\n© 2013-2025 Dogecoin Foundation"
         android:title="@string/about_copyright_title" />

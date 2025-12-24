@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_level0">
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal" />
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Header Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@color/bg_level3"
+                android:layout_marginBottom="24dp"
+                android:elevation="2dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/authentication_activity_title"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/fg_significant"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/authentication_activity_description"
+                    android:textSize="14sp"
+                    android:textColor="@color/fg_less_significant"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- Address Selection Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/bg_level3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_place_white_24dp"
+                            android:layout_marginEnd="12dp"
+                            android:tint="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_step1_title"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_filter_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Search address or label..."
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:background="@color/bg_level2"
+                        android:textColor="@color/fg_significant"
+                        android:textColorHint="@color/fg_less_significant"
+                        android:drawableStart="@drawable/ic_search_white_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/fg_less_significant"
+                        android:layout_marginBottom="12dp" />
+
+                    <Spinner
+                        android:id="@+id/address_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:padding="12dp"
+                        android:background="@color/bg_level2" />
+
+                    <Button
+                        android:id="@+id/btn_generate_new_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/authentication_generate_new_address"
+                        android:drawableStart="@drawable/ic_add_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        style="@style/My.Dialog.Button" />
+
+                    <TextView
+                        android:id="@+id/text_selected_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:fontFamily="monospace" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Scan Message Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/bg_level3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_qrcode_white_24dp"
+                            android:layout_marginEnd="12dp"
+                            android:tint="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_step2_title"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/authentication_message_description"
+                        android:textSize="14sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_scan_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/authentication_scan_qr"
+                        android:drawableStart="@drawable/ic_qrcode_white_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@android:color/white"
+                        style="@style/My.Dialog.Button" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Signature Result Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout_signature_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/bg_level3"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_verify_white_24dp"
+                            android:layout_marginEnd="12dp"
+                            android:tint="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_step3_title"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3/3"
+                            android:textSize="12sp"
+                            android:textColor="@color/fg_less_significant"
+                            android:background="@drawable/bg_rounded"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/authentication_signature_description"
+                        android:textSize="13sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:layout_marginBottom="16dp" />
+
+                    <ImageView
+                        android:id="@+id/qr_code_signature"
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="16dp"
+                        android:background="@android:color/white"
+                        android:padding="12dp"
+                        android:elevation="2dp" />
+
+                    <TextView
+                        android:id="@+id/text_signature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="11sp"
+                        android:textColor="@color/fg_less_significant"
+                        android:fontFamily="monospace"
+                        android:scrollbars="vertical"
+                        android:maxLines="5"
+                        android:padding="12dp"
+                        android:background="@color/bg_level2"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_copy_signature"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_copy"
+                            android:drawableStart="@drawable/ic_copy_white_24dp"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="@android:color/white"
+                            style="@style/My.Dialog.Button"
+                            android:layout_marginEnd="6dp" />
+
+                        <Button
+                            android:id="@+id/btn_share_signature"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_share"
+                            android:drawableStart="@drawable/ic_share_white_24dp"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="@android:color/white"
+                            style="@style/My.Dialog.Button"
+                            android:layout_marginStart="6dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Stored Requests Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout_stored_requests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/bg_level3"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_list_white_24dp"
+                            android:layout_marginEnd="12dp"
+                            android:tint="@color/fg_significant" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/authentication_stored_requests"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/fg_significant" />
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/list_stored_requests"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="400dp"
+                        android:divider="@color/bg_level2"
+                        android:dividerHeight="1dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

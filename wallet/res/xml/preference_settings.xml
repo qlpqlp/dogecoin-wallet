@@ -51,7 +51,6 @@
             android:entries="@array/preferences_fee_category_labels"
             android:entryValues="@array/preferences_fee_category_values" />
 
-
         <Preference
             android:key="data_usage"
             android:title="@string/preferences_data_usage_title"
@@ -161,9 +160,38 @@
             android:defaultValue="true" />
 
         <CheckBoxPreference
+            android:key="show_multisig_menu"
+            android:title="@string/preferences_show_multisig_menu_title"
+            android:summary="@string/preferences_show_multisig_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="show_authentication_menu"
+            android:title="@string/preferences_show_authentication_menu_title"
+            android:summary="@string/preferences_show_authentication_menu_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
             android:key="use_doge_enabled"
             android:title="@string/preferences_use_doge_title"
             android:summary="@string/preferences_use_doge_summary"
             android:defaultValue="true" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preferences_category_labs">
+        
+        <CheckBoxPreference
+            android:key="labs_exchange_enabled"
+            android:title="@string/preferences_labs_exchange_title"
+            android:summary="@string/preferences_labs_exchange_summary"
+            android:defaultValue="false" />
+        
+        <CheckBoxPreference
+            android:key="labs_atomic_swap_enabled"
+            android:title="@string/preferences_labs_atomic_swap_title"
+            android:summary="@string/preferences_labs_atomic_swap_summary"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

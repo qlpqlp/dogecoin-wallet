@@ -178,8 +178,8 @@ public final class WalletBalanceFragment extends Fragment {
     }
 
     private void updateView() {
-        // Guard against null application
-        if (application == null) {
+        // Guard against null application and ensure fragment is attached
+        if (application == null || !isAdded() || getContext() == null) {
             return;
         }
         
@@ -259,6 +259,10 @@ public final class WalletBalanceFragment extends Fragment {
                     final Coin reservedBalance = ExcludedAddressHelper.getExcludedAddressesBalance(wallet);
                     // Update UI on main thread
                     activity.runOnUiThread(() -> {
+                        // Check if fragment is still attached before accessing context
+                        if (!isAdded() || getContext() == null) {
+                            return;
+                        }
                         if (reservedBalance.signum() > 0) {
                             viewBalanceReserved.setVisibility(View.VISIBLE);
                             viewBalanceReserved.setText(getString(R.string.address_excluded_balance, 
@@ -270,6 +274,10 @@ public final class WalletBalanceFragment extends Fragment {
                 } else {
                     // Update UI on main thread
                     activity.runOnUiThread(() -> {
+                        // Check if fragment is still attached before accessing context
+                        if (!isAdded() || getContext() == null) {
+                            return;
+                        }
                         viewBalanceReserved.setVisibility(View.GONE);
                     });
                 }

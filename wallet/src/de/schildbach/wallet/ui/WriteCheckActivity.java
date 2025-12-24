@@ -25,11 +25,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.annotation.WorkerThread;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -662,6 +664,43 @@ public class WriteCheckActivity extends AbstractWalletActivity {
                     textStatusBadge.setBackground(badgeDrawable);
                 } else {
                     textStatusBadge.setVisibility(View.GONE);
+                }
+                
+                // Set button icon colors based on theme (black in light mode, white in dark mode)
+                int nightModeFlags = itemView.getContext().getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+                boolean isDarkMode = nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+                int iconTintColor = isDarkMode ? 
+                    ContextCompat.getColor(itemView.getContext(), android.R.color.white) : 
+                    ContextCompat.getColor(itemView.getContext(), android.R.color.black);
+                
+                // Tint button icons
+                if (btnPrint != null) {
+                    Drawable printIcon = ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_file_white_24dp);
+                    if (printIcon != null) {
+                        printIcon.setTint(iconTintColor);
+                        btnPrint.setCompoundDrawablesWithIntrinsicBounds(printIcon, null, null, null);
+                    }
+                }
+                if (btnViewTransaction != null) {
+                    Drawable qrIcon = ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_qrcode_white_24dp);
+                    if (qrIcon != null) {
+                        qrIcon.setTint(iconTintColor);
+                        btnViewTransaction.setCompoundDrawablesWithIntrinsicBounds(qrIcon, null, null, null);
+                    }
+                }
+                if (btnCancel != null) {
+                    Drawable closeIcon = ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_close_white_24dp);
+                    if (closeIcon != null) {
+                        closeIcon.setTint(iconTintColor);
+                        btnCancel.setCompoundDrawablesWithIntrinsicBounds(closeIcon, null, null, null);
+                    }
+                }
+                if (btnShare != null) {
+                    Drawable shareIcon = ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_share_white_24dp);
+                    if (shareIcon != null) {
+                        shareIcon.setTint(iconTintColor);
+                        btnShare.setCompoundDrawablesWithIntrinsicBounds(shareIcon, null, null, null);
+                    }
                 }
                 
                 // Reset expanded state

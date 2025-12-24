@@ -23,6 +23,13 @@
         android:fragment="de.schildbach.wallet.ui.preference.SweepWalletPreferenceFragment"
         android:title="@string/sweep_wallet_activity_title"
         android:summary="@string/sweep_wallet_fragment_intro" />
+    <header
+        android:title="@string/exchange_menu_title"
+        android:summary="@string/exchange_activity_description">
+        <intent
+            android:targetPackage="org.dogecoin.wallet"
+            android:targetClass="de.schildbach.wallet.ui.ExchangeActivity" />
+    </header>
     
     <!-- Network & Information -->
     <header

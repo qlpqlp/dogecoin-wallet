@@ -1,0 +1,22 @@
+# Metal Pay Connect API - URL Rewriting with Environment Variables
+# This file routes /v1/signature requests to index.php
+# AND sets environment variables (if your server supports it)
+
+RewriteEngine On
+RewriteBase /
+
+# Set environment variables (if supported by your server)
+# Replace with your actual values
+SetEnv SECRET_KEY "your-secret-key-here"
+SetEnv API_KEY "your-api-key-here"
+
+# Route /v1/signature to index.php
+RewriteRule ^v1/signature$ index.php [L,QSA]
+
+# Optional: Redirect /index.php/v1/signature to /v1/signature (cleaner URLs)
+RewriteRule ^index\.php/v1/signature$ /v1/signature [R=301,L]
+
+# Optional: Block direct access to index.php (uncomment if you want to force /v1/signature)
+# RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+# RewriteRule ^index\.php$ - [F,L]
+

@@ -17,6 +17,7 @@
 
 package de.schildbach.wallet.ui.preference;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -25,8 +26,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
+import de.schildbach.wallet.Configuration;
 import de.schildbach.wallet.R;
+import de.schildbach.wallet.WalletApplication;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -178,6 +182,40 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
     public void onBuildHeaders(final List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
         
+        // Filter headers based on Labs settings
+        WalletApplication application = (WalletApplication) getApplication();
+        if (application != null) {
+            Configuration config = application.getConfiguration();
+            
+            // Remove Exchange header if Labs Exchange is disabled
+            if (!config.getLabsExchangeEnabled()) {
+                Iterator<Header> iterator = target.iterator();
+                while (iterator.hasNext()) {
+                    Header header = iterator.next();
+                    // Check by intent component class name or by title
+                    boolean isExchange = false;
+                    if (header.intent != null) {
+                        if (header.intent.getComponent() != null) {
+                            String className = header.intent.getComponent().getClassName();
+                            if (className != null && className.contains("ExchangeActivity")) {
+                                isExchange = true;
+                            }
+                        } else {
+                            // Check by title when component is not set
+                            CharSequence title = header.title;
+                            if (title != null && title.toString().equals(getString(R.string.exchange_menu_title))) {
+                                isExchange = true;
+                            }
+                        }
+                    }
+                    if (isExchange) {
+                        iterator.remove();
+                        break;
+                    }
+                }
+            }
+        }
+        
         // Add section headers for better organization
         // We'll insert category headers at appropriate positions
         // Note: We need to insert them in reverse order to maintain correct indices
@@ -253,6 +291,39 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
     
     @Override
     public void onHeaderClick(Header header, int position) {
+        // Handle headers with intents first (like Exchange)
+        if (header.intent != null) {
+            // Always create explicit intent for ExchangeActivity to ensure it works
+            // Check if this is ExchangeActivity by component or title
+            boolean isExchange = false;
+            if (header.intent.getComponent() != null) {
+                String className = header.intent.getComponent().getClassName();
+                if (className != null && className.contains("ExchangeActivity")) {
+                    isExchange = true;
+                }
+            } else {
+                // Check by title when component is not set
+                CharSequence title = header.title;
+                if (title != null && title.toString().equals(getString(R.string.exchange_menu_title))) {
+                    isExchange = true;
+                }
+            }
+            
+            if (isExchange) {
+                // Always create explicit intent for ExchangeActivity
+                Intent newIntent = new Intent(this, de.schildbach.wallet.ui.ExchangeActivity.class);
+                startActivity(newIntent);
+            } else {
+                // For other intents, try to start normally
+                try {
+                    startActivity(header.intent);
+                } catch (android.content.ActivityNotFoundException e) {
+                    // If it fails, log and show error
+                    android.util.Log.e("PreferenceActivity", "Failed to start activity from header", e);
+                }
+            }
+            return;
+        }
         // Prevent clicking on section headers (headers with fragment == null)
         if (header.fragment == null) {
             return; // Don't navigate, just return
@@ -295,11 +366,15 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
             if (view != null) {
                 Header header = (Header) adapter.getItem(i);
                 if (header != null && header.fragment == null) {
-                    // This is a section header - style it in yellow
+                    // This is a section header - style it with appropriate color
                     TextView titleView = view.findViewById(android.R.id.title);
                     if (titleView != null) {
-                        // Use amber/yellow color to match Configuration category titles
-                        titleView.setTextColor(ContextCompat.getColor(PreferenceActivity.this, R.color.amber));
+                        // Detect dark mode
+                        int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+                        boolean isDarkMode = nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+                        // Use amber in dark mode, colorPrimary (golden) in light mode
+                        int colorRes = isDarkMode ? R.color.amber : R.color.colorPrimary;
+                        titleView.setTextColor(ContextCompat.getColor(PreferenceActivity.this, colorRes));
                     }
                 }
             }
@@ -322,11 +397,15 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
                         if (childView != null) {
                             Header header = (Header) adapter.getItem(i);
                             if (header != null && header.fragment == null) {
-                                // This is a section header - style it in yellow
+                                // This is a section header - style it with appropriate color
                                 TextView titleView = childView.findViewById(android.R.id.title);
                                 if (titleView != null) {
-                                    // Use amber/yellow color (#ffc107) to match Configuration category titles
-                                    titleView.setTextColor(0xFFFFC107); // Yellow/amber color
+                                    // Detect dark mode
+                                    int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+                                    boolean isDarkMode = nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+                                    // Use amber in dark mode, colorPrimary (golden) in light mode
+                                    int colorRes = isDarkMode ? R.color.amber : R.color.colorPrimary;
+                                    titleView.setTextColor(ContextCompat.getColor(PreferenceActivity.this, colorRes));
                                 }
                             }
                         }

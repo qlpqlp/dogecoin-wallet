@@ -252,6 +252,35 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name="de.schildbach.wallet.ui.MultiSigActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/multisig_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.AuthenticationActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:label="@string/authentication_activity_title"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="de.schildbach.wallet.ui.AtomicSwapActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:label="Atomic Swap"
+            android:parentActivityName="de.schildbach.wallet.ui.WalletActivity" />
+
+        <activity
+            android:name="de.schildbach.wallet.ui.ExchangeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:label="@string/exchange_activity_title"
+            android:parentActivityName="de.schildbach.wallet.ui.preference.PreferenceActivity"
+            android:theme="@style/My.Theme.ChildActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name="de.schildbach.wallet.ui.ProductManagementActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/point_of_sale_mode_title"
@@ -322,6 +351,10 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false"
             android:directBootAware="false" />
+        <service
+            android:name="de.schildbach.wallet.service.AtomicSwapService"
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name="de.schildbach.wallet.service.BlockchainService"
             android:exported="false"

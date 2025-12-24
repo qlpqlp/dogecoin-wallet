@@ -73,6 +73,9 @@ import de.schildbach.wallet.ui.DigitalSignatureActivity;
 import de.schildbach.wallet.ui.AccountingReportsActivity;
 import de.schildbach.wallet.ui.FamilyModeActivity;
 import de.schildbach.wallet.ui.ProductManagementActivity;
+import de.schildbach.wallet.ui.MultiSigActivity;
+import de.schildbach.wallet.ui.AuthenticationActivity;
+import de.schildbach.wallet.ui.ExchangeActivity;
 import de.schildbach.wallet.ui.FirstTimeSetupDialogFragment;
 import de.schildbach.wallet.data.FamilyMemberDatabase;
 import de.schildbach.wallet.util.BiometricHelper;
@@ -1070,6 +1073,24 @@ public final class WalletActivity extends AbstractWalletActivity {
             writeCheckOption.setVisible(config.getShowWriteCheckMenu());
         }
 
+        // Multi-Sig
+        final MenuItem multisigOption = menu.findItem(R.id.wallet_options_multisig);
+        if (multisigOption != null) {
+            multisigOption.setVisible(config.getShowMultisigMenu());
+        }
+
+        // Authentication
+        final MenuItem authenticationOption = menu.findItem(R.id.wallet_options_authentication);
+        if (authenticationOption != null) {
+            authenticationOption.setVisible(config.getShowAuthenticationMenu());
+        }
+
+        // Atomic Swap (Labs feature)
+        final MenuItem atomicSwapOption = menu.findItem(R.id.wallet_options_atomic_swap);
+        if (atomicSwapOption != null) {
+            atomicSwapOption.setVisible(config.getLabsAtomicSwapEnabled());
+        }
+
         // Ensure icons are visible in overflow menu items
         ensureMenuIconsVisible(menu);
 
@@ -1098,51 +1119,61 @@ public final class WalletActivity extends AbstractWalletActivity {
             }
         }
         
-        // Ensure icons are set for all menu items in overflow menu
+        // Detect dark mode
+        int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+        boolean isDarkMode = nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+        
+        // Helper method to set icon with proper tinting
+        java.util.function.BiConsumer<MenuItem, Integer> setIconWithTint = (item, iconRes) -> {
+            if (item != null) {
+                Drawable icon = ContextCompat.getDrawable(this, iconRes);
+                if (icon != null) {
+                    // Apply tint based on theme: black for light mode, white for dark mode
+                    int tintColor = isDarkMode ? 
+                        ContextCompat.getColor(this, android.R.color.white) : 
+                        ContextCompat.getColor(this, android.R.color.black);
+                    icon.setTint(tintColor);
+                    item.setIcon(icon);
+                }
+            }
+        };
+        
+        // Ensure icons are set for all menu items in overflow menu with proper tinting
         final MenuItem pointOfSaleItem = menu.findItem(R.id.wallet_options_point_of_sale);
-        if (pointOfSaleItem != null) {
-            pointOfSaleItem.setIcon(R.drawable.ic_point_of_sale_white_24dp);
-        }
+        setIconWithTint.accept(pointOfSaleItem, R.drawable.ic_point_of_sale_white_24dp);
         
         final MenuItem recurringPaymentsItem = menu.findItem(R.id.wallet_options_recurring_payments);
-        if (recurringPaymentsItem != null) {
-            recurringPaymentsItem.setIcon(R.drawable.ic_repeat_white_24dp);
-        }
+        setIconWithTint.accept(recurringPaymentsItem, R.drawable.ic_repeat_white_24dp);
         
         final MenuItem digitalSignatureItem = menu.findItem(R.id.wallet_options_digital_signature);
-        if (digitalSignatureItem != null) {
-            digitalSignatureItem.setIcon(R.drawable.ic_pen_signing_white_24dp);
-        }
+        setIconWithTint.accept(digitalSignatureItem, R.drawable.ic_pen_signing_white_24dp);
         
         final MenuItem writeCheckItem = menu.findItem(R.id.wallet_options_write_check);
-        if (writeCheckItem != null) {
-            writeCheckItem.setIcon(R.drawable.ic_checkbook_white_24dp);
-        }
+        setIconWithTint.accept(writeCheckItem, R.drawable.ic_checkbook_white_24dp);
+        
+        final MenuItem multisigItem = menu.findItem(R.id.wallet_options_multisig);
+        setIconWithTint.accept(multisigItem, R.drawable.ic_diversity_3_white_24dp);
+        
+        final MenuItem authenticationItem = menu.findItem(R.id.wallet_options_authentication);
+        setIconWithTint.accept(authenticationItem, R.drawable.ic_lock_white_24dp);
         
         final MenuItem useDogeItem = menu.findItem(R.id.wallet_options_use_doge);
-        if (useDogeItem != null) {
-            useDogeItem.setIcon(R.drawable.ic_place_white_24dp);
-        }
+        setIconWithTint.accept(useDogeItem, R.drawable.ic_place_white_24dp);
+        
+        final MenuItem atomicSwapItem = menu.findItem(R.id.wallet_options_atomic_swap);
+        setIconWithTint.accept(atomicSwapItem, R.drawable.ic_sync_white_24dp);
         
         final MenuItem accountingReportsItem = menu.findItem(R.id.wallet_options_accounting_reports);
-        if (accountingReportsItem != null) {
-            accountingReportsItem.setIcon(R.drawable.ic_bar_chart_white_24dp);
-        }
+        setIconWithTint.accept(accountingReportsItem, R.drawable.ic_bar_chart_white_24dp);
         
         final MenuItem preferencesItem = menu.findItem(R.id.wallet_options_preferences);
-        if (preferencesItem != null) {
-            preferencesItem.setIcon(R.drawable.ic_settings_white_24dp);
-        }
+        setIconWithTint.accept(preferencesItem, R.drawable.ic_settings_white_24dp);
         
         final MenuItem educationItem = menu.findItem(R.id.wallet_options_education);
-        if (educationItem != null) {
-            educationItem.setIcon(R.drawable.ic_school_white_24dp);
-        }
+        setIconWithTint.accept(educationItem, R.drawable.ic_school_white_24dp);
         
         final MenuItem helpItem = menu.findItem(R.id.wallet_options_help);
-        if (helpItem != null) {
-            helpItem.setIcon(R.drawable.ic_help_white_24dp);
-        }
+        setIconWithTint.accept(helpItem, R.drawable.ic_help_white_24dp);
         
         // Handle Family Mode submenu
         for (int i = 0; i < menu.size(); i++) {
@@ -1233,6 +1264,15 @@ public final class WalletActivity extends AbstractWalletActivity {
             return true;
         } else if (itemId == R.id.wallet_options_write_check) {
             startActivity(new Intent(this, WriteCheckActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_multisig) {
+            startActivity(new Intent(this, MultiSigActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_authentication) {
+            startActivity(new Intent(this, AuthenticationActivity.class));
+            return true;
+        } else if (itemId == R.id.wallet_options_atomic_swap) {
+            startActivity(new Intent(this, AtomicSwapActivity.class));
             return true;
         } else if (itemId == R.id.wallet_options_use_doge) {
             startActivity(new Intent(this, UseDogeActivity.class));

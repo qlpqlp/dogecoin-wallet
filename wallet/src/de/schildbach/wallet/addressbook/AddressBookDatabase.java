@@ -31,11 +31,15 @@ import de.schildbach.wallet.data.Product;
 import de.schildbach.wallet.data.ProductDao;
 import de.schildbach.wallet.data.Check;
 import de.schildbach.wallet.data.CheckDao;
+import de.schildbach.wallet.data.AuthenticationRequest;
+import de.schildbach.wallet.data.AuthenticationRequestDao;
+import de.schildbach.wallet.data.AtomicSwap;
+import de.schildbach.wallet.data.AtomicSwapDao;
 
 /**
  * @author Andreas Schildbach
  */
-@Database(entities = { AddressBookEntry.class, ExcludedAddress.class, DigitalSignature.class, Category.class, Product.class, Check.class }, version = 6, exportSchema = false)
+@Database(entities = { AddressBookEntry.class, ExcludedAddress.class, DigitalSignature.class, Category.class, Product.class, Check.class, AuthenticationRequest.class, AtomicSwap.class }, version = 8, exportSchema = false)
 public abstract class AddressBookDatabase extends RoomDatabase {
     public abstract AddressBookDao addressBookDao();
     public abstract ExcludedAddressDao excludedAddressDao();
@@ -43,6 +47,8 @@ public abstract class AddressBookDatabase extends RoomDatabase {
     public abstract CategoryDao categoryDao();
     public abstract ProductDao productDao();
     public abstract CheckDao checkDao();
+    public abstract AuthenticationRequestDao authenticationRequestDao();
+    public abstract AtomicSwapDao atomicSwapDao();
 
     private static final String DATABASE_NAME = "address_book";
     private static AddressBookDatabase INSTANCE;

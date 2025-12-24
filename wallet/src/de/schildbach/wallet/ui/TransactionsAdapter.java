@@ -55,6 +55,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Transaction.Purpose;
+import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.TransactionConfidence;
 import org.bitcoinj.core.TransactionConfidence.ConfidenceType;
 import org.bitcoinj.utils.ExchangeRate;
@@ -257,6 +258,62 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
                     else
                         addressLabel = null;
                 }
+                
+                // Check if transaction is internal (funds moving within the wallet)
+                // This handles canceled checks, recurring payments to wallet addresses, and other internal transactions
+                boolean isInternalTransaction = false;
+                
+                if (wallet != null) {
+                    if (sent) {
+                        // For sent transactions: check if destination address belongs to wallet
+                        // This catches canceled checks and recurring payments sent to wallet addresses
+                        if (address != null && wallet.isAddressMine(address)) {
+                            isInternalTransaction = true;
+                        } else if (address == null) {
+                            // If address is null, check if all outputs are mine (internal transfer)
+                            boolean allOutputsMine = true;
+                            for (final TransactionOutput output : tx.getOutputs()) {
+                                if (!output.isMine(wallet)) {
+                                    allOutputsMine = false;
+                                    break;
+                                }
+                            }
+                            isInternalTransaction = allOutputsMine;
+                        }
+                        // Also check if address label indicates canceled check
+                        if (!isInternalTransaction && addressLabel != null && addressLabel.startsWith("Canceled -")) {
+                            isInternalTransaction = true;
+                        }
+                    } else {
+                        // For received transactions: check if all outputs are mine
+                        // This catches funds returning to wallet (e.g., from canceled checks)
+                        if (address == null) {
+                            boolean allOutputsMine = true;
+                            for (final TransactionOutput output : tx.getOutputs()) {
+                                if (!output.isMine(wallet)) {
+                                    allOutputsMine = false;
+                                    break;
+                                }
+                            }
+                            isInternalTransaction = allOutputsMine;
+                        } else {
+                            // If address is found, check if it's a wallet address
+                            // This handles cases where address was found but transaction is still internal
+                            if (wallet.isAddressMine(address)) {
+                                // Check if all outputs are mine to confirm it's internal
+                                boolean allOutputsMine = true;
+                                for (final TransactionOutput output : tx.getOutputs()) {
+                                    if (!output.isMine(wallet)) {
+                                        allOutputsMine = false;
+                                        break;
+                                    }
+                                }
+                                isInternalTransaction = allOutputsMine;
+                            }
+                        }
+                    }
+                }
+                
                 if (tx.isCoinBase()) {
                     this.address = SpannedString
                             .valueOf(context.getString(R.string.wallet_transactions_fragment_coinbase));
@@ -266,7 +323,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionsAdapter.ListIte
                     this.address = null;
                     this.addressColor = 0;
                     this.addressTypeface = Typeface.DEFAULT;
-                } else if (purpose == Purpose.KEY_ROTATION || self) {
+                } else if (purpose == Purpose.KEY_ROTATION || self || isInternalTransaction) {
                     this.address = SpannedString.valueOf(context.getString(R.string.symbol_internal) + " "
                             + context.getString(R.string.wallet_transactions_fragment_internal));
                     this.addressColor = lessSignificantColor;

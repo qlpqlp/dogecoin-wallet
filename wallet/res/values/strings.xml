@@ -350,6 +350,7 @@
 <string name="report_issue_dialog_mail_intent_chooser">Send report using…</string>
 <string name="about_title">About</string>
 <string name="about_version_title">Version</string>
+<string name="about_build_version_title">Build version</string>
 <string name="about_version_apk_hash_title">SHA256 hash of the APK</string>
 <string name="about_copyright_title">Copyright</string>
 <string name="about_license_title">License</string>
@@ -796,4 +797,182 @@
     <string name="write_check_status_active">Active</string>
     <string name="write_check_status_canceled">Canceled</string>
     <string name="write_check_status_spent">Spent</string>
+    
+    <!-- Multi-Signature Wallet -->
+    <string name="preferences_show_multisig_menu_title">Multi-Sig</string>
+    <string name="preferences_show_multisig_menu_summary">Show or hide the Multi-Sig menu option</string>
+    
+    <string name="multisig_menu_title">Multi-Sig</string>
+    <string name="multisig_activity_title">Multi-Signature Wallet</string>
+    <string name="multisig_activity_description">Create and manage multi-signature wallets. Share control with others for enhanced security.</string>
+    
+    <string name="multisig_step1_title">Share Your Public Key</string>
+    <string name="multisig_step1_description">Generate your public key to share with other signers. They\'ll need this to create the multi-sig wallet together.</string>
+    <string name="multisig_step2_title">Create Multi-Sig Wallet</string>
+    <string name="multisig_step2_description">Combine public keys from all signers to create a shared wallet. For example, \"2 of 3\" means 2 signatures are required from 3 total keys.</string>
+    <string name="multisig_step3_title">Manage Multi-Sig</string>
+    <string name="multisig_step3_description">Send funds to the multi-sig address or spend from it. Spending requires signatures from the required number of signers.</string>
+    
+    <string name="multisig_generate_public_key">Generate Public Key</string>
+    <string name="multisig_share_public_key">Share Public Key</string>
+    <string name="multisig_show_qr">Show QR Code</string>
+    <string name="multisig_your_public_key">Your Public Key:</string>
+    <string name="multisig_public_key_qr_title">Public Key QR Code</string>
+    <string name="multisig_public_key_generated">Public key generated successfully</string>
+    <string name="multisig_no_public_key">Please generate a public key first</string>
+    <string name="multisig_public_key_scanned">Public key scanned successfully</string>
+    
+    <string name="multisig_create_wallet">Create Multi-Sig Wallet</string>
+    <string name="multisig_create_help">Enter how many signatures are required and the total number of keys. Then add all public keys from each signer. You can scan QR codes or paste them manually.</string>
+    <string name="multisig_required_signatures">Required Signatures (M)</string>
+    <string name="multisig_total_keys">Total Keys (N)</string>
+    <string name="multisig_public_keys">Public Keys</string>
+    <string name="multisig_add_public_key">Add Public Key</string>
+    <string name="multisig_scan_public_key">Scan QR Code</string>
+    <string name="multisig_public_key_hint">Paste or scan public key (hex)</string>
+    <string name="multisig_wallet_created">Multi-sig wallet created: %1$d of %2$d</string>
+    <string name="multisig_wallet_info">This is a %1$d-of-%2$d multi-signature wallet. Address: %3$s\n\nShare this address to receive funds. To spend, you\'ll need %1$d signatures from the %2$d key holders.</string>
+    
+    <string name="multisig_address">Multi-Sig Address</string>
+    <string name="multisig_redeem_script">Redeem Script</string>
+    <string name="multisig_send_to_address">Send to Multi-Sig Address</string>
+    <string name="multisig_spend_from">Spend from Multi-Sig</string>
+    
+    <string name="multisig_create_unsigned_tx">Create Unsigned Transaction</string>
+    <string name="multisig_unsigned_tx_help">Create a transaction that needs to be signed by multiple parties. Enter the destination address and amount, then share the unsigned transaction with other signers.</string>
+    <string name="multisig_destination_address">Destination Address</string>
+    <string name="multisig_amount_doge">Amount (DOGE)</string>
+    <string name="multisig_share_unsigned_tx">Share Unsigned Transaction</string>
+    <string name="multisig_unsigned_transaction">Unsigned Transaction</string>
+    
+    <string name="multisig_sign_transaction">Sign Transaction</string>
+    <string name="multisig_sign_tx_help">Paste or scan an unsigned transaction hex. The app will sign it with your key. Share the signed transaction with other signers until you have enough signatures.</string>
+    <string name="multisig_enter_unsigned_tx_hex">Enter unsigned transaction hex...</string>
+    <string name="multisig_scan_transaction">Scan Transaction QR</string>
+    <string name="multisig_signed_transaction">Signed Transaction</string>
+    
+    <string name="multisig_merge_signatures">Merge Signatures</string>
+    <string name="multisig_merge_help">Combine multiple signatures into a complete transaction. Paste the transaction hex and all signatures, then broadcast when you have enough signatures.</string>
+    <string name="multisig_enter_transaction_hex">Enter transaction hex...</string>
+    <string name="multisig_enter_signatures">Enter signatures (comma-separated hex)...</string>
+    <string name="multisig_signatures">Signatures</string>
+    <string name="multisig_transaction_hex">Transaction Hex</string>
+    
+    <string name="multisig_broadcast">Broadcast Transaction</string>
+    <string name="multisig_tx_broadcast_success">Transaction broadcast successfully</string>
+    
+    <string name="multisig_qr_code">QR Code</string>
+    
+    <!-- Error Messages -->
+    <string name="multisig_error_no_key">Unable to generate key from wallet</string>
+    <string name="multisig_error_generating_key">Error generating public key: %1$s</string>
+    <string name="multisig_error_qr_code">Error generating QR code</string>
+    <string name="multisig_error_no_wallet">Please create a multisig wallet first</string>
+    <string name="multisig_error_no_balance">No balance in multisig address</string>
+    <string name="multisig_error_invalid_required">Required signatures must be between 1 and total keys</string>
+    <string name="multisig_error_wrong_key_count">Please add exactly %1$d public keys</string>
+    <string name="multisig_error_missing_key">All public keys must be provided</string>
+    <string name="multisig_error_invalid_key">Invalid public key: %1$s</string>
+    <string name="multisig_error_invalid_number">Invalid number format</string>
+    <string name="multisig_error_creating_wallet">Error creating multisig wallet: %1$s</string>
+    <string name="multisig_error_fill_all_fields">Please fill all fields</string>
+    <string name="multisig_error_creating_tx">Error creating transaction: %1$s</string>
+    <string name="multisig_error_no_utxos">No UTXOs found for multisig address</string>
+    <string name="multisig_error_no_tx_hex">Please enter transaction hex</string>
+    <string name="multisig_error_no_signing_key">Unable to get key for signing</string>
+    <string name="multisig_error_signing">Error signing transaction: %1$s</string>
+    <string name="multisig_error_no_inputs">Transaction has no inputs</string>
+    <string name="multisig_error_merging">Error merging signatures: %1$s</string>
+    <string name="multisig_error_broadcasting">Error broadcasting transaction: %1$s</string>
+    
+    <!-- Authentication -->
+    <string name="preferences_show_authentication_menu_title">Authentication</string>
+    <string name="preferences_show_authentication_menu_summary">Show or hide the Authentication menu option</string>
+    
+    <string name="authentication_menu_title">Authentication</string>
+    <string name="authentication_activity_title">Authentication</string>
+    <string name="authentication_activity_description">Prove you have access to a ticket, digital content, or doors by signing with your wallet</string>
+    <string name="authentication_select_address">Select Address</string>
+    <string name="authentication_generate_new_address">Generate New Address</string>
+    <string name="authentication_your_address">Your Address:</string>
+    <string name="authentication_step1_title">Choose Address</string>
+    <string name="authentication_step2_title">Enter Message</string>
+    <string name="authentication_step3_title">Your Signature</string>
+    <string name="authentication_enter_message">Message to Sign</string>
+    <string name="authentication_message_description">Scan the QR code to automatically sign the message</string>
+    <string name="authentication_signature_description">Share this signature as a QR code or text to prove access</string>
+    <string name="authentication_message_hint">Paste or type the message, hash, or text to sign...</string>
+    <string name="authentication_scan_qr">Scan</string>
+    <string name="authentication_sign_message">Sign</string>
+    <string name="authentication_store_for_later">Save</string>
+    <string name="authentication_your_signature">Your Signature:</string>
+    <string name="authentication_copy">Copy</string>
+    <string name="authentication_share">Share</string>
+    <string name="authentication_stored_requests">Stored Requests</string>
+    <string name="authentication_dialog_enter_message_title">Enter Message</string>
+    <string name="authentication_dialog_enter_message_hint">Enter message to sign (string, hash, or text)</string>
+    <string name="authentication_dialog_add_label_title">Add Label to Request</string>
+    <string name="authentication_dialog_add_label_hint">Optional label (e.g., "Cinema Ticket")</string>
+    <string name="authentication_request_stored">Authentication request stored successfully.</string>
+    <string name="authentication_request_deleted">Authentication request deleted.</string>
+    <string name="authentication_address_generated">New address generated successfully</string>
+    <string name="authentication_error_no_address_selected">Please select or generate an address first.</string>
+    <string name="authentication_error_no_message_entered">Please enter a message to sign.</string>
+    <string name="authentication_error_signing_failed">Failed to sign message: %1$s</string>
+    <string name="authentication_error_generating_address">Error generating new address: %1$s</string>
+    <string name="authentication_error_qr_code">Error generating QR code.</string>
+    <string name="authentication_delete_confirm_title">Delete Request?</string>
+    <string name="authentication_delete_confirm_message">Are you sure you want to delete this authentication request?</string>
+    
+    <!-- Exchange -->
+    <string name="exchange_menu_title">Exchange</string>
+    <string name="exchange_activity_title">Exchange</string>
+    <string name="exchange_activity_description">Buy or sell Dogecoin using Metal Pay Connect</string>
+    <string name="exchange_buy_doge">Buy Doge</string>
+    <string name="exchange_buy_doge_description">Purchase Dogecoin with fiat currency</string>
+    <string name="exchange_sell_doge">Sell Doge</string>
+    <string name="exchange_sell_doge_description">Sell Dogecoin for fiat currency</string>
+    <string name="exchange_error_loading">Error loading exchange</string>
+    <string name="exchange_error_connection">Unable to connect to exchange service</string>
+    <string name="exchange_error_api">API error</string>
+    <string name="exchange_error_parsing">Error parsing exchange response</string>
+    <string name="exchange_error_title">Exchange Error</string>
+    <string name="exchange_error_missing_keys">The server is missing API keys. Please contact the server administrator to configure SECRET_KEY and API_KEY environment variables.</string>
+    <string name="exchange_error_500_help">This is a server configuration error. The Exchange API server may be missing required API keys or has a configuration issue. Please check the server settings or contact support.</string>
+    <string name="exchange_error_sdk_load">Failed to load Metal Pay Connect SDK</string>
+    <string name="exchange_error_sdk_help">The SDK could not be loaded from any source. Please check your internet connection and try again. If the problem persists, the SDK may need to be bundled with the app.</string>
+    <string name="exchange_environment_title">Environment</string>
+    <string name="exchange_environment_production">Production</string>
+    <string name="exchange_environment_dev">Development</string>
+    <string name="exchange_settings_updated">Exchange settings updated</string>
+    
+    <!-- Exchange Settings -->
+    <string name="preferences_category_configuration">Configuration</string>
+    <string name="preferences_exchange_api_host_title">Exchange API Host</string>
+    <string name="preferences_exchange_api_host_summary">Configure the Exchange API server URL</string>
+    <string name="preferences_exchange_api_host_dialog_message">Enter the Exchange API host URL (e.g., https://api.dogecoinwallet.org)</string>
+    <string name="exchange_settings_title">Settings</string>
+    <string name="exchange_api_host_updated">Exchange API host updated</string>
+    
+    <!-- Labs -->
+    <string name="preferences_labs_exchange_title">Exchange (Buy/Sell Dogecoin)</string>
+    <string name="preferences_labs_exchange_summary">Enable experimental exchange feature to buy or sell Dogecoin using Metal Pay Connect</string>
+    <string name="preferences_labs_atomic_swap_title">Atomic Swap</string>
+    <string name="preferences_labs_atomic_swap_summary">Enable experimental atomic swap feature for cross-chain swaps (DOGE ↔ BTC, DOGE ↔ LTC)</string>
+    
+    <!-- Atomic Swap -->
+    <string name="atomic_swap_activity_title">Atomic Swap</string>
+    <string name="atomic_swap_menu_title">Atomic Swap</string>
+    <string name="atomic_swap_initiate">Initiate Atomic Swap</string>
+    <string name="atomic_swap_from_currency">From</string>
+    <string name="atomic_swap_to_currency">To</string>
+    <string name="atomic_swap_amount">Amount</string>
+    <string name="atomic_swap_counterparty_address">Counterparty Address</string>
+    <string name="atomic_swap_secret_hash">Secret Hash</string>
+    <string name="atomic_swap_status">Status</string>
+    <string name="atomic_swap_pending">Pending</string>
+    <string name="atomic_swap_completed">Completed</string>
+    <string name="atomic_swap_failed">Failed</string>
+    <string name="atomic_swap_refunded">Refunded</string>
+    <string name="atomic_swap_experimental_warning">Atomic Swap is an experimental feature. Use at your own risk.</string>
 </resources>

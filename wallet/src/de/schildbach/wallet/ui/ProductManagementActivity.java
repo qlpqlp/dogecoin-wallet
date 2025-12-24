@@ -355,7 +355,9 @@ public class ProductManagementActivity extends AbstractWalletActivity {
             if (product.getQuantity() > 0) {
                 editQuantity.setText(String.valueOf(product.getQuantity()));
             }
-            editPrice.setText(String.valueOf(product.getPriceDoge()));
+            // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+            double priceInDoge = product.getPriceDoge() / 100000000.0;
+            editPrice.setText(String.valueOf(priceInDoge));
             imagePath = product.getImagePath();
             selectedCategoryId = product.getCategoryId();
             
@@ -443,7 +445,9 @@ public class ProductManagementActivity extends AbstractWalletActivity {
                 Double weight = weightStr.isEmpty() ? null : Double.parseDouble(weightStr);
                 // If quantity is empty, use -1 for unlimited
                 int quantity = quantityStr.isEmpty() ? -1 : Integer.parseInt(quantityStr);
-                long priceDoge = Long.parseLong(priceStr);
+                // Parse price as double and convert to smallest unit (1 DOGE = 100,000,000 smallest units)
+                double priceDouble = Double.parseDouble(priceStr);
+                long priceDoge = Math.round(priceDouble * 100000000L); // Convert DOGE to smallest unit
                 
                 // Get the current image path (use currentPhotoPath if set, otherwise use saved path)
                 String imagePathToSave = (currentPhotoPath != null && !currentPhotoPath.isEmpty()) 
@@ -781,7 +785,11 @@ public class ProductManagementActivity extends AbstractWalletActivity {
                     textCategory.setText(category.getName());
                 }
                 
-                textPrice.setText(product.getPriceDoge() + " DOGE");
+                // Convert from smallest unit to DOGE for display (1 DOGE = 100,000,000 smallest units)
+                double priceInDoge = product.getPriceDoge() / 100000000.0;
+                // Format to remove trailing zeros (e.g., "0.5" instead of "0.50000000")
+                String formattedPrice = String.format("%.8f", priceInDoge).replaceAll("0+$", "").replaceAll("\\.$", "");
+                textPrice.setText(formattedPrice + " DOGE");
                 if (product.getQuantity() == -1) {
                     textQuantity.setText("Qty: Unlimited");
                 } else {

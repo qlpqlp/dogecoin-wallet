@@ -18,6 +18,7 @@
     <dimen name="exchange_rate_pane_width">352sp</dimen>
     <dimen name="divider_currency_padding">0dp</dimen>
     <dimen name="wallet_address_qr_size">72dp</dimen>
+    <dimen name="qr_code_size">300dp</dimen>
     <dimen name="request_coins_qr_size">128dp</dimen>
     <dimen name="bitmap_dialog_qr_size">224dp</dimen>
     <dimen name="scan_laser_width">4dp</dimen>

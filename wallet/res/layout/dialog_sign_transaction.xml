@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/fg_less_significant"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:background="@color/bg_level2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multisig_transaction_hex"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/edit_transaction_hex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:fontFamily="monospace"
+        android:hint="@string/multisig_enter_unsigned_tx_hex"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btn_scan_tx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multisig_scan_transaction"
+        style="@style/My.Dialog.Button" />
+
+</LinearLayout>
+

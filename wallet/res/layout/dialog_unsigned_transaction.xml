@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/fg_less_significant"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:background="@color/bg_level2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multisig_destination_address"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/edit_destination_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="D..."
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multisig_amount_doge"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/edit_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="0.0"
+        android:layout_marginBottom="16dp" />
+
+</LinearLayout>
+
